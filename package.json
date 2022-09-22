@@ -2,7 +2,20 @@
   "name": "@andrewmclachlan/mooapp",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "author": {
+    "name": "Andrew McLachlan",
+    "url": "https://andrewmclachlan.com"
+  },
+  "license": "UNLICENSED",
+  "description": "Base library for Moo-branded apps",
   "module": "dist/index.es.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AndrewMcLachlan/MooApp.git"
+  },
+  "publishConfig": {
+    "@andrewmclachlan:registry": "https://npm.pkg.github.com"
+  },
   "dependencies": {
     "@azure/msal-browser": "^2.28.3",
     "@azure/msal-react": "^1.4.7",
