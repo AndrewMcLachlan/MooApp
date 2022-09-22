@@ -1,0 +1,21 @@
+article {
+
+    flex: 1 0 auto;
+    background-color: var(--background);
+    color: var(--color);
+
+    header {
+        background-color: var(--title-background);
+        color: var(--title-text);
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        button {
+            font-size: 1.4rem;
+        }
+    }
+}
