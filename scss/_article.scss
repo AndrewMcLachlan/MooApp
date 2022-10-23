@@ -5,8 +5,12 @@ article {
     color: var(--color);
 
     header {
-        background-color: var(--title-background);
-        color: var(--title-text);
+        background-color: var(--page-header-background);
+        color: var(--page-header-text);
+        
+        h2 {
+            font-size: var(--h2-size);
+        }
 
         .container {
             display: flex;

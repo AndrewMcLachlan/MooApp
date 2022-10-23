@@ -1,28 +1,33 @@
 html, body, #root, main {
-    height: 100%;
-    font-family: $primary-fonts;
+  height: 100%;
+  font-family: $primary-fonts;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+
+  &.default {
+    @include media-breakpoint-up(lg) {
+      --header-height: 80px;
+      --footer-height: 80px;
+      --foter-text-size: 1rem;
+      --user-image: 60px;
+      --user-radius: 30px;
+      --h1-size: 2rem;
+      --h2-size: 2rem;
+    }
   }
 
-  main {
-    display: flex;
-    flex-direction: column;
-  
-    & > footer
-    {
-  
-      ul {
-        width: 90%;
-        height: 100%;
-        margin: 0 auto;
-        padding: 0;
-        list-style: none;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-      }
-  
-      li {
-        padding: 0 5px;
-      }
-    } 
+  &.small {
+    @include media-breakpoint-up(lg) {
+      --header-height: 40px;
+      --footer-height: 40px;
+      --footer-text-size: 1rem;
+      --user-image: 30px;
+      --user-radius: 15px;
+      --h1-size: 1.4rem;
+      --h2-size: 1.4rem;
+    }
   }
+}

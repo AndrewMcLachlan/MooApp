@@ -2,8 +2,8 @@
 
 :root {
 
-  --title-background: #000;
-  --title-text: #F6F6F6;
+  --page-header-background: #111;
+  --page-header-text: #F6F6F6;
   
   --background: #FFF;
   --color: #{$text-color};
@@ -27,12 +27,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #222;
+    --background: #1F1F1F;
     --color: #EEE;
     --header: #620000;
     --header-bright: #800;
     --header-text: #EEE;
-    --footer: var(--header);
+    --footer: #111;
     --footer-text: #EEE;
     --hover: #6E6E6E;
   }
@@ -55,7 +55,7 @@
   --header: #620000;
   --header-bright: #800;
   --header-text: #EEE;
-  --footer: var(--header);
+  --footer: #111;
   --footer-text: #EEE;
   --hover: #6E6E6E;
 }

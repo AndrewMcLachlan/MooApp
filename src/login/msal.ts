@@ -50,10 +50,13 @@ export const apiRequest = {
 
 let msalInstance: msal.PublicClientApplication;
 
-const getMsalInstance = (clientId: string) => {
+const getMsalInstance = (clientId: string): msal.PublicClientApplication => {
     if (msalInstance) return msalInstance;
 
     msalConfig.auth.clientId = clientId;
+    msalConfig.system.loggerOptions = {
+        logLevel: msal.LogLevel.Warning
+    }
     msalInstance = new msal.PublicClientApplication(msalConfig);
 
     msalInstance.addEventCallback((event) => {
@@ -72,6 +75,8 @@ const getMsalInstance = (clientId: string) => {
     if (accounts.length > 0) {
         msalInstance.setActiveAccount(accounts[0]);
     }
+
+    return msalInstance;
 }
 
-export default getMsalInstance;
+export default getMsalInstance; 

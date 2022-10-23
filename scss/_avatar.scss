@@ -1,0 +1,18 @@
+.avatar {
+    img {
+        height: var(--user-image);
+        width: var(--user-image);
+        border-radius: var(--user-radius);
+        cursor: pointer;
+    }
+
+    .initials {
+        height: var(--user-image);
+        width: var(--user-image);
+        border-radius: var(--user-radius);
+        border: 1px solid var(--color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

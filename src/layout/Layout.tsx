@@ -2,11 +2,12 @@ import { PropsWithChildren, useState } from "react";
 
 import { DesktopFooterComponent, Footer } from "./Footer";
 import { LayoutProvider } from "../providers";
-import { Theme } from "../models/Layout";
+import { size, Theme } from "../models/Layout";
 import { DesktopHeaderComponent, Header } from "./Header";
 import { Article, ArticleComponent } from "./Article";
 import { MobileHeaderComponent, Header as MHeader } from "./Mobile/Header";
 import { MobileFooterComponent, Footer as MFooter } from "./Mobile/Footer";
+import classNames from "classnames";
 
 export type LayoutComponent = React.FC<PropsWithChildren<LayoutProps>> & {
   Footer: DesktopFooterComponent;
@@ -16,7 +17,7 @@ export type LayoutComponent = React.FC<PropsWithChildren<LayoutProps>> & {
   Article: ArticleComponent;
 };
 
-const Layout: LayoutComponent = ({ children }) => {
+const Layout: LayoutComponent = ({ size, children }) => {
 
   const [theme, setTheme] = useState<Theme>();
 
@@ -25,8 +26,8 @@ const Layout: LayoutComponent = ({ children }) => {
   }
 
   return (
-    <LayoutProvider theme={theme} setTheme={changeTheme}>
-      <main className={theme}>
+    <LayoutProvider theme={theme} setTheme={changeTheme} size={size}>
+      <main className={classNames(size)}>
         {children}
       </main>
     </LayoutProvider>
@@ -42,5 +43,5 @@ Layout.Article = Article;
 export { Layout };
 
 export interface LayoutProps {
-
+  size?: size;
 }
