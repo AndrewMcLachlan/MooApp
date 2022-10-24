@@ -1,6 +1,15 @@
-export const PageHeader = (props: PageHeaderProps) => (
+import { PropsWithChildren } from "react";
+
+export const PageHeader: React.FC<PropsWithChildren<PageHeaderProps>> = ({ children, ...props }) => (
     <header>
-        <h2 className="container">{props.title}</h2>
+        <div className="container"><h2>{props.title}</h2>
+        {
+            children && 
+            <div className="buttons">
+                {children}
+            </div>
+        }
+        </div>
     </header>
 );
 
