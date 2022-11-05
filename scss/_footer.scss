@@ -1,7 +1,7 @@
 @import "./variables";
 
 main>footer {
-  font-family: $secondary-fonts;
+  font-family: var(--secondary-fonts);
   width: 100%;
   background: var(--footer);
   text-align: center;

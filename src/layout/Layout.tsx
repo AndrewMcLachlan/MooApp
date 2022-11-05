@@ -34,6 +34,10 @@ const Layout: LayoutComponent = ({ size, children }) => {
   );
 };
 
+Layout.defaultProps = {
+  size: "default",
+}
+
 Layout.Footer = Footer;
 Layout.MobileFooter = MFooter;
 Layout.Header = Header;

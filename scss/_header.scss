@@ -9,7 +9,7 @@ main>header {
     align-items: center;
 
     color: var(--header-text);
-    font-family: $secondary-fonts;
+    font-family: var(--secondary-fonts);
 
     height: var(--header-height);
 

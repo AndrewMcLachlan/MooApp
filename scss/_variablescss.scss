@@ -2,12 +2,18 @@
 
 :root {
 
+  --bs-font-sans-serif: #{$primary-fonts};
+  --secondary-fonts: #{$secondary-fonts};
+
   --page-header-background: #111;
   --page-header-text: #F6F6F6;
   
   --background: #FFF;
   --color: #{$text-color};
+  --bs-body-color: #{$text-color};
   --primary: #{$primary};
+  --bs-primary: #{$primary};
+  --bs-primary-rgb: 0, 123, 255;
   --input-border: #666;
   --disabled: #999;
 
