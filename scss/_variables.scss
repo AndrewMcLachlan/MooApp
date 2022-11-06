@@ -42,10 +42,10 @@
 
 .light {
   --bs-body-backgorund: #FFF;
-  --header: #{$header};
+  --header: rgb(194,0,0);;
   --header-bright: #F00;
   --header-text: #FFF;
-  --footer: #{$footer};
+  --footer: rgb(194,0,0);
   --footer-text: #FFF;
   --hover: #E6E6E6;
 }
