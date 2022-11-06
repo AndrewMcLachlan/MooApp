@@ -1,8 +1,8 @@
 article {
 
     flex: 1 0 auto;
-    background-color: var(--background);
-    color: var(--color);
+    background-color: var(--bs-body-backgorund);
+    color: var(--bs-body-color);
 
     &>header {
         background-color: var(--page-header-background);

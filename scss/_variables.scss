@@ -6,8 +6,6 @@
   --page-header-background: #111;
   --page-header-text: #F6F6F6;
   
-  --background: #FFF;
-
   --bs-body-color: rgb(33,33,33);
   
   --primary: #007bff;
@@ -31,8 +29,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1F1F1F;
-    --color: #EEE;
+    --bs-body-backgorund: #1F1F1F;
+    --bs-body-color: #EEE;
     --header: #620000;
     --header-bright: #800;
     --header-text: #EEE;
@@ -43,8 +41,7 @@
 }
 
 .light {
-  --background: #FFF;
-  --color: #{$text-color};
+  --bs-body-backgorund: #FFF;
   --header: #{$header};
   --header-bright: #F00;
   --header-text: #FFF;
@@ -54,8 +51,8 @@
 }
 
 .dark {
-  --background: #222;
-  --color: #EEE;
+  --bs-body-backgorund: #1F1F1F;
+  --bs-body-color: #EEE;
   --header: #620000;
   --header-bright: #800;
   --header-text: #EEE;
