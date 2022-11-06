@@ -1,17 +1,20 @@
 import { useMsal } from "@azure/msal-react";
-import React from "react";
-import { usePhoto } from "../services"
+import React, { useMemo } from "react";
+import { useLayout } from "../providers";
 
 const AvatarComponent = () => {
-    const photo = usePhoto();
+
+    const photo = useLayout().photo;
     const msal = useMsal();
 
-    return (
-        <div className="avatar">
-            {photo && <img src={photo} alt="Me" />}
-            {!photo && <div className="initials">{msal.accounts[0]?.name.split(" ").map(n => n[0]).join(" ")}</div>}
-        </div>
-    );
+    return useMemo(() => {
+        return (
+            <div className="avatar">
+                {photo && <img src={photo} alt="Me" />}
+                {!photo && <div className="initials">{msal.accounts[0]?.name.split(" ").map(n => n[0]).join(" ")}</div>}
+            </div>
+        );
+    }, [photo]);
 };
 
-export const Avatar = React.memo(AvatarComponent);
+export const Avatar = AvatarComponent;

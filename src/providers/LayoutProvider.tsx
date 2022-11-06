@@ -1,6 +1,8 @@
+import { useMsal } from "@azure/msal-react";
 import React, { createContext, useEffect } from "react";
 import { useContext } from "react";
 import * as Models from "../models";
+import { usePhoto } from "../services";
 
 export const LayoutContext = createContext<Models.LayoutOptions>({ size: "default", defaultTheme: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light" });
 
@@ -20,8 +22,11 @@ export const LayoutProvider: React.FC<React.PropsWithChildren<LayoutProviderProp
         document.body.setAttribute("class", defaultTheme);
     }, []);
 
+    const msal = useMsal();
+    const photo = usePhoto(msal.instance?.getActiveAccount()?.username);
+
     return (
-        <LayoutContext.Provider value={{ theme, setTheme, size, defaultTheme: defaultTheme}}>
+        <LayoutContext.Provider value={{ theme, setTheme, size, defaultTheme: defaultTheme, photo: photo}}>
             {children}
         </LayoutContext.Provider>
     );

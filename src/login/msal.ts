@@ -42,7 +42,7 @@ export const loginRequest: msal.RedirectRequest = {
 };
 
 // Add here scopes for id token to be used at MS Identity Platform endpoints.
-export const apiRequest = {
+export const apiRequest: msal.SilentRequest = {
     scopes: [] as string[],
     forceRefresh: true // Set this to "true" to skip a cached token and go to the server to get a new token
 };

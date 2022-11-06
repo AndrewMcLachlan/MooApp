@@ -5,6 +5,7 @@ export interface LayoutOptions {
     setTheme?: (theme?: Theme) => void;
     defaultTheme: Theme;
     size: size;
+    photo?: string;
 }
 
 export type Theme = "dark" | "light";
