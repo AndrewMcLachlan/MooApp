@@ -4,7 +4,8 @@ import axios, { AxiosInstance } from "axios";
 import { apiRequest, loginRequest } from "../login/msal";
 
 import { useMsal } from "@azure/msal-react";
-import { AuthError, InteractionRequiredAuthError } from "@azure/msal-browser";
+import { AuthError, InteractionRequiredAuthError, ServerError } from "@azure/msal-browser";
+import { BrowserConstants } from "@azure/msal-browser/dist/utils/BrowserConstants";
 
 export interface HttpClientProviderProps {
     baseUrl: string;
@@ -41,8 +42,14 @@ const useCreateHttpClient = (baseUrl: string): AxiosInstance => {
             token = await msal.instance.acquireTokenSilent(apiRequest);
         }
         catch (error) {
-            if (error instanceof InteractionRequiredAuthError || (error as AuthError)?.errorCode === "login_required") {
+
+            const isServerError = error instanceof ServerError;
+            const isInteractionRequiredError = error instanceof InteractionRequiredAuthError;
+            const isInvalidGrantError = (error as AuthError)?.errorCode === BrowserConstants.INVALID_GRANT_ERROR;
+
+            if ((isServerError && isInvalidGrantError) || isInteractionRequiredError) {
                 await msal.instance.loginRedirect(loginRequest);
+                token = await msal.instance.acquireTokenSilent(apiRequest);
             } else {
                 console.warn("Error getting token silently: " + error);
             }

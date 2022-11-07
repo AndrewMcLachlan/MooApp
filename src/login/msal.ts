@@ -8,6 +8,9 @@ const msalConfig: msal.Configuration = {
         navigateToLoginRequestUrl: true,
         postLogoutRedirectUri: window.location.origin,
     },
+    cache: {
+        cacheLocation: "sessionStorage",
+    },
     system: {
         loggerOptions: {
             loggerCallback: (level, message, containsPii) => {
@@ -44,7 +47,7 @@ export const loginRequest: msal.RedirectRequest = {
 // Add here scopes for id token to be used at MS Identity Platform endpoints.
 export const apiRequest: msal.SilentRequest = {
     scopes: [] as string[],
-    forceRefresh: true // Set this to "true" to skip a cached token and go to the server to get a new token
+    //forceRefresh: true // Set this to "true" to skip a cached token and go to the server to get a new token
 };
 
 
