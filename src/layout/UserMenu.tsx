@@ -1,4 +1,3 @@
-import { usePhoto } from "../services/msgraph";
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { Avatar } from "../components";
@@ -12,7 +11,7 @@ export const UserMenu = () => {
 
     const popover = (
         <Popover id="user-popover" className="user-popover">
-            <Popover.Header as="h3"><Avatar />{msal.accounts[0]?.name}</Popover.Header>
+            <Popover.Header as="h3"><Avatar />{msal.instance.getActiveAccount()?.name}</Popover.Header>
             <Popover.Body>
                 <ul>
                     <li><span>Theme</span><ThemeSwitcher /></li>
