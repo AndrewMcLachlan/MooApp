@@ -10,7 +10,7 @@ import getMsalInstance from "./login/msal";
 import { MsalProvider } from "@azure/msal-react";
 import { Login } from "./login/Login";
 
-export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, clientId }) => {
+export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, clientId, scopes, baseUrl }) => {
 
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -24,7 +24,7 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, cli
   return (
     <React.StrictMode>
       <MsalProvider instance={getMsalInstance(clientId)}>
-        <HttpClientProvider baseUrl="/">
+        <HttpClientProvider baseUrl={baseUrl} scopes={scopes}>
           <QueryClientProvider client={queryClient}>
             <BrowserRouter>
               <Login>
@@ -38,6 +38,13 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, cli
   );
 };
 
+MooApp.defaultProps = {
+  scopes: [],
+  baseUrl: "/"
+};
+
 export interface MooAppProps {
-  clientId: string
+  clientId: string,
+  scopes?: string[],
+  baseUrl?: string,
 }
