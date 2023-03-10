@@ -7,3 +7,4 @@ export * from "./Breadcrumb";
 export * from "./PageHeader";
 export * from "./SpinnerContainer";
 export * from "./TagPanel";
+export * from "./Upload";
