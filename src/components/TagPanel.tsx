@@ -1,5 +1,3 @@
-import "./TagPanel.scss";
-
 import React, { useState, useRef, ElementType } from "react";
 import { BadgeProps } from "react-bootstrap";
 import { CloseBadge, ComboBox } from ".";

@@ -1,5 +1,3 @@
-import "./ThemeSwitcher.scss";
-
 import Form from "react-bootstrap/Form";
 import { useLayout } from "../providers"
 

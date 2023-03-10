@@ -1,5 +1,3 @@
-import "./ComboBox.scss";
-
 import React, { useState, forwardRef, SetStateAction, Dispatch } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
