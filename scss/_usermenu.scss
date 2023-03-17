@@ -1,7 +1,7 @@
 .user-popover {
 
     box-shadow: var(--bs-popover-box-shadow);
-    --bs-popover-bg: var(--bs-body-backgorund);
+    --bs-popover-bg: var(--bs-body-bg);
     --bs-popover-body-color: var(--bs-body-color);
     --bs-popover-header-color: var(--bs-body-color);
     --bs-popover-border-color: #f0f0f0;
@@ -44,8 +44,8 @@
 }
 
 .light .popover {
-    --bs-popover-bg: var(--bs-body-backgorund);
-    --bs-popover-header-bg: var(--bs-body-backgorund);
+    --bs-popover-bg: var(--bs-body-bg);
+    --bs-popover-header-bg: var(--bs-body-bg);
     --bs-popover-border-color: #f0f0f0;
     --bs-popover-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
 }

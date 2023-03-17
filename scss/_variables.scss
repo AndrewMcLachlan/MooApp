@@ -29,7 +29,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bs-body-backgorund: #1F1F1F;
+    --bs-body-bg: #1F1F1F;
     --bs-body-color: #EEE;
     --header: #620000;
     --header-bright: #800;
@@ -41,7 +41,7 @@
 }
 
 .light {
-  --bs-body-backgorund: #FFF;
+  --bs-body-bg: #FFF;
   --bs-body-color: rgb(33,33,33);
   --header: rgb(194,0,0);
   --header-bright: #F00;
@@ -52,7 +52,7 @@
 }
 
 .dark {
-  --bs-body-backgorund: #1F1F1F;
+  --bs-body-bg: #1F1F1F;
   --bs-body-color: #EEE;
   --header: #620000;
   --header-bright: #800;
