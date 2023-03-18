@@ -1,4 +1,19 @@
-.form-select, .form-control, .form-control:focus, option {
+.form-select,
+.form-control,
+.form-control:focus,
+option {
     background-color: var(--bs-body-bg);
     color: var(--bs-body-color);
+}
+
+@media (prefers-color-scheme: dark) {
+    .form-select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23ced4da%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e")
+    }
+}
+
+.dark {
+    .form-select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23ced4da%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e")
+    }
 }
