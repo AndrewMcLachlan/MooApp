@@ -1,5 +1,4 @@
-import React, { useState, forwardRef, SetStateAction, Dispatch } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState, forwardRef } from "react";
 
 export const ComboBox = forwardRef<any, ComboBoxProps>((props, ref) => {
 
@@ -9,10 +8,7 @@ export const ComboBox = forwardRef<any, ComboBoxProps>((props, ref) => {
 
     return (
         <div className="combo-box" hidden={props.hidden} ref={ref}>
-            <input type="text" onChange={comboBox.onChange} value={value} tabIndex={1} />
-            <div className="cb-arrow" onClick={comboBox.showHideItems}>
-                <FontAwesomeIcon icon="chevron-down" />
-            </div>
+            <input type="text" onChange={comboBox.onChange} value={value} tabIndex={1} className="form-control" />
             {comboBox.items && comboBox.items.length > 0 &&
                 <ol className="cb-list">
                     {comboBox.items.map((i) =>

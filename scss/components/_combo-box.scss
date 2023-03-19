@@ -3,12 +3,12 @@
 
     input {
         width: 100%;
-        border-radius: 3px;
-        border-style: solid;
-        border-width: 1px;
-        border-color: #CCC;
-        padding: 2px;
+        background-repeat: no-repeat;
+        background-position-y: 50%;
+        background-position-x: calc(100% - 12px);
+        background-size: 16px 12px;
         background-color: var(--bs-body-bg);
+        background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e");
         color: currentColor;
     }
 
@@ -30,16 +30,22 @@
             }
         }
     }
+}
 
-    .cb-arrow {
-        position: absolute;
-        right: 4px;
-        top: 0;
-        line-height: 24px;
+@media (prefers-color-scheme: dark) {
+    .combo-box input {
+        background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23ced4da%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e")
+    }
+}
 
-        svg, .fa {
-            font-size: 0.7rem;
-            color: #666;
-        }
+.dark {
+    .combo-box input {
+        background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23ced4da%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e")
+    }
+}
+
+.light {
+    .combo-box input {
+        background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e")
     }
 }
