@@ -9,7 +9,7 @@ export const ComboBox = forwardRef<any, ComboBoxProps>((props, ref) => {
 
     return (
         <div className="combo-box" hidden={props.hidden} ref={ref}>
-            <input type="text" onChange={comboBox.onChange} value={value} tabIndex={1} />
+            <input type="text" onChange={comboBox.onChange} value={value} tabIndex={1} className="form-control" />
             <div className="cb-arrow" onClick={comboBox.showHideItems}>
             </div>
             {comboBox.items && comboBox.items.length > 0 &&

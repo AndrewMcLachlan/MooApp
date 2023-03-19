@@ -4,8 +4,7 @@
     input {
         width: 100%;
         background-repeat: no-repeat;
-        background-position-y: 50%;
-        background-position-x: calc(100% - 12px);
+        background-position: right 0.75rem center;
         background-size: 16px 12px;
         background-color: var(--bs-body-bg);
         background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e");
@@ -35,8 +34,9 @@
         position: absolute;
         right: 0;
         top: 0;
-        width: 16px;
+        width: calc(1.5rem + 16px);
         line-height: 24px;
+        height: 100%;
     }
 }
 
