@@ -30,6 +30,14 @@
             }
         }
     }
+
+    .cb-arrow {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 16px;
+        line-height: 24px;
+    }
 }
 
 @media (prefers-color-scheme: dark) {
