@@ -27,7 +27,7 @@ const Layout: LayoutComponent = ({ size, children }) => {
 
   return (
     <LayoutProvider theme={theme} setTheme={changeTheme} size={size}>
-      <main className={classNames(size)}>
+      <main className={classNames(`moo-${size}`)}>
         {children}
       </main>
     </LayoutProvider>
