@@ -38,7 +38,7 @@ TagPanel.defaultProps = {
 
 export interface TagPanelProps extends Pick<BadgeProps, "bsPrefix" | "pill"> {
 
-    as: ElementType;
+    as?: ElementType;
     allowCreate?: boolean;
 
     alwaysShowEditPanel?: boolean;
