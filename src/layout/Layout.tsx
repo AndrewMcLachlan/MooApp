@@ -19,14 +19,8 @@ export type LayoutComponent = React.FC<PropsWithChildren<LayoutProps>> & {
 
 const Layout: LayoutComponent = ({ size, children }) => {
 
-  const [theme, setTheme] = useState<Theme>();
-
-  const changeTheme = (theme?: Theme) => {
-    setTheme(theme);
-  }
-
   return (
-    <LayoutProvider theme={theme} setTheme={changeTheme} size={size}>
+    <LayoutProvider size={size}>
       <main className={classNames(`moo-${size}`)}>
         {children}
       </main>
