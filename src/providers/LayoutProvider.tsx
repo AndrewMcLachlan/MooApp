@@ -24,7 +24,7 @@ export const LayoutProvider: React.FC<React.PropsWithChildren<LayoutProviderProp
     const photo = usePhoto(msal.instance?.getActiveAccount()?.username);
 
     return (
-        <LayoutContext.Provider value={{ setTheme, size, defaultTheme: defaultTheme, photo: photo}}>
+        <LayoutContext.Provider value={{ theme, setTheme, size, defaultTheme: defaultTheme, photo: photo}}>
             {children}
         </LayoutContext.Provider>
     );
