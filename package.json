@@ -29,7 +29,8 @@
     "date-fns": "^2.29.2",
     "react-query": "^3.39.2",
     "react-router-bootstrap": "^0.26.2",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "react-select": "^5.7.2"
   },
   "scripts": {
     "start": "rollup -c -w",

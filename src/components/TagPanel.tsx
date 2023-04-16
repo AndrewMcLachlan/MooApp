@@ -1,24 +1,67 @@
-import React, { useState, useRef, ElementType } from "react";
-import { BadgeProps } from "react-bootstrap";
-import { CloseBadge, ComboBox } from ".";
-import { useClickAway } from "../hooks/clickAway";
+import { ElementType, useRef, useState } from "react";
+import { useClickAway } from "hooks";
+import Select, { ActionMeta, MultiValue } from "react-select";
+import Creatable, { CreatableProps } from "react-select/creatable";
+import classNames from "classnames";
 
-export const TagPanel: React.FC<TagPanelProps> = (props) => {
+export const TagPanel = <T extends unknown>(props: TagPanelProps<T, any>) => {
 
     const [editMode, setEditMode] = useState(false);
     const ref = useRef(null);
     useClickAway(setEditMode, ref);
 
-    function event(item: any, event:(item: any) => void): void {
-        setEditMode(false);
-        if (event) event(item);
+    const Component = props.allowCreate ? Creatable : Select;
+
+    const extraProps: Partial<CreatableProps<any, any, any>> = props.allowCreate ? {
+        onCreateOption: props.onCreate,
+        formatCreateLabel: (input) => `Create ${input}...`,
+    } : {};
+
+    const onChange = (value: MultiValue<T>, meta: ActionMeta<T>) => {
+
+        switch (meta.action) {
+            case "remove-value":
+            case "pop-value":
+            case "deselect-option":
+                props.onRemove && props.onRemove(meta.removedValue);
+                break;
+            case "clear":
+                for (const val of meta.removedValues) {
+                    props.onRemove && props.onRemove(val);
+                }
+                break;
+            case "select-option":
+                props.onAdd && props.onAdd(meta.option);
+        }
+
+        props.onChange && props.onChange(Array.from(value));
     }
 
+    const keyUp: React.KeyboardEventHandler<any> = (e) => {
+        if (e.key === "Enter") {
+            setEditMode(false);
+        }
+    }
+
+const getOptionLabel = (item: T) =>  props.labelField(item) ?? (props.allowCreate && "Create new tag...");
+
+    const displayEdit = editMode || props.alwaysShowEditPanel;
+    const readonly = !editMode && !props.alwaysShowEditPanel;
+
+    const { as: As, allowCreate,
+        alwaysShowEditPanel,
+        selectedItems,
+        items,
+        labelField,
+        valueField,
+        search,
+        onAdd,
+        onRemove,
+        onCreate, ...rest } = props;
+
     return (
-        <props.as className="tag-panel" onClick={() => setEditMode(true)}>
-            {!props.selectedItems || props.selectedItems.length === 0 && <>&nbsp;</>}
-            {props.selectedItems && props.selectedItems.map((i) => <CloseBadge onClose={() => event(i, props.onRemove)} key={i[props.textField]} pill={props.pill} bsPrefix={props.bsPrefix}>{i[props.textField]}</CloseBadge>)}
-            {(editMode || props.alwaysShowEditPanel) && <ComboBox ref={ref} items={props.allItems} textField={props.textField} valueField={props.valueField} onSelected={(item) => event(item, props.onAdd)} onAdd={(item) => event(item, props.onCreate)} allowAdd={props.allowCreate} />}
+        <props.as ref={ref} className={classNames("tag-panel", displayEdit && "edit-mode")} onClick={() => setEditMode(true)} onKeyUp={rest.onKeyUp ?? keyUp}>
+            <Component unstyled={readonly} {...extraProps} options={props.items} isMulti isClearable value={props.selectedItems} getOptionLabel={getOptionLabel} getOptionValue={props.valueField} onChange={onChange} className={classNames("react-select", readonly && "readonly")} classNamePrefix="react-select" />
         </props.as>
     );
 }
@@ -26,33 +69,26 @@ export const TagPanel: React.FC<TagPanelProps> = (props) => {
 TagPanel.displayName = "TagPanel";
 
 TagPanel.defaultProps = {
-    textField: "name",
-    valueField: "id",
     as: "div",
     allowCreate: false,
-    alwaysShowEditPanel: false,
-    pill: true,
     readonly: false,
+    alwaysShowEditPanel: false,
 }
 
+export type TagPanelProps<TData, TElement extends ElementType> = Props<TData, TElement> & Omit<React.ComponentPropsWithoutRef<TElement>, keyof Props<TData, TElement>>;
 
-export interface TagPanelProps extends Pick<BadgeProps, "bsPrefix" | "pill"> {
+export interface Props<TData, TElement extends ElementType> {
 
-    as?: ElementType;
+    as?: TElement;
     allowCreate?: boolean;
-
     alwaysShowEditPanel?: boolean;
 
-    selectedItems: any[];
-    allItems: any[];
-    textField: string;
-    valueField: string;
+    selectedItems: TData[];
+    items: TData[];
+    labelField: (item: TData) => string;
+    valueField: (item: TData) => string;
 
-    readonly?: boolean;
-
-    search?: (search: string) => any[];
-
-    onAdd?: (item: any) => void;
-    onRemove?: (item: any) => void;
+    onAdd?: (item: TData) => void;
+    onRemove?: (item: TData) => void;
     onCreate?: (text: string) => void;
 }
