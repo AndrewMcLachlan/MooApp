@@ -18,6 +18,10 @@
         color: var(--bs-body-color);
     }
 
+    .react-select__control {
+        border-radius: 0.375rem;
+    }
+
     .react-select__value-container {
         gap: 8px;
     }
