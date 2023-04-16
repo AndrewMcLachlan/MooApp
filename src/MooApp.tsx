@@ -22,19 +22,17 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, cli
   });
 
   return (
-    <React.StrictMode>
-      <MsalProvider instance={getMsalInstance(clientId)}>
-        <HttpClientProvider baseUrl={baseUrl} scopes={scopes}>
-          <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-              <Login>
-                {children}
-              </Login>
-            </BrowserRouter>
-          </QueryClientProvider>
-        </HttpClientProvider>
-      </MsalProvider>
-    </React.StrictMode>
+    <MsalProvider instance={getMsalInstance(clientId)}>
+      <HttpClientProvider baseUrl={baseUrl} scopes={scopes}>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Login>
+              {children}
+            </Login>
+          </BrowserRouter>
+        </QueryClientProvider>
+      </HttpClientProvider>
+    </MsalProvider>
   );
 };
 
