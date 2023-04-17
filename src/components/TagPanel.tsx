@@ -60,7 +60,7 @@ const getOptionLabel = (item: T) =>  props.labelField(item) ?? (props.allowCreat
         onCreate, ...rest } = props;
 
     return (
-        <props.as ref={ref} className={classNames("tag-panel", displayEdit && "edit-mode")} onClick={() => setEditMode(true)} onKeyUp={rest.onKeyUp ?? keyUp}>
+        <props.as ref={ref} className={classNames("tag-panel", displayEdit && "edit-mode")} onClick={() => setEditMode(true)} onKeyUp={rest.onKeyUp ?? keyUp} onTouchStart={() => setEditMode(true)}>
             <Component unstyled={readonly} {...extraProps} options={props.items} isMulti isClearable value={props.selectedItems} getOptionLabel={getOptionLabel} getOptionValue={props.valueField} onChange={onChange} className={classNames("react-select", readonly && "readonly")} classNamePrefix="react-select" />
         </props.as>
     );

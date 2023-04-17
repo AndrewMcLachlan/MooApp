@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 
-
 export const useClickAway = (setShow: (value: boolean) => void, ref: React.RefObject<any>, onClickAway?: () => void) => {
 
     function handleClickOutside(event: Event) {
@@ -12,8 +11,10 @@ export const useClickAway = (setShow: (value: boolean) => void, ref: React.RefOb
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("touchstart", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("touchstart", handleClickOutside);
         };
     });
 }
