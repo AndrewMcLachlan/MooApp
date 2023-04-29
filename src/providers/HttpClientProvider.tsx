@@ -61,9 +61,7 @@ export const useCreateHttpClient = (baseUrl: string, scopes?: string[]): AxiosIn
             }
         }
 
-        request.headers = {
-            "Authorization": `Bearer ${token.accessToken}`
-        };
+        request.headers.setAuthorization(`Bearer ${token.accessToken}`);
         return request;
     });
 

@@ -1,4 +1,4 @@
-import { useCreateHttpClient } from "../providers";
+import { useCreateHttpClient } from "../providers/HttpClientProvider";
 import { useMemo, useState } from "react";
 
 export const usePhoto = (userName: string) => {

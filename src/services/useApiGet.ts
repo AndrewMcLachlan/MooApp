@@ -1,5 +1,5 @@
 import { useQuery, QueryKey, UseQueryOptions } from "react-query";
-import { useHttpClient } from "../providers";
+import { useHttpClient } from "../providers/HttpClientProvider";
 
 export const useApiGet = <T>(key: QueryKey, path: string, options?: UseQueryOptions<T>) => {
 

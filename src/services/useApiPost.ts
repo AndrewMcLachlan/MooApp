@@ -1,18 +1,18 @@
 import { useMutation, UseMutationOptions } from "react-query";
-import { useHttpClient } from "../providers";
+import { useHttpClient } from "../providers/HttpClientProvider";
 
 export const useApiPost = <Response, Variables, Data = null>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, null, [Variables, Data]>) => {
 
     const httpClient = useHttpClient();
 
-    return useMutation<Response, null, [Variables, Data]>(async ([variables, data]): Promise<Response> => await httpClient.post(path(variables), data), options);
+    return useMutation<Response, null, [Variables, Data]>(async ([variables, data]): Promise<Response> => (await httpClient.post(path(variables), data)).data, options);
 }
 
 export const useApiDatalessPost = <Response, Variables>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, null, Variables>) => {
 
     const httpClient = useHttpClient();
 
-    return useMutation<Response, null, Variables>(async (variables): Promise<Response> => await httpClient.post(path(variables)), options);
+    return useMutation<Response, null, Variables>(async (variables): Promise<Response> => (await httpClient.post(path(variables))).data, options);
 }
 
 export const useApiPostFile = <Variables extends { file: File }>(path: (variables: Variables) => string, options?: UseMutationOptions<null, null, Variables>) => {
