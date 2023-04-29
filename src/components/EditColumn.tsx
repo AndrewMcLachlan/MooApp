@@ -1,5 +1,5 @@
-import { useClickAway } from "hooks";
-import { ValueProps } from "models";
+import { useClickAway } from "../hooks";
+import { ValueProps } from "../models";
 import { ChangeEventHandler, FocusEventHandler, KeyboardEventHandler, useEffect, useRef, useState } from "react";
 
 export const EditColumn: React.FC<EditColumnProps> = (props) => {
