@@ -38,12 +38,18 @@ export const TagPanel = <T extends unknown>(props: TagPanelProps<T, any>) => {
     }
 
     const keyUp: React.KeyboardEventHandler<any> = (e) => {
-        if (e.key === "Enter") {
+        if (e.key === "Enter" || e.key === "Tab") {
             setEditMode(false);
         }
     }
 
-const getOptionLabel = (item: T) =>  props.labelField(item) ?? (props.allowCreate && "Create new tag...");
+    const onClick: React.MouseEventHandler<any> = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setEditMode(true);
+    }
+
+    const getOptionLabel = (item: T) => props.labelField(item) ?? (props.allowCreate && "Create new tag...");
 
     const displayEdit = editMode || props.alwaysShowEditPanel;
     const readonly = !editMode && !props.alwaysShowEditPanel;
@@ -60,7 +66,7 @@ const getOptionLabel = (item: T) =>  props.labelField(item) ?? (props.allowCreat
         onCreate, ...rest } = props;
 
     return (
-        <props.as ref={ref} className={classNames("tag-panel", displayEdit && "edit-mode")} onClick={() => setEditMode(true)} onKeyUp={rest.onKeyUp ?? keyUp} onTouchStart={() => setEditMode(true)}>
+        <props.as ref={ref} className={classNames("tag-panel", displayEdit && "edit-mode")} onClick={onClick} onKeyUp={rest.onKeyUp ?? keyUp} onTouchStart={() => setEditMode(true)}>
             <Component unstyled={readonly} {...extraProps} options={props.items} isMulti isClearable value={props.selectedItems} getOptionLabel={getOptionLabel} getOptionValue={props.valueField} onChange={onChange} className={classNames("react-select", readonly && "readonly")} classNamePrefix="react-select" />
         </props.as>
     );
