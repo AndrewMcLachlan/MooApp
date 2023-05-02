@@ -44,6 +44,6 @@ export const EditColumn: React.FC<EditColumnProps> = (props) => {
     );
 }
 
-export interface EditColumnProps extends ValueProps {
+export interface EditColumnProps extends ValueProps<string> {
 
 }

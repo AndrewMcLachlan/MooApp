@@ -1,4 +1,4 @@
-export interface ValueProps {
-    value?: string;
-    onChange?: (value: string) => void;
+export interface ValueProps<T> {
+    value?: T;
+    onChange?: (value: T) => void;
 }
