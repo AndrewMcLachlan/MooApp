@@ -1,0 +1,1 @@
+export const formatCurrency = (amount: number): string => amount.toLocaleString("en-AU", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
