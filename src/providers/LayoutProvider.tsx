@@ -18,6 +18,7 @@ export const LayoutProvider: React.FC<React.PropsWithChildren<LayoutProviderProp
     useEffect(() => {
         colour.setAttribute("content", theme === "dark" ? "#620000" : "#C20000");
         document.body.setAttribute("class", theme);
+        document.body.setAttribute("data-bs-theme", theme === "dark" ? theme : null);
     }, [theme]);
 
     const msal = useMsal();
