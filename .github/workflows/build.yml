@@ -26,8 +26,8 @@ jobs:
         cache: npm
         cache-dependency-path: 'package-lock.json'
         registry-url: "https://npm.pkg.github.com"
-    - name: npm ci --ignore-scripts
-      run: npm
+    - name: npm install
+      run: npm ci --ignore-scripts
     - name: npm version
       run: npm version ${{ steps.set-version-number.outputs.version }} --no-git-tag-version
     - name: npm run build
