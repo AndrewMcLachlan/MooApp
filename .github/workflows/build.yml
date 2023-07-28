@@ -34,5 +34,5 @@ jobs:
       run: npm run build
     - name: npm publish
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.CROSS_REPO_PACKAGE_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npm publish
