@@ -1,0 +1,32 @@
+.sidebar {
+
+    grid-area: sidebar;
+
+    height: 100%;
+    background-color: var(--panel-bg);
+    color: white!important;
+    font-family: var(--font-family-alt);
+
+    border-right: $border;
+
+    .nav-link {
+
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        color: var(--bs-body-color);
+
+        &:hover {
+            text-decoration: underline;
+            color: var(--body-colour-bold);
+        }
+        
+         svg {
+            stroke: var(--bs-body-color);
+            fill: var(--bs-body-color);
+            height: 24px;
+            width: 24px;
+         }
+    }
+}

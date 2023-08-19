@@ -1,32 +1,7 @@
-html, body, #root, main {
-  height: 100%;
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-
-  &.moo-default {
-    @include media-breakpoint-up(lg) {
-      --header-height: 80px;
-      --footer-height: 80px;
-      --foter-text-size: 1rem;
-      --user-image: 60px;
-      --user-radius: 30px;
-      --h1-size: 2rem;
-      --h2-size: 2rem;
-    }
-  }
-
-  &.moo-small {
-    @include media-breakpoint-up(lg) {
-      --header-height: 40px;
-      --footer-height: 40px;
-      --footer-text-size: 1rem;
-      --user-image: 30px;
-      --user-radius: 15px;
-      --h1-size: 1.4rem;
-      --h2-size: 1.4rem;
-    }
-  }
-}
+@import "layout/breadcrumb";
+@import "layout/footer";
+@import "layout/header";
+@import "layout/layout";
+@import "layout/main";
+@import "layout/section";
+@import "layout/sidebar";

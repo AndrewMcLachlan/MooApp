@@ -2,7 +2,7 @@ div.upload-box {
     height: 200px;
     width: 200px;
     z-index: 2;
-    border: 1px solid #ccc;
+    border: $border;
     position: relative;
 
     svg {
