@@ -18,14 +18,22 @@ const App = () => {
       <Layout.Breadcrumb />
       <Layout.Sidebar navItems={[
         {
-          text: "Settings",
+          text: "Home",
           route: "/",
+          image: <Tags />
+        },
+        {
+          text: "Components",
+          route: "/components",
           image: <Tags />
         }
       ]}/>
       <Layout.Main>
         <Routes>
           <Route path="/" element={<Components />} />
+          <Route path="/components" element={<Components />} />
+          <Route path="/components/subcomponents" element={<Components />} />
+          <Route path="/settings" element={<Components />} />
         </Routes>
       </Layout.Main>
       <Layout.Footer copyrightYear={2022} />

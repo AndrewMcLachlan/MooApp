@@ -15,16 +15,34 @@
         align-items: center;
         gap: 8px;
 
-        color: var(--bs-body-color);
+        color: var(--body-colour-dim);
+
+        &:visited {
+            color: var(--body-colour-dim);
+        }
 
         &:hover {
             text-decoration: underline;
+        }
+
+        &:hover,
+        &.active {
             color: var(--body-colour-bold);
 
             svg {
                 stroke: var(--body-colour-bold);
-                fill: var(--body-colour-bold);                
+                fill: var(--body-colour-bold);
             }
+        }
+
+        &.active::before {
+            position: absolute;
+            margin-left: -10px;
+            content: '';
+            background-color: #8b0000;
+            width: 5px;
+            height: 20px;
+            border-radius: 4px;
         }
 
         svg {

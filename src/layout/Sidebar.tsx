@@ -1,7 +1,8 @@
 import { Button, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, NavLink, NavLinkProps } from "react-router-dom";
 import { NavItem } from "../models";
 import { useLayout } from "providers";
+import { LinkContainer } from "react-router-bootstrap";
 
 export type SidebarComponent = React.FC<React.PropsWithChildren<SidebarProps>>;
 
@@ -22,26 +23,22 @@ export const Sidebar: SidebarComponent = ({ children, ...props }) => {
     );
 };
 
-const renderMenu = (menuItems: NavItem[]) => {
+const renderMenu = (navItems: NavItem[]) => {
 
-    const items: React.ReactNode[] = [];
+    const items: React.ReactNode[] = navItems.map((navItem, index) => {
 
-    let keysuffix = 0;
+        const image = typeof navItem.image === "string" ? <img src={navItem.image} alt="" /> : navItem.image ?? <svg></svg>;
 
-    for (const menuItem of menuItems) {
-
-        const image = typeof menuItem.image === "string" ? <img src={menuItem.image} alt="" /> : menuItem.image ?? <svg></svg>;
-
-
-        if (menuItem.route) {
-            items.push(<Nav.Link as={Link} key={"route" + keysuffix.toString()} to={menuItem.route} onClick={() => menuItem.onClick && menuItem.onClick()}>{image}{menuItem.text}</Nav.Link>);
+        if (navItem.route) {
+            return <NavLink className={({isActive}) => `nav-link ${isActive ? "active" : ""}`} to={navItem.route} key={`route${index}`} onClick={navItem.onClick}>{image}{navItem.text}</NavLink>;
         }
-        else if (menuItem.onClick) {
-            items.push(<Nav.Link as={Button} key={"click" + keysuffix.toString()} variant="link" onClick={() => menuItem.onClick!()}>{image}{menuItem.text}</Nav.Link>);
+        else if (navItem.onClick) {
+            return <Nav.Link as={Button} key={`click${index}`} variant="link" onClick={navItem.onClick}>{image}{navItem.text}</Nav.Link>;
         }
-
-        keysuffix++;
-    }
+        else{
+            throw "Invalid nav item, specify a route and/or an onClick handler.";
+        }
+    });
 
     return items;
 
