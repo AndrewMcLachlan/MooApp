@@ -4,7 +4,6 @@ import { DesktopFooterComponent, Footer } from "./Footer";
 import { LayoutProvider } from "../providers";
 import { size, Theme } from "../models/Layout";
 import { DesktopHeaderComponent, Header } from "./Header";
-import { Main, MainComponent } from "./Main";
 import { MobileHeaderComponent, Header as MHeader } from "./Mobile/Header";
 import { MobileFooterComponent, Footer as MFooter } from "./Mobile/Footer";
 import classNames from "classnames";
@@ -16,7 +15,6 @@ export type LayoutComponent = React.FC<PropsWithChildren<LayoutProps>> & {
   MobileFooter: MobileFooterComponent;
   Header: DesktopHeaderComponent;
   Breadcrumb: BreadcrumbComponent
-  Main: MainComponent;
   MobileHeader: MobileHeaderComponent;
   Sidebar: SidebarComponent;
 };
@@ -40,7 +38,6 @@ Layout.Footer = Footer;
 Layout.MobileFooter = MFooter;
 Layout.Header = Header;
 Layout.MobileHeader = MHeader;
-Layout.Main = Main;
 Layout.Breadcrumb = Breadcrumb;
 Layout.Sidebar = Sidebar;
 

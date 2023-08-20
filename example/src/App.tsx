@@ -27,15 +27,13 @@ const App = () => {
           route: "/components",
           image: <Tags />
         }
-      ]}/>
-      <Layout.Main>
-        <Routes>
-          <Route path="/" element={<Components />} />
-          <Route path="/components" element={<Components />} />
-          <Route path="/components/subcomponents" element={<Components />} />
-          <Route path="/settings" element={<Components />} />
-        </Routes>
-      </Layout.Main>
+      ]} />
+      <Routes>
+        <Route path="/" element={<Components />} />
+        <Route path="/components" element={<Components />} />
+        <Route path="/components/subcomponents" element={<Components />} />
+        <Route path="/settings" element={<Components />} />
+      </Routes>
       <Layout.Footer copyrightYear={2022} />
     </Layout>
   );
