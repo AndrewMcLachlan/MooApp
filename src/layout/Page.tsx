@@ -1,27 +1,30 @@
+import { useIsAuthenticated } from "@azure/msal-react";
 import { usePageTitle } from "hooks/pageTitle";
+import { Container } from "react-bootstrap";
 import { NavItem } from "models";
 import { useLayout } from "providers"
 import { useEffect } from "react";
 
-export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, ...props }) => {
+export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, title, breadcrumbs, navItems, ...rest }) => {
 
+    const isAuthenticated = useIsAuthenticated();
     const layout = useLayout();
 
-    usePageTitle(props.title);
+    usePageTitle(title);
 
     useEffect(() => {
-        layout.setBreadcrumbs(props.breadcrumbs ?? []);
-        layout.setSecondaryNav(props.navItems ?? []);
+        layout.setBreadcrumbs(breadcrumbs ?? []);
+        layout.setSecondaryNav(navItems ?? []);
     }, []);
 
     return (
-        <>
-            {children}
-        </>
+        <Container fluid as="main" {...rest}>
+            {isAuthenticated && children}
+        </Container>
     );
 }
 
-export interface PageProps {
+export interface PageProps extends React.HTMLAttributes<HTMLElement> {
     title: string;
     navItems?: NavItem[];
     breadcrumbs?: NavItem[];
