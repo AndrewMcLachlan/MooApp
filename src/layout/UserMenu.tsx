@@ -1,7 +1,8 @@
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { Avatar } from "../components";
-import { ThemeSwitcher } from "../components/ThemeSwitcher";
+//import { ThemeSwitcher } from "../components/ThemeSwitcher";
+import { ThemeSelector } from "components/ThemeSelector";
 
 export const UserMenu = () => {
     const msal = useMsal();
@@ -14,7 +15,7 @@ export const UserMenu = () => {
             <Popover.Header as="h3"><Avatar />{msal.instance.getActiveAccount()?.name}</Popover.Header>
             <Popover.Body>
                 <ul>
-                    <li><span>Theme</span><ThemeSwitcher /></li>
+                    <li><span>Theme</span><ThemeSelector /></li>
                 </ul>
             </Popover.Body>
         </Popover>

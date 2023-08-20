@@ -11,6 +11,8 @@ $border: 1px solid var(--bs-border-color);
   --bs-body-color: rgb(46,41,36);
   --bs-body-colour: var(--bs-body-color);
   --body-colour-bold: #000;
+
+  --bs-secondary-color: rgb(36,32,27);
   
   --primary: #007bff;
   --bs-primary: var(--primary);
@@ -23,26 +25,29 @@ $border: 1px solid var(--bs-border-color);
   --amber: #FFBF00;
   --green: #5A5;
 
-  --header: #65000b;
+  --header-bg: #FFF;
   --panel-bg: rgb(251, 248, 244);
-  --header-text: #FFF;
-  --footer: #65000b;
-  --footer-text: #FFF;
+  --breadcrumb-bg: var(--header-bg);
+  --header-text: var(--bs-body-color);
+  --footer-bg: var(--header-bg);
+  --footer-text: var(--body-color);
   --hover: #E6E6E6;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --bs-body-bg: rgb(23, 18, 17);
-    --bs-body-color: #EEE;
+    --bs-body-color: rgb(251, 248, 244);
+    --body-colour-bold: #FFF;
+
+    --bs-secondary-color: rgb(151,148,144);
   
-    --header: rgb(31,27,24);
+    --header-bg: rgb(31,27,24);
     --panel-bg: rgb(31,27,24);
 
-    --header-text: #EEE;
-    --footer: #111;
-    --footer-text: #EEE;
+    --footer-bg: rgb(31,27,24);
     --hover: #6E6E6E;
+    --bs-border-color: #575049;
   }
 }
 
@@ -50,24 +55,33 @@ $border: 1px solid var(--bs-border-color);
   --bs-body-bg: #FFF;
   --bs-body-color: rgb(46,41,36);
   --body-colour-bold: #000;
+  --bs-border-color: rgba(46,41,36,.12);
 
-  --header: #65000b;
+  --header-bg: #FFF;
+  --breadcrumb-bg: var(--header-bg);
   --panel-bg: rgb(251, 248, 244);
 
-  --header-text: #FFF;
-  --footer: #65000b;
-  --footer-text: #FFF;
+  --footer-bg: #FFF;
   --hover: #E6E6E6;
+}
+
+.red {
+  @extend .light;
+  --header-bg: #65000b;
+  --footer-bg: #65000b;
+  --breadcrumb-bg: #FFF;
+  --header-text: #EEE;
+  --footer-text: #EEE;
 }
 
 .dark {
   --bs-body-bg: rgb(23, 18, 17);
   --bs-body-color: #EEE;
-  --header: rgb(31,27,24);
+  --header-bg: rgb(31,27,24);
+  --breadcrumb-bg:rgb(31,27,24);
   --panel-bg: rgb(31,27,24);
-  //--header: #620000;
   --header-text: #EEE;
-  --footer: #111;
+  --footer-bg: #111;
   --footer-text: #EEE;
   --hover: #6E6E6E;
 }

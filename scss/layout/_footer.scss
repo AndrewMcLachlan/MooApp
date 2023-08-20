@@ -6,10 +6,11 @@
 
   font-family: var(--secondary-fonts);
   width: 100%;
-  background: var(--footer);
+  background: var(--footer-bg);
   text-align: center;
   color: var(--footer-text);
   letter-spacing: 0.3px;
+  border-top: $border;
   
   height: var(--footer-height);
   min-height: var(--footer-height);

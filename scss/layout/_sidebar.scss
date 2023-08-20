@@ -4,7 +4,7 @@
 
     height: 100%;
     background-color: var(--panel-bg);
-    color: white!important;
+    color: white !important;
     font-family: var(--font-family-alt);
 
     border-right: $border;
@@ -20,13 +20,22 @@
         &:hover {
             text-decoration: underline;
             color: var(--body-colour-bold);
+
+            svg {
+                stroke: var(--body-colour-bold);
+                fill: var(--body-colour-bold);                
+            }
         }
-        
-         svg {
+
+        svg {
             stroke: var(--bs-body-color);
             fill: var(--bs-body-color);
             height: 24px;
             width: 24px;
-         }
+        }
+    }
+
+    .divider {
+        border-top: $border;
     }
 }

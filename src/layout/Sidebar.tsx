@@ -1,14 +1,26 @@
 import { Button, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { NavItem } from "../models";
+import { useLayout } from "providers";
 
 export type SidebarComponent = React.FC<React.PropsWithChildren<SidebarProps>>;
 
-export const Sidebar: SidebarComponent = ({children, ...props }) => (
-    <Nav className="flex-column sidebar">
-        {renderMenu(props.navItems!)}
-    </Nav>
-);
+export const Sidebar: SidebarComponent = ({ children, ...props }) => {
+
+    const layout = useLayout();
+
+    return (
+        <Nav className="flex-column sidebar">
+            {renderMenu(props.navItems)}
+            {layout.secondaryNav.length > 0 &&
+                <>
+                    <Nav.Item className="divider" />
+                    {renderMenu(layout.secondaryNav)}
+                </>
+            }
+        </Nav>
+    );
+};
 
 const renderMenu = (menuItems: NavItem[]) => {
 
@@ -18,8 +30,7 @@ const renderMenu = (menuItems: NavItem[]) => {
 
     for (const menuItem of menuItems) {
 
-        const image = typeof menuItem.image === "string" ? <img src={menuItem.image} alt="" /> : menuItem.image;
-
+        const image = typeof menuItem.image === "string" ? <img src={menuItem.image} alt="" /> : menuItem.image ?? <svg></svg>;
 
 
         if (menuItem.route) {
@@ -29,7 +40,7 @@ const renderMenu = (menuItems: NavItem[]) => {
             items.push(<Nav.Link as={Button} key={"click" + keysuffix.toString()} variant="link" onClick={() => menuItem.onClick!()}>{image}{menuItem.text}</Nav.Link>);
         }
 
-        keysuffix++; 
+        keysuffix++;
     }
 
     return items;

@@ -1,8 +1,8 @@
 .top-breadcrumb {
     grid-area: breadcrumb;
     font-weight: bold;
-    background-color: var(--breadcrumb-background);
-    border-bottom: 1px solid var(--bs-border-color);
+    background-color: var(--breadcrumb-bg);
+    border-bottom: $border;
     padding: 0 20px;
 
     >.breadcrumb {

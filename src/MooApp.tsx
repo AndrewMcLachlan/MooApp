@@ -3,14 +3,14 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 import { BrowserRouter } from "react-router-dom";
 
-import { HttpClientProvider } from "./providers";
+import { AppProvider, HttpClientProvider } from "./providers";
 
 import getMsalInstance from "./login/msal";
 
 import { MsalProvider } from "@azure/msal-react";
 import { Login } from "./login/Login";
 
-export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, clientId, scopes, baseUrl }) => {
+export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, clientId, scopes, baseUrl, name }) => {
 
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -22,17 +22,19 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, cli
   });
 
   return (
-    <MsalProvider instance={getMsalInstance(clientId)}>
-      <HttpClientProvider baseUrl={baseUrl} scopes={scopes}>
-        <QueryClientProvider client={queryClient}>
-          <BrowserRouter>
-            <Login>
-              {children}
-            </Login>
-          </BrowserRouter>
-        </QueryClientProvider>
-      </HttpClientProvider>
-    </MsalProvider>
+    <AppProvider name={name}>
+      <MsalProvider instance={getMsalInstance(clientId)}>
+        <HttpClientProvider baseUrl={baseUrl} scopes={scopes}>
+          <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+              <Login>
+                {children}
+              </Login>
+            </BrowserRouter>
+          </QueryClientProvider>
+        </HttpClientProvider>
+      </MsalProvider>
+    </AppProvider>
   );
 };
 
@@ -45,4 +47,5 @@ export interface MooAppProps {
   clientId: string,
   scopes?: string[],
   baseUrl?: string,
+  name?: string,
 }
