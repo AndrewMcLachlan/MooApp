@@ -3,7 +3,7 @@ import commonjs from "@rollup/plugin-commonjs"
 import resolve from "@rollup/plugin-node-resolve"
 import external from "rollup-plugin-peer-deps-external"
 import postcss from "rollup-plugin-postcss"
-//import svgr from "@svgr/rollup"
+import svgr from "@svgr/rollup"
 
 import pkg from "./package.json" assert { type: "json" }
 
@@ -31,7 +31,7 @@ export default {
         extensions: [".scss"],
         sourceMap: true
     }),
-    //svgr(),
+    svgr(),
     typescript(),
     commonjs()
   ]

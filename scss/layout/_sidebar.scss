@@ -3,13 +3,59 @@
     grid-area: sidebar;
 
     height: 100%;
+    width: 100%;
     background-color: var(--panel-bg);
-    color: white !important;
     font-family: var(--font-family-alt);
 
     border-right: $border;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+
+    .sidebar-collapse {
+        border-top: $border;
+        height: 3rem;
+        padding-right: 17px;
+        display: flex;
+        align-content: flex-end;
+        align-items: center;
+        justify-content: end;
+        line-height: 3rem;
+        padding-right: 15px;
+
+        svg {
+            height: 1.2rem;
+            width: 1.2rem;
+            transition: rotate 250ms ease-in-out;
+        }
+    }
+
+    transition: width 350ms ease-in-out;
+
+    .nav-link span {
+        transition: opacity 100ms linear;
+    }
+
+
+    &.collapsed {
+        width: 55px;
+        align-content: center;
+        padding-right: 0;
+
+        .sidebar-collapse svg {
+            rotate: 180deg;
+        }
+
+        .nav-link span {
+            opacity: 0;
+        }
+    }
+
     .nav-link {
+
+        white-space: nowrap;
 
         display: flex;
         align-items: center;
