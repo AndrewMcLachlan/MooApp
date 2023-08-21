@@ -1,13 +1,12 @@
-import { ReactElement, createElement } from "react";
+import classNames from "classnames";
 
-
-export const Section: React.FC<React.PropsWithChildren<SectionProps>> = ({ title, size, children, ...rest}) => {
+export const Section: React.FC<React.PropsWithChildren<SectionProps>> = ({ title, size, children, className, ...rest}) => {
 
     const H: any = `h${size}`;
 
     return (
 
-        <section {...rest}>
+        <section className={classNames("section", className)} {...rest}>
             {title && <H>{title}</H>}
             {children}
         </section>
