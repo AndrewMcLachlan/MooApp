@@ -1,5 +1,5 @@
 import { useMsal } from "@azure/msal-react";
-import React, { createContext, useEffect, useState } from "react";
+import React, { ReactNode, createContext, useEffect, useState } from "react";
 import { useContext } from "react";
 import * as Models from "../models";
 import { usePhoto } from "../services";
@@ -17,7 +17,7 @@ export const LayoutProvider: React.FC<React.PropsWithChildren<LayoutProviderProp
 
     const [theme, setTheme] = useLocalStorage<Models.Theme>("theme", defaultTheme);
     const [breadcrumbs, setBreadcrumbs] = useState<Models.NavItem[]>([]);
-    const [secondaryNav, setSecondaryNav] = useState<Models.NavItem[]>([]);
+    const [secondaryNav, setSecondaryNav] = useState<(Models.NavItem|ReactNode)[]>([]);
 
     useEffect(() => {
         colour.setAttribute("content", theme.colour);

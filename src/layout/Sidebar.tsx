@@ -2,7 +2,7 @@ import { Button, Nav } from "react-bootstrap";
 import { Link, NavLink, NavLinkProps } from "react-router-dom";
 import { NavItem } from "../models";
 import { useLayout } from "providers";
-import { useState } from "react";
+import { isValidElement, ReactNode, useState } from "react";
 import classNames from "classnames";
 import Chevron from "../assets/chevron.svg";
 
@@ -36,9 +36,13 @@ export const Sidebar: SidebarComponent = ({ children, ...props }) => {
     );
 };
 
-const renderMenu = (navItems: NavItem[]) => {
+const renderMenu = (navItems: (NavItem|ReactNode)[]) => {
 
-    const items: React.ReactNode[] = navItems.map((navItem, index) => {
+    const items: React.ReactNode[] = navItems.map((item, index) => {
+
+        if (isValidElement(item)) return item; 
+
+        const navItem = item as NavItem;
 
         const image = typeof navItem.image === "string" ? <img src={navItem.image} alt="" /> : navItem.image ?? <svg></svg>;
 

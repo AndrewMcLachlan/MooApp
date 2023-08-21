@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { NavItem } from "./NavItem";
 
 export type size = "small" | "default";
@@ -10,8 +11,8 @@ export interface LayoutOptions {
     photo?: string;
     breadcrumbs?: NavItem[];
     setBreadcrumbs?: (items: NavItem[]) => void;
-    secondaryNav?: NavItem[];
-    setSecondaryNav?: (items: NavItem[]) => void;
+    secondaryNav?: (NavItem|ReactNode)[];
+    setSecondaryNav?: (items: (NavItem|ReactNode)[]) => void;
 }
 
 export type Themes = "" | "dark" | "light" | "red";

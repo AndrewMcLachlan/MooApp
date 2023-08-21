@@ -5,6 +5,7 @@ export * from "./CloseBadge";
 export * from "./ComboBox";
 export * from "./EditColumn";
 export * from "./Input";
+export * from "./NavItemDivider";
 export * from "./PageHeader";
 export * from "./Paginaton";
 export * from "./SearchBox";

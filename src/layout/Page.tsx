@@ -3,7 +3,7 @@ import { usePageTitle } from "hooks/pageTitle";
 import { Container } from "react-bootstrap";
 import { NavItem } from "models";
 import { useLayout } from "providers"
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 
 export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, title, breadcrumbs, navItems, ...rest }) => {
 
@@ -26,6 +26,6 @@ export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, t
 
 export interface PageProps extends React.HTMLAttributes<HTMLElement> {
     title: string;
-    navItems?: NavItem[];
+    navItems?: (NavItem|ReactNode)[];
     breadcrumbs?: NavItem[];
 }
