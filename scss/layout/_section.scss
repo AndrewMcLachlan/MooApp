@@ -8,3 +8,8 @@ main>section, .section {
         margin: 0;
     }
 }
+
+.section-group {
+    display: flex;
+    gap: 20px;
+}
