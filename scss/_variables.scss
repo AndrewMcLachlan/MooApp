@@ -2,23 +2,17 @@ $primary: #8b0000;
 $border: 1px solid var(--bs-border-color);
 
 :root {
-
   --bs-font-sans-serif: 'Inter', 'Franklin Gothic', Helvetica, 'Helvetica Neue', Arial, sans-serif;
   --secondary-fonts: 'Open Sans Condensed';
 
   --page-header-background: #111;
   --page-header-text: #F6F6F6;
   
-  --bs-body-color: rgb(46,41,36);
   --bs-body-colour: var(--bs-body-color);
-  --body-colour-bold: #000;
-  --body-colour-dim: rgb(76, 71, 66);
-
-  --bs-secondary-color: rgb(36,32,27);
   
-  --primary: #007bff;
-  --bs-primary: var(--primary);
-  --bs-primary-rgb: 0, 123, 255;
+  //--primary: #8b0000;
+  //--bs-primary: var(--primary);
+  //--bs-primary-rgb: 0, 123, 255;
   
   --input-border: #666;
   --disabled: #999;
@@ -27,13 +21,31 @@ $border: 1px solid var(--bs-border-color);
   --amber: #FFBF00;
   --green: #5A5;
 
-  --header-bg: #FFF;
-  --section-bg: rgb(251, 248, 244);
   --breadcrumb-bg: var(--header-bg);
   --header-text: var(--bs-body-color);
   --footer-bg: var(--header-bg);
   --footer-text: var(--body-color);
-  --hover: #E6E6E6;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --bs-body-color: rgb(46,41,36);
+    --body-colour-bold: #000;
+    --body-colour-dim: rgb(76, 71, 66);
+    
+    --bs-secondary-color: rgb(36,32,27);
+
+    --header-bg: #FFF;
+    --section-bg: rgb(251, 248, 244);
+    
+    --hover: #E6E6E6;
+
+    --breadcrumb-bg: var(--header-bg);
+    --header-text: var(--bs-body-color);
+    --footer-bg: var(--header-bg);
+    --footer-text: var(--body-color);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -51,10 +63,20 @@ $border: 1px solid var(--bs-border-color);
     --footer-bg: rgb(31,27,24);
     --hover: #6E6E6E;
     --bs-border-color: #575049;
+
+    --breadcrumb-bg: var(--header-bg);
+    --header-text: var(--bs-body-color);
+    --footer-bg: var(--header-bg);
+    --footer-text: var(--body-color);
+  }
+
+  body  {
+    color-scheme: dark;
   }
 }
 
-.light {
+.light, [data-bs-theme="light"] {
+  color-scheme: light;
   --bs-body-bg: #FFF;
   --bs-body-color: rgb(46,41,36);
   --body-colour-bold: #000;
@@ -79,7 +101,8 @@ $border: 1px solid var(--bs-border-color);
   --footer-text: #EEE;
 }
 
-.dark {
+.dark, [data-bs-theme="dark"] {
+  color-scheme: dark;
   --bs-body-bg: rgb(23, 18, 17);
   --bs-body-color: #EEE;
   --body-colour-dim: rgb(221, 218, 214);
