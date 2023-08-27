@@ -16,13 +16,14 @@ export const UserMenu = () => {
             <Popover.Body>
                 <ul>
                     <li><span>Theme</span><ThemeSelector /></li>
+                    <li className="clickable" onClick={() => msal.instance.logoutRedirect()}>Sign out</li>
                 </ul>
             </Popover.Body>
         </Popover>
     );
 
     return (
-        <OverlayTrigger trigger="click" placement="bottom" overlay={popover} rootClose>
+        <OverlayTrigger trigger="click" placement="bottom" overlay={popover} rootClose containerPadding={10}>
             <div className="user-menu">
                 <Avatar />
             </div>
