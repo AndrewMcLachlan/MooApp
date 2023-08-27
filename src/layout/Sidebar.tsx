@@ -1,10 +1,12 @@
+import Chevron from "../assets/chevron.svg";
+
+import React from "react";
 import { Button, Nav } from "react-bootstrap";
 import { Link, NavLink, NavLinkProps } from "react-router-dom";
 import { NavItem } from "../models";
 import { useLayout } from "providers";
 import { isValidElement, ReactNode, useState } from "react";
 import classNames from "classnames";
-import Chevron from "../assets/chevron.svg";
 
 export type SidebarComponent = React.FC<React.PropsWithChildren<SidebarProps>>;
 
@@ -40,7 +42,9 @@ const renderMenu = (navItems: (NavItem|ReactNode)[]) => {
 
     const items: React.ReactNode[] = navItems.map((item, index) => {
 
-        if (isValidElement(item)) return item; 
+        if (isValidElement(item)) {
+            return <React.Fragment key={`node${index}`}>{item}</React.Fragment>;
+        }; 
 
         const navItem = item as NavItem;
 
