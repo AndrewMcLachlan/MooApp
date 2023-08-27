@@ -22,7 +22,7 @@ export const LayoutProvider: React.FC<React.PropsWithChildren<LayoutProviderProp
     useEffect(() => {
         colour.setAttribute("content", theme.colour);
         document.body.setAttribute("class", theme.theme);
-        document.body.setAttribute("data-bs-theme", theme.theme === "dark" ? "dark" : "light");
+        document.body.setAttribute("data-bs-theme", theme.theme === "" ? defaultTheme.theme : theme.theme === "dark" ? "dark" : "light");
     }, [theme]);
 
     const msal = useMsal();
