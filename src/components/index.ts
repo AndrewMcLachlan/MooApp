@@ -4,6 +4,7 @@ export * from "./ClickableIcon";
 export * from "./CloseBadge";
 export * from "./ComboBox";
 export * from "./EditColumn";
+export * from "./IconButton";
 export * from "./Input";
 export * from "./NavItemDivider";
 export * from "./PageHeader";
