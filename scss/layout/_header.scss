@@ -12,7 +12,6 @@
     border-bottom: $border;
 
     color: var(--header-text);
-    font-family: var(--secondary-fonts);
 
     height: var(--header-height);
 
@@ -24,6 +23,10 @@
 
     .logo {
         margin-right: 10px;
+    }
+
+    .breadcrumb {
+        font-family: var(--secondary-fonts);
     }
 
     .container,
