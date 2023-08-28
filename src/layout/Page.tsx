@@ -5,7 +5,7 @@ import { NavItem } from "models";
 import { useLayout } from "providers"
 import { ReactNode, useEffect } from "react";
 
-export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, title, breadcrumbs, navItems, ...rest }) => {
+export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, title, breadcrumbs, navItems, actions, ...rest }) => {
 
     const isAuthenticated = useIsAuthenticated();
     const layout = useLayout();
@@ -15,6 +15,7 @@ export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, t
     useEffect(() => {
         layout.setBreadcrumbs(breadcrumbs ?? []);
         layout.setSecondaryNav(navItems ?? []);
+        layout.setActions(actions ?? []);
     }, []);
 
     return (
@@ -28,4 +29,5 @@ export interface PageProps extends React.HTMLAttributes<HTMLElement> {
     title: string;
     navItems?: (NavItem|ReactNode)[];
     breadcrumbs?: NavItem[];
+    actions?: ReactNode[];
 }

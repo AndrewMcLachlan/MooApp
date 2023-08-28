@@ -17,7 +17,6 @@ const App = () => {
   return (
     <Layout size="small">
       <Layout.Header AppName="DeMoo" Menu={[]} />
-      <Layout.Breadcrumb />
       <Layout.Sidebar navItems={[
         {
           text: "Home",

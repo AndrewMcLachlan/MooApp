@@ -7,7 +7,7 @@ export const Components = () => {
     const httpClient = useHttpClient();
     httpClient.get("fake").then(() => console.debug("Success")).catch((e) => console.debug(e));
     return (
-        <Page title="Components" breadcrumbs={[{route: "/", text: "Components"}]} navItems={[{route: "/components/subcomponents", image: <Tags />, text: "Sub-Components"}, <NavItemDivider /> ]}>
+        <Page title="Components" breadcrumbs={[{route: "/", text: "Components"}]} navItems={[{route: "/components/subcomponents", image: <Tags />, text: "Sub-Components"}, <NavItemDivider /> ]} actions={[<Button>Create</Button>]}>
         <Section title="Components">
             <Button size="sm" variant="link">Sample</Button>
             <Button>Sample 2</Button>

@@ -13,6 +13,8 @@ export interface LayoutOptions {
     setBreadcrumbs?: (items: NavItem[]) => void;
     secondaryNav?: (NavItem|ReactNode)[];
     setSecondaryNav?: (items: (NavItem|ReactNode)[]) => void;
+    actions?: ReactNode[];
+    setActions?: (items: ReactNode[]) => void;
 }
 
 export type Themes = "" | "dark" | "light" | "red";

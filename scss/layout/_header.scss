@@ -31,10 +31,43 @@
         height: var(--header-height);
         display: flex;
         justify-content: space-between;
+        align-items: center;
 
         &>div {
             display: flex;
             align-items: center;
+        }
+
+        &.second-header {
+            background-color: var(--breadcrumb-bg);
+            border-bottom: $border;
+            padding: 0 20px;
+
+            ol {
+                margin-bottom: 0;
+            }
+        
+            >.breadcrumb {
+                align-items: center;
+                padding: 0;
+                height: 40px;
+        
+                a {
+                    text-decoration: none;
+                    color: var(--bs-body-color);
+                    font-family: var(--secondary-fonts);
+                }
+            }
+
+            >.actions {
+                height: 24px;
+                margin: 0;
+
+                button {
+                    padding-top: 0;
+                    padding-bottom: 0;
+                }
+            }
         }
     }
 
