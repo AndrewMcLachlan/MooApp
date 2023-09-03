@@ -7,6 +7,7 @@ import { useIsAuthenticated } from "@azure/msal-react";
 import { ReactComponent as Tags } from "./assets/tags.svg";
 import { Home } from "./pages/Home";
 import { Providers } from "./pages/Providers";
+import { Link } from "react-router-dom";
 
 const App = () => {
 
@@ -16,7 +17,7 @@ const App = () => {
 
   return (
     <Layout size="small">
-      <Layout.Header AppName="DeMoo" Menu={[]} />
+      <Layout.Header AppName="DeMoo" Menu={[<Link to="/"><Tags /></Link>]} />
       <Layout.Sidebar navItems={[
         {
           text: "Home",

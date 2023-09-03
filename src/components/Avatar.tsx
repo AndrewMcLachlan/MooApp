@@ -9,9 +9,9 @@ const AvatarComponent = () => {
 
     return useMemo(() => {
         return (
-            <div className="avatar">
+            <div className="avatar clickable">
                 {photo && <img src={photo} alt="Me" />}
-                {!photo && <div className="initials">{msal.accounts[0]?.name.split(" ").map(n => n[0]).join(" ")}</div>}
+                {!photo && <div className="initials">{msal.accounts[0]?.name.split(" ").map(n => n[0]).join("")}</div>}
             </div>
         );
     }, [photo]);
