@@ -1,6 +1,6 @@
 import "./App.scss";
 
-import { Layout } from "@andrewmclachlan/mooapp";
+import { Layout, SearchBox } from "@andrewmclachlan/mooapp";
 import { Route, Routes } from "react-router-dom";
 import { Components } from "./pages/Components";
 import { useIsAuthenticated } from "@azure/msal-react";
@@ -17,7 +17,7 @@ const App = () => {
 
   return (
     <Layout size="small">
-      <Layout.Header AppName="DeMoo" Menu={[<Link to="/"><Tags /></Link>]} />
+      <Layout.Header AppName="DeMoo" Menu={[<Link to="/"><Tags /></Link>]} Search={<SearchBox />} />
       <Layout.Sidebar navItems={[
         {
           text: "Home",

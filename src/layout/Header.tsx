@@ -5,6 +5,7 @@ import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { UserMenu } from "./UserMenu";
 import { useLayout } from "../providers";
 import { Breadcrumb } from "../components";
+import React from "react";
 
 export type DesktopHeaderComponent = React.FC<HeaderProps>;
 
@@ -16,11 +17,14 @@ export const Header: DesktopHeaderComponent = (props) => {
 
     return (
         <header className={`d-none d-lg-block`}>
-            <Container fluid>
+            <Container fluid className="first-header">
                 <div>
                     <Link to="/">
                         <img src="/logo.svg" alt={props.AppName} height={logoHeight} className="logo" />
                     </Link>
+                </div>
+                <div className="search">
+                    {props.Search}
                 </div>
                 <nav>
                     <ul>
@@ -43,5 +47,6 @@ export const Header: DesktopHeaderComponent = (props) => {
 
 export interface HeaderProps {
     AppName: string;
+    Search?: React.ReactNode;
     Menu: React.ReactNode[];
 };

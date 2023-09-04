@@ -6,9 +6,6 @@
 
     background-color: var(--header-bg);
     color: var(--header-text);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     border-bottom: $border;
 
     color: var(--header-text);
@@ -23,6 +20,7 @@
         /* TODO: variablise */
         svg {
             height: 18px;
+            width: 18px;
             color: rgba(220, 204, 204, 0.65);
 
             &:hover {
@@ -49,6 +47,19 @@
         &>div {
             display: flex;
             align-items: center;
+        }
+
+        &.first-header {
+            display: grid;
+            grid-template-columns: 1.5fr minmax(240px, 1fr) 1.5fr;
+
+            nav {
+                justify-content: end;
+            }
+
+            .search input {
+                height: 32px;
+            }
         }
 
         &.second-header {
@@ -85,6 +96,7 @@
     }
 
     nav {
+        justify-content: end;
         ul {
             list-style: none;
             margin: 0;
