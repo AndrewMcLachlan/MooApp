@@ -16,7 +16,7 @@ export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, t
         layout.setBreadcrumbs(breadcrumbs ?? []);
         layout.setSecondaryNav(navItems ?? []);
         layout.setActions(actions ?? []);
-    }, []);
+    }, [breadcrumbs, navItems, actions]);
 
     return (
         <Container fluid as="main" {...rest}>
