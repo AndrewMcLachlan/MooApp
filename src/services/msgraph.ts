@@ -12,6 +12,8 @@ export const usePhoto = (userName: string) => {
         {
             const url = URL.createObjectURL(response.data);
             setPhoto(url);
+        }).catch((error) => {
+            console.warn("No photo found for user", error);
         });
     },[userName]);
 
