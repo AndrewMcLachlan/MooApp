@@ -1,14 +1,13 @@
 import { PropsWithChildren, useState } from "react";
 
 import { DesktopFooterComponent, Footer } from "./Footer";
-import { LayoutProvider } from "../providers";
+import { LayoutProvider, ThemeProvider } from "../providers";
 import { size } from "../models/Layout";
 import { DesktopHeaderComponent, Header } from "./Header";
 import { MobileHeaderComponent, Header as MHeader } from "./Mobile/Header";
 import { MobileFooterComponent, Footer as MFooter } from "./Mobile/Footer";
 import classNames from "classnames";
 import { Sidebar, SidebarComponent } from "./Sidebar";
-import { ThemeProvider } from "react-bootstrap";
 
 export type LayoutComponent = React.FC<PropsWithChildren<LayoutProps>> & {
   Footer: DesktopFooterComponent;

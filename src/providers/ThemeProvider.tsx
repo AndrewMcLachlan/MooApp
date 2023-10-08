@@ -21,7 +21,6 @@ export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>
         document.body.setAttribute("data-bs-theme", theme.theme === "" ? defaultTheme.theme : theme.theme === "dark" ? "dark" : "light");
     }, [theme]);
 
-
     return (
         <ThemeContext.Provider value={{ theme, setTheme, defaultTheme }}>
             {children}
@@ -29,11 +28,9 @@ export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>
     );
 }
 
-
-
 export const useTheme = () => useContext(ThemeContext);
 
-export interface ThemeProviderProps extends Omit<Models.ThemeOptions, "theme" | "setTheme" | "defaultTheme"> {
+export interface ThemeProviderProps {
 }
 
 ThemeProvider.displayName = "ThemeProvider";
