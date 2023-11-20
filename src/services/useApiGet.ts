@@ -1,9 +1,9 @@
-import { useQuery, QueryKey } from "@tanstack/react-query";
+import { useQuery, QueryKey, UseQueryResult } from "@tanstack/react-query";
 import { UseQueryOptions } from "./types";
 import { useHttpClient } from "../providers/HttpClientProvider";
 import { PagedResult } from "models";
 
-export const useApiPagedGet = <T extends PagedResult<any>>(key: QueryKey, path: string, options?: UseQueryOptions<T>) => {
+export const useApiPagedGet = <T extends PagedResult<any>>(key: QueryKey, path: string, options?: UseQueryOptions<T>): UseQueryResult<T, Error> => {
 
     const httpClient = useHttpClient();
 
@@ -23,7 +23,7 @@ export const useApiPagedGet = <T extends PagedResult<any>>(key: QueryKey, path: 
     });
 }
 
-export const useApiGet = <T>(key: QueryKey, path: string, options?: UseQueryOptions<T>) => {
+export const useApiGet = <T>(key: QueryKey, path: string, options?: UseQueryOptions<T>): UseQueryResult<T, Error> => {
 
     const { get } = useGet();
 
