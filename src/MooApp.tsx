@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { BrowserRouter } from "react-router-dom";
 
@@ -16,8 +16,12 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, cli
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
-        retry: false
-      }
+        retry: false,
+        networkMode: "offlineFirst",
+      },
+      mutations: {
+        networkMode: "offlineFirst",
+      },
     }
   });
 

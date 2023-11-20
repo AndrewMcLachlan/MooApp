@@ -2,6 +2,7 @@ import { useRef, forwardRef, useEffect } from "react";
 import { Form, FormControlProps } from "react-bootstrap";
 import { BsPrefixRefForwardingComponent } from "react-bootstrap/esm/helpers";
 
+//@ts-ignore
 export const Input: BsPrefixRefForwardingComponent<"input", InputProps> = forwardRef<HTMLInputElement, InputProps>(({clearable, ...rest}, ref) => {
 
     const innerRef = useRef<HTMLInputElement>(null);
