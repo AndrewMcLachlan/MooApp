@@ -1,4 +1,5 @@
-import { useQuery, QueryKey, UseQueryOptions } from "@tanstack/react-query";
+import { useQuery, QueryKey } from "@tanstack/react-query";
+import { UseQueryOptions } from "./types";
 import { useHttpClient } from "../providers/HttpClientProvider";
 import { PagedResult } from "models";
 
