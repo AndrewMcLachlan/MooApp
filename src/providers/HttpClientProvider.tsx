@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import axios, { AxiosInstance } from "axios";
 
-import { apiRequest, loginRequest } from "../login/msal";
+import { loginRequest } from "../login/msal";
 
 import { useMsal } from "@azure/msal-react";
 import { AuthError, InteractionRequiredAuthError, ServerError, SilentRequest } from "@azure/msal-browser";
-import { BrowserConstants } from "@azure/msal-browser/dist/utils/BrowserConstants";
 
 export interface HttpClientProviderProps {
     baseUrl: string;
@@ -51,7 +50,7 @@ export const useCreateHttpClient = (baseUrl: string, scopes?: string[]): AxiosIn
 
             const isServerError = error instanceof ServerError;
             const isInteractionRequiredError = error instanceof InteractionRequiredAuthError;
-            const isInvalidGrantError = (error as AuthError)?.errorCode === BrowserConstants.INVALID_GRANT_ERROR;
+            const isInvalidGrantError = (error as AuthError)?.errorCode === "invalid_grant";
 
             if ((isServerError && isInvalidGrantError) || isInteractionRequiredError) {
                 await msal.instance.loginRedirect(loginRequest);
