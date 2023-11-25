@@ -51,16 +51,16 @@ export const apiRequest: msal.SilentRequest = {
 };
 
 
-let msalInstance: msal.PublicClientApplication;
+let msalInstance: msal.IPublicClientApplication;
 
-const getMsalInstance = (clientId: string): msal.PublicClientApplication => {
+const getMsalInstance = async (clientId: string): Promise<msal.IPublicClientApplication> => {
     if (msalInstance) return msalInstance;
 
     msalConfig.auth.clientId = clientId;
     msalConfig.system.loggerOptions = {
         logLevel: msal.LogLevel.Warning
     }
-    msalInstance = new msal.PublicClientApplication(msalConfig);
+    msalInstance = await msal.PublicClientApplication.createPublicClientApplication(msalConfig);
 
     msalInstance.addEventCallback((event) => {
         if (event.eventType === msal.EventType.LOGIN_SUCCESS && event.payload) {

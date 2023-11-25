@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { BrowserRouter } from "react-router-dom";
@@ -11,6 +11,12 @@ import { MsalProvider } from "@azure/msal-react";
 import { Login } from "./login/Login";
 
 export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, clientId, scopes, baseUrl, name, version }) => {
+
+  const [msalInstance, setMsalInstance] = React.useState<any>(null);
+
+  useEffect(() => {
+    getMsalInstance(clientId).then((instance) => setMsalInstance(instance));
+  }, []);
 
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -25,9 +31,11 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, cli
     }
   });
 
+  if (!msalInstance) return null;
+
   return (
     <AppProvider name={name} version={version}>
-      <MsalProvider instance={getMsalInstance(clientId)}>
+      <MsalProvider instance={msalInstance}>
         <HttpClientProvider baseUrl={baseUrl} scopes={scopes}>
           <QueryClientProvider client={queryClient}>
             <BrowserRouter>
