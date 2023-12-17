@@ -4,7 +4,7 @@ import { Layout, SearchBox } from "@andrewmclachlan/mooapp";
 import { Route, Routes } from "react-router-dom";
 import { Components } from "./pages/Components";
 import { useIsAuthenticated } from "@azure/msal-react";
-import { ReactComponent as Tags } from "./assets/tags.svg";
+import { default as Tags } from "./assets/tags.svg";
 import { Home } from "./pages/Home";
 import { Providers } from "./pages/Providers";
 import { Link } from "react-router-dom";

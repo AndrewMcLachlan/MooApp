@@ -6,6 +6,7 @@ export * from "./ComboBox";
 export * from "./EditColumn";
 export * from "./ErrorBoundary";
 export * from "./IconButton";
+export * from "./IconLinkButton";
 export * from "./Input";
 export * from "./NavItemDivider";
 export * from "./PageHeader";
