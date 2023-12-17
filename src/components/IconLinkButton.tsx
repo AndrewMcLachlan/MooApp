@@ -2,9 +2,9 @@ import { FontAwesomeIcon, FontAwesomeIconProps } from "@fortawesome/react-fontaw
 import { PropsWithChildren } from "react";
 import { Link, LinkProps } from "react-router-dom";
 
-export const IconLink: React.FC<PropsWithChildren<IconLinkProps>> = ({ children, icon, ...link }) => (
+export const IconLinkButton: React.FC<PropsWithChildren<IconLinkButtonProps>> = ({ children, icon, ...link }) => (
     <Link {...link}><FontAwesomeIcon icon={icon} size="xs" />{children}</Link>
 );
 
-export interface IconLinkProps extends Pick<FontAwesomeIconProps, "icon">, LinkProps {
+export interface IconLinkButtonProps extends Pick<FontAwesomeIconProps, "icon">, LinkProps {
 }
