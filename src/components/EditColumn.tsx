@@ -1,8 +1,8 @@
 import { useClickAway } from "../hooks";
 import { ValueProps } from "../models";
-import { ChangeEventHandler, FocusEventHandler, KeyboardEventHandler, useEffect, useRef, useState } from "react";
+import { ChangeEventHandler, FocusEventHandler, KeyboardEventHandler, PropsWithChildren, useEffect, useRef, useState } from "react";
 
-export const EditColumn: React.FC<EditColumnProps> = (props) => {
+export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({children, ...props }) => {
 
     const ref = useRef<HTMLInputElement>();
 
@@ -36,14 +36,19 @@ export const EditColumn: React.FC<EditColumnProps> = (props) => {
 
     return (
         <td onClick={() => setEditing(true)}>
-            {!editing && props.value}
+            {!editing && (children ?? props.value)}
             {editing &&
-                <input className="form-control" value={value} onChange={onChange} onBlur={onBlur} onKeyUp={onKey} ref={ref} autoFocus />
+                <input className="form-control" type={props.type} value={value} onChange={onChange} onBlur={onBlur} onKeyUp={onKey} ref={ref} autoFocus />
             }
         </td>
     );
 }
 
-export interface EditColumnProps extends ValueProps<string> {
+EditColumn.defaultProps = {
+    type: "text"
+};
 
+
+export interface EditColumnProps extends ValueProps<string> {
+    type?: string;
 }
