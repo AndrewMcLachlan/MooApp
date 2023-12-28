@@ -1,7 +1,7 @@
-import { useMutation, UseMutationOptions } from "@tanstack/react-query";
+import { DefaultError, useMutation, UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useHttpClient } from "../providers/HttpClientProvider";
 
-export const useApiPut = <Response, Variables, Data = null>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, null, [Variables, Data]>) => {
+export const useApiPut = <Response, Variables, Data = null>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, DefaultError, [Variables, Data]>): UseMutationResult<Response, DefaultError, [Variables, Data]> => {
 
     const httpClient = useHttpClient();
 
@@ -11,7 +11,7 @@ export const useApiPut = <Response, Variables, Data = null>(path: (variables: Va
     });
 }
 
-export const useApiDatalessPut = <Response, Variables>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, null, Variables>) => {
+export const useApiDatalessPut = <Response, Variables>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, DefaultError, Variables>) => {
 
     const httpClient = useHttpClient();
 

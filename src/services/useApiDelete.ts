@@ -1,7 +1,7 @@
-import { useMutation, UseMutationOptions } from "@tanstack/react-query";
+import { DefaultError, useMutation, UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useHttpClient } from "../providers/HttpClientProvider";
 
-export const useApiDelete = <Variables>(path: (variables: Variables) => string, options?: UseMutationOptions<null, null, Variables>) => {
+export const useApiDelete = <Variables>(path: (variables: Variables) => string, options?: UseMutationOptions<null, null, Variables>): UseMutationResult<Response, DefaultError, Variables> => {
 
     const httpClient = useHttpClient();
 
