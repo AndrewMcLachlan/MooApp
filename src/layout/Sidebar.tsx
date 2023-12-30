@@ -7,6 +7,7 @@ import { NavItem } from "../models";
 import { useLayout } from "providers";
 import { isValidElement, ReactNode, useState } from "react";
 import classNames from "classnames";
+import { useLocalStorage } from "hooks";
 
 export type SidebarComponent = React.FC<React.PropsWithChildren<SidebarProps>>;
 
@@ -14,7 +15,7 @@ export const Sidebar: SidebarComponent = ({ children, ...props }) => {
 
     const layout = useLayout();
 
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useLocalStorage("sidebar-collapse", false);
 
     const collapse = () => {
         setCollapsed(!collapsed);
