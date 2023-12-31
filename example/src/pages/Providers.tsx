@@ -1,6 +1,6 @@
 import { Section, useHttpClient, Page, NavItemDivider } from "@andrewmclachlan/mooapp";
 import { Button } from "react-bootstrap";
-import { ReactComponent as Tags } from "../assets/tags.svg";
+import { Tags } from "../assets";
 
 export const Providers = () => {
 

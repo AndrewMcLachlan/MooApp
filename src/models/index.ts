@@ -1,5 +1,6 @@
 export * from "./App";
 export * from "./Layout";
+export * from "./Message";
 export * from "./NavItem";
 export * from "./PagedResult";
 export * from "./RagStatus";

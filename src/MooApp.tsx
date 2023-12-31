@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { BrowserRouter } from "react-router-dom";
 
-import { AppProvider, HttpClientProvider } from "./providers";
+import { AppProvider, HttpClientProvider, MessageProvider } from "./providers";
 
 import getMsalInstance from "./login/msal";
 
@@ -38,15 +38,17 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, cli
       <MsalProvider instance={msalInstance}>
         <HttpClientProvider baseUrl={baseUrl} scopes={scopes}>
           <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-              <Login>
-                {children}
-              </Login>
-            </BrowserRouter>
+            <MessageProvider>
+              <BrowserRouter>
+                <Login>
+                  {children}
+                </Login>
+              </BrowserRouter>
+            </MessageProvider>
           </QueryClientProvider>
         </HttpClientProvider>
       </MsalProvider>
-    </AppProvider>
+    </AppProvider >
   );
 };
 

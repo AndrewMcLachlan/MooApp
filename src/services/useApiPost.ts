@@ -1,29 +1,56 @@
 import { DefaultError, useMutation, UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useHttpClient } from "../providers/HttpClientProvider";
+import { useMessages } from "providers";
 
 export const useApiPost = <Response, Variables, Data = null>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, DefaultError, [Variables, Data]>): UseMutationResult<Response, DefaultError, [Variables, Data]> => {
 
     const httpClient = useHttpClient();
+    const messages = useMessages();
+
+    const { onError, ...otherOptions } = options;
+
+    const onErrorWrapper = (error: Error, variables: [Variables, Data], context: unknown) => {
+        messages.sendMessage({ message: error.message, variant: "danger" });
+        onError?.(error, variables, context);
+    }
 
     return useMutation<Response, DefaultError, [Variables, Data]>({
         mutationFn: async ([variables, data]): Promise<Response> => (await httpClient.post(path(variables), data)).data,
-        ...options
+        onError: onErrorWrapper,
+        ...otherOptions
     });
 }
 
-export const useApiDatalessPost = <Response, Variables>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, DefaultError, Variables>) => {
+export const useApiPostEmpty = <Response, Variables>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, DefaultError, Variables>) => {
 
     const httpClient = useHttpClient();
+    const messages = useMessages();
+
+    const { onError, ...otherOptions } = options;
+
+    const onErrorWrapper = (error: Error, variables: Variables, context: unknown) => {
+        messages.sendMessage({ message: error.message, variant: "danger" });
+        onError?.(error, variables, context);
+    }
 
     return useMutation<Response, DefaultError, Variables>({
         mutationFn: async (variables): Promise<Response> => (await httpClient.post(path(variables))).data,
-        ...options
+        onError: onErrorWrapper,
+        ...otherOptions
     });
 }
 
 export const useApiPostFile = <Variables extends { file: File }>(path: (variables: Variables) => string, options?: UseMutationOptions<null, DefaultError, Variables>) => {
 
     const httpClient = useHttpClient();
+    const messages = useMessages();
+
+    const { onError, ...otherOptions } = options;
+
+    const onErrorWrapper = (error: Error, variables: Variables, context: unknown) => {
+        messages.sendMessage({ message: error.message, variant: "danger" });
+        onError?.(error, variables, context);
+    }
 
     return useMutation<null, DefaultError, Variables>({
         mutationFn: async (variables): Promise<null> => {
@@ -34,6 +61,7 @@ export const useApiPostFile = <Variables extends { file: File }>(path: (variable
 
             return (await httpClient.post(path(variables), formData)).data;
         },
-        ...options
+        onError: onErrorWrapper,
+        ...otherOptions
     });
 }

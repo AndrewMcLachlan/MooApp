@@ -1,14 +1,20 @@
-import { Section, useHttpClient, Page, NavItemDivider } from "@andrewmclachlan/mooapp";
+import { Section, useHttpClient, Page, NavItemDivider, useMessages } from "@andrewmclachlan/mooapp";
 import { Button } from "react-bootstrap";
 
 export const Home = () => {
 
+    const messages = useMessages();
+
+    const addAlert = () => {
+        messages?.sendMessage({ key:"m1", message: "This is a test alert", variant: "danger" });
+    }
+
     return (
         <Page title="Home">
-        <Section title="Home">
-            <Button size="sm" variant="link">Sample</Button>
-            <Button>Sample 2</Button>
-        </Section>
+            <Section title="Home">
+                <Button size="sm" variant="link">Sample</Button>
+                <Button onClick={addAlert}>Show Alert</Button>
+            </Section>
         </Page>
     );
 }

@@ -1,6 +1,6 @@
 import { Section, useHttpClient, Page, NavItemDivider, IconButton } from "@andrewmclachlan/mooapp";
 import { Button } from "react-bootstrap";
-import { ReactComponent as Tags } from "../assets/tags.svg";
+import { Tags } from "../assets";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export const Components = () => {

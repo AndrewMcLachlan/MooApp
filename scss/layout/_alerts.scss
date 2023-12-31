@@ -1,0 +1,22 @@
+.alerts {
+    grid-area: alerts;
+
+    .alert {
+        display: flex;
+        margin: 0;
+        border-radius: 0;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        font-weight: 400;
+        align-items: center;
+    }
+
+    .btn-close {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+        font-weight: 400;
+    }
+}

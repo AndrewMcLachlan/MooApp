@@ -1,10 +1,10 @@
 import "./App.scss";
 
-import { Layout, SearchBox } from "@andrewmclachlan/mooapp";
+import { Alerts, Layout, SearchBox } from "@andrewmclachlan/mooapp";
 import { Route, Routes } from "react-router-dom";
 import { Components } from "./pages/Components";
 import { useIsAuthenticated } from "@azure/msal-react";
-import { default as Tags } from "./assets/tags.svg";
+import { Tags } from "./assets";
 import { Home } from "./pages/Home";
 import { Providers } from "./pages/Providers";
 import { Link } from "react-router-dom";
@@ -17,6 +17,7 @@ const App = () => {
 
   return (
     <Layout size="small">
+      <Alerts />
       <Layout.Header AppName="DeMoo" Menu={[<Link to="/"><Tags /></Link>]} Search={<SearchBox />} />
       <Layout.Sidebar navItems={[
         {
