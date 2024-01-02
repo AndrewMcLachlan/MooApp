@@ -7,7 +7,7 @@ export const useApiPost = <Response, Variables, Data = null>(path: (variables: V
     const httpClient = useHttpClient();
     const messages = useMessages();
 
-    const { onError, ...otherOptions } = options;
+    const { onError, ...otherOptions } = options ?? {};
 
     const onErrorWrapper = (error: Error, variables: [Variables, Data], context: unknown) => {
         messages.sendMessage({ message: error.message, variant: "danger" });
@@ -26,7 +26,7 @@ export const useApiPostEmpty = <Response, Variables>(path: (variables: Variables
     const httpClient = useHttpClient();
     const messages = useMessages();
 
-    const { onError, ...otherOptions } = options;
+    const { onError, ...otherOptions } = options ?? {};
 
     const onErrorWrapper = (error: Error, variables: Variables, context: unknown) => {
         messages.sendMessage({ message: error.message, variant: "danger" });
@@ -45,7 +45,7 @@ export const useApiPostFile = <Variables extends { file: File }>(path: (variable
     const httpClient = useHttpClient();
     const messages = useMessages();
 
-    const { onError, ...otherOptions } = options;
+    const { onError, ...otherOptions } = options ?? {};
 
     const onErrorWrapper = (error: Error, variables: Variables, context: unknown) => {
         messages.sendMessage({ message: error.message, variant: "danger" });

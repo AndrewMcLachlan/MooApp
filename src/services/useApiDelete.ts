@@ -7,7 +7,7 @@ export const useApiDelete = <Variables>(path: (variables: Variables) => string, 
     const httpClient = useHttpClient();
     const messages = useMessages();
 
-    const { onError, ...otherOptions } = options;
+    const { onError, ...otherOptions } = options ?? {};
 
     const onErrorWrapper = (error: Error, variables: Variables, context: unknown) => {
         messages.sendMessage({ message: error.message, variant: "danger" });

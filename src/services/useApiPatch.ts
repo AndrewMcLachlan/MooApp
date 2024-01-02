@@ -7,7 +7,7 @@ export const useApiPatch = <Response, Variables, Data = null>(path: (variables: 
     const httpClient = useHttpClient();
     const messages = useMessages();
 
-    const { onError, ...otherOptions } = options;
+    const { onError, ...otherOptions } = options ?? {};
 
     const onErrorWrapper = (error: Error, variables: [Variables, Data], context: unknown) => {
         messages.sendMessage({ message: error.message, variant: "danger" });
