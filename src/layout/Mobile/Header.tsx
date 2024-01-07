@@ -1,12 +1,15 @@
+import { useApp } from "providers";
 import{ Nav, Navbar } from "react-bootstrap";
 
 export type MobileHeaderComponent = React.FC<HeaderProps>;
 
 export const Header: MobileHeaderComponent = (props) => {
 
+    const {name: appName} = useApp();
+
     return (
             <header className="d-lg-none">
-                <img src="/logo.svg" alt={props.AppName} height="40" className="logo" />
+                <img src="/logo.svg" alt={`${appName} home`} height="40" className="logo" />
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse>
                 <Nav>
@@ -18,6 +21,5 @@ export const Header: MobileHeaderComponent = (props) => {
 }
 
 export interface HeaderProps {
-    AppName: string;
     Menu: React.ReactNode[];
 }

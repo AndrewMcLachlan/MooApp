@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { UserMenu } from "./UserMenu";
-import { useLayout } from "../providers";
+import { useApp, useLayout } from "../providers";
 import { Breadcrumb } from "../components";
 import React from "react";
 
@@ -12,6 +12,7 @@ export type DesktopHeaderComponent = React.FC<HeaderProps>;
 export const Header: DesktopHeaderComponent = (props) => {
 
     const { size, breadcrumbs, actions } = useLayout();
+    const { name: appName } = useApp();
 
     const logoHeight = size == "default" ? 80 : 40;
 
@@ -20,7 +21,7 @@ export const Header: DesktopHeaderComponent = (props) => {
             <Container fluid className="first-header">
                 <div>
                     <Link to="/">
-                        <img src="/logo.svg" alt={props.AppName} height={logoHeight} className="logo" />
+                        <img src="/logo.svg" alt={`${appName} home`} height={logoHeight} className="logo" />
                     </Link>
                 </div>
                 <div className="search">
@@ -46,7 +47,6 @@ export const Header: DesktopHeaderComponent = (props) => {
 };
 
 export interface HeaderProps {
-    AppName: string;
     Search?: React.ReactNode;
     Menu: React.ReactNode[];
 };
