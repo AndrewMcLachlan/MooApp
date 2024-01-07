@@ -24,7 +24,7 @@ $border: 1px solid var(--bs-border-color);
   --breadcrumb-bg: var(--header-bg);
   --header-text: var(--bs-body-color);
   --footer-bg: var(--header-bg);
-  --footer-text: var(--body-color);
+  --footer-text: var(--bs-body-color);
 }
 
 @media (prefers-color-scheme: light) {
@@ -67,7 +67,7 @@ $border: 1px solid var(--bs-border-color);
     --breadcrumb-bg: var(--header-bg);
     --header-text: var(--bs-body-color);
     --footer-bg: var(--header-bg);
-    --footer-text: var(--body-color);
+    --footer-text: var(--bs-body-color);
   }
 
   body  {
@@ -85,10 +85,12 @@ $border: 1px solid var(--bs-border-color);
   --bs-border-color: rgba(46,41,36,.12);
 
   --header-bg: #FFF;
+  --header-text: var(--bs-body-color);
   --breadcrumb-bg: var(--header-bg);
   --section-bg: rgb(251, 248, 244);
 
   --footer-bg: #FFF;
+  --footer-text: var(--bs-body-color);
   --hover: #E6E6E6;
 }
 
@@ -109,8 +111,8 @@ $border: 1px solid var(--bs-border-color);
   --header-bg: rgb(31,27,24);
   --breadcrumb-bg:rgb(31,27,24);
   --section-bg: rgb(31,27,24);
-  --header-text: #EEE;
+  --footer-text: var(--bs-body-color);
   --footer-bg: #111;
-  --footer-text: #EEE;
+  --footer-text: var(--bs-body-color);
   --hover: #6E6E6E;
 }
