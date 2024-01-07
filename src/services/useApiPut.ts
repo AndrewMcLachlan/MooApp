@@ -1,6 +1,7 @@
 import { DefaultError, useMutation, UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useHttpClient } from "../providers/HttpClientProvider";
 import { useMessages } from "providers";
+import { processAxiosError } from "./processAxiosError";
 
 export const useApiPut = <Response, Variables, Data = null>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, DefaultError, [Variables, Data]>): UseMutationResult<Response, DefaultError, [Variables, Data]> => {
 
@@ -15,7 +16,14 @@ export const useApiPut = <Response, Variables, Data = null>(path: (variables: Va
     }
 
     return useMutation<Response, null,[Variables, Data]>({
-        mutationFn: async ([variables, data]): Promise<Response> => (await httpClient.put(path(variables), data)).data,
+        mutationFn: async ([variables, data]): Promise<Response> => {
+            try {
+                return (await httpClient.put(path(variables), data)).data;
+            }
+            catch (error: any) {
+                throw processAxiosError(error);
+            }
+        },
         onError: onErrorWrapper,
         ...otherOptions
     });
@@ -34,7 +42,14 @@ export const useApiPutEmpty = <Response, Variables>(path: (variables: Variables)
     }
 
     return useMutation<Response, null,Variables>({
-        mutationFn: async (variables): Promise<Response> => (await httpClient.put(path(variables))).data,
+        mutationFn: async (variables): Promise<Response> => {
+            try {
+                return (await httpClient.put(path(variables))).data;
+            }
+            catch (error: any) {
+                throw processAxiosError(error);
+            }
+        },
         onError: onErrorWrapper,
         ...otherOptions
     });

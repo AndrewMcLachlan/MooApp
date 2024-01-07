@@ -18,9 +18,9 @@ export const useApiPost = <Response, Variables, Data = null>(path: (variables: V
     return useMutation<Response, DefaultError, [Variables, Data]>({
         mutationFn: async ([variables, data]): Promise<Response> => {
             try {
-             return (await httpClient.post(path(variables), data)).data;
+                return (await httpClient.post(path(variables), data)).data;
             }
-            catch(error: any) {
+            catch (error: any) {
                 throw processAxiosError(error);
             }
         },
@@ -42,7 +42,14 @@ export const useApiPostEmpty = <Response, Variables>(path: (variables: Variables
     }
 
     return useMutation<Response, DefaultError, Variables>({
-        mutationFn: async (variables): Promise<Response> => (await httpClient.post(path(variables))).data,
+        mutationFn: async (variables): Promise<Response> => {
+            try {
+                return (await httpClient.post(path(variables))).data;
+            }
+            catch (error: any) {
+                throw processAxiosError(error);
+            }
+        },
         onError: onErrorWrapper,
         ...otherOptions
     });
@@ -67,7 +74,12 @@ export const useApiPostFile = <Variables extends { file: File }>(path: (variable
 
             formData.append("file", variables.file, variables.file.name);
 
-            return (await httpClient.post(path(variables), formData)).data;
+            try {
+                return (await httpClient.post(path(variables), formData)).data;
+            }
+            catch (error: any) {
+                throw processAxiosError(error);
+            }
         },
         onError: onErrorWrapper,
         ...otherOptions
