@@ -15,28 +15,32 @@ const App = () => {
 
   if (!isAuthenticated) return null;
 
+const sidebarNav = [
+  {
+    text: "Home",
+    route: "/",
+    image: <Tags />
+  },
+  {
+    text: "Components",
+    route: "/components",
+    image: <Tags />
+  },
+  {
+    text: "Providers",
+    route: "/providers",
+    image: <Tags />
+  }
+
+];
+
   return (
     <Layout size="small">
       <Alerts />
-      <Layout.Header AppName="DeMoo" Menu={[<Link to="/"><Tags /></Link>]} Search={<SearchBox />} />
-      <Layout.Sidebar navItems={[
-        {
-          text: "Home",
-          route: "/",
-          image: <Tags />
-        },
-        {
-          text: "Components",
-          route: "/components",
-          image: <Tags />
-        },
-        {
-          text: "Providers",
-          route: "/providers",
-          image: <Tags />
-        }
-
-      ]} />
+      <Layout.Header Menu={[<Link to="/"><Tags /></Link>]} Search={<SearchBox />} />
+      <Layout.MobileHeader Menu={[<Link to="/"><Tags /></Link>]} />
+      <Layout.Sidebar navItems={sidebarNav} />
+      <Layout.MobileSidebar navItems={sidebarNav} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/components" element={<Components />} />

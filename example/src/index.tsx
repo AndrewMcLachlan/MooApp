@@ -13,7 +13,7 @@ console.debug((import.meta as any).env);
 console.debug((import.meta as any).env.VITE_REACT_APP_VERSION);
 
 root.render(
-  <MooApp clientId="045f8afa-70f2-4700-ab75-77ac41b306f7" scopes={["api://bankplus.mclachlan.family/api.read"]} name="DeMoo" version={(import.meta as any).env.VITE_REACT_APP_VERSION}>
+  <MooApp clientId="045f8afa-70f2-4700-ab75-77ac41b306f7" scopes={["api://moobank.mclachlan.family/api.read"]} name="DeMoo" version={(import.meta as any).env.VITE_REACT_APP_VERSION}>
     <App />
   </MooApp>
 );

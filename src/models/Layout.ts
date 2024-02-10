@@ -12,4 +12,6 @@ export interface LayoutOptions {
     setSecondaryNav?: (items: (NavItem|ReactNode)[]) => void;
     actions?: ReactNode[];
     setActions?: (items: ReactNode[]) => void;
+    showSidebar?: boolean;
+    setShowSidebar?: (show: boolean) => void;
 }

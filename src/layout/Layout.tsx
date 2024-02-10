@@ -1,20 +1,23 @@
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren } from "react";
 
-import { DesktopFooterComponent, Footer } from "./Footer";
+import { Footer } from "./Desktop/Footer";
 import { LayoutProvider, ThemeProvider } from "../providers";
 import { size } from "../models/Layout";
-import { DesktopHeaderComponent, Header } from "./Header";
-import { MobileHeaderComponent, Header as MHeader } from "./Mobile/Header";
-import { MobileFooterComponent, Footer as MFooter } from "./Mobile/Footer";
+import { Header } from "./Desktop/Header";
+import { Header as MHeader } from "./Mobile/Header";
+import { Footer as MFooter } from "./Mobile/Footer";
+import { Sidebar as MSidebar } from "./Mobile/Sidebar";
 import classNames from "classnames";
-import { Sidebar, SidebarComponent } from "./Sidebar";
+import { Sidebar } from "./Desktop/Sidebar";
+import { FooterComponent, HeaderComponent, SidebarComponent } from "./Types";
 
 export type LayoutComponent = React.FC<PropsWithChildren<LayoutProps>> & {
-  Footer: DesktopFooterComponent;
-  MobileFooter: MobileFooterComponent;
-  Header: DesktopHeaderComponent;
-  MobileHeader: MobileHeaderComponent;
+  Footer: FooterComponent;
+  MobileFooter: FooterComponent;
+  Header: HeaderComponent;
+  MobileHeader: HeaderComponent;
   Sidebar: SidebarComponent;
+  MobileSidebar: SidebarComponent;
 };
 
 const Layout: LayoutComponent = ({ size, children }) => {
@@ -39,6 +42,7 @@ Layout.MobileFooter = MFooter;
 Layout.Header = Header;
 Layout.MobileHeader = MHeader;
 Layout.Sidebar = Sidebar;
+Layout.MobileSidebar = MSidebar;
 
 export { Layout };
 

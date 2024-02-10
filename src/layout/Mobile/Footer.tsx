@@ -1,11 +1,4 @@
-import { HTMLAttributes } from "react";
+import { FooterComponent } from "layout/Types";
 
-export type MobileFooterComponent = React.FC<FooterProps>;
-
-export const Footer: MobileFooterComponent = (_props) => 
+export const Footer: FooterComponent = (_props) => 
 <footer className="d-lg-none" />
-
-export interface FooterProps extends HTMLAttributes<HTMLElement> {
-}
-
-Footer.displayName = "Footer";

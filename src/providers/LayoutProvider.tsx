@@ -11,12 +11,13 @@ export const LayoutProvider: React.FC<React.PropsWithChildren<LayoutProviderProp
     const [breadcrumbs, setBreadcrumbs] = useState<Models.NavItem[]>([]);
     const [secondaryNav, setSecondaryNav] = useState<(Models.NavItem|ReactNode)[]>([]);
     const [actions, setActions] = useState<ReactNode[]>([]);
+    const [showSidebar, setShowSidebar] = useState<boolean>(false);
 
     const msal = useMsal();
     const photo = usePhoto(msal.instance?.getActiveAccount()?.username);
 
     return (
-        <LayoutContext.Provider value={{ size, photo, breadcrumbs, setBreadcrumbs, secondaryNav, setSecondaryNav, actions, setActions}}>
+        <LayoutContext.Provider value={{ size, photo, breadcrumbs, setBreadcrumbs, secondaryNav, setSecondaryNav, actions, setActions, showSidebar, setShowSidebar}}>
             {children}
         </LayoutContext.Provider>
     );
@@ -24,7 +25,7 @@ export const LayoutProvider: React.FC<React.PropsWithChildren<LayoutProviderProp
 
 export const useLayout = () => useContext(LayoutContext);
 
-export interface LayoutProviderProps extends Omit<Models.LayoutOptions, "theme" | "setTheme" | "defaultTheme" | "breadcrumbs" | "setBreadcrumbs" | "secondaryNav" | "setSecondaryNav" | "actions" | "setActions"> {
+export interface LayoutProviderProps extends Omit<Models.LayoutOptions, "theme" | "setTheme" | "defaultTheme" | "breadcrumbs" | "setBreadcrumbs" | "secondaryNav" | "setSecondaryNav" | "actions" | "setActions" | "showSidebar" | "setShowSidebar"> {
 }
 
 LayoutProvider.displayName = "LayoutProvider";
