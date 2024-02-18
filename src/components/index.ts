@@ -18,3 +18,4 @@ export * from "./SpinnerContainer";
 export * from "./TagPanel";
 export * from "./Tooltip";
 export * from "./Upload";
+export * from "./Widget";
