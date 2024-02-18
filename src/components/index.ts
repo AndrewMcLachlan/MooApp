@@ -11,7 +11,6 @@ export * from "./Input";
 export * from "./NavItemDivider";
 export * from "./PageHeader";
 export * from "./Paginaton";
-export * from "./SectionRow";
 export * from "./SortableTh";
 export * from "./SortIcon";
 export * from "./SearchBox";
