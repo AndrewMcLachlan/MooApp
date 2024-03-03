@@ -1,4 +1,5 @@
-main>section, .section {
+main > section,
+.section {
     background-color: var(--section-bg);
     padding: 15px;
     border: $border;
@@ -6,6 +7,21 @@ main>section, .section {
     @include h-all {
         padding: 0 0 0.5rem;
         margin: 0;
+    }
+
+    &.table {
+        @include h-all {
+            padding: 15px 15px 0.5rem;
+            margin: 0;
+        }
+
+        padding: 0;
+     
+        > table {
+            margin-bottom: 0;
+        }
+
+        border-bottom: none;
     }
 }
 
