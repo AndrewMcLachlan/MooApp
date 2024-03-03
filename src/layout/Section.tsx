@@ -19,5 +19,9 @@ Section.defaultProps = {
 
 export interface SectionProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
     title?: string;
+    /** 
+     * @deprecated use titleSize
+     */
     size?: 1 | 2 | 3 | 4 | 5 | 6;
+    titleSize?: 1 | 2 | 3 | 4 | 5 | 6;
 }

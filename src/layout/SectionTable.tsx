@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 import { Table, TableProps } from "react-bootstrap"
 import { Section } from "./Section";
 
-export const SectionTable: React.FC<PropsWithChildren<SectionTableProps>> = ({ title, titleSize, ...rest }) => (
+export const SectionTable: React.FC<PropsWithChildren<SectionTableProps & React.RefAttributes<HTMLTableElement>>> = ({ title, titleSize, ...rest }) => (
     <>
         {title &&
             <Section className="table" title={title} size={titleSize}>
