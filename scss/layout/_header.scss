@@ -15,10 +15,6 @@
         margin-right: 10px;
     }
 
-    .breadcrumb {
-        font-family: var(--secondary-fonts);
-    }
-
     .container,
     .container-fluid {
         height: var(--header-height);
@@ -65,8 +61,7 @@
 
                 a {
                     text-decoration: none;
-                    color: var(--bs-body-color);
-                    font-family: var(--secondary-fonts);
+                    color: var(--bs-secondary-color);
                 }
             }
 
@@ -111,7 +106,7 @@
         button {
             color: var(--bs-body-color);
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 500;
         }
 
         button {

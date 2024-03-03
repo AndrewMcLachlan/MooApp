@@ -61,10 +61,10 @@
         align-items: center;
         gap: 8px;
 
-        color: var(--body-colour-dim);
+        color: var(--bs-secondary-color);
 
         &:visited {
-            color: var(--body-colour-dim);
+            color: var(--bs-secondary-color);
         }
 
         &:hover {
@@ -73,11 +73,11 @@
 
         &:hover,
         &.active {
-            color: var(--body-colour-bold);
+            color: var(--bs-body-color);
 
             svg {
-                stroke: var(--body-colour-bold);
-                fill: var(--body-colour-bold);
+                stroke: var(--bs-body-color);
+                fill: var(--bs-body-color);
             }
         }
 
