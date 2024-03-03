@@ -9,6 +9,7 @@ export * from "./IconButton";
 export * from "./IconLinkButton";
 export * from "./Input";
 export * from "./LoadingTableRow";
+export * from "./LoadingTableRows";
 export * from "./NavItemDivider";
 export * from "./PageHeader";
 export * from "./Paginaton";
