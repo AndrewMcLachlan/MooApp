@@ -62,7 +62,7 @@ $border: 1px solid var(--bs-border-color);
 
     --footer-bg: rgb(31,27,24);
     --hover: #6E6E6E;
-    --bs-border-color: #575049;
+    --bs-border-color: rgba(251, 248, 244, .15);
 
     --breadcrumb-bg: var(--header-bg);
     --header-text: var(--bs-body-color);
@@ -109,6 +109,7 @@ $border: 1px solid var(--bs-border-color);
   --bs-body-color: rgb(251, 248, 244);
   --body-colour-bold: rgb(251, 248, 244);
   --body-colour-dim: rgba(251, 248, 244, .65);
+  --bs-border-color: rgba(251, 248, 244, .15);
   --header-bg: rgb(31,27,24);
   --breadcrumb-bg:rgb(31,27,24);
   --section-bg: rgb(31,27,24);
