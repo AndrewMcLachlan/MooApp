@@ -29,3 +29,19 @@ option {
     font-size: 0.9rem;
     margin-bottom: 0.25rem;
 }
+
+.form-check-input {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+input.form-control:read-only {
+    background-color: var(--bs-disabled-bg);
+    cursor: default;
+
+    &:focus {
+        box-shadow: none;
+        border-color: var(--bs-border-color);
+        background-color: var(--bs-disabled-bg);
+    }
+}
