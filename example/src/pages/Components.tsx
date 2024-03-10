@@ -1,12 +1,14 @@
-import { Section, useHttpClient, Page, NavItemDivider, IconButton, SectionTable } from "@andrewmclachlan/mooapp";
+import { Section, useHttpClient, Page, NavItemDivider, IconButton, SectionTable, EditColumn } from "@andrewmclachlan/mooapp";
 import { Button, Table } from "react-bootstrap";
 import { Tags } from "../assets";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 export const Components = () => {
 
-    const httpClient = useHttpClient();
-    httpClient.get("fake").then(() => console.debug("Success")).catch((e) => console.debug(e));
+    const [ tableValue, setTableValue ] = useState<string | undefined>("Row 1 Data 1");
+    const [ tableNumValue, setTableNumValue ] = useState<number | undefined>(1);
+
     return (
         <Page title="Components" breadcrumbs={[{ route: "/", text: "Components" }]} navItems={[{ route: "/components/subcomponents", image: <Tags />, text: "Sub-Components" }, <NavItemDivider />]} actions={[<IconButton icon={faPlus}>Create</IconButton>]}>
             <Section title="Components">
@@ -24,8 +26,8 @@ export const Components = () => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Row 1 Data 1</td>
-                        <td>Row 1 Data 2</td>
+                        <EditColumn value={tableValue} onChange={e => setTableValue(e?.value)} />
+                        <EditColumn type="number" value={tableNumValue ?? ""} onChange={e => setTableNumValue(Number.isNaN(e?.valueAsNumber) ? undefined : e?.valueAsNumber)} />
                         <td>Row 1 Data 3</td>
                     </tr>
                     <tr>
@@ -44,7 +46,7 @@ export const Components = () => {
                 </tfoot>
             </SectionTable>
 
-            
+
             <SectionTable className="section" striped hover titleSize={2}>
                 <thead>
                     <tr>

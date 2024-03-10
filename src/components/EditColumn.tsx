@@ -1,5 +1,6 @@
+import React from "react";
+
 import { useClickAway } from "../hooks";
-import { ValueProps } from "../models";
 import { ChangeEventHandler, FocusEventHandler, KeyboardEventHandler, PropsWithChildren, useEffect, useRef, useState } from "react";
 
 export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({children, ...props }) => {
@@ -7,9 +8,9 @@ export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({childr
     const ref = useRef<HTMLInputElement>();
 
     const [editing, setEditing] = useState(false);
-    
+
     useClickAway(setEditing, ref, () => {
-        props.onChange && props.onChange(ref.current?.value ?? "");
+        props.onChange && props.onChange(ref.current);
     });
 
     const [value, setValue] = useState(props.value);
@@ -24,13 +25,13 @@ export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({childr
 
     const onBlur: FocusEventHandler<HTMLInputElement> = (e) => {
         setEditing(false);
-        props.onChange && props.onChange(e.currentTarget.value);
+        props.onChange && props.onChange(e.currentTarget);
     }
 
     const onKey: KeyboardEventHandler<HTMLInputElement> = (e) => {
         if (e.key === "Enter" || e.key === "Tab") {
             setEditing(false);
-            props.onChange && props.onChange(e.currentTarget.value);
+            props.onChange && props.onChange(e.currentTarget);
         }
     }
 
@@ -45,10 +46,10 @@ export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({childr
 }
 
 EditColumn.defaultProps = {
-    type: "text"
+    type: "text",
+
 };
 
-
-export interface EditColumnProps extends ValueProps<string> {
-    type?: string;
+export interface EditColumnProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+    onChange?: (target?: EventTarget & HTMLInputElement) => void;
 }
