@@ -79,7 +79,7 @@
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-svgr": "^2.0.0",
     "sass": "^1.71.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.4.2"
   },
   "peerDependencies": {
     "react": ">=18.2.0",
