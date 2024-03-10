@@ -22,15 +22,15 @@ export const Header: HeaderComponent = (props) => {
                     </Link>
                 </div>
                 <div className="search">
-                    {props.Search}
+                    {props.search}
                 </div>
                 <nav>
                     <ul>
-                        {props.Menu.map((item, i) => (
+                        {props.menu.map((item, i) => (
                             <li key={i}>{item}</li>
                         ))}
                     </ul>
-                    <UserMenu />
+                    <UserMenu userMenu={props.userMenu} />
                 </nav>
             </Container>
             <Container fluid className="second-header">

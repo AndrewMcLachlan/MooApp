@@ -14,31 +14,31 @@ const App = () => {
 
   if (!isAuthenticated) return null;
 
-const sidebarNav = [
-  {
-    text: "Home",
-    route: "/",
-    image: <Tags />
-  },
-  {
-    text: "Components",
-    route: "/components",
-    image: <Tags />
-  },
-  {
-    text: "Providers",
-    route: "/providers",
-    image: <Tags />
-  }
+  const sidebarNav = [
+    {
+      text: "Home",
+      route: "/",
+      image: <Tags />
+    },
+    {
+      text: "Components",
+      route: "/components",
+      image: <Tags />
+    },
+    {
+      text: "Providers",
+      route: "/providers",
+      image: <Tags />
+    }
 
-];
+  ];
 
   return (
     <MooAppLayout
-      header={{ Menu: [<Link to="/"><Tags /></Link>], Search: <SearchBox /> }}
+      header={{ menu: [<Link to="/"><Tags /></Link>], search: <SearchBox />, userMenu: [{ route: "/profile", text: "Profile" }] }}
       sidebar={{ navItems: sidebarNav }}
-      footer={{ copyrightYear: 2022}}
-      />
+      footer={{ copyrightYear: 2022 }}
+    />
   );
 }
 

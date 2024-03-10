@@ -8,6 +8,7 @@ import { Button, Nav } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { NavItem } from "../../models";
 import { SidebarComponent } from "layout/Types";
+import { renderMenu } from "utils";
 
 export const Sidebar: SidebarComponent = ({ children, ...props }) => {
 
@@ -36,33 +37,6 @@ export const Sidebar: SidebarComponent = ({ children, ...props }) => {
         </div>
     );
 };
-
-const renderMenu = (navItems: (NavItem | ReactNode)[]) => {
-
-    const items: React.ReactNode[] = navItems.map((item, index) => {
-
-        if (isValidElement(item)) {
-            return <React.Fragment key={`node${index}`}>{item}</React.Fragment>;
-        };
-
-        const navItem = item as NavItem;
-
-        const image = typeof navItem.image === "string" ? <img src={navItem.image} alt="" /> : navItem.image ?? <svg></svg>;
-
-        if (navItem.route) {
-            return <NavLink className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`} to={navItem.route} key={`route${index}`} onClick={navItem.onClick} title={navItem.text}>{image}<span>{navItem.text}</span></NavLink>;
-        }
-        else if (navItem.onClick) {
-            return <Nav.Link as={Button} key={`click${index}`} variant="link" onClick={navItem.onClick} title={navItem.text}>{image}<span>{navItem.text}</span></Nav.Link>;
-        }
-        else {
-            throw "Invalid nav item, specify a route and/or an onClick handler.";
-        }
-    });
-
-    return items;
-
-}
 
 Sidebar.defaultProps = {
     navItems: [],

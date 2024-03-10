@@ -6,6 +6,7 @@ import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Components } from './pages/Components';
 import { Providers } from './pages/Providers';
 import { Home } from './pages/Home';
+import { Profile } from "./pages/Profile";
 
 
 const root = ReactDOM.createRoot(
@@ -23,6 +24,7 @@ const router = createMooAppBrowserRouter({
       providers: { path: "/providers", element: <Providers /> },
       componentsSubcomponents: { path: "/components/subcomponents", element: <Components /> },
       settings: { path: "/settings", element: <Components /> },
+      profile: {path: "/profile", element: <Profile />},
     }
   }
 });
@@ -41,4 +43,3 @@ root.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 //596dfa38-50f8-4b83-8513-dfd3473d2072
-
