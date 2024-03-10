@@ -1,8 +1,6 @@
 import React, { PropsWithChildren, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { BrowserRouter } from "react-router-dom";
-
 import { AppProvider, HttpClientProvider, MessageProvider } from "./providers";
 
 import getMsalInstance from "./login/msal";
@@ -39,11 +37,9 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, cli
         <HttpClientProvider baseUrl={baseUrl} scopes={scopes}>
           <QueryClientProvider client={queryClient}>
             <MessageProvider>
-              <BrowserRouter>
-                <Login>
-                  {children}
-                </Login>
-              </BrowserRouter>
+              <Login>
+                {children}
+              </Login>
             </MessageProvider>
           </QueryClientProvider>
         </HttpClientProvider>

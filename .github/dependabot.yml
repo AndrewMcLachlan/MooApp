@@ -12,6 +12,13 @@ updates:
     reviewers:
       - andrewmcLachlan
 
+  - package-ecosystem: "npm" # See documentation for possible values
+    directory: "/example" # Location of package manifests
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - andrewmcLachlan
+
   - package-ecosystem: github-actions
     directory: /
     schedule:

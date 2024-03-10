@@ -1,7 +1,6 @@
 import "./App.scss";
 
-import { Alerts, Layout, SearchBox } from "@andrewmclachlan/mooapp";
-import { Route, Routes } from "react-router-dom";
+import { MooAppLayout, SearchBox, createMooAppBrowserRouter } from "@andrewmclachlan/mooapp";
 import { Components } from "./pages/Components";
 import { useIsAuthenticated } from "@azure/msal-react";
 import { Tags } from "./assets";
@@ -35,21 +34,11 @@ const sidebarNav = [
 ];
 
   return (
-    <Layout size="small">
-      <Alerts />
-      <Layout.Header Menu={[<Link to="/"><Tags /></Link>]} Search={<SearchBox />} />
-      <Layout.MobileHeader Menu={[<Link to="/"><Tags /></Link>]} />
-      <Layout.Sidebar navItems={sidebarNav} />
-      <Layout.MobileSidebar navItems={sidebarNav} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/components" element={<Components />} />
-        <Route path="/providers" element={<Providers />} />
-        <Route path="/components/subcomponents" element={<Components />} />
-        <Route path="/settings" element={<Components />} />
-      </Routes>
-      <Layout.Footer copyrightYear={2022} />
-    </Layout>
+    <MooAppLayout
+      header={{ Menu: [<Link to="/"><Tags /></Link>], Search: <SearchBox /> }}
+      sidebar={{ navItems: sidebarNav }}
+      footer={{ copyrightYear: 2022}}
+      />
   );
 }
 

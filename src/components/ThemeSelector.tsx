@@ -8,6 +8,5 @@ export const ThemeSelector = () => {
 
     return (
         <Select value={theme} onChange={(t) => setTheme(t)} options={Themes} getOptionLabel={t => t.name} getOptionValue={t => t.theme?.toString()} className="react-select" classNamePrefix="react-select" />
-
     );
 }
