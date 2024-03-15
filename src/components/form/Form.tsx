@@ -6,7 +6,7 @@ import { Select, SelectComponent } from "./Select";
 import { Input, InputComponent } from "./Input";
 import { TextArea, TextAreaComponent } from "./TextArea";
 
-export type FormComponent<TFormValues> = PropsWithChildren<FormProps<TFormValues>> & {
+export type FormComponent<TFormValues> = React.FC<PropsWithChildren<FormProps<TFormValues>>> & {
     Input: InputComponent;
     Select: SelectComponent;
     Group: GroupComponent;
@@ -14,7 +14,7 @@ export type FormComponent<TFormValues> = PropsWithChildren<FormProps<TFormValues
     TextArea: TextAreaComponent;
 };
 
-export const Form = <TFormValues,>({onSubmit, children, ...rest}: FormComponent<TFormValues>): React.ReactNode => {
+export const Form: FormComponent<any> = <TFormValues,>({onSubmit, children, ...rest}: PropsWithChildren<FormProps<TFormValues>>) => {
 
     const forms = useForm<TFormValues>();
 
