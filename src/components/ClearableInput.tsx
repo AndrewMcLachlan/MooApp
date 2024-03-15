@@ -3,7 +3,7 @@ import { Form, FormControlProps } from "react-bootstrap";
 import { BsPrefixRefForwardingComponent } from "react-bootstrap/esm/helpers";
 
 //@ts-ignore
-export const Input: BsPrefixRefForwardingComponent<"input", InputProps> = forwardRef<HTMLInputElement, InputProps>(({clearable, ...rest}, ref) => {
+export const ClearableInput: BsPrefixRefForwardingComponent<"input", ClearableInputProps> = forwardRef<HTMLInputElement, ClearableInputProps>(({clearable, ...rest}, ref) => {
 
     const innerRef = useRef<HTMLInputElement>(null);
 
@@ -24,7 +24,7 @@ export const Input: BsPrefixRefForwardingComponent<"input", InputProps> = forwar
         }
     }, [ref, innerRef, innerRef.current]);
 
-    const formControlProps = {ref: innerRef, ...rest} as InputProps;
+    const formControlProps = {ref: innerRef, ...rest} as ClearableInputProps;
 
     return (
         <div className={clearable && "clearable"}>
@@ -35,10 +35,10 @@ export const Input: BsPrefixRefForwardingComponent<"input", InputProps> = forwar
 }
 );
 
-Input.defaultProps = {
+ClearableInput.defaultProps = {
     clearable: false,
 }
 
-export interface InputProps extends FormControlProps {
+export interface ClearableInputProps extends FormControlProps {
     clearable?: boolean;
 }
