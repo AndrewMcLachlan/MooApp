@@ -1,11 +1,16 @@
 import classNames from "classnames";
+import { useFormGroup } from "./FormGroupProvider";
 
 export type TextAreaComponent = React.FC<TextAreaProps>;
 
-export const TextArea: TextAreaComponent = ({ className, ...rest }) => {
+export const TextArea: TextAreaComponent = ({ className, id, ...rest }) => {
+
+    const group = useFormGroup();
+
+    id = id ?? group.groupId;
 
     return (
-        <textarea className={classNames("form-control", className)} {...rest} />
+        <textarea id={id} className={classNames("form-control", className)} {...rest} />
     );
 }
 
