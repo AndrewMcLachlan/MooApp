@@ -1,5 +1,5 @@
 import { DefaultError, useMutation, UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
-import { useMessages } from "providers";
+import { useMessages } from "providers/MessageProvider";
 import { useHttpClient } from "providers/HttpClientProvider";
 import { processAxiosError } from "./processAxiosError";
 

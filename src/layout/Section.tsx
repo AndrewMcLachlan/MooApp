@@ -1,8 +1,8 @@
 import classNames from "classnames";
 
-export const Section: React.FC<React.PropsWithChildren<SectionProps>> = ({ title, size, children, className, ...rest}) => {
+export const Section: React.FC<React.PropsWithChildren<SectionProps>> = ({ title, titleSize, children, className, ...rest}) => {
 
-    const H: any = `h${size}`;
+    const H: any = `h${titleSize}`;
 
     return (
 
@@ -14,14 +14,10 @@ export const Section: React.FC<React.PropsWithChildren<SectionProps>> = ({ title
 }
 
 Section.defaultProps = {
-    size: 2,
+    titleSize: 2,
 };
 
 export interface SectionProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
     title?: string;
-    /** 
-     * @deprecated use titleSize
-     */
-    size?: 1 | 2 | 3 | 4 | 5 | 6;
     titleSize?: 1 | 2 | 3 | 4 | 5 | 6;
 }
