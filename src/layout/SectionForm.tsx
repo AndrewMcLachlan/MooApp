@@ -1,4 +1,4 @@
-import { Form, FormProps } from "components/form/Form";
+import { Form, FormProps } from "../components";
 import { PropsWithChildren } from "react";
 
 export const SectionForm = <TFormValues,>({ title, titleSize, children, ...rest }: PropsWithChildren<SectionFormProps<TFormValues>>) => {
