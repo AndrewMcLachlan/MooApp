@@ -1,3 +1,11 @@
 .btn svg {
 margin-right: 5px;
+stroke: var(--bs-btn-color);
+fill: var(--bs-btn-color);
+}
+
+.btn svg.custom-icon {
+    height: 18px;
+    width: 18px;
+    vertical-align: -4px;
 }

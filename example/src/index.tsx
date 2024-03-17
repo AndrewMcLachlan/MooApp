@@ -1,13 +1,15 @@
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { Alerts, ErrorBoundary, Layout, MooApp, createMooAppBrowserRouter } from "@andrewmclachlan/mooapp";
+import { Alerts, ErrorBoundary, IconLinkButton, Layout, MooApp, createMooAppBrowserRouter } from "@andrewmclachlan/mooapp";
 import reportWebVitals from './reportWebVitals';
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Components } from './pages/Components';
 import { Providers } from './pages/Providers';
 import { Home } from './pages/Home';
 import { Profile } from "./pages/Profile";
-
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faArrowsRotate, faCheck, faCheckCircle, faTrashAlt, faChevronDown, faChevronUp, faTimesCircle, faArrowLeft, faChevronRight, faCircleChevronLeft, faLongArrowUp, faLongArrowDown, faUpload, faXmark, faFilterCircleXmark, faInfoCircle, faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { IconLinkButtonComponent } from "./pages/components/IconLinkButtonComponent";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,13 +18,15 @@ const root = ReactDOM.createRoot(
 console.debug((import.meta as any).env);
 console.debug((import.meta as any).env.VITE_REACT_APP_VERSION);
 
+library.add(faArrowsRotate, faCheck, faCheckCircle, faTrashAlt, faChevronDown, faChevronUp, faTimesCircle, faArrowLeft, faLongArrowUp, faLongArrowDown, faChevronRight, faCircleChevronLeft, faUpload, faXmark, faFilterCircleXmark, faInfoCircle, faPenToSquare, faPlus);
+
 const router = createMooAppBrowserRouter({
   layout: {
     path: "/", element: <App />, children: {
       home: { path: "/", element: <Home /> },
       components: { path: "/components", element: <Components /> },
       providers: { path: "/providers", element: <Providers /> },
-      componentsSubcomponents: { path: "/components/subcomponents", element: <Components /> },
+      componentsSubcomponents: { path: "/components/iconlinkbutton", element: <IconLinkButtonComponent /> },
       settings: { path: "/settings", element: <Components /> },
       profile: {path: "/profile", element: <Profile />},
     }
