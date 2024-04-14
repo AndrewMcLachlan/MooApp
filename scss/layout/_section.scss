@@ -3,6 +3,7 @@ main > section,
     background-color: var(--section-bg);
     padding: 15px;
     border: $border;
+    border-radius: 2px;
 
     @include h-all {
         padding: 0 0 0.5rem;
@@ -16,7 +17,7 @@ main > section,
         }
 
         padding: 0;
-     
+
         > table {
             margin-bottom: 0;
         }

@@ -7,13 +7,13 @@ $border: 1px solid var(--bs-border-color);
 
   --page-header-background: #111;
   --page-header-text: #F6F6F6;
-  
+
   --bs-body-colour: var(--bs-body-color);
-  
+
   //--primary: #8b0000;
   //--bs-primary: var(--primary);
   //--bs-primary-rgb: 0, 123, 255;
-  
+
   --input-border: #666;
   --disabled: #999;
 
@@ -33,12 +33,12 @@ $border: 1px solid var(--bs-border-color);
     --bs-body-color: rgb(46,41,36);
     --body-colour-bold: #000;
     --body-colour-dim: rgb(76, 71, 66);
-    
+
     --bs-secondary-color: rgb(36,32,27);
 
     --header-bg: #FFF;
     --section-bg: rgb(251, 248, 244);
-    
+
     --hover: #E6E6E6;
 
     --breadcrumb-bg: var(--header-bg);
@@ -56,13 +56,13 @@ $border: 1px solid var(--bs-border-color);
     --body-colour-dim: rgba(251, 248, 244, .65);
 
     --bs-secondary-color: rgb(151,148,144);
-  
+
     --header-bg: rgb(31,27,24);
     --section-bg: rgb(31,27,24);
 
     --footer-bg: rgb(31,27,24);
     --hover: #6E6E6E;
-    --bs-border-color: rgba(251, 248, 244, .15);
+    --bs-border-color: rgba(251, 248, 244, .1);
 
     --breadcrumb-bg: var(--header-bg);
     --header-text: var(--bs-body-color);
