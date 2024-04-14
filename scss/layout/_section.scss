@@ -17,18 +17,18 @@ main > section,
             margin: 0;
         }
 
+        th:first-child, td:first-child {
+            padding-left: 1rem;
+        }
+
+        th:last-child, td:last-child {
+            padding-left: 1rem;
+        }
+
         padding: 0;
 
         > table {
             margin-bottom: 0;
-
-            th:first-child, td:first-child {
-                padding-left: 1rem;
-            }
-
-            th:last-child, td:last-child {
-                padding-left: 1rem;
-            }
         }
 
         border-bottom-width: 0;
