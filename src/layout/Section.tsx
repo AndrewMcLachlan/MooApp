@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { SectionSubheading, SectionSubheadingComponent } from "./SectionSubheading";
 
 export type SectionComponent = React.FC<React.PropsWithChildren<SectionProps>> & {
-    SubHeading: SectionSubheadingComponent;
+    Subheading: SectionSubheadingComponent;
 };
 
 const Section: SectionComponent = ({ title, titleSize, children, className, ...rest }) => {
@@ -22,7 +22,7 @@ Section.defaultProps = {
     titleSize: 2,
 };
 
-Section.SubHeading = SectionSubheading;
+Section.Subheading = SectionSubheading;
 
 export { Section };
 
