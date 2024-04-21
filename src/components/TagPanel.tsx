@@ -1,5 +1,5 @@
 import { ElementType, useRef, useState } from "react";
-import { useClickAway } from "hooks";
+import { useClickAway } from "../hooks";
 import Select, { ActionMeta, MultiValue } from "react-select";
 import Creatable, { CreatableProps } from "react-select/creatable";
 import classNames from "classnames";

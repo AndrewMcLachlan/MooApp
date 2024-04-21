@@ -1,8 +1,8 @@
-import { getPagesToDisplay } from "utils/paging";
+import { getPagesToDisplay } from "../utils/paging";
 import { Pagination as BSPagination } from "react-bootstrap"
 
 export const Pagination : React.FC<PaginationProps> = ({pageNumber, numberOfPages, onChange}) => {
-    
+
     const showNext = pageNumber < numberOfPages;
     const showPrev = pageNumber > 1;
 

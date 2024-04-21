@@ -1,5 +1,5 @@
-import { FooterComponent } from "layout/Types";
-import { useApp } from "providers";
+import { FooterComponent } from "../Types";
+import { useApp } from "../../providers";
 import { Container } from "react-bootstrap";
 
 export const Footer: FooterComponent = ({ copyrightYear, ...rest }) => {

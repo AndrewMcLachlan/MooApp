@@ -1,14 +1,15 @@
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import { Breadcrumb } from "components";
-import { HeaderComponent } from "layout/Types";
-import { useApp, useLayout } from "providers";
+import { Breadcrumb } from "../../components";
+import { HeaderComponent } from "../Types";
+import { useApp, useLayout } from "../../providers";
 import { UserMenu } from "../UserMenu";
+import { MenuToggle } from "../MenuToggle";
 
 export const Header: HeaderComponent = (props) => {
 
-    const { size, breadcrumbs, actions } = useLayout();
+    const { size, breadcrumbs, actions, sidebarCollapsed, setSidebarCollapsed } = useLayout();
     const { name: appName } = useApp();
 
     const logoHeight = size == "default" ? 80 : 40;
@@ -34,6 +35,7 @@ export const Header: HeaderComponent = (props) => {
                 </nav>
             </Container>
             <Container fluid className="second-header">
+                <MenuToggle onClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
                 <Breadcrumb breadcrumbs={breadcrumbs} />
                 <div className="actions">
                     {actions}

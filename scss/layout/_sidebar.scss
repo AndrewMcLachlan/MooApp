@@ -1,5 +1,4 @@
 .sidebar {
-
     grid-area: sidebar;
 
     height: 100%;
@@ -14,33 +13,14 @@
     justify-content: space-between;
     overflow: hidden;
 
-    .sidebar-collapse {
-        border-top: $border;
-        height: 3rem;
-        padding-right: 17px;
-        display: flex;
-        align-content: flex-end;
-        align-items: center;
-        justify-content: end;
-        line-height: 3rem;
-        padding-right: 15px;
-
-        svg {
-            height: 1.2rem;
-            width: 1.2rem;
-            transition: rotate 250ms ease-in-out;
-        }
-    }
-
     transition: width 350ms ease-in-out;
 
     .nav-link span {
         transition: opacity 100ms linear;
     }
 
-
     &.collapsed {
-        width: 55px;
+        width: 50px;
         align-content: center;
         padding-right: 0;
 
@@ -54,7 +34,6 @@
     }
 
     .nav-link {
-
         white-space: nowrap;
 
         display: flex;
@@ -84,7 +63,7 @@
         &.active::before {
             position: absolute;
             margin-left: -10px;
-            content: '';
+            content: "";
             background-color: #8b0000;
             width: 5px;
             height: 1.5rem;
@@ -97,6 +76,11 @@
             height: 1.5rem;
             width: 1.5rem;
         }
+    }
+
+    // Required to enforce minimum width while retaining the transition animation
+    .spacer {
+        width: 200px;
     }
 
     .divider {

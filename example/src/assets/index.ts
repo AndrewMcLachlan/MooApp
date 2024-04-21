@@ -3,6 +3,7 @@ export {default as BarChart } from "./bar-chart.svg?react";
 export {default as Budget } from "./budget.svg?react";
 export {default as Cog } from "./cog.svg?react";
 export {default as Dashboard } from "./dashboard.svg?react";
+export {default as HamburgerMenu } from "./hamburger-menu.svg?react";
 export {default as Hierarchy } from "./hierarchy.svg?react";
 export {default as Import } from "./import.svg?react";
 export {default as LeftRightArrow } from "./left-right-arrow.svg?react";

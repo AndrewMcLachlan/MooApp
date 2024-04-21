@@ -1,6 +1,6 @@
 import { DefaultError, useMutation, UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useHttpClient } from "../providers/HttpClientProvider";
-import { useMessages } from "providers/MessageProvider";
+import { useMessages } from "../providers/MessageProvider";
 import { processAxiosError } from "./processAxiosError";
 
 export const useApiDelete = <Variables>(path: (variables: Variables) => string, options?: UseMutationOptions<null, Error, Variables>): UseMutationResult<Response, DefaultError, Variables> => {

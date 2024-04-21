@@ -1,12 +1,10 @@
 
-import { useLocalStorage } from "hooks";
-import { SidebarComponent } from "layout/Types";
-import { useLayout } from "providers";
+import { SidebarComponent } from "../Types";
+import { useLayout } from "../../providers";
 import React, { ReactNode, isValidElement } from "react";
 import { Button, Nav, Offcanvas } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { LayoutOptions, NavItem } from "../../models";
-import { LayoutComponent } from "layout/Layout";
+import { LayoutContext, NavItem } from "../../models";
 
 export const Sidebar: SidebarComponent = ({ children, ...props }) => {
 
@@ -30,7 +28,7 @@ export const Sidebar: SidebarComponent = ({ children, ...props }) => {
     );
 };
 
-const renderMenu = (layout: LayoutOptions, navItems: (NavItem | ReactNode)[]) => {
+const renderMenu = (layout: LayoutContext, navItems: (NavItem | ReactNode)[]) => {
 
     const items: React.ReactNode[] = navItems.map((item, index) => {
 

@@ -1,4 +1,4 @@
-import { useApp } from "providers/AppProvider";
+import { useApp } from "../providers/AppProvider";
 import { useMemo } from "react";
 
 export function usePageTitle(title?: string) {

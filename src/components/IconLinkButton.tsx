@@ -4,18 +4,17 @@ import { ElementType, PropsWithChildren } from "react";
 import { ButtonProps } from "react-bootstrap";
 import { Link, LinkProps } from "react-router-dom";
 
-export const IconLinkButton: React.FC<PropsWithChildren<IconLinkButtonProps>> = ({ children, icon, customIcon, variant, ...link }) => {
+export const IconLinkButton: React.FC<PropsWithChildren<IconLinkButtonProps>> = ({ children, icon, variant, ...link }) => {
 
-    const CustomIconElement = customIcon;
+    const CustomIconElement = icon as ElementType;
 
-    const IconNode = (icon && <FontAwesomeIcon icon={icon} />) || (customIcon && <CustomIconElement className="custom-icon" />);
+    const IconNode = typeof icon === "function" ? <CustomIconElement className="custom-icon" /> : <FontAwesomeIcon icon={icon as IconProp} />;
 
     return (
-        <Link {...link} className={`btn ${variant && `btn-${variant}`} `}>{IconNode}{children}</Link>
+        <Link {...link} className={`btn ${variant && `btn-${variant}`} btn-icon `}><div>{IconNode}<span>{children}</span></div></Link>
     );
 };
 
 export interface IconLinkButtonProps extends LinkProps, Pick<ButtonProps, "variant"> {
-    icon?: IconProp;
-    customIcon?: ElementType;
+    icon?: IconProp | ElementType;
 }

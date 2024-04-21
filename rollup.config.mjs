@@ -1,9 +1,11 @@
+import react from "@vitejs/plugin-react"
 import typescript from "@rollup/plugin-typescript"
 import commonjs from "@rollup/plugin-commonjs"
 import resolve from "@rollup/plugin-node-resolve"
 import external from "rollup-plugin-peer-deps-external"
 import postcss from "rollup-plugin-postcss"
 import svgr from "@svgr/rollup"
+//import svgr from "vite-plugin-svgr";
 
 import pkg from "./package.json" assert { type: "json" }
 
@@ -33,6 +35,6 @@ export default {
     }),
     svgr(),
     typescript(),
-    commonjs()
+    //commonjs()
   ]
 }

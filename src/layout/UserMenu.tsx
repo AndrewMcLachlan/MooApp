@@ -1,9 +1,9 @@
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { Avatar } from "../components";
-import { ThemeSelector } from "components/ThemeSelector";
-import { NavItem } from "models";
-import { renderMenu } from "utils";
+import { ThemeSelector } from "../components/ThemeSelector";
+import { NavItem } from "../models";
+import { renderMenu } from "../utils";
 
 export const UserMenu: React.FC<UserMenuProps> = ({userMenu}) => {
     const msal = useMsal();

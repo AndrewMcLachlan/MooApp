@@ -1,6 +1,6 @@
 import { useTheme } from "../providers"
 import Select from "react-select";
-import { Themes } from "models";
+import { Themes } from "../models";
 
 export const ThemeSelector = () => {
 

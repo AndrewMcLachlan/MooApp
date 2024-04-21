@@ -1,4 +1,4 @@
-import { useMessages } from "providers"
+import { useMessages } from "../providers"
 import { Alert, Button } from "react-bootstrap";
 
 export const Alerts = () => {

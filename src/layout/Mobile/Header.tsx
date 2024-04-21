@@ -1,8 +1,9 @@
-import { Breadcrumb } from "components";
-import { HeaderComponent } from "layout/Types";
-import { UserMenu } from "layout/UserMenu";
-import { useApp, useLayout } from "providers";
-import { Container, Navbar } from "react-bootstrap";
+import { Breadcrumb } from "../../components";
+import { MenuToggle } from "../../layout/MenuToggle";
+import { HeaderComponent } from "../../layout/Types";
+import { UserMenu } from "../../layout/UserMenu";
+import { useApp, useLayout } from "../../providers";
+import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export const Header: HeaderComponent = (props) => {
@@ -31,8 +32,7 @@ export const Header: HeaderComponent = (props) => {
                 </nav>
             </Container>
             <Container fluid className="second-header">
-                {/*<button className="sidebar-toggle" onClick={() => document.body.classList.toggle("sidebar-open")}><img src="/logo.svg" alt={`${appName} home`} height={logoHeight} className="logo" /></button>*/}
-                <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setShowSidebar(true)} />
+                <MenuToggle onClick={() => setShowSidebar(true)} />
                 <Breadcrumb breadcrumbs={breadcrumbs} />
                 <div className="actions">
                     {actions}

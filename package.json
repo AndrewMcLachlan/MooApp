@@ -31,6 +31,8 @@
     "react-router-bootstrap": "^0.26.2"
   },
   "scripts": {
+    "vite": "vite",
+    "vite-build": "tsc && vite build",
     "start": "rollup -c -w",
     "build": "rollup -c"
   },
@@ -71,13 +73,16 @@
     "@types/react-dom": "^18.2.23",
     "@types/react-router-bootstrap": "^0.26.6",
     "@types/react-router-dom": "^5.3.3",
+    "@vitejs/plugin-react": "^4.2.1",
     "react-dom": "^18.2.0",
     "rollup": "^4.14.3",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-svgr": "^2.0.0",
     "sass": "^1.75.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vite": "^5.2.9",
+    "vite-plugin-svgr": "^4.2.0"
   },
   "peerDependencies": {
     "react": ">=18.2.0",

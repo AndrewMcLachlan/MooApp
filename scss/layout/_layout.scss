@@ -34,10 +34,10 @@ html, body, #root, .app-container {
       --h1-size: 1.4rem;
       --h2-size: 1.4rem;
 
-  }  
+  }
 
   @include media-breakpoint-down(lg) {
-      grid-template-areas: 
+      grid-template-areas:
       "header header"
       "main main";
 
@@ -45,4 +45,3 @@ html, body, #root, .app-container {
       grid-template-rows: 80px 1fr;
   }
 }
-

@@ -3,11 +3,11 @@ import { FontAwesomeIcon, FontAwesomeIconProps } from "@fortawesome/react-fontaw
 import { ElementType, PropsWithChildren } from "react";
 import { Button, ButtonProps } from "react-bootstrap";
 
-export const IconButton: React.FC<PropsWithChildren<IconButtonProps>> = ({ children, icon, customIcon, ...button }) => {
+export const IconButton: React.FC<PropsWithChildren<IconButtonProps>> = ({ children, icon, ...button }) => {
 
-    const CustomIconElement = customIcon;
+    const CustomIconElement = icon as ElementType;
 
-    const IconNode = (icon && <FontAwesomeIcon icon={icon} />) || (customIcon && <CustomIconElement className="custom-icon" />);
+    const IconNode = typeof icon === "function" ? <CustomIconElement className="custom-icon" /> : <FontAwesomeIcon icon={icon as IconProp} />;
 
     return (
         <Button {...button}>{IconNode}{children}</Button>
@@ -15,6 +15,5 @@ export const IconButton: React.FC<PropsWithChildren<IconButtonProps>> = ({ child
 }
 
 export interface IconButtonProps extends ButtonProps {
-    icon?: IconProp;
-    customIcon?: ElementType;
+    icon?: IconProp | ElementType;
 }
