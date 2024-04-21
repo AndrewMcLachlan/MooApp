@@ -1,6 +1,11 @@
 import classNames from "classnames";
+import { SectionSubheading, SectionSubheadingComponent } from "./SectionSubheading";
 
-export const Section: React.FC<React.PropsWithChildren<SectionProps>> = ({ title, titleSize, children, className, ...rest}) => {
+export type SectionComponent = React.FC<React.PropsWithChildren<SectionProps>> & {
+    SubHeading: SectionSubheadingComponent;
+};
+
+const Section: SectionComponent = ({ title, titleSize, children, className, ...rest }) => {
 
     const H: any = `h${titleSize}`;
 
@@ -16,6 +21,10 @@ export const Section: React.FC<React.PropsWithChildren<SectionProps>> = ({ title
 Section.defaultProps = {
     titleSize: 2,
 };
+
+Section.SubHeading = SectionSubheading;
+
+export { Section };
 
 export interface SectionProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
     title?: string;
