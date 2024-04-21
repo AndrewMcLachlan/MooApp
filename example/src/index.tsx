@@ -10,6 +10,7 @@ import { Profile } from "./pages/Profile";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowsRotate, faCheck, faCheckCircle, faTrashAlt, faChevronDown, faChevronUp, faTimesCircle, faArrowLeft, faChevronRight, faCircleChevronLeft, faLongArrowUp, faLongArrowDown, faUpload, faXmark, faFilterCircleXmark, faInfoCircle, faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { IconLinkButtonComponent } from "./pages/components/IconLinkButtonComponent";
+import { IconButtonComponent } from "./pages/components/IconButtonComponent";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -27,6 +28,7 @@ const router = createMooAppBrowserRouter({
       components: { path: "/components", element: <Components /> },
       providers: { path: "/providers", element: <Providers /> },
       componentsSubcomponents: { path: "/components/iconlinkbutton", element: <IconLinkButtonComponent /> },
+      componentsIconButton: { path: "/components/iconbutton", element: <IconButtonComponent /> },
       settings: { path: "/settings", element: <Components /> },
       profile: {path: "/profile", element: <Profile />},
     }
