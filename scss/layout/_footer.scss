@@ -1,36 +1,33 @@
 @import "../variables";
 
-.app-container>footer {
-
+.app-container > footer {
   grid-area: footer;
 
-  font-family: var(--secondary-fonts);
   width: 100%;
   background: var(--footer-bg);
   text-align: center;
   color: var(--footer-text);
   letter-spacing: 0.3px;
   border-top: $border;
-  
+  font-weight: 200;
+
   height: var(--footer-height);
   min-height: var(--footer-height);
-  
+
   .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 100%;
-      font-size: var(--footer-text-size);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    font-size: var(--footer-text-size);
   }
 
   a {
     color: var(--footer-text);
-    font-size: 0.8em;
-    font-weight: bold;
+    font-weight: 400;
   }
 
   @include media-breakpoint-down(md) {
-
     ul {
       width: 90%;
       height: 100%;
