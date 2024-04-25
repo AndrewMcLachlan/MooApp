@@ -5,6 +5,12 @@ main > section,
     border: $border;
     border-radius: 2px;
 
+    position: relative;
+
+    .body {
+        flex: 1;
+    }
+
     @include h-all {
         padding: 0 0 1rem;
         margin: 0;

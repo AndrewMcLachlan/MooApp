@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { Table, TableProps } from "react-bootstrap"
-import { Section } from "./Section";
+import { Section } from "./Section/Section";
 import classNames from "classnames";
 
 export const SectionTable: React.FC<PropsWithChildren<SectionTableProps & React.RefAttributes<HTMLTableElement>>> = ({ title, titleSize, className, ...rest }) => (

@@ -1,7 +1,11 @@
 import classNames from "classnames";
 import { SectionSubheading, SectionSubheadingComponent } from "./SectionSubheading";
+import { SectionHeader, SectionHeaderComponent } from "./SectionHeader";
+import { SectionBody, SectionBodyComponent } from "./SectionBody";
 
 export type SectionComponent = React.FC<React.PropsWithChildren<SectionProps>> & {
+    Body: SectionBodyComponent;
+    Header: SectionHeaderComponent;
     Subheading: SectionSubheadingComponent;
 };
 
@@ -22,6 +26,8 @@ Section.defaultProps = {
     titleSize: 2,
 };
 
+Section.Body = SectionBody;
+Section.Header = SectionHeader;
 Section.Subheading = SectionSubheading;
 
 export { Section };
