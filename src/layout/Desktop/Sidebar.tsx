@@ -1,7 +1,4 @@
-import Chevron from "../../assets/chevron.svg";
-
 import classNames from "classnames";
-import { useLocalStorage } from "../../hooks";
 import { useLayout } from "../../providers";
 import { Nav } from "react-bootstrap";
 import { SidebarComponent } from "../Types";
