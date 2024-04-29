@@ -75,7 +75,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.2.1",
     "react-dom": "^18.2.0",
-    "rollup": "^4.14.3",
+    "rollup": "^4.17.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-svgr": "^2.0.0",
