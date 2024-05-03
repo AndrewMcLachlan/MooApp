@@ -54,7 +54,9 @@ export const TagPanel = <T extends unknown>({ as = "div", allowCreate = false, r
     const displayEdit = !readonly  && (editMode || props.alwaysShowEditPanel);
     const isReadonly = readonly || (!editMode && !props.alwaysShowEditPanel);
 
-    const { as: As,
+    const As = as;
+
+    const {
         selectedItems,
         items,
         labelField,
