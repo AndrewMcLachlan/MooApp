@@ -2,9 +2,9 @@ import React from "react";
 import { SortDirection } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const SortIcon: React.FC<SortIconProps> = (props) => {
+export const SortIcon: React.FC<SortIconProps> = ({ hidden = false, ...props }) => {
 
-    if (props.hidden) return null;
+    if (hidden) return null;
 
     const icon = props.direction === "Ascending" ? "long-arrow-up" : "long-arrow-down";
 
@@ -12,10 +12,6 @@ export const SortIcon: React.FC<SortIconProps> = (props) => {
         <FontAwesomeIcon icon={icon} />
     );
 };
-
-SortIcon.defaultProps = {
-    hidden: false
-}
 
 export interface SortIconProps {
     direction: SortDirection

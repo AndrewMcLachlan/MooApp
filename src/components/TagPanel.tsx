@@ -4,7 +4,7 @@ import Select, { ActionMeta, MultiValue } from "react-select";
 import Creatable, { CreatableProps } from "react-select/creatable";
 import classNames from "classnames";
 
-export const TagPanel = <T extends unknown>(props: TagPanelProps<T, any>) => {
+export const TagPanel = <T extends unknown>({ as = "div", allowCreate = false, readonly = false, alwaysShowEditPanel = false, ...props }: TagPanelProps<T, any>) => {
 
     const [editMode, setEditMode] = useState(false);
     const ref = useRef(null);
@@ -51,11 +51,10 @@ export const TagPanel = <T extends unknown>(props: TagPanelProps<T, any>) => {
 
     const getOptionLabel = (item: T) => props.labelField(item) ?? (props.allowCreate && "Create new tag...");
 
-    const displayEdit = editMode || props.alwaysShowEditPanel;
-    const readonly = !editMode && !props.alwaysShowEditPanel;
+    const displayEdit = !readonly  && (editMode || props.alwaysShowEditPanel);
+    const isReadonly = readonly || (!editMode && !props.alwaysShowEditPanel);
 
-    const { as: As, allowCreate,
-        alwaysShowEditPanel,
+    const { as: As,
         selectedItems,
         items,
         labelField,
@@ -67,18 +66,9 @@ export const TagPanel = <T extends unknown>(props: TagPanelProps<T, any>) => {
 
     return (
         <props.as ref={ref} className={classNames("tag-panel", displayEdit && "edit-mode")} onClick={onClick} onKeyUp={rest.onKeyUp ?? keyUp} onTouchStart={() => setEditMode(true)}>
-            <Component unstyled={readonly} {...extraProps} options={props.items} isMulti isClearable value={props.selectedItems} getOptionLabel={getOptionLabel} getOptionValue={props.valueField} onChange={onChange} className={classNames("react-select", readonly && "readonly")} classNamePrefix="react-select" />
+            <Component unstyled={isReadonly} {...extraProps} options={props.items} isMulti isClearable value={props.selectedItems} getOptionLabel={getOptionLabel} getOptionValue={props.valueField} onChange={onChange} className={classNames("react-select", isReadonly && "readonly")} classNamePrefix="react-select" />
         </props.as>
     );
-}
-
-TagPanel.displayName = "TagPanel";
-
-TagPanel.defaultProps = {
-    as: "div",
-    allowCreate: false,
-    readonly: false,
-    alwaysShowEditPanel: false,
 }
 
 export type TagPanelProps<TData, TElement extends ElementType> = Props<TData, TElement> & Omit<React.ComponentPropsWithoutRef<TElement>, keyof Props<TData, TElement>>;

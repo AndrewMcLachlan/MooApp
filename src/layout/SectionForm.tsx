@@ -1,7 +1,7 @@
 import { Form, FormProps } from "../components";
 import { PropsWithChildren } from "react";
 
-export const SectionForm = <TFormValues,>({ title, titleSize, children, ...rest }: PropsWithChildren<SectionFormProps<TFormValues>>) => {
+export const SectionForm = <TFormValues,>({ title, titleSize = 2, children, ...rest }: PropsWithChildren<SectionFormProps<TFormValues>>) => {
 
     const H: any = `h${titleSize}`;
 
@@ -12,10 +12,6 @@ export const SectionForm = <TFormValues,>({ title, titleSize, children, ...rest 
         </Form>
     );
 }
-
-SectionForm.defaultProps = {
-    titleSize: 2,
-};
 
 export interface SectionFormProps<TFormValues> extends FormProps<TFormValues> {
     title?: string;

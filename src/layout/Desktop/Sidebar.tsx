@@ -4,14 +4,14 @@ import { Nav } from "react-bootstrap";
 import { SidebarComponent } from "../Types";
 import { renderMenu } from "../../utils";
 
-export const Sidebar: SidebarComponent = ({ children, ...props }) => {
+export const Sidebar: SidebarComponent = ({ navItems = [] }) => {
 
     const layout = useLayout();
 
     return (
         <div id="sidebar" className={classNames("sidebar", layout.sidebarCollapsed ? "collapsed" : "", "d-none d-lg-flex")}>
             <Nav className="flex-column">
-                {renderMenu(props.navItems)}
+                {renderMenu(navItems)}
                 {layout.secondaryNav.length > 0 &&
                     <>
                         <Nav.Item className="divider" />
@@ -22,8 +22,4 @@ export const Sidebar: SidebarComponent = ({ children, ...props }) => {
             </Nav>
         </div>
     );
-};
-
-Sidebar.defaultProps = {
-    navItems: [],
 };

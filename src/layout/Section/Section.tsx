@@ -9,7 +9,7 @@ export type SectionComponent = React.FC<React.PropsWithChildren<SectionProps>> &
     Subheading: SectionSubheadingComponent;
 };
 
-const Section: SectionComponent = ({ title, titleSize, children, className, ...rest }) => {
+const Section: SectionComponent = ({ title, titleSize = 2, children, className, ...rest }) => {
 
     const H: any = `h${titleSize}`;
 
@@ -21,10 +21,6 @@ const Section: SectionComponent = ({ title, titleSize, children, className, ...r
         </section>
     );
 }
-
-Section.defaultProps = {
-    titleSize: 2,
-};
 
 Section.Body = SectionBody;
 Section.Header = SectionHeader;

@@ -5,7 +5,7 @@ import { ThemeSelector } from "../components/ThemeSelector";
 import { NavItem } from "../models";
 import { renderMenu } from "../utils";
 
-export const UserMenu: React.FC<UserMenuProps> = ({userMenu}) => {
+export const UserMenu: React.FC<UserMenuProps> = ({userMenu = []}) => {
     const msal = useMsal();
     const isAuthenticated = useIsAuthenticated();
 
@@ -31,10 +31,6 @@ export const UserMenu: React.FC<UserMenuProps> = ({userMenu}) => {
             </div>
         </OverlayTrigger>
     );
-};
-
-UserMenu.defaultProps = {
-    userMenu: []
 };
 
 export interface UserMenuProps {

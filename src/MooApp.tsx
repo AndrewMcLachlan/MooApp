@@ -8,7 +8,7 @@ import getMsalInstance from "./login/msal";
 import { MsalProvider } from "@azure/msal-react";
 import { Login } from "./login/Login";
 
-export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, clientId, scopes, baseUrl, name, version }) => {
+export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, clientId, scopes = [], baseUrl = "/", name, version }) => {
 
   const [msalInstance, setMsalInstance] = React.useState<any>(null);
 
@@ -46,11 +46,6 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, cli
       </MsalProvider>
     </AppProvider >
   );
-};
-
-MooApp.defaultProps = {
-  scopes: [],
-  baseUrl: "/"
 };
 
 export interface MooAppProps {

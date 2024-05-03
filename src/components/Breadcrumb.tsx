@@ -2,7 +2,7 @@ import { NavItem } from "models";
 import { Breadcrumb as BSBreadcrumb, BreadcrumbProps as BSBreadcrumbProps } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
-export const Breadcrumb: React.FC<BreadcrumbProps> = ({breadcrumbs, ...rest}) => (
+export const Breadcrumb: React.FC<BreadcrumbProps> = ({breadcrumbs = [], ...rest}) => (
 
     <BSBreadcrumb {...rest}>
         <LinkContainer to="/">
@@ -15,12 +15,6 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({breadcrumbs, ...rest}) =>
         )}
     </BSBreadcrumb>
 );
-
-Breadcrumb.displayName = "Breadcrumb";
-
-Breadcrumb.defaultProps = {
-    breadcrumbs: [],
-};
 
 export interface BreadcrumbProps extends BSBreadcrumbProps {
     breadcrumbs?: NavItem[];

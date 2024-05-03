@@ -20,7 +20,7 @@ export type LayoutComponent = React.FC<PropsWithChildren<LayoutProps>> & {
   MobileSidebar: SidebarComponent;
 };
 
-const Layout: LayoutComponent = ({ size, children }) => {
+const Layout: LayoutComponent = ({ size = "default", children }) => {
 
   return (
     <ThemeProvider>
@@ -32,10 +32,6 @@ const Layout: LayoutComponent = ({ size, children }) => {
     </ThemeProvider>
   );
 };
-
-Layout.defaultProps = {
-  size: "default",
-}
 
 Layout.Footer = Footer;
 Layout.MobileFooter = MFooter;

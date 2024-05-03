@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const Upload: React.FC<UploadProps> = (props) => {
+export const Upload: React.FC<UploadProps> = ({allowMultiple = false, ...props}) => {
 
-    const dragEvents = useDragEvents(props);
+    const dragEvents = useDragEvents({allowMultiple, ...props});
 
     return (
         <section className="upload">
@@ -14,7 +14,7 @@ export const Upload: React.FC<UploadProps> = (props) => {
                         <span>Drag a file here</span>
                         <span>or click to browse</span>
                     </div>
-                    <input type="file" accept={props.accept} multiple={props.allowMultiple} onChange={dragEvents.filesChanged} />
+                    <input type="file" accept={props.accept} multiple={allowMultiple} onChange={dragEvents.filesChanged} />
                 </label>
             </div>
             <ul>
@@ -24,12 +24,6 @@ export const Upload: React.FC<UploadProps> = (props) => {
             </ul>
         </section>
     );
-}
-
-Upload.displayName = "Upload";
-
-Upload.defaultProps = {
-    allowMultiple: false,
 }
 
 const useDragEvents = (props: UploadProps) => {

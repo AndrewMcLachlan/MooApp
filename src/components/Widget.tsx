@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 import { Col } from "react-bootstrap";
 import { SpinnerContainer } from "./SpinnerContainer";
 
-export const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({ children, loading, ...rest }) => (
+export const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({ children, loading = false, ...rest }) => (
     <Col xl={4} lg={6} md={12}>
         <Section {...rest}>
             {loading && <SpinnerContainer />}
@@ -11,10 +11,6 @@ export const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({ children, loa
         </Section>
     </Col>
 )
-
-Widget.defaultProps = {
-    loading: false,
-}
 
 export interface WidgetProps {
     loading?: boolean;

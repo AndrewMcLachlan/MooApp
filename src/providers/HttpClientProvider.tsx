@@ -12,15 +12,11 @@ export interface HttpClientProviderProps {
 }
 
 export const HttpClientContext = React.createContext<AxiosInstance | undefined>(undefined);
-export const HttpClientProvider: React.FC<React.PropsWithChildren<HttpClientProviderProps>> = ({ baseUrl, scopes, children }) => (
+export const HttpClientProvider: React.FC<React.PropsWithChildren<HttpClientProviderProps>> = ({ baseUrl, scopes = [], children }) => (
     <HttpClientContext.Provider value={useCreateHttpClient(baseUrl, scopes)}>
         {children}
     </HttpClientContext.Provider>
 );
-
-HttpClientProvider.defaultProps = {
-    scopes: []
-};
 
 export const useHttpClient = () => useContext(HttpClientContext);
 

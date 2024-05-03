@@ -6,7 +6,7 @@ import { Button, Nav, Offcanvas } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { LayoutContext, NavItem } from "../../models";
 
-export const Sidebar: SidebarComponent = ({ children, ...props }) => {
+export const Sidebar: SidebarComponent = ({ navItems = [] }) => {
 
     const layout = useLayout();
 
@@ -15,7 +15,7 @@ export const Sidebar: SidebarComponent = ({ children, ...props }) => {
             <Offcanvas.Header closeButton onHide={() => layout.setShowSidebar(false)} />
             <Offcanvas.Body className="d-lg-none sidebar">
                 <Nav className="flex-column ">
-                    {renderMenu(layout, props.navItems)}
+                    {renderMenu(layout, navItems)}
                     {layout.secondaryNav.length > 0 &&
                         <>
                             <Nav.Item className="divider" />
@@ -56,7 +56,3 @@ const renderMenu = (layout: LayoutContext, navItems: (NavItem | ReactNode)[]) =>
     return items;
 
 }
-
-Sidebar.defaultProps = {
-    navItems: [],
-};
