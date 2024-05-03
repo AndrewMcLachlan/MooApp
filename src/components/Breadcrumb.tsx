@@ -1,17 +1,13 @@
 import { NavItem } from "models";
 import { Breadcrumb as BSBreadcrumb, BreadcrumbProps as BSBreadcrumbProps } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { Link } from "react-router-dom";
 
-export const Breadcrumb: React.FC<BreadcrumbProps> = ({breadcrumbs = [], ...rest}) => (
+export const Breadcrumb: React.FC<BreadcrumbProps> = ({ breadcrumbs = [], ...rest }) => (
 
     <BSBreadcrumb {...rest}>
-        <LinkContainer to="/">
-            <BSBreadcrumb.Item>Home</BSBreadcrumb.Item>
-        </LinkContainer>
+        <BSBreadcrumb.Item linkProps={{ to: "/" }} linkAs={Link}>Home</BSBreadcrumb.Item>
         {breadcrumbs.map((item, index) =>
-            <LinkContainer key={index} to={item.route}>
-                <BSBreadcrumb.Item>{item.text}</BSBreadcrumb.Item>
-            </LinkContainer>
+            <BSBreadcrumb.Item key={index} linkProps={{ to: item.route }} linkAs={Link}>{item.text}</BSBreadcrumb.Item>
         )}
     </BSBreadcrumb>
 );

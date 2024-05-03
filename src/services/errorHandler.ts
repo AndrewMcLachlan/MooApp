@@ -1,4 +1,4 @@
-import { useMessages } from "providers";
+import { useMessages } from "providers/MessageProvider";
 
 export const useErrorHandler = () => {
 

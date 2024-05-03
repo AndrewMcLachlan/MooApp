@@ -10,7 +10,7 @@ export const Components = () => {
     const [ tableNumValue, setTableNumValue ] = useState<number | undefined>(1);
 
     return (
-        <Page title="Components" breadcrumbs={[{ route: "/", text: "Components" }]} navItems={[{ route: "/components/iconlinkbutton", image: <Tags />, text: "Icon Link Button" }, { route: "/components/iconbutton", image: <Tags />, text: "Icon Button" }, <NavItemDivider />]} actions={[<IconButton icon={faPlus}>Create</IconButton>]}>
+        <Page title="Components" breadcrumbs={[{ route: "/components", text: "Components" }]} navItems={[{ route: "/components/iconlinkbutton", image: <Tags />, text: "Icon Link Button" }, { route: "/components/iconbutton", image: <Tags />, text: "Icon Button" }, <NavItemDivider />]} actions={[<IconButton icon={faPlus}>Create</IconButton>]}>
             <Section title="Components">
                 <Button size="sm" variant="link">Sample</Button>
                 <Button>Sample 2</Button>
