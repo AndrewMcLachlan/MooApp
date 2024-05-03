@@ -1,17 +1,17 @@
 import { DefaultError, useMutation, UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useHttpClient } from "../providers/HttpClientProvider";
-import { useMessages } from "../providers/MessageProvider";
 import { processAxiosError } from "./processAxiosError";
+import { useErrorHandler } from "./errorHandler";
 
 export const useApiPut = <Response, Variables, Data = null>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, DefaultError, [Variables, Data]>): UseMutationResult<Response, DefaultError, [Variables, Data]> => {
 
     const httpClient = useHttpClient();
-    const messages = useMessages();
+    const errorHandler = useErrorHandler();
 
     const { onError, ...otherOptions } = options ?? {};
 
     const onErrorWrapper = (error: Error, variables: [Variables, Data], context: unknown) => {
-        messages.sendMessage({ message: error.message, variant: "danger" });
+        errorHandler(error);
         onError?.(error, variables, context);
     }
 
@@ -32,12 +32,12 @@ export const useApiPut = <Response, Variables, Data = null>(path: (variables: Va
 export const useApiPutEmpty = <Response, Variables>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, DefaultError, Variables>) => {
 
     const httpClient = useHttpClient();
-    const messages = useMessages();
+    const errorHandler = useErrorHandler();
 
     const { onError, ...otherOptions } = options ?? {};
 
     const onErrorWrapper = (error: Error, variables: Variables, context: unknown) => {
-        messages.sendMessage({ message: error.message, variant: "danger" });
+        errorHandler(error);
         onError?.(error, variables, context);
     }
 

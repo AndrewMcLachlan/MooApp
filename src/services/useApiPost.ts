@@ -1,17 +1,17 @@
 import { DefaultError, useMutation, UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
-import { useMessages } from "../providers/MessageProvider";
 import { useHttpClient } from "../providers/HttpClientProvider";
 import { processAxiosError } from "./processAxiosError";
+import { useErrorHandler } from "./errorHandler";
 
 export const useApiPost = <Response, Variables, Data = null>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, DefaultError, [Variables, Data]>): UseMutationResult<Response, DefaultError, [Variables, Data]> => {
 
     const httpClient = useHttpClient();
-    const messages = useMessages();
+    const errorHandler = useErrorHandler();
 
     const { onError, ...otherOptions } = options ?? {};
 
     const onErrorWrapper = (error: Error, variables: [Variables, Data], context: unknown) => {
-        messages.sendMessage({ message: error.message, variant: "danger" });
+        errorHandler(error);
         onError?.(error, variables, context);
     }
 
@@ -32,12 +32,12 @@ export const useApiPost = <Response, Variables, Data = null>(path: (variables: V
 export const useApiPostEmpty = <Response, Variables>(path: (variables: Variables) => string, options?: UseMutationOptions<Response, DefaultError, Variables>) => {
 
     const httpClient = useHttpClient();
-    const messages = useMessages();
+    const errorHandler = useErrorHandler();
 
     const { onError, ...otherOptions } = options ?? {};
 
     const onErrorWrapper = (error: Error, variables: Variables, context: unknown) => {
-        messages.sendMessage({ message: error.message, variant: "danger" });
+        errorHandler(error);
         onError?.(error, variables, context);
     }
 
@@ -58,12 +58,12 @@ export const useApiPostEmpty = <Response, Variables>(path: (variables: Variables
 export const useApiPostFile = <Variables extends { file: File }>(path: (variables: Variables) => string, options?: UseMutationOptions<null, DefaultError, Variables>) => {
 
     const httpClient = useHttpClient();
-    const messages = useMessages();
+    const errorHandler = useErrorHandler();
 
     const { onError, ...otherOptions } = options ?? {};
 
     const onErrorWrapper = (error: Error, variables: Variables, context: unknown) => {
-        messages.sendMessage({ message: error.message, variant: "danger" });
+        errorHandler(error);
         onError?.(error, variables, context);
     }
 
