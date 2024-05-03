@@ -35,6 +35,12 @@ option {
     width: 1.5rem;
 }
 
+.form-switch {
+    .form-check-input {
+        width: 2.8em;
+    }
+}
+
 input.form-control:read-only {
     background-color: var(--bs-disabled-bg);
     cursor: default;
