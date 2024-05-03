@@ -65,9 +65,9 @@ export const TagPanel = <T extends unknown>({ as = "div", allowCreate = false, r
         onCreate, ...rest } = props;
 
     return (
-        <props.as ref={ref} className={classNames("tag-panel", displayEdit && "edit-mode")} onClick={onClick} onKeyUp={rest.onKeyUp ?? keyUp} onTouchStart={() => setEditMode(true)}>
+        <As ref={ref} className={classNames("tag-panel", displayEdit && "edit-mode")} onClick={onClick} onKeyUp={rest.onKeyUp ?? keyUp} onTouchStart={() => setEditMode(true)}>
             <Component unstyled={isReadonly} {...extraProps} options={props.items} isMulti isClearable value={props.selectedItems} getOptionLabel={getOptionLabel} getOptionValue={props.valueField} onChange={onChange} className={classNames("react-select", isReadonly && "readonly")} classNamePrefix="react-select" />
-        </props.as>
+        </As>
     );
 }
 
