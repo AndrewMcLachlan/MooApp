@@ -78,7 +78,7 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-svgr": "^2.0.0",
-    "sass": "^1.75.0",
+    "sass": "^1.76.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
     "vite-plugin-svgr": "^4.2.0"
