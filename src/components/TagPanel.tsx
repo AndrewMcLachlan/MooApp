@@ -10,9 +10,9 @@ export const TagPanel = <T extends unknown>({ as = "div", allowCreate = false, r
     const ref = useRef(null);
     useClickAway(setEditMode, ref);
 
-    const Component = props.allowCreate ? Creatable : Select;
+    const Component = allowCreate ? Creatable : Select;
 
-    const extraProps: Partial<CreatableProps<any, any, any>> = props.allowCreate ? {
+    const extraProps: Partial<CreatableProps<any, any, any>> = allowCreate ? {
         onCreateOption: props.onCreate,
         formatCreateLabel: (input) => `Create ${input}...`,
     } : {};
@@ -49,10 +49,10 @@ export const TagPanel = <T extends unknown>({ as = "div", allowCreate = false, r
         setEditMode(true);
     }
 
-    const getOptionLabel = (item: T) => props.labelField(item) ?? (props.allowCreate && "Create new tag...");
+    const getOptionLabel = (item: T) => props.labelField(item) ?? (allowCreate && "Create new tag...");
 
-    const displayEdit = !readonly  && (editMode || props.alwaysShowEditPanel);
-    const isReadonly = readonly || (!editMode && !props.alwaysShowEditPanel);
+    const displayEdit = !readonly  && (editMode || alwaysShowEditPanel);
+    const isReadonly = readonly || (!editMode && !alwaysShowEditPanel);
 
     const As = as;
 
