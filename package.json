@@ -79,7 +79,7 @@
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-svgr": "^2.0.0",
     "sass": "^1.77.6",
-    "typescript": "^5.4.5",
+    "typescript": "^5.5.3",
     "vite": "^5.2.11",
     "vite-plugin-svgr": "^4.2.0"
   },
