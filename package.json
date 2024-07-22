@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@azure/msal-browser": "^3.13.0",
-    "@azure/msal-react": "^2.0.20",
+    "@azure/msal-react": "^2.0.21",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
