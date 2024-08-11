@@ -2,10 +2,10 @@ name: Build and Publish
 on:
   push:
     branches:
-    - master
+    - main
   pull_request:
     branches:
-    - master
+    - main
   workflow_dispatch:
 jobs:
   build:
@@ -36,7 +36,7 @@ jobs:
     - name: npm run build
       run: npm run build
     - name: npm publish
-      if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+      if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npm publish
