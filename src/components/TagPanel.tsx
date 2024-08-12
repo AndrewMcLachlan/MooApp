@@ -1,10 +1,10 @@
+import classNames from "classnames";
 import { ElementType, useRef, useState } from "react";
-import { useClickAway } from "../hooks";
 import Select, { ActionMeta, MultiValue } from "react-select";
 import Creatable, { CreatableProps } from "react-select/creatable";
-import classNames from "classnames";
+import { useClickAway } from "../hooks";
 
-export const TagPanel = <T extends unknown>({ as = "div", allowCreate = false, readonly = false, alwaysShowEditPanel = false, ...props }: TagPanelProps<T, any>) => {
+export const TagPanel = <T,>({ as = "div", allowCreate = false, readonly = false, alwaysShowEditPanel = false, ...props }: TagPanelProps<T, any>) => {
 
     const [editMode, setEditMode] = useState(false);
     const ref = useRef(null);
@@ -23,18 +23,18 @@ export const TagPanel = <T extends unknown>({ as = "div", allowCreate = false, r
             case "remove-value":
             case "pop-value":
             case "deselect-option":
-                props.onRemove && props.onRemove(meta.removedValue);
+                props.onRemove?.(meta.removedValue);
                 break;
             case "clear":
                 for (const val of meta.removedValues) {
-                    props.onRemove && props.onRemove(val);
+                    props.onRemove?.(val);
                 }
                 break;
             case "select-option":
-                props.onAdd && props.onAdd(meta.option);
+                props.onAdd?.(meta.option);
         }
 
-        props.onChange && props.onChange(Array.from(value));
+        props.onChange?.(Array.from(value));
     }
 
     const keyUp: React.KeyboardEventHandler<any> = (e) => {
@@ -56,18 +56,8 @@ export const TagPanel = <T extends unknown>({ as = "div", allowCreate = false, r
 
     const As = as;
 
-    const {
-        selectedItems,
-        items,
-        labelField,
-        valueField,
-        search,
-        onAdd,
-        onRemove,
-        onCreate, ...rest } = props;
-
     return (
-        <As ref={ref} className={classNames("tag-panel", displayEdit && "edit-mode")} onClick={onClick} onKeyUp={rest.onKeyUp ?? keyUp} onTouchStart={() => setEditMode(true)}>
+        <As ref={ref} className={classNames("tag-panel", displayEdit && "edit-mode")} onClick={onClick} onKeyUp={props.onKeyUp ?? keyUp} onTouchStart={() => setEditMode(true)}>
             <Component unstyled={isReadonly} {...extraProps} options={props.items} isMulti isClearable value={props.selectedItems} getOptionLabel={getOptionLabel} getOptionValue={props.valueField} onChange={onChange} className={classNames("react-select", isReadonly && "readonly")} classNamePrefix="react-select" />
         </As>
     );

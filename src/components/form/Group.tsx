@@ -10,3 +10,5 @@ export const Group: GroupComponent = React.forwardRef(({ children, groupId, ...p
         </div>
     </FromGroupProvider>
 ));
+
+Group.displayName = "Group";

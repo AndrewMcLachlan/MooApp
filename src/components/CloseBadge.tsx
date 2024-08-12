@@ -9,7 +9,7 @@ export const CloseBadge: React.FC<PropsWithChildren<CloseBadgeProps>> = (props) 
         e.defaultPrevented = true;
         e.stopPropagation();
 
-        props.onClose && props.onClose();
+        props.onClose?.();
     }
 
     const { className, ...other } = props;

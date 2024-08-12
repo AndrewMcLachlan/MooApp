@@ -10,7 +10,7 @@ export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({childr
     const [editing, setEditing] = useState(false);
 
     useClickAway(setEditing, ref, () => {
-        props.onChange && props.onChange(ref.current);
+        props.onChange?.(ref.current);
     });
 
     const [value, setValue] = useState(props.value);
@@ -25,13 +25,13 @@ export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({childr
 
     const onBlur: FocusEventHandler<HTMLInputElement> = (e) => {
         setEditing(false);
-        props.onChange && props.onChange(e.currentTarget);
+        props.onChange?.(e.currentTarget);
     }
 
     const onKey: KeyboardEventHandler<HTMLInputElement> = (e) => {
         if (e.key === "Enter" || e.key === "Tab") {
             setEditing(false);
-            props.onChange && props.onChange(e.currentTarget);
+            props.onChange?.(e.currentTarget);
         }
     }
 

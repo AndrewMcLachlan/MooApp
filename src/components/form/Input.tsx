@@ -15,5 +15,7 @@ export const Input: InputComponent = React.forwardRef(({ className, id, ...rest 
     );
 });
 
+Input.displayName = "Input";
+
 export interface InputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
 }

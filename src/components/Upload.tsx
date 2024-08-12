@@ -18,8 +18,8 @@ export const Upload: React.FC<UploadProps> = ({allowMultiple = false, ...props})
                 </label>
             </div>
             <ul>
-                {dragEvents.files.map(f =>
-                    <li>{f.name}</li>
+                {dragEvents.files.map((f, index) =>
+                    <li key={index}>{f.name}</li>
                 )}
             </ul>
         </section>
@@ -37,7 +37,7 @@ const useDragEvents = (props: UploadProps) => {
     };
 
     const onFilesAdded = (currentFiles: File[], newFiles: File[]) => {
-        props.onFilesAdded && props.onFilesAdded({ currentFiles, newFiles });
+        props.onFilesAdded?.({ currentFiles, newFiles });
     };
 
     const filesChanged = (e: React.ChangeEvent<HTMLInputElement>) => {

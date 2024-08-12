@@ -15,5 +15,7 @@ export const TextArea: TextAreaComponent = React.forwardRef(({ className, id, ..
     );
 });
 
+TextArea.displayName = "TextArea";
+
 export interface TextAreaProps extends React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> {
 }
