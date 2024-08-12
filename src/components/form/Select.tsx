@@ -15,5 +15,7 @@ export const Select: SelectComponent = React.forwardRef(({ className, id, ...res
     );
 });
 
+Select.displayName = "Select";
+
 export interface SelectProps extends React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> {
 }

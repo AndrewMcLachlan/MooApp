@@ -1,5 +1,4 @@
-import React, { useState, forwardRef, SetStateAction, Dispatch } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { forwardRef, useState } from "react";
 
 export const ComboBox = forwardRef<any, ComboBoxProps>((props, ref) => {
 
@@ -57,11 +56,11 @@ function useComboBox(props: ComboBoxProps) {
         }
         else {
 
-            let tempItems = props.items.filter((i) => i[props.textField].toLowerCase().startsWith(e.currentTarget.value.toLowerCase()));
+            const tempItems = props.items.filter((i) => i[props.textField].toLowerCase().startsWith(e.currentTarget.value.toLowerCase()));
 
             if (props.allowAdd && !props.items.some((i) => i[props.textField].toLowerCase() === e.currentTarget.value.toLowerCase())) {
 
-                let addItem = newItem ? newItem : {};
+                const addItem = newItem ? newItem : {};
 
                 addItem[props.textField] = e.currentTarget.value + " (Add new)";
 
@@ -78,11 +77,11 @@ function useComboBox(props: ComboBoxProps) {
 
         if (item === newItem) {
             item[props.textField] = (item[props.textField] as string).replace(/ \(Add new\)$/, "");
-            props.onAdd && props.onAdd(item[props.textField] as string);
+            props.onAdd?.(item[props.textField] as string);
         }
 
         setSelectedItem(item);
-        props.onSelected && props.onSelected(item);
+        props.onSelected?.(item);
         setItems([]);
     }
 

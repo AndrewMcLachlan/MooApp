@@ -4,8 +4,8 @@ export const useClickAway = (setShow: (value: boolean) => void, ref: React.RefOb
 
     function handleClickOutside(event: Event) {
         if (ref.current && !ref.current.contains(event.target)) {
-            onClickAway && onClickAway();
-            setShow && setShow(false);
+            onClickAway?.();
+            setShow?.(false);
         }
     }
 
