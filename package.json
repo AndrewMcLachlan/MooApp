@@ -81,7 +81,7 @@
     "eslint-plugin-react": "^7.35.0",
     "globals": "^15.9.0",
     "react-dom": "^18.3.1",
-    "rollup": "^4.20.0",
+    "rollup": "^4.21.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-svgr": "^2.1.0",
