@@ -17,7 +17,7 @@
     "@andrewmclachlan:registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
-    "@azure/msal-browser": "^3.13.0",
+    "@azure/msal-browser": "^3.21.0",
     "@azure/msal-react": "^2.0.22",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
