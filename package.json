@@ -65,7 +65,7 @@
     "@rollup/plugin-typescript": "^11.1.6",
     "@svgr/rollup": "^8.1.0",
     "@testing-library/jest-dom": "^6.5.0",
-    "@testing-library/react": "^16.0.0",
+    "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.4.0",
