@@ -3,12 +3,18 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
       timezone: Australia/Brisbane
-      day: monday
       time: '06:00'
     reviewers:
       - andrewmcLachlan
+    groups:
+      dev-dependences:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        dependency-type: "development"
+    open-pull-requests-limit: 20
 
   - package-ecosystem: "npm"
     directory: "/example"
