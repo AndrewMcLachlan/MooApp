@@ -27,7 +27,7 @@
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
-    "date-fns": "^3.6.0"
+    "date-fns": "^4.1.0"
   },
   "scripts": {
     "vite": "vite",
