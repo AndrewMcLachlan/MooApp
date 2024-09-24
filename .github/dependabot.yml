@@ -9,7 +9,7 @@ updates:
     reviewers:
       - andrewmcLachlan
     groups:
-      dev-dependences:
+      dev-dependencies:
         applies-to: version-updates
         patterns:
           - "*"
