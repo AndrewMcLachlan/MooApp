@@ -3,8 +3,9 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
       timezone: Australia/Brisbane
+      day: "monday"
       time: '06:00'
     reviewers:
       - andrewmcLachlan
@@ -14,6 +15,11 @@ updates:
         patterns:
           - "*"
         dependency-type: "development"
+      prod-dependencies:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        dependency-type: "production"
     open-pull-requests-limit: 20
 
   - package-ecosystem: "npm"
@@ -25,6 +31,17 @@ updates:
       time: '06:00'
     reviewers:
       - andrewmcLachlan
+    groups:
+      dev-dependencies:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        dependency-type: "development"
+      prod-dependencies:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        dependency-type: "production"
 
   - package-ecosystem: github-actions
     directory: /
