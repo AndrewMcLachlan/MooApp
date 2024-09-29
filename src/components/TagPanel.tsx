@@ -17,7 +17,7 @@ export const TagPanel = <T,>({ as = "div", allowCreate = false, readonly = false
         formatCreateLabel: (input) => `Create ${input}...`,
     } : {};
 
-    const onChange = (value: MultiValue<T>, meta: ActionMeta<T>) => {
+    const onChange = (value: T | MultiValue<T>, meta: ActionMeta<T>) => {
 
         switch (meta.action) {
             case "remove-value":
@@ -34,7 +34,7 @@ export const TagPanel = <T,>({ as = "div", allowCreate = false, readonly = false
                 props.onAdd?.(meta.option);
         }
 
-        props.onChange?.(Array.from(value));
+        props.onChange?.(Array.from(value as T[]));
     }
 
     const keyUp: React.KeyboardEventHandler<any> = (e) => {

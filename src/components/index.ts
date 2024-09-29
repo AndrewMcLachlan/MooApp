@@ -7,6 +7,7 @@ export * from "./DeleteIcon";
 export * from "./EditColumn";
 export * from "./ErrorBoundary";
 export * from "./form";
+export * from "./Icon";
 export * from "./IconButton";
 export * from "./IconLinkButton";
 export * from "./ClearableInput";

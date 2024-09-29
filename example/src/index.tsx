@@ -6,6 +6,7 @@ import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Components } from './pages/Components';
 import { Providers } from './pages/Providers';
 import { Home } from './pages/Home';
+import { TagPanel } from './pages/TagPanel';
 import { Profile } from "./pages/Profile";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowsRotate, faCheck, faCheckCircle, faTrashAlt, faChevronDown, faChevronUp, faTimesCircle, faArrowLeft, faChevronRight, faCircleChevronLeft, faLongArrowUp, faLongArrowDown, faUpload, faXmark, faFilterCircleXmark, faInfoCircle, faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -29,6 +30,7 @@ const router = createMooAppBrowserRouter({
       providers: { path: "/providers", element: <Providers /> },
       componentsSubcomponents: { path: "/components/iconlinkbutton", element: <IconLinkButtonComponent /> },
       componentsIconButton: { path: "/components/iconbutton", element: <IconButtonComponent /> },
+      tagPanel: {path: "/tag-panel", element: <TagPanel />},
       settings: { path: "/settings", element: <Components /> },
       profile: {path: "/profile", element: <Profile />},
     }

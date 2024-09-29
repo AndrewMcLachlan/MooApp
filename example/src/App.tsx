@@ -1,12 +1,9 @@
 import "./App.scss";
 
-import { MooAppLayout, SearchBox, createMooAppBrowserRouter } from "@andrewmclachlan/mooapp";
-import { Components } from "./pages/Components";
+import { Icon, MooAppLayout, SearchBox } from "@andrewmclachlan/mooapp";
 import { useIsAuthenticated } from "@azure/msal-react";
-import { Tags } from "./assets";
-import { Home } from "./pages/Home";
-import { Providers } from "./pages/Providers";
 import { Link } from "react-router-dom";
+import { Tags } from "./assets";
 
 const App = () => {
 
@@ -18,7 +15,7 @@ const App = () => {
     {
       text: "Home",
       route: "/",
-      image: <Tags />
+      image: <Icon icon={Tags} />
     },
     {
       text: "Components",
@@ -28,6 +25,11 @@ const App = () => {
     {
       text: "Providers",
       route: "/providers",
+      image: <Tags />
+    },
+    {
+      text: "Tag Panel",
+      route: "/tag-panel",
       image: <Tags />
     }
 
