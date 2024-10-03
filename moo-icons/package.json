@@ -1,6 +1,6 @@
 {
   "name": "@andrewmclachlan/mooicons",
-  "version": "0.1.0",
+  "version": "2.1.0",
   "type": "module",
   "files": [
     "dist"
@@ -16,7 +16,7 @@
   "description": "A collection of icons for use in React applications.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AndrewMcLachlan/MooIcons.git"
+    "url": "https://github.com/AndrewMcLachlan/MooApp.git"
   },
   "publishConfig": {
     "@andrewmclachlan:registry": "https://npm.pkg.github.com"
