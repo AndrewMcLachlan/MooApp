@@ -4,9 +4,9 @@
     "description": "A collection of packages for the MooApp framework",
     "private": true,
     "workspaces": [
-        "demoo",
         "moo-app",
-        "moo-icons"
+        "moo-icons",
+        "demoo"
     ],
     "devDependencies": {
         "@eslint/js": "^9.11.1",
