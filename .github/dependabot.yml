@@ -23,7 +23,49 @@ updates:
     open-pull-requests-limit: 20
 
   - package-ecosystem: "npm"
-    directory: "/example"
+    directory: "/moo-app"
+    schedule:
+      interval: "weekly"
+      timezone: Australia/Brisbane
+      day: monday
+      time: '06:00'
+    reviewers:
+      - andrewmcLachlan
+    groups:
+      dev-dependencies:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        dependency-type: "development"
+      prod-dependencies:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/moo-icons"
+    schedule:
+      interval: "weekly"
+      timezone: Australia/Brisbane
+      day: monday
+      time: '06:00'
+    reviewers:
+      - andrewmcLachlan
+    groups:
+      dev-dependencies:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        dependency-type: "development"
+      prod-dependencies:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/demoo"
     schedule:
       interval: "weekly"
       timezone: Australia/Brisbane
