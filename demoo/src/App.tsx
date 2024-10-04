@@ -3,7 +3,7 @@ import "./App.scss";
 import { Icon, MooAppLayout, SearchBox } from "@andrewmclachlan/mooapp";
 import { useIsAuthenticated } from "@azure/msal-react";
 import { Link } from "react-router-dom";
-import { Budget, Tags, User, Stack, Users } from "@andrewmclachlan/mooicons";
+import { Application, Budget, Tags, User, Stack, Users } from "@andrewmclachlan/mooicons";
 
 const App = () => {
 
@@ -15,7 +15,7 @@ const App = () => {
     {
       text: "Home",
       route: "/",
-      image: <Icon icon={Tags} />
+      image: <Icon icon={Application} />
     },
     {
       text: "Components",

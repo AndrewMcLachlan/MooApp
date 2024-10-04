@@ -1,28 +1,4 @@
-/*/// <reference types="vite-plugin-svgr/client" />
-export { default as BarChart } from "./bar-chart.svg?react";
-export { default as Budget } from "./budget.svg?react";
-export { default as Cog } from "./cog.svg?react";
-export { default as Dashboard } from "./dashboard.svg?react";
-export { default as HamburgerMenu } from "./hamburger-menu.svg?react";
-export { default as Hierarchy } from "./hierarchy.svg?react";
-export { default as Import } from "./import.svg?react";
-export { default as LeftRightArrow } from "./left-right-arrow.svg?react";
-export { default as PieChart } from "./pie-chart.svg?react";
-export { default as PiggyBank3 } from "./piggybank.svg?react";
-export { default as Reports } from "./reports.svg?react";
-export { default as Rules } from "./rules.svg?react";
-export { default as Sliders } from "./sliders.svg?react";
-export { default as Stack } from "./stack.svg?react";
-export { default as Tags } from "./tags.svg?react";
-export { default as Trendline } from "./trendline.svg?react";
-export { default as TwoCoins } from "./two-coins.svg?react";
-export { default as Transaction } from "./transaction.svg?react";
-export { default as UpDownArrow } from "./up-down-arrow.svg?react";
-export { default as User } from "./user.svg?react";
-export { default as UserShield } from "./user-shield.svg?react";
-export { default as Users } from "./users.svg?react";
-*/
-
+export { default as Application } from "./application.svg";
 export { default as BarChart } from "./bar-chart.svg";
 export { default as Budget } from "./budget.svg";
 export { default as Cog } from "./cog.svg";
