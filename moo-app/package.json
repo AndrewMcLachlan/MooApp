@@ -17,7 +17,7 @@
     "@andrewmclachlan:registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
-    "@azure/msal-browser": "^3.25.0",
+    "@azure/msal-browser": "^3.26.1",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
@@ -60,7 +60,7 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.13",
     "@types/react-calendar": "^4.1.0",
-    "@types/react-dom": "^18.3.0",
+    "@types/react-dom": "^18.3.1",
     "@types/react-router-bootstrap": "^0.26.6",
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^8.8.0",
