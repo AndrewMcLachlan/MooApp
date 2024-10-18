@@ -1,5 +1,6 @@
 export * from "./Avatar";
 export * from "./Breadcrumb";
+export * from "./ClearableInput";
 export * from "./ClickableIcon";
 export * from "./CloseBadge";
 export * from "./ComboBox";
@@ -10,7 +11,7 @@ export * from "./form";
 export * from "./Icon";
 export * from "./IconButton";
 export * from "./IconLinkButton";
-export * from "./ClearableInput";
+export * from "./LinkBox";
 export * from "./LoadingTableRow";
 export * from "./LoadingTableRows";
 export * from "./NavItemDivider";

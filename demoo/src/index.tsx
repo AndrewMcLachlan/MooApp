@@ -7,6 +7,9 @@ import App from "./App";
 import { Components } from './pages/Components';
 import { IconButtonComponent } from "./pages/components/IconButtonComponent";
 import { IconLinkButtonComponent } from "./pages/components/IconLinkButtonComponent";
+import { LinkBoxComponent } from "./pages/components/LinkBoxComponent";
+import { PasswordComponent } from "./pages/components/form/PasswordComponent";
+import { FormComponent } from "./pages/components/Form";
 import { Home } from './pages/Home';
 import { Profile } from "./pages/Profile";
 import { Providers } from './pages/Providers';
@@ -27,11 +30,17 @@ const router = createMooAppBrowserRouter({
       home: { path: "/", element: <Home /> },
       components: { path: "/components", element: <Components /> },
       providers: { path: "/providers", element: <Providers /> },
-      componentsSubcomponents: { path: "/components/iconlinkbutton", element: <IconLinkButtonComponent /> },
-      componentsIconButton: { path: "/components/iconbutton", element: <IconButtonComponent /> },
-      tagPanel: {path: "/tag-panel", element: <TagPanel />},
+      iconLinkButton: { path: "/components/icon-link-button", element: <IconLinkButtonComponent /> },
+      iconButton: { path: "/components/icon-button", element: <IconButtonComponent /> },
+      linkBox: { path: "/components/link-box", element: <LinkBoxComponent /> },
+      form: {
+        path: "/components/form", element: <FormComponent />, children: {
+          password: { path: "password", element: <PasswordComponent /> },
+        },
+      },
+      tagPanel: { path: "/tag-panel", element: <TagPanel /> },
       settings: { path: "/settings", element: <Components /> },
-      profile: {path: "/profile", element: <Profile />},
+      profile: { path: "/profile", element: <Profile /> },
     }
   }
 });

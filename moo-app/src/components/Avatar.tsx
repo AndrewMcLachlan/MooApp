@@ -1,5 +1,5 @@
 import { useMsal } from "@azure/msal-react";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useLayout } from "../providers";
 
 const AvatarComponent = () => {
