@@ -5,12 +5,14 @@ import { Input, InputComponent } from "./Input";
 import { Label, LabelComponent } from "./Label";
 import { Select, SelectComponent } from "./Select";
 import { TextArea, TextAreaComponent } from "./TextArea";
+import { Password, PasswordComponent } from "./Password";
 
 export type FormComponent<TFormValues> = React.FC<PropsWithChildren<FormProps<TFormValues>>> & {
     Input: InputComponent;
     Select: SelectComponent;
     Group: GroupComponent;
     Label: LabelComponent
+    Password: PasswordComponent;
     TextArea: TextAreaComponent;
 };
 
@@ -28,6 +30,7 @@ export const Form: FormComponent<any> = <TFormValues,>({onSubmit, children, ...r
 Form.Group = Group;
 Form.Input = Input;
 Form.Label = Label;
+Form.Password = Password;
 Form.Select = Select;
 Form.TextArea = TextArea;
 
