@@ -18,3 +18,5 @@ export const IconButton: React.FC<PropsWithChildren<IconButtonProps>> = ({ child
 export interface IconButtonProps extends ButtonProps {
     icon?: IconProp | ElementType;
 }
+
+IconButton.displayName = "IconButton";

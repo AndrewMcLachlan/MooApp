@@ -6,7 +6,8 @@
     "workspaces": [
         "moo-app",
         "moo-icons",
-        "demoo"
+        "demoo",
+        "storybook"
     ],
     "devDependencies": {
         "@eslint/js": "^9.12.0",
