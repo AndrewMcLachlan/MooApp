@@ -25,18 +25,14 @@ div.upload-box {
     }
 
     div {
-        width: 100%;
-        margin: 0 auto;
-        top: 35%;
-        position: absolute;
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
 
         span {
-            display: block;
+            display: inline-block;
             text-align: center;
-
-            &:last-child {
-                font-weight: normal;
-            }
         }
     }
 }

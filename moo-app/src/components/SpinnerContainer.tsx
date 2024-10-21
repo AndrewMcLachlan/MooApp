@@ -5,3 +5,5 @@ export const SpinnerContainer: React.FC = () => (
         <Spinner animation="border" />
     </div>
 );
+
+SpinnerContainer.displayName = "SpinnerContainer";

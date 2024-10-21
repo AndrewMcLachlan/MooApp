@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 export const CloseBadge: React.FC<PropsWithChildren<CloseBadgeProps>> = (props) => {
 
-    const click = (e:React.MouseEvent<any, any>) => {
+    const click = (e: React.MouseEvent<any, any>) => {
         e.defaultPrevented = true;
         e.stopPropagation();
 
@@ -14,7 +14,7 @@ export const CloseBadge: React.FC<PropsWithChildren<CloseBadgeProps>> = (props) 
 
     const { className, ...other } = props;
 
-    return (<Badge {...other} className={classNames(className, "close-badge")} >{props.children}<span onClick={click}><FontAwesomeIcon icon="times-circle" /></span></Badge>);
+    return (<Badge {...other} className={classNames(className, "close-badge")}>{props.children}<FontAwesomeIcon icon="times-circle" onClick={click} /></Badge>);
 }
 
 CloseBadge.displayName = "CloseBadge";

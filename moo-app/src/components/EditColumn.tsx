@@ -45,6 +45,8 @@ export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({childr
     );
 }
 
+EditColumn.displayName = "EditColumn";
+
 export interface EditColumnProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
     onChange?: (target?: EventTarget & HTMLInputElement) => void;
 }

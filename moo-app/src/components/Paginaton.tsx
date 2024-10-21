@@ -23,6 +23,8 @@ export const Pagination : React.FC<PaginationProps> = ({pageNumber, numberOfPage
     );
 }
 
+Pagination.displayName = "Pagination";
+
 export interface PaginationProps {
     pageNumber: number,
     numberOfPages: number,

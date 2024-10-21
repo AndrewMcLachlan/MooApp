@@ -13,6 +13,8 @@ export const SortIcon: React.FC<SortIconProps> = ({ hidden = false, ...props }) 
     );
 };
 
+SortIcon.displayName = "SortIcon";
+
 export interface SortIconProps {
     direction: SortDirection
     hidden?: boolean;

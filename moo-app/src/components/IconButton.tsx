@@ -1,22 +1,16 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
-import { ElementType, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { Button, ButtonProps } from "react-bootstrap";
+import { IconType } from "../types";
+import { Icon } from "./Icon";
 
-export const IconButton: React.FC<PropsWithChildren<IconButtonProps>> = ({ children, icon, className, ...button }) => {
 
-    const CustomIconElement = icon as ElementType;
-
-    const IconNode = typeof icon === "function" ? <CustomIconElement className="custom-icon" /> : <FontAwesomeIcon icon={icon as IconProp} />;
-
-    return (
-        <Button className={classNames(className, "btn-icon")} {...button}><div>{IconNode}<span>{children}</span></div></Button>
-    );
-}
+export const IconButton: React.FC<PropsWithChildren<IconButtonProps>> = ({ children, icon, className, ...button }) => (
+    <Button className={classNames(className, "btn-icon")} {...button}><div><Icon icon={icon} /><span>{children}</span></div></Button>
+);
 
 export interface IconButtonProps extends ButtonProps {
-    icon?: IconProp | ElementType;
+    icon?: IconType;
 }
 
 IconButton.displayName = "IconButton";

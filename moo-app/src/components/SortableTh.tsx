@@ -18,6 +18,8 @@ export const SortableTh: React.FC<PropsWithChildren<SortableThProps>> = ({field,
     );
 };
 
+SortableTh.displayName = "SortableTh";
+
 export interface SortableThProps extends HTMLAttributes<HTMLTableCellElement>  {
     field: string;
     sortField: string;

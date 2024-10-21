@@ -15,6 +15,8 @@ export class ErrorBoundary extends React.Component<React.PropsWithChildren<Error
     error: null
   };
 
+  static displayName = "ErrorBoundary";
+
   static getDerivedStateFromError(error: Error) {
     return { error: error }
   }

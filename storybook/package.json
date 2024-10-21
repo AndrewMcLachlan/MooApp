@@ -4,15 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "build": "storybook build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook": "storybook dev -p 6006 --no-open"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-regular-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -26,6 +26,7 @@
     "@storybook/blocks": "^8.3.6",
     "@storybook/react": "^8.3.6",
     "@storybook/react-vite": "^8.3.6",
+    "@storybook/store": "^7.6.17",
     "@storybook/test": "^8.3.6",
     "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",

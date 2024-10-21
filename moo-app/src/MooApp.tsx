@@ -44,7 +44,7 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, cli
           </QueryClientProvider>
         </HttpClientProvider>
       </MsalProvider>
-    </AppProvider >
+    </AppProvider>
   );
 };
 

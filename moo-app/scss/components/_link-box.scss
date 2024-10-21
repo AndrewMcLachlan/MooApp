@@ -19,6 +19,10 @@
     .link-box-img {
         max-height: 40px;
         max-width: 40px;
+
+        svg {
+            vertical-align: inherit;
+        }
     }
 
     .link-box-img > * {

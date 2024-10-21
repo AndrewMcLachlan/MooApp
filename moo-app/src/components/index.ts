@@ -15,7 +15,6 @@ export * from "./LinkBox";
 export * from "./LoadingTableRow";
 export * from "./LoadingTableRows";
 export * from "./NavItemDivider";
-export * from "./PageHeader";
 export * from "./Paginaton";
 export * from "./SaveIcon";
 export * from "./SortableTh";

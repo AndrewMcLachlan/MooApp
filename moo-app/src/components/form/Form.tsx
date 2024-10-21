@@ -34,6 +34,8 @@ Form.Password = Password;
 Form.Select = Select;
 Form.TextArea = TextArea;
 
+Form.displayName = "Form";
+
 export interface FormProps<TFormValues> extends Omit<React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement>, "onSubmit"> {
     onSubmit: SubmitHandler<TFormValues>;
 }

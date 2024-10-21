@@ -17,6 +17,8 @@ export const Password: PasswordComponent = React.forwardRef(({ className, id, ..
     );
 });
 
+Password.displayName = "Password";
+
 export interface PasswordProps extends React.DetailedHTMLProps<Omit<React.InputHTMLAttributes<HTMLInputElement>, "type">, HTMLInputElement> {
 
 }

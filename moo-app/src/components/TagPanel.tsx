@@ -63,6 +63,8 @@ export const TagPanel = <T,>({ as = "div", allowCreate = false, readonly = false
     );
 }
 
+TagPanel.displayName = "TagPanel";
+
 export type TagPanelProps<TData, TElement extends ElementType> = Props<TData, TElement> & Omit<React.ComponentPropsWithoutRef<TElement>, keyof Props<TData, TElement>>;
 
 export interface Props<TData, TElement extends ElementType> {

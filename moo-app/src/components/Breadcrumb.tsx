@@ -12,6 +12,8 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({ breadcrumbs = [], ...res
     </BSBreadcrumb>
 );
 
+Breadcrumb.displayName = "Breadcrumb";
+
 export interface BreadcrumbProps extends BSBreadcrumbProps {
     breadcrumbs?: NavItem[];
 }
