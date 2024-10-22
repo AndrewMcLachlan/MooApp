@@ -25,6 +25,8 @@ export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, t
     );
 }
 
+Page.displayName = "Page";
+
 export interface PageProps extends React.HTMLAttributes<HTMLElement> {
     title: string;
     navItems?: (NavItem|ReactNode)[];

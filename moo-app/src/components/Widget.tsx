@@ -12,6 +12,8 @@ export const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({ children, loa
     </Col>
 )
 
+Widget.displayName = "Widget";
+
 export interface WidgetProps {
     loading?: boolean;
     title?: string;

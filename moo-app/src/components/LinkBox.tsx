@@ -33,6 +33,8 @@ export const LinkBox: React.FC<PropsWithChildren<LinkBoxProps>> = ({ href, to, c
     return component;
 }
 
+LinkBox.displayName = "LinkBox";
+
 export interface LinkBoxProps extends React.HTMLAttributes<HTMLElement> {
     href?: string;
     to?: string;

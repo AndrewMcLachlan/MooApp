@@ -22,7 +22,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
 
-    //"baseUrl": "src",
+    "baseUrl": "src",
     //"allowJs": true,
 
     //"esModuleInterop": true,

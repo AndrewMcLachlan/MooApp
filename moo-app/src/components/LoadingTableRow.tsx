@@ -6,6 +6,8 @@ export const LoadingTableRow: React.FC<LoadingTableRowProps> = ({cols}) => (
     </tr>
 );
 
+LoadingTableRow.displayName = "LoadingTableRow";
+
 export interface LoadingTableRowProps {
     cols: number;
 }

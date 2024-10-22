@@ -17,4 +17,6 @@ const AvatarComponent = () => {
     }, [photo]);
 };
 
+AvatarComponent.displayName = "Avatar";
+
 export const Avatar = AvatarComponent;

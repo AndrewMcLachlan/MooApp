@@ -10,3 +10,5 @@ export const ThemeSwitcher = () => {
         <Form.Check className="theme-switcher" type="switch" checked={theme.theme === "light"} onChange={e => setTheme(e.currentTarget.checked ? getTheme("light") : getTheme("dark"))} />
     );
 }
+
+ThemeSwitcher.displayName = "ThemeSwitcher";
