@@ -33,7 +33,7 @@ jobs:
       run: |
         rm -rf node_modules
         rm -rf package-lock.json
-        npm ci --no-scripts --workspaces
+        npm i --no-scripts --workspaces
     - name: npm version
       run: npm version ${{ steps.set-version-number.outputs.version }} --no-git-tag-version --workspaces
     - name: npm run build
