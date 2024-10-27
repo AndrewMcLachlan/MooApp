@@ -28,7 +28,7 @@
     "@storybook/react-vite": "^8.3.6",
     "@storybook/store": "^7.6.17",
     "@storybook/test": "^8.3.6",
-    "@types/react": "^18.3.10",
+    "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.3",
     "eslint": "^9.13.0",
