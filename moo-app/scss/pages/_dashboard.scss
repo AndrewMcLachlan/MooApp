@@ -4,17 +4,18 @@ main.dashboard {
     }
 
     [class^="col"] {
-        max-height: 300px;
+        &.single {
+            max-height: 300px;
+        }
+
+        &.double {
+            max-height: calc(600px + 1.5rem);
+        }
     }
 
     .section {
         flex: 0 0 auto;
 
         height: 100%;
-    }
-
-    .report {
-        max-height: 300px;
-        padding-bottom: calc(50px + 2rem);
     }
 }
