@@ -1,15 +1,16 @@
 main.dashboard {
     .row {
         --bs-gutter-y: 1.5rem;
-    }
 
-    [class^="col"] {
-        &.single {
-            max-height: 300px;
-        }
+        > div {
 
-        &.double {
-            max-height: calc(600px + 1.5rem);
+            &.single {
+                max-height: 300px;
+            }
+
+            &.double {
+                max-height: calc(600px + 1.5rem);
+            }
         }
     }
 
