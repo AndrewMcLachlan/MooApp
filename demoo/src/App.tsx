@@ -31,8 +31,12 @@ const App = () => {
       text: "Tag Panel",
       route: "/tag-panel",
       image: <Users />
-    }
-
+    },
+    {
+      text: "Error Page",
+      route: "/error-page",
+      image: <Users />
+    },
   ];
 
   return (

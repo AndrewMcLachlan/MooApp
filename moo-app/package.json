@@ -21,7 +21,8 @@
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
-    "date-fns": "^4.1.0"
+    "date-fns": "^4.1.0",
+    "react-error-boundary": "^4.1.2"
   },
   "scripts": {
     "vite": "vite",

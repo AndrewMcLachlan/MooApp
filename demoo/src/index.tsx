@@ -1,4 +1,4 @@
-import { MooApp, createMooAppBrowserRouter } from "@andrewmclachlan/mooapp";
+import { MooApp, NotFound, createMooAppBrowserRouter } from "@andrewmclachlan/mooapp";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowLeft, faArrowsRotate, faCheck, faCheckCircle, faChevronDown, faChevronRight, faChevronUp, faCircleChevronLeft, faFilterCircleXmark, faInfoCircle, faLongArrowDown, faLongArrowUp, faPenToSquare, faPlus, faTimesCircle, faTrashAlt, faUpload, faXmark } from "@fortawesome/free-solid-svg-icons";
 import ReactDOM from "react-dom/client";
@@ -14,6 +14,8 @@ import { Home } from './pages/Home';
 import { Profile } from "./pages/Profile";
 import { Providers } from './pages/Providers';
 import { TagPanel } from './pages/TagPanel';
+import { error } from "console";
+import { ErrorPage } from "./pages/ErrorPage";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -30,6 +32,7 @@ const router = createMooAppBrowserRouter({
       home: { path: "/", element: <Home /> },
       components: { path: "/components", element: <Components /> },
       providers: { path: "/providers", element: <Providers /> },
+      errorPage: { path: "/error-page", element: <ErrorPage /> },
       iconLinkButton: { path: "/components/icon-link-button", element: <IconLinkButtonComponent /> },
       iconButton: { path: "/components/icon-button", element: <IconButtonComponent /> },
       linkBox: { path: "/components/link-box", element: <LinkBoxComponent /> },
@@ -41,6 +44,7 @@ const router = createMooAppBrowserRouter({
       tagPanel: { path: "/tag-panel", element: <TagPanel /> },
       settings: { path: "/settings", element: <Components /> },
       profile: { path: "/profile", element: <Profile /> },
+      fallback: { path: "*", element: <NotFound /> },
     }
   }
 });

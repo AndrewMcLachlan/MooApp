@@ -6,7 +6,7 @@ export * from "./CloseBadge";
 export * from "./ComboBox";
 export * from "./DeleteIcon";
 export * from "./EditColumn";
-export * from "./ErrorBoundary";
+export * from "./ErrorFallback";
 export * from "./form";
 export * from "./Icon";
 export * from "./IconButton";
