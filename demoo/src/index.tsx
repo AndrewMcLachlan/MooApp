@@ -13,9 +13,10 @@ import { FormComponent } from "./pages/components/Form";
 import { Home } from './pages/Home';
 import { Profile } from "./pages/Profile";
 import { Providers } from './pages/Providers';
-import { TagPanel } from './pages/TagPanel';
+import { TagPanel } from './pages/components/TagPanel';
 import { error } from "console";
 import { ErrorPage } from "./pages/ErrorPage";
+import { Notifications } from "./pages/Notifications";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -41,6 +42,7 @@ const router = createMooAppBrowserRouter({
           password: { path: "password", element: <PasswordComponent /> },
         },
       },
+      notifications: { path: "/notifications", element: <Notifications /> },
       tagPanel: { path: "/tag-panel", element: <TagPanel /> },
       settings: { path: "/settings", element: <Components /> },
       profile: { path: "/profile", element: <Profile /> },

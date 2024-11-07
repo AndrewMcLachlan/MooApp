@@ -4,6 +4,7 @@ import { Alerts, Layout } from "./layout";
 import { FooterProps, HeaderProps, SidebarProps } from "./layout/Types";
 import { ErrorBoundary } from "react-error-boundary";
 import { Error } from "pages/Error";
+import { Notifications } from "layout/Notifications";
 
 export const MooAppLayout: React.FC<MooAppLayoutProps> = ({ header, sidebar, footer }) => {
 
@@ -12,6 +13,7 @@ export const MooAppLayout: React.FC<MooAppLayoutProps> = ({ header, sidebar, foo
   return (
     <Layout size="small">
       <Alerts />
+      <Notifications />
       <Layout.Header {...header} />
       <Layout.MobileHeader {...header} />
       <Layout.MobileSidebar {...sidebar} />

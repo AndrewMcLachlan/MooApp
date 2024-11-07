@@ -23,14 +23,14 @@ const App = () => {
       image: <Icon icon={User} />
     },
     {
+      text: "Notifications",
+      route: "/notifications",
+      image: <Stack />
+    },
+    {
       text: "Providers",
       route: "/providers",
       image: <Budget />
-    },
-    {
-      text: "Tag Panel",
-      route: "/tag-panel",
-      image: <Users />
     },
     {
       text: "Error Page",
