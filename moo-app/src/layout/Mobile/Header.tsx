@@ -4,7 +4,7 @@ import { HeaderComponent } from "../../layout/Types";
 import { UserMenu } from "../../layout/UserMenu";
 import { useApp, useLayout } from "../../providers";
 import { Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export const Header: HeaderComponent = (props) => {
     const { size, breadcrumbs, actions, setShowSidebar } = useLayout();

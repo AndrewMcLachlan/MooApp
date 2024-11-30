@@ -3,7 +3,7 @@ import { Page } from "layout";
 import React from "react";
 import { Container } from "react-bootstrap";
 import { FallbackProps } from "react-error-boundary";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export const Error: React.FC<FallbackProps> = (props) => {
 

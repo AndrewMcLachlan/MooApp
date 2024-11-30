@@ -1,8 +1,8 @@
-@import "layout/alerts";
-@import "layout/footer";
-@import "layout/header";
-@import "layout/layout";
-@import "layout/main";
-@import "layout/menu-toggle";
-@import "layout/section";
-@import "layout/sidebar";
+@forward "layout/alerts";
+@forward "layout/footer";
+@forward "layout/header";
+@forward "layout/layout";
+@forward "layout/main";
+@forward "layout/menu-toggle";
+@forward "layout/section";
+@forward "layout/sidebar";

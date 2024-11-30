@@ -3,7 +3,7 @@ import { SidebarComponent } from "../Types";
 import { useLayout } from "../../providers";
 import React, { ReactNode, isValidElement } from "react";
 import { Button, Nav, Offcanvas } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import { LayoutContext, NavItem } from "../../models";
 
 export const Sidebar: SidebarComponent = ({ navItems = [] }) => {

@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router";
 
 import { Alerts, Layout } from "./layout";
 import { FooterProps, HeaderProps, SidebarProps } from "./layout/Types";

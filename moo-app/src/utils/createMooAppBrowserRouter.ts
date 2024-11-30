@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router";
 import { toRoutes } from "./toRoutes";
 import { RouteDefinition } from "models/Route";
 

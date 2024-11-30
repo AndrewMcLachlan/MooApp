@@ -2,7 +2,7 @@ import "./App.scss";
 
 import { Icon, MooAppLayout, SearchBox } from "@andrewmclachlan/mooapp";
 import { useIsAuthenticated } from "@azure/msal-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Application, Budget, Tags, User, Stack, Users } from "@andrewmclachlan/mooicons";
 
 const App = () => {

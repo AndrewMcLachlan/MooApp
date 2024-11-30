@@ -1,2 +1,2 @@
-@import "pages/dashboard";
-@import "pages/error";
+@forward "pages/dashboard";
+@forward "pages/error";

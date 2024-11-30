@@ -1,7 +1,7 @@
 import { RouteDefinition } from "models/Route";
-import { RouteObject } from "react-router-dom";
+import { RouteObject } from "react-router";
 
-export const toRoutes = (routes: RouteDefinition): RouteObject[] => 
+export const toRoutes = (routes: RouteDefinition): RouteObject[] =>
      Object.keys(routes).map((key) => {
         const route = routes[key];
         return {

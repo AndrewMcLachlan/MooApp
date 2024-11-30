@@ -1,4 +1,5 @@
-@import "../variables";
+@use "../variables" as *;
+@use "~/bootstrap/scss/bootstrap-utilities" as *;
 
 .app-container > footer {
   grid-area: footer;

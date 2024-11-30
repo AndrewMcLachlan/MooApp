@@ -2,24 +2,24 @@ import { MooApp, NotFound, createMooAppBrowserRouter } from "@andrewmclachlan/mo
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowLeft, faArrowsRotate, faCheck, faCheckCircle, faChevronDown, faChevronRight, faChevronUp, faCircleChevronLeft, faFilterCircleXmark, faInfoCircle, faLongArrowDown, faLongArrowUp, faPenToSquare, faPlus, faTimesCircle, faTrashAlt, faUpload, faXmark } from "@fortawesome/free-solid-svg-icons";
 import ReactDOM from "react-dom/client";
-import { RouterProvider } from 'react-router-dom';
+import { RouterProvider } from "react-router";
 import App from "./App";
-import { Components } from './pages/Components';
+import { Components } from "./pages/Components";
 import { IconButtonComponent } from "./pages/components/IconButtonComponent";
 import { IconLinkButtonComponent } from "./pages/components/IconLinkButtonComponent";
 import { LinkBoxComponent } from "./pages/components/LinkBoxComponent";
 import { PasswordComponent } from "./pages/components/form/PasswordComponent";
 import { FormComponent } from "./pages/components/Form";
-import { Home } from './pages/Home';
+import { Home } from "./pages/Home";
 import { Profile } from "./pages/Profile";
-import { Providers } from './pages/Providers';
-import { TagPanel } from './pages/components/TagPanel';
+import { Providers } from "./pages/Providers";
+import { TagPanel } from "./pages/components/TagPanel";
 import { error } from "console";
 import { ErrorPage } from "./pages/ErrorPage";
 import { Notifications } from "./pages/Notifications";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 
 console.debug((import.meta as any).env);
