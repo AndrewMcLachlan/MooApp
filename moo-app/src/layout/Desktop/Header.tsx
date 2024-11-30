@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 import { Breadcrumb } from "../../components";
 import { HeaderComponent } from "../Types";

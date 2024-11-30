@@ -1,6 +1,6 @@
 import { NavItem } from "models";
 import { Breadcrumb as BSBreadcrumb, BreadcrumbProps as BSBreadcrumbProps } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export const Breadcrumb: React.FC<BreadcrumbProps> = ({ breadcrumbs = [], ...rest }) => (
 

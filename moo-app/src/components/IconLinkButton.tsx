@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { ButtonProps } from "react-bootstrap";
-import { Link, LinkProps } from "react-router-dom";
+import { Link, LinkProps } from "react-router";
 import { IconType } from "../types";
 import { Icon } from "./Icon";
 
