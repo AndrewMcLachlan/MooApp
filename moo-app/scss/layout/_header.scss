@@ -1,4 +1,4 @@
-@import "../fonts";
+@use "../variables" as *;
 
 .app-container > header {
     grid-area: header;

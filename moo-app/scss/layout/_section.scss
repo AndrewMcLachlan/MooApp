@@ -1,3 +1,6 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
 main > section,
 .section {
     background-color: var(--section-bg);
