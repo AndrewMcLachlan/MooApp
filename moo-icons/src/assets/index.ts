@@ -8,7 +8,7 @@ export { default as Hierarchy } from "./hierarchy.svg";
 export { default as Import } from "./import.svg";
 export { default as LeftRightArrow } from "./left-right-arrow.svg";
 export { default as PieChart } from "./pie-chart.svg";
-export { default as PiggyBank3 } from "./piggybank.svg";
+export { default as PiggyBank } from "./piggybank.svg";
 export { default as Reports } from "./reports.svg";
 export { default as Rules } from "./rules.svg";
 export { default as Sliders } from "./sliders.svg";
