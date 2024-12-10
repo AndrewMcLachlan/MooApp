@@ -34,7 +34,7 @@ jobs:
         rm -rf node_modules
         npm ci --no-scripts --workspaces --force
     - name: npm version
-      run: npm version ${{ steps.set-version-number.outputs.version }} --no-git-tag-version --workspaces
+      run: npm version ${{ steps.set-version-number.outputs.version }} --no-git-tag-version --workspaces --force
     - name: npm run build
       run: npm run build
     - name: npm publish
