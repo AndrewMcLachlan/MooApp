@@ -90,8 +90,14 @@
     "react": ">=19.0.0",
     "react-bootstrap": ">=2.10.1",
     "react-dom": ">=19.0.0",
-    "react-hook-form": ">=7.51.0",
+    "react-hook-form": "^7.54.1",
     "react-router": ">=7.0.0",
     "react-select": ">=5.8.0"
+  },
+  "overrides": {
+    "@azure/msal-react": {
+      "react": "^19.0.0",
+      "react-dom": "^19.0.0"
+    }
   }
 }
