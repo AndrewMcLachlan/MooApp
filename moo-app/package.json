@@ -55,10 +55,10 @@
     ]
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^28.0.1",
-    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^12.1.1",
+    "@rollup/plugin-typescript": "^12.1.2",
     "@svgr/rollup": "^8.1.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
@@ -70,7 +70,7 @@
     "@typescript-eslint/eslint-plugin": "^8.10.0",
     "@typescript-eslint/parser": "^8.10.0",
     "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.16.0",
+    "eslint": "^9.17.0",
     "eslint-plugin-react": "^7.37.2",
     "globals": "^15.13.0",
     "rollup": "^4.28.1",
@@ -78,7 +78,7 @@
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-svgr": "^4.0.1",
     "rollup-plugin-terser": "^7.0.2",
-    "sass": "^1.82.0"
+    "sass": "^1.83.0"
   },
   "peerDependencies": {
     "@azure/msal-react": ">=2.1.0",
