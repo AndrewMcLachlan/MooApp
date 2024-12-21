@@ -1,0 +1,7 @@
+th.sortable {
+    white-space: nowrap;
+    cursor: pointer;
+    svg {
+        margin-left: 5px;
+    }
+}
