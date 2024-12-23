@@ -1,0 +1,8 @@
+.modal-header {
+    color: var(--header-text);
+    background-color: var(--header-bg);
+
+    .h4 {
+        font-weight: bold;
+    }
+}

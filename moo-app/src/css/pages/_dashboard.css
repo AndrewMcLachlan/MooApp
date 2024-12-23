@@ -1,0 +1,22 @@
+main.dashboard {
+    .row {
+        --bs-gutter-y: 1.5rem;
+
+        > div {
+
+            &.single {
+                max-height: 300px;
+            }
+
+            &.double {
+                max-height: calc(600px + 1.5rem);
+            }
+        }
+    }
+
+    .section {
+        flex: 0 0 auto;
+
+        height: 100%;
+    }
+}

@@ -1,4 +1,5 @@
-import "./App.scss";
+import "./App.css";
+import "../../moo-app/src/css/mooapp.css";
 
 import { Icon, MooAppLayout, SearchBox } from "@andrewmclachlan/mooapp";
 import { useIsAuthenticated } from "@azure/msal-react";

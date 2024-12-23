@@ -1,0 +1,37 @@
+button {
+    &.link {
+        outline: none;
+        border: none;
+        background: none;
+        color: inherit;
+        font-family: inherit;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &:focus,
+        &:active {
+            outline: none;
+        }
+    }
+
+    &.icon {
+        background: none;
+        border: none;
+        outline: none;
+        color: inherit;
+    }
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--primary);
+    --bs-btn-border-color: #var(--primary);
+    --bs-btn-hover-bg: rgb(118.15, 0, 0);
+    --bs-btn-hover-border-color: rgb(111.2, 0, 0);
+    --bs-btn-focus-shadow-rgb: 156, 38, 38;
+    --bs-btn-active-bg: rgb(111.2, 0, 0);
+    --bs-btn-active-border-color: rgb(104.25, 0, 0);
+    --bs-btn-disabled-bg: #var(--primary);
+    --bs-btn-disabled-border-color: #var(--primary);
+}

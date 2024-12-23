@@ -1,0 +1,8 @@
+html {
+    font-size: 14px;
+}
+
+/* Reset the z-index of pagination to prevent it overlaying react-select. */
+.page-item.active > .page-link {
+    z-index: 0;
+}

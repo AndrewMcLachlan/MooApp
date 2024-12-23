@@ -1,11 +1,8 @@
 import typescript from "@rollup/plugin-typescript";
-//import commonjs from "@rollup/plugin-commonjs";
-import resolve from "@rollup/plugin-node-resolve";
 import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
-import svgr from "@svgr/rollup";
+import postcssImport from "postcss-import";
 import terser from "@rollup/plugin-terser";
-
 import pkg from "./package.json" with { type: "json" }
 
 export default {
@@ -26,15 +23,13 @@ export default {
   ],
   plugins: [
     external(),
-    //resolve({browser: true}),
     postcss({
-      modules: false,
-      extensions: [".scss"],
+      plugins: [postcssImport()],
+      extract: true,
+      extensions: [".css"],
       sourceMap: true
     }),
-    svgr(),
     typescript(),
     terser(),
-    //commonjs()
   ]
 }

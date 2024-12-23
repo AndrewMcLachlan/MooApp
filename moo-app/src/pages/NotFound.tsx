@@ -1,6 +1,6 @@
-import { Container } from "react-bootstrap";
+import { Page } from "layout";
 
 export const NotFound = () =>
-    <Container>
+    <Page title="Not Found">
         <p className="error">Page Not Found</p>
-    </Container>
+    </Page>

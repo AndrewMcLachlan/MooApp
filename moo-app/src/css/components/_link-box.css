@@ -1,0 +1,32 @@
+.link-box {
+    background-color: var(--section-bg);
+    padding: 15px;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    color: var(--bs-text-color);
+    text-decoration: none;
+    gap: 1.5rem;
+    font-size: 2rem;
+    height: 100px;
+
+    &:hover {
+        background-color: var(--hover);
+    }
+
+    .link-box-img {
+        max-height: 40px;
+        max-width: 40px;
+
+        svg {
+            vertical-align: inherit;
+        }
+    }
+
+    .link-box-img > * {
+        height: 40px;
+        width: 40px;
+    }
+}
