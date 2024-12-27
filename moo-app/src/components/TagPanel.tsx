@@ -1,8 +1,7 @@
 import classNames from "classnames";
 import { ElementType, useRef, useState } from "react";
-import Select, { ActionMeta, MultiValue } from "react-select";
-import Creatable, { CreatableProps } from "react-select/creatable";
 import { useClickAway } from "../hooks";
+import { ComboBox } from "./ComboBox";
 
 export const TagPanel = <T,>({ as = "div", allowCreate = false, readonly = false, alwaysShowEditPanel = false, ...props }: TagPanelProps<T, any>) => {
 
@@ -10,31 +9,9 @@ export const TagPanel = <T,>({ as = "div", allowCreate = false, readonly = false
     const ref = useRef(null);
     useClickAway(setEditMode, ref);
 
-    const Component = allowCreate ? Creatable : Select;
 
-    const extraProps: Partial<CreatableProps<any, any, any>> = allowCreate ? {
-        onCreateOption: props.onCreate,
-        formatCreateLabel: (input) => `Create ${input}...`,
-    } : {};
-
-    const onChange = (value: T | MultiValue<T>, meta: ActionMeta<T>) => {
-
-        switch (meta.action) {
-            case "remove-value":
-            case "pop-value":
-            case "deselect-option":
-                props.onRemove?.(meta.removedValue);
-                break;
-            case "clear":
-                for (const val of meta.removedValues) {
-                    props.onRemove?.(val);
-                }
-                break;
-            case "select-option":
-                props.onAdd?.(meta.option);
-        }
-
-        props.onChange?.(Array.from(value as T[]));
+    const onChange = (items: T[]) => {
+        props.onChange?.(items);
     }
 
     const keyUp: React.KeyboardEventHandler<any> = (e) => {
@@ -49,16 +26,18 @@ export const TagPanel = <T,>({ as = "div", allowCreate = false, readonly = false
         setEditMode(true);
     }
 
-    const getOptionLabel = (item: T) => props.labelField(item) ?? (allowCreate && "Create new tag...");
-
     const displayEdit = !readonly  && (editMode || alwaysShowEditPanel);
     const isReadonly = readonly || (!editMode && !alwaysShowEditPanel);
+    console.debug("displayEdit", displayEdit);
+    console.debug("editMode", editMode);
+    console.debug("alwaysShowEditPanel", alwaysShowEditPanel);
+    console.debug("isReadonly", isReadonly);
 
     const As = as;
 
     return (
         <As ref={ref} className={classNames("tag-panel", displayEdit && "edit-mode")} onClick={onClick} onKeyUp={props.onKeyUp ?? keyUp} onTouchStart={() => setEditMode(true)}>
-            <Component unstyled={isReadonly} {...extraProps} options={props.items} isMulti isClearable value={props.selectedItems} getOptionLabel={getOptionLabel} getOptionValue={props.valueField} onChange={onChange} className={classNames("react-select", isReadonly && "readonly")} classNamePrefix="react-select" />
+            <ComboBox<T> items={props.items} multiSelect clearable creatable selectedItems={props.selectedItems} labelField={props.labelField} valueField={props.valueField} onChange={onChange} createLabel={() => "Create new tag..."} readonly={isReadonly} />
         </As>
     );
 }
@@ -80,5 +59,6 @@ export interface Props<TData, TElement extends ElementType> {
 
     onAdd?: (item: TData) => void;
     onRemove?: (item: TData) => void;
+    onChange?: (items: TData[]) => void;
     onCreate?: (text: string) => void;
 }

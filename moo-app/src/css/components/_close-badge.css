@@ -1,6 +1,9 @@
 ﻿.badge.close-badge {
-    span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    svg {
         cursor: pointer;
-        margin-left: 4px;
     }
 }

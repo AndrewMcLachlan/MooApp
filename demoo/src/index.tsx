@@ -43,7 +43,7 @@ const router = createMooAppBrowserRouter({
         },
       },
       notifications: { path: "/notifications", element: <Notifications /> },
-      tagPanel: { path: "/tag-panel", element: <TagPanel /> },
+      tagPanel: { path: "/components/tag-panel", element: <TagPanel /> },
       settings: { path: "/settings", element: <Components /> },
       profile: { path: "/profile", element: <Profile /> },
       fallback: { path: "*", element: <NotFound /> },

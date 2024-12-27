@@ -23,13 +23,13 @@ export default {
   ],
   plugins: [
     external(),
+    typescript(),
     postcss({
       plugins: [postcssImport()],
       extract: true,
       extensions: [".css"],
       sourceMap: true
     }),
-    typescript(),
     terser(),
   ]
 }
