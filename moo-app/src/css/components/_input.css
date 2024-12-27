@@ -1,14 +1,14 @@
 input.clearable {
     position: relative;
 
-    svg {
+    svg.clear-input {
         position: absolute;
         right: 0.6rem;
         top: calc(1rem - 7px);
         fill: hsl(0, 0%, 80%);
     }
 
-    input:focus + svg {
+    input:focus + svg.clear-input {
         fill: hsl(0, 0%, 40%);
     }
 }

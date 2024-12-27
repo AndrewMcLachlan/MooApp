@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/react";
 import { themes } from "@storybook/theming";
-import "../../moo-app/scss/mooapp.scss";
+import "../../moo-app/src/css/mooapp.css";
 
 const preview: Preview = {
   parameters: {

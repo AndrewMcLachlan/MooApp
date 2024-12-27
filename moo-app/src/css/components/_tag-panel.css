@@ -1,17 +1,4 @@
-.tag-panel .readonly {
-    .react-select__indicators {
-        display: none;
-    }
 
-    .react-select__placeholder {
-        display: none;
-    }
-
-    .react-select__input-container {
-        display: none;
-    }
-}
-
-td.tag-panel .react-select {
+td.tag-panel .combo-box {
     width: 100%
 }
