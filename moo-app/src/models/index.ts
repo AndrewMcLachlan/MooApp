@@ -4,6 +4,7 @@ export * from "./Message";
 export * from "./NavItem";
 export * from "./PagedResult";
 export * from "./RagStatus";
+export * from "./RefProps";
 export * from "./Route";
 export * from "./SortDirection";
 export * from "./Theme";
