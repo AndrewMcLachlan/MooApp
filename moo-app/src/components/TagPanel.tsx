@@ -28,10 +28,6 @@ export const TagPanel = <T,>({ as = "div", allowCreate = false, readonly = false
 
     const displayEdit = !readonly  && (editMode || alwaysShowEditPanel);
     const isReadonly = readonly || (!editMode && !alwaysShowEditPanel);
-    console.debug("displayEdit", displayEdit);
-    console.debug("editMode", editMode);
-    console.debug("alwaysShowEditPanel", alwaysShowEditPanel);
-    console.debug("isReadonly", isReadonly);
 
     const As = as;
 
