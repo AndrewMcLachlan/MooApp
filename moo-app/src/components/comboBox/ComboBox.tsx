@@ -1,5 +1,3 @@
-import { RefProps } from "@andrewmclachlan/mooapp";
-
 import { ComboBoxProps, ComboBoxProvider } from "./ComboBoxProvider";
 import { ComboBoxContainer } from "./ComboBoxContainer";
 

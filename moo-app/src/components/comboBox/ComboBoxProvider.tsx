@@ -1,5 +1,5 @@
-import React, { createContext, ReactNode, useEffect, useMemo, useState } from "react";
-import { useContext } from "react";
+import { RefProps } from "models";
+import React, { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
 
 export const ComboBoxContext = createContext<ComboBoxOptions | undefined>(undefined);
 
@@ -86,7 +86,7 @@ export interface ComboBoxOptions {
     allItems?: any[];
 }
 
-export interface ComboBoxProps<TItem> {
+export interface ComboBoxProps<TItem> extends RefProps<HTMLDivElement> {
     search?: (input: string) => TItem[];
     onCreate?: (name: string) => void;
     onAdd?: (item: TItem) => void;
@@ -103,16 +103,5 @@ export interface ComboBoxProps<TItem> {
     placeholder?: string;
     readonly?: boolean;
     createLabel?: (input: string) => string;
-    ref?: React.Ref<any>;
 }
 
-function useCustomState<S>(customSetter: (value: S) => S, initialState: S | (() => S)): [S, (value: S) => void] {
-    const [value, setter] = useState<S>(initialState);
-
-    const setterWrapper = (value: S) => {
-        const newValue = customSetter(value);
-        setter(newValue);
-    }
-
-    return [value, setterWrapper];
-}

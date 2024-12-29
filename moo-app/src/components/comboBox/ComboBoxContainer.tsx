@@ -1,6 +1,8 @@
-import { CloseBadge, RefProps, useClickAway } from "@andrewmclachlan/mooapp";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import classNames from "classnames";
+
+import { RefProps } from "models";
+import { useClickAway } from "hooks";
 
 import { ComboBoxInput as Input } from "./ComboBoxInput";
 import { ComboBoxControls as Controls } from "./ComboBoxControls";
@@ -34,9 +36,8 @@ export const ComboBoxContainer: React.FC<ComboBoxContainerProps> = ({ placeholde
 
 ComboBoxContainer.displayName = "ComboBoxContainer";
 
-interface ComboBoxContainerProps {
+interface ComboBoxContainerProps extends RefProps<HTMLDivElement> {
     placeholder?: string;
     readonly?: boolean;
     hidden?: boolean;
-    ref?: React.Ref<any>;
 }

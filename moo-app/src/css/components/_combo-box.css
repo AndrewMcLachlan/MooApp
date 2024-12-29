@@ -1,17 +1,30 @@
 @scope (.combo-box) {
 
     :scope {
+        background-color: var(--bs-body-bg);
         position: relative;
         border-radius: var(--bs-border-radius);
         border: var(--bs-border-width) solid var(--bs-border-color);
     }
 
+    &.readonly:scope {
+        background-color: transparent;
+    }
+
     &.readonly {
         border: var(--bs-border-width) solid transparent;
+
+        input {
+            background-color: transparent;
+        }
 
         >div .controls {
             display: none;
         }
+    }
+
+    .single-item {
+        position: absolute;
     }
 
     >div {
@@ -25,12 +38,9 @@
         padding: 8px 8px 8px 0px;
         border: none;
         width: 100%;
-        background-repeat: no-repeat;
-        background-position: right 0.75rem center;
-        background-size: 16px 12px;
-        background-color: var(--bs-body-bg);
-        /*background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e");*/
-        color: currentColor;
+        z-index: 10;
+        background-color: transparent;
+
 
         &:focus {
             outline: none;
@@ -80,23 +90,3 @@
         height: 100%;
     }
 }
-
-/*
-@media (prefers-color-scheme: dark) {
-    .combo-box input {
-        background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23ced4da%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e")
-    }
-}
-
-.dark {
-    .combo-box input {
-        background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23ced4da%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e")
-    }
-}
-
-.light {
-    .combo-box input {
-        background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e")
-    }
-}
-    */

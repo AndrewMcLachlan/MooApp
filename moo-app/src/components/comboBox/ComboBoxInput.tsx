@@ -1,10 +1,9 @@
-import { useState } from "react";
 import { useComboBox } from "./ComboBoxProvider";
 import { useDebounce } from "use-debounce";
 
 export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => {
 
-    const { createLabel, creatable, allItems, items, labelField, multiSelect, search, setItems, selectedItems, setSelectedItems, newItem, setNewItem, text, setText, setShow } = useComboBox();
+    const { createLabel, creatable, allItems, items, labelField, search, setItems, selectedItems, newItem, setNewItem, text, setText, setShow } = useComboBox();
 
     const [debouncedSearch] = useDebounce(search, 300);
 

@@ -1,4 +1,4 @@
-import { CloseBadge } from "@andrewmclachlan/mooapp";
+import { CloseBadge } from "../CloseBadge";
 import { useComboBox } from "./ComboBoxProvider";
 
 export const ComboBoxSelectedItem = <T,>({item}: ComboBoxSelectedItemProps<T>) => {
