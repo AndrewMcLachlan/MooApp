@@ -1,4 +1,4 @@
-import { NavItem } from "models";
+import { NavItem } from "../models";
 import { HTMLAttributes } from "react";
 import { UserMenuProps } from "./UserMenu";
 

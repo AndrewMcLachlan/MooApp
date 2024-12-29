@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import classNames from "classnames";
 
-import { RefProps } from "models";
-import { useClickAway } from "hooks";
+import { RefProps } from "../../models";
+import { useClickAway } from "../../hooks";
 
 import { ComboBoxInput as Input } from "./ComboBoxInput";
 import { ComboBoxControls as Controls } from "./ComboBoxControls";

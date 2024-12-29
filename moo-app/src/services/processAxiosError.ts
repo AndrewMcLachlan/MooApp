@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { ProblemDetails } from "models/ProblemDetails";
+import { ProblemDetails } from "../models/ProblemDetails";
 
 export const processAxiosError = (error: any): Error => {
 

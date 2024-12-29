@@ -1,4 +1,4 @@
-import { NavItem } from "models";
+import { NavItem } from "../models";
 import { Breadcrumb as BSBreadcrumb, BreadcrumbProps as BSBreadcrumbProps } from "react-bootstrap";
 import { Link } from "react-router";
 

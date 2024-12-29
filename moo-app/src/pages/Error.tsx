@@ -1,5 +1,5 @@
-import { ErrorFallback } from "components";
-import { Page } from "layout";
+import { ErrorFallback } from "../components";
+import { Page } from "../layout";
 import React from "react";
 import { Container } from "react-bootstrap";
 import { FallbackProps } from "react-error-boundary";
@@ -12,7 +12,7 @@ export const Error: React.FC<FallbackProps> = (props) => {
     return (
         <Page title="Error">
             <Container className="error-page">
-                <ErrorFallback {...props} onClose={() => navigate(-1)} dismissable message="Close this alert to go back to the previous page." />
+                <ErrorFallback {...props} onClose={() => navigate(-1)} dismissible message="Close this alert to go back to the previous page." />
             </Container>
         </Page>
     );

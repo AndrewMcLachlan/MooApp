@@ -1,7 +1,7 @@
 import React, { ElementType, ReactNode, isValidElement } from "react";
 import { Button, Nav } from "react-bootstrap";
 import { NavLink } from "react-router";
-import { NavItem } from "models";
+import { NavItem } from "../models";
 
 export const renderMenu = (navItems: (NavItem | ReactNode)[], as: ElementType = React.Fragment) => {
 

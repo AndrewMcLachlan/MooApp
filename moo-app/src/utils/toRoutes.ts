@@ -1,4 +1,4 @@
-import { RouteDefinition } from "models/Route";
+import { RouteDefinition } from "../models/Route";
 import { RouteObject } from "react-router";
 
 export const toRoutes = (routes: RouteDefinition): RouteObject[] =>

@@ -1,6 +1,6 @@
 import Form from "react-bootstrap/Form";
 import { useTheme } from "../providers"
-import { theme as getTheme } from "models";
+import { theme as getTheme } from "../models";
 
 export const ThemeSwitcher = () => {
 
