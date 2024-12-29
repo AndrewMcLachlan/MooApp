@@ -1,3 +1,3 @@
 export { ComboBox } from "./ComboBox";
-export { ComboBoxProps } from "./ComboBoxProvider";
+export type { ComboBoxProps } from "./ComboBoxProvider";
 

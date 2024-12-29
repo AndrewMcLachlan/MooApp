@@ -11,6 +11,7 @@
   --bs-primary: var(--primary);
   --bs-primary-rgb: 139, 0, 0;
 
+  
   --input-border: #666;
   --disabled: #999;
 
@@ -45,6 +46,12 @@
     --header-text: var(--bs-body-color);
     --footer-bg: var(--header-bg);
     --footer-text: var(--body-color);
+
+    --bs-link-color: #8b0000;
+    --bs-link-color-rgb: 139, 0, 0;
+    --bs-link-decoration: underline;
+    --bs-link-hover-color: rgb(111.2, 0, 0);
+    --bs-link-hover-color-rgb: 111, 0, 0;
   }
 }
 
@@ -68,6 +75,12 @@
     --header-text: var(--bs-body-color);
     --footer-bg: var(--header-bg);
     --footer-text: var(--bs-body-color);
+
+    --bs-link-color: rgb(185.4, 102, 102);
+    --bs-link-hover-color: rgb(199.32, 132.6, 132.6);
+    --bs-link-color-rgb: 185, 102, 102;
+    --bs-link-hover-color-rgb: 199, 133, 133;
+    --bs-code-color: rgb(230.4, 132.6, 181.2);
   }
 
   body  {
@@ -92,6 +105,12 @@
   --footer-bg: #FFF;
   --footer-text: var(--bs-body-color);
   --hover: #E6E6E6;
+
+  --bs-link-color: #8b0000;
+  --bs-link-color-rgb: 139, 0, 0;
+  --bs-link-decoration: underline;
+  --bs-link-hover-color: rgb(111.2, 0, 0);
+  --bs-link-hover-color-rgb: 111, 0, 0;
 }
 
 .red {
@@ -129,4 +148,10 @@
   --footer-bg: #111;
   --footer-text: var(--bs-body-color);
   --hover: #6E6E6E;
+
+  --bs-link-color: rgb(185.4, 102, 102);
+  --bs-link-hover-color: rgb(199.32, 132.6, 132.6);
+  --bs-link-color-rgb: 185, 102, 102;
+  --bs-link-hover-color-rgb: 199, 133, 133;
+  --bs-code-color: rgb(230.4, 132.6, 181.2);
 }

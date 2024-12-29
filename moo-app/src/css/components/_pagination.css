@@ -1,3 +1,6 @@
 .pagination {
     justify-content: flex-end;
+
+    --bs-pagination-active-bg: var(--primary);
+    --bs-pagination-active-border-color: var(--primary);
 }
