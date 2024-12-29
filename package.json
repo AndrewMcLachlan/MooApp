@@ -28,8 +28,8 @@
         "rollup-plugin-postcss": "^4.0.2",
         "rollup-plugin-svgr": "^4.0.1",
         "typescript": "^5.7.2",
-        "typescript-eslint": "^8.18.1",
-        "vite": "^6.0.5",
+        "typescript-eslint": "^8.18.2",
+        "vite": "^6.0.6",
         "vite-plugin-dts": "^4.4.0",
         "vite-plugin-svgr": "^4.3.0",
         "vite-tsconfig-paths": "^5.1.4"
