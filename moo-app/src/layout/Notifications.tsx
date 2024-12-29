@@ -1,6 +1,6 @@
 import "~/react-toastify/dist/ReactToastify.css";
 import { Slide, ToastContainer } from "react-toastify";
-import { useTheme } from "@andrewmclachlan/mooapp";
+import { useTheme } from "../providers";
 
 export const Notifications: React.FC = () => {
 

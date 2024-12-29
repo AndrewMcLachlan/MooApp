@@ -1,6 +1,6 @@
 import { useTheme } from "../providers"
 import { Themes } from "../models";
-import { ComboBox } from "./ComboBox";
+import { ComboBox } from "./comboBox";
 
 export const ThemeSelector = () => {
 
