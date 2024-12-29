@@ -3,8 +3,8 @@ import { Outlet, useLocation } from "react-router";
 import { Alerts, Layout } from "./layout";
 import { FooterProps, HeaderProps, SidebarProps } from "./layout/Types";
 import { ErrorBoundary } from "react-error-boundary";
-import { Error } from "pages/Error";
-import { Notifications } from "layout/Notifications";
+import { Error } from "./pages/Error";
+import { Notifications } from "./layout/Notifications";
 
 export const MooAppLayout: React.FC<MooAppLayoutProps> = ({ header, sidebar, footer }) => {
 
