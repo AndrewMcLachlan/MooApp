@@ -3,7 +3,7 @@ export * from "./Breadcrumb";
 export * from "./ClearableInput";
 export * from "./ClickableIcon";
 export * from "./CloseBadge";
-export * from "./ComboBox";
+export * from "./comboBox";
 export * from "./DeleteIcon";
 export * from "./EditColumn";
 export * from "./ErrorFallback";
