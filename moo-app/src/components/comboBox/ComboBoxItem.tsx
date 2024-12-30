@@ -11,6 +11,8 @@ export const ComobBoxItem = <T,>(props: ComboBoxItemProps<T>) => {
         props.onSelected(props.item);
     }
 
+    if (props.item === undefined) return null;
+
     return (<li onClick={click} tabIndex={2}>{props.label ?? labelField(props.item)}</li>);
 }
 

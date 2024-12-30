@@ -5,6 +5,7 @@ export const ComboBoxSingleSelectedItem: React.FC = () => {
     const { selectedItems, text, labelField } = useComboBox();
 
     if (text) return null;
+    if (!selectedItems || selectedItems.length === 0) return null;
 
     return (
         <div className="single-item">

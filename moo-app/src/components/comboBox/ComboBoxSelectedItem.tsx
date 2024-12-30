@@ -13,6 +13,8 @@ export const ComboBoxSelectedItem = <T,>({item}: ComboBoxSelectedItemProps<T>) =
         onChange?.(newSelectedItems);
     }
 
+    if (item === undefined) return null;
+
     return (
         <div className="item"><CloseBadge pill bg="primary" onClose={() => removeItem(item)}>{labelField(item)}</CloseBadge></div>
     );
