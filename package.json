@@ -36,7 +36,7 @@
     },
     "optionalDependencies": {
         "@esbuild/linux-arm64": "0.24.2",
-        "@rollup/rollup-linux-arm64-gnu": "4.29.1"
+        "@rollup/rollup-linux-arm64-gnu": "4.29.2"
     },
     "peerDependencies": {
         "react": ">=19.0.0",
