@@ -18,13 +18,13 @@
   },
   "typings": "dist/index.d.ts",
   "dependencies": {
-    "@azure/msal-browser": "^3.28.0",
+    "@azure/msal-browser": "^4.0.1",
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "react-error-boundary": "^5.0.0",
-    "react-toastify": "^11.0.2",
+    "react-toastify": "^11.0.3",
     "use-debounce": "^10.0.4"
   },
   "scripts": {
@@ -61,8 +61,8 @@
     "@rollup/plugin-typescript": "^12.1.2",
     "@svgr/rollup": "^8.1.0",
     "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.1.0",
-    "@testing-library/user-event": "^14.5.2",
+    "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^14.6.0",
     "@types/jest": "^29.5.14",
     "@types/postcss-import": "^14.0.3",
     "@types/react": "^19.0.5",
