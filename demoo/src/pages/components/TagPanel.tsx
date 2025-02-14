@@ -5,7 +5,7 @@ type item = { id: number, text: string };
 
 export const TagPanel = () => {
 
-    const [selectedItems, setSelectedItems] = useState<any[]>([]);
+    const [selectedItems, setSelectedItems] = useState<item[]>([]);
 
     const items = useMemo(() => {
         const items: item[] = [];
@@ -17,7 +17,7 @@ export const TagPanel = () => {
 
     return (
         <Page title="Tag Panel">
-            <TagPanelComponent items={items} labelField={i => i.text} valueField={i => i.id.toString()} selectedItems={selectedItems} onChange={i => setSelectedItems(i)}  />
+            <TagPanelComponent<item> items={items} labelField={i => i.text} valueField={i => i.id.toString()} selectedItems={selectedItems} onChange={i => setSelectedItems(i)}  />
             <ComboBox items={items} labelField={i => i.text} valueField={i => i.id.toString()} selectedItems={selectedItems} onChange={i => setSelectedItems(i)} multiSelect clearable />
         </Page>
     );
