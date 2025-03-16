@@ -55,7 +55,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "bootstrap": "^5.3.3",
     "typescript": "^5.8.2",
-    "vite": "^6.2.1",
+    "vite": "^6.2.2",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4"
   }
