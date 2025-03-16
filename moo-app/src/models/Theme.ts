@@ -4,7 +4,7 @@ export interface ThemeOptions {
     defaultTheme: Theme;
 }
 
-export type Themes = "" | "dark" | "light" | "red";
+export type Themes = "" | "dark" | "light" | "light red" | "dark blue";
 
 export interface Theme {
     name: string,
@@ -20,9 +20,14 @@ export const Themes: Theme[] = [
         theme: "",
     },
     {
-        name: "Dark",
+        name: "Dark warm",
         theme: "dark",
         colour: "#1F1B18"
+    },
+    {
+        name: "Dark cool",
+        theme: "dark blue",
+        colour: "#181B1F"
     },
     {
         name: "Light",
@@ -31,7 +36,7 @@ export const Themes: Theme[] = [
     },
     {
         name: "Red",
-        theme: "red",
+        theme: "light red",
         colour: "#620000"
     },
 ];

@@ -1,24 +1,26 @@
-.table th {
-  background-color: var(--section-bg);
-}
+.table {
+  --bs-table-striped-bg: var(--table-striped-bg);
 
-th {
-  font-weight: 600;
-}
+  th {
+    background-color: var(--section-bg);
+    font-weight: 600;
+  }
 
-td {
-  vertical-align: middle;
-}
 
-.row-action {
-  vertical-align: middle;
-  text-align: center;
+  td {
+    vertical-align: middle;
+  }
 
-  svg {
-    margin-right: 8px;
+  .row-action {
+    vertical-align: middle;
+    text-align: center;
 
-    &:last-child {
-      padding-right: 0;
+    svg {
+      margin-right: 8px;
+
+      &:last-child {
+        padding-right: 0;
+      }
     }
   }
 }

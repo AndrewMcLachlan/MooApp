@@ -36,6 +36,26 @@ export const Components = () => {
                         <td>Row 2 Data 2</td>
                         <td>Row 2 Data 3</td>
                     </tr>
+                    <tr>
+                        <td>Row 3 Data 1</td>
+                        <td>Row 3 Data 2</td>
+                        <td>Row 3 Data 3</td>
+                    </tr>
+                    <tr>
+                        <td>Row 4 Data 1</td>
+                        <td>Row 4 Data 2</td>
+                        <td>Row 4 Data 3</td>
+                    </tr>
+                    <tr>
+                        <td>Row 5 Data 1</td>
+                        <td>Row 5 Data 2</td>
+                        <td>Row 5 Data 3</td>
+                    </tr>
+                    <tr>
+                        <td>Row 6 Data 1</td>
+                        <td>Row 6 Data 2</td>
+                        <td>Row 6 Data 3</td>
+                    </tr>
                 </tbody>
                 <tfoot
                 >

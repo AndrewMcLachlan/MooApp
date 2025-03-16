@@ -3,7 +3,7 @@
 
     height: 100%;
     width: 100%;
-    background-color: var(--section-bg);
+    background-color: var(--sidebar-bg);
     font-family: var(--font-family-alt);
 
     border-right: 1px solid var(--bs-border-color);
@@ -64,7 +64,7 @@
             position: absolute;
             margin-left: -10px;
             content: "";
-            background-color: #8b0000;
+            background-color: var(--nav-link-active);
             width: 5px;
             height: 1.5rem;
             border-radius: 4px;
