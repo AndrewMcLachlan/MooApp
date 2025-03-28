@@ -18,10 +18,10 @@ export const renderMenu = (navItems: (NavItem | ReactNode)[], as: ElementType = 
         const image = typeof navItem.image === "string" ? <img src={navItem.image} alt="" /> : navItem.image ?? <></>;
 
         if (navItem.route) {
-            return <As key={`route${index}`} role={role}><NavLink className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`} to={navItem.route} onClick={navItem.onClick} title={navItem.text}>{image}<span>{navItem.text}</span></NavLink></As>;
+            return <As key={`route${index}`}><NavLink className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`} to={navItem.route} onClick={navItem.onClick} title={navItem.text} role={role}>{image}<span>{navItem.text}</span></NavLink></As>;
         }
         else if (navItem.onClick) {
-            return <As key={`click${index}`} role={role}><Nav.Link as={Button} variant="link" onClick={navItem.onClick} title={navItem.text}>{image}<span>{navItem.text}</span></Nav.Link></As>;
+            return <As key={`click${index}`}><Nav.Link as={Button} variant="link" onClick={navItem.onClick} title={navItem.text} role={role}>{image}<span>{navItem.text}</span></Nav.Link></As>;
         }
         else {
             throw "Invalid nav item, specify a route and/or an onClick handler.";

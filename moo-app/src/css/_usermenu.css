@@ -32,6 +32,11 @@
         }
     }
 
+    a.nav-link {
+        display: flex;
+        gap: 1rem;
+    }
+
     .avatar {
 
         img,
