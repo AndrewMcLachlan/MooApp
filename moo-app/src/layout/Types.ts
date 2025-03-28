@@ -13,7 +13,6 @@ export interface HeaderProps extends UserMenuProps {
 
 export interface FooterProps extends HTMLAttributes<HTMLElement> {
     copyrightYear: number;
-
 }
 
 export interface SidebarProps {

@@ -9,7 +9,6 @@
 
   --bs-body-colour: var(--bs-body-color);
 
-  --primary: #8b0000;
   --primary-rgb: 139, 0, 0;
   --primary-dark: #6f0000;
   --bs-primary: var(--primary);
@@ -31,11 +30,18 @@
   --toastify-color-progress-dark: var(--primary);
 
   --nav-link-active: var(--primary);
+
+  --dark-body-bg: rgb(23, 18, 17);
+  --default-primary: #8b0000;
+  --light-body-bg: #FFF;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
+    
     color-scheme: light;
+    --primary: var(--default-primary);
+
     --bs-body-color: rgb(46, 41, 36);
     --body-colour-bold: #000;
     --body-colour-dim: rgb(76, 71, 66);
@@ -63,8 +69,11 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    color-scheme: dark;
+    --primary: var(--default-primary);
+
     --bs-body-bg: rgb(23, 18, 17);
-    --bs-body-color: rgb(251, 248, 244);
+    --bs-body-color: rgb(211, 208, 204);
     --body-colour-bold: rgb(251, 248, 244);
     --body-colour-dim: rgba(251, 248, 244, .65);
 
@@ -98,6 +107,8 @@
 .light,
 [data-bs-theme="light"] {
   color-scheme: light;
+  --primary: var(--default-primary);
+  
   --bs-body-bg: #FFF;
   --bs-body-color: rgb(46, 41, 36);
   --body-colour-bold: #000;
@@ -155,11 +166,15 @@
 .dark,
 [data-bs-theme="dark"] {
   color-scheme: dark;
+  --primary: var(--default-primary);
+
   --bs-body-bg: rgb(23, 18, 17);
-  --bs-body-color: rgb(251, 248, 244);
-  --body-colour-bold: rgb(251, 248, 244);
-  --body-colour-dim: rgba(251, 248, 244, .65);
-  --bs-border-color: rgba(251, 248, 244, .15);
+  --bs-body-color: rgb(211, 208, 204);
+  --bs-secondary-color: rgb(151, 148, 144);
+  --bs-emphasis-color: rgb(211, 208, 204);
+  --body-color-bold: rgb(211, 208, 204);
+  --body-colour-dim: rgba(211, 208, 204, .65);
+  --bs-border-color: rgba(211, 208, 204, .15);
 
   --base-bg: rgb(31, 27, 24);
   --header-bg: var(--base-bg);

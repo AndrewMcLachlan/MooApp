@@ -6,7 +6,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Error } from "./pages/Error";
 import { Notifications } from "./layout/Notifications";
 
-export const MooAppLayout: React.FC<MooAppLayoutProps> = ({ header, sidebar, footer }) => {
+export const MooAppLayout: React.FC<MooAppLayoutProps> = ({ header, sidebar }) => {
 
   const location = useLocation();
 
@@ -21,7 +21,6 @@ export const MooAppLayout: React.FC<MooAppLayoutProps> = ({ header, sidebar, foo
       <ErrorBoundary FallbackComponent={Error} resetKeys={[location.pathname]}>
         <Outlet />
       </ErrorBoundary>
-      <Layout.Footer {...footer} />
     </Layout>
   );
 };
@@ -29,5 +28,4 @@ export const MooAppLayout: React.FC<MooAppLayoutProps> = ({ header, sidebar, foo
 export interface MooAppLayoutProps {
   header: HeaderProps;
   sidebar: SidebarProps;
-  footer: FooterProps;
 }

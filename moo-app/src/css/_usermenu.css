@@ -5,6 +5,8 @@
     --bs-popover-body-color: var(--bs-body-color);
     --bs-popover-header-color: var(--bs-body-color);
     --bs-popover-border-color: #f0f0f0;
+    --bs-popover-font-size: 1rem;
+    --bs-popover-header-font-size: 1.3rem;
 
     .popover-header {
         display: flex;
@@ -20,8 +22,14 @@
 
     li {
         display: flex;
-        justify-content: space-between;
+        justify-content: left;
         align-items: center;
+        gap: .75rem;
+
+        &.divider{
+            border-top: 2px solid var(--bs-border-color);
+            margin: 1rem 0;
+        }
     }
 
     .avatar {

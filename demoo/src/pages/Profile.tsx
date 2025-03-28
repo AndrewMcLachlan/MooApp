@@ -1,14 +1,13 @@
-import { Section, useHttpClient, Page, NavItemDivider } from "@andrewmclachlan/mooapp";
-import { Button } from "react-bootstrap";
+import { Section, ThemeSelector, useHttpClient, Page, NavItemDivider } from "@andrewmclachlan/mooapp";
+import { Button, Col, Row } from "react-bootstrap";
 
 export const Profile = () => {
 
     return (
         <Page title="Profile">
-        <Section title="Profile">
-            <Button size="sm" variant="link">Sample</Button>
-            <Button>Sample 2</Button>
-        </Section>
+            <Section title="Profile">
+                <ThemeSelector />
+            </Section>
         </Page>
     );
 }
