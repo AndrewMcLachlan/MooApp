@@ -16,12 +16,12 @@ export type FormComponent<TFormValues> = React.FC<PropsWithChildren<FormProps<TF
     TextArea: TextAreaComponent;
 };
 
-export const Form: FormComponent<any> = <TFormValues,>({onSubmit, children, ...rest}: PropsWithChildren<FormProps<TFormValues>>) => {
+export const Form: FormComponent<any> = <TFormValues,>({onSubmit, children, className, ...rest}: PropsWithChildren<FormProps<TFormValues>>) => {
 
     const forms = useForm<TFormValues>();
 
     return (
-        <form onSubmit={forms.handleSubmit(onSubmit)} {...rest}>
+        <form onSubmit={forms.handleSubmit(onSubmit)} className={className ?? "form-container"} {...rest}>
             {children}
         </form>
     );
