@@ -6,6 +6,7 @@
     --bs-popover-header-color: var(--bs-body-color);
     --bs-popover-border-color: #f0f0f0;
     --bs-popover-font-size: 1rem;
+    --bs-popover-header-font-size: 1.3rem;
 
     .popover-header {
         display: flex;
