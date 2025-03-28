@@ -4,10 +4,10 @@ import * as Models from "../models";
 
 export const AppContext = createContext<Models.AppOptions | undefined>(undefined);
 
-export const AppProvider: React.FC<React.PropsWithChildren<AppProviderProps>> = ({ name, version, children }) => {
+export const AppProvider: React.FC<React.PropsWithChildren<AppProviderProps>> = ({ name, version, copyrightYear, children }) => {
 
     return (
-        <AppContext.Provider value={{ name, version }}>
+        <AppContext.Provider value={{ name, version, copyrightYear }}>
             {children}
         </AppContext.Provider>
     );
@@ -15,7 +15,7 @@ export const AppProvider: React.FC<React.PropsWithChildren<AppProviderProps>> = 
 
 export const useApp = () => useContext(AppContext);
 
-export interface AppProviderProps extends Pick<Models.AppOptions, "name" | "version"> {
+export interface AppProviderProps extends Models.AppOptions {
 }
 
 AppProvider.displayName = "AppProvider";

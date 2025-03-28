@@ -5,9 +5,9 @@ import { useLocalStorage } from "../hooks/localStorage";
 
 const getDefaultTheme = () => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? Models.theme("dark") : Models.theme("light");
 
-export const ThemeContext = createContext<Models.ThemeOptions>({ defaultTheme: getDefaultTheme()});
+export const ThemeContext = createContext<Models.ThemeOptions>({ defaultTheme: getDefaultTheme() });
 
-export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>> = ({  children }) => {
+export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>> = ({ children }) => {
 
     const colour = document.getElementsByName("theme-color")[0];
 
@@ -20,6 +20,15 @@ export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>
         document.body.setAttribute("class", theme.theme);
         document.body.setAttribute("data-bs-theme", theme.theme === "" ? defaultTheme.theme : theme.theme.startsWith("dark") ? "dark" : "light");
     }, [theme]);
+
+    useEffect(() => {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (theme.name !== "Default") return;
+            document.body.setAttribute("data-bs-theme", event.matches ? "dark" : "light");
+        });
+
+        return () => window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', () => { });
+    }, []);
 
     return (
         <ThemeContext.Provider value={{ theme, setTheme, defaultTheme }}>

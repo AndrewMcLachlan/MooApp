@@ -8,7 +8,12 @@ import getMsalInstance from "./login/msal";
 import { MsalProvider } from "@azure/msal-react";
 import { Login } from "./login/Login";
 
-export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, clientId, scopes = [], baseUrl = "/", name, version }) => {
+import { faArrowRightFromBracket, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+library.add(faArrowRightFromBracket, faTimesCircle);
+
+export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, clientId, scopes = [], baseUrl = "/", name, version, copyrightYear }) => {
 
   const [msalInstance, setMsalInstance] = React.useState<any>(null);
 
@@ -32,7 +37,7 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, cli
   if (!msalInstance) return null;
 
   return (
-    <AppProvider name={name} version={version}>
+    <AppProvider name={name} version={version} copyrightYear={copyrightYear}>
       <MsalProvider instance={msalInstance}>
         <HttpClientProvider baseUrl={baseUrl} scopes={scopes}>
           <QueryClientProvider client={queryClient}>
@@ -54,4 +59,5 @@ export interface MooAppProps {
   baseUrl?: string,
   name?: string,
   version?: string;
+  copyrightYear?: number;
 }

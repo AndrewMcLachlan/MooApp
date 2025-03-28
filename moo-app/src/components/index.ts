@@ -22,6 +22,7 @@ export * from "./SortIcon";
 export * from "./SearchBox";
 export * from "./SpinnerContainer";
 export * from "./TagPanel";
+export * from "./ThemeSelector";
 export * from "./Tooltip";
 export * from "./Upload";
 export * from "./Widget";

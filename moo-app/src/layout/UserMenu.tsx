@@ -1,7 +1,7 @@
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { Avatar } from "../components";
-import { ThemeSelector } from "../components/ThemeSelector";
 import { NavItem } from "../models";
 import { renderMenu } from "../utils";
 
@@ -16,9 +16,9 @@ export const UserMenu: React.FC<UserMenuProps> = ({userMenu = []}) => {
             <Popover.Header as="h3"><Avatar />{msal.instance.getActiveAccount()?.name}</Popover.Header>
             <Popover.Body>
                 <ul>
-                    {renderMenu(userMenu, "li")}
-                    <li><span>Theme</span><ThemeSelector /></li>
-                    <li className="clickable" onClick={() => msal.instance.logoutRedirect()}>Sign out</li>
+                    {renderMenu(userMenu, "li", "menuitem")}
+                    <li className="divider" />
+                    <li className="clickable" onClick={() => msal.instance.logoutRedirect()} role="menuitem"><FontAwesomeIcon icon="arrow-right-from-bracket" />Sign out</li>
                 </ul>
             </Popover.Body>
         </Popover>

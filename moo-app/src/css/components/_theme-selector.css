@@ -1,0 +1,28 @@
+.theme {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.theme-sample {
+
+    background-color: var(--bs-body-bg);
+    background-image: -webkit-linear-gradient(135deg, var(--primary) 50%, var(--section-bg) 50%);
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: var(--bs-body-color) 0.2rem solid;
+
+    &.system {
+        @media (prefers-color-scheme: dark) {
+            --primary: var(--default-primary);
+            --bs-body-bg: var(--dark-body-bg);
+        }
+
+        @media (prefers-color-scheme: light) {
+            --primary: var(--default-primary);
+            --bs-body-bg: var(--light-body-bg);
+        }
+    }
+}

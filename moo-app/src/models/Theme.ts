@@ -16,7 +16,7 @@ export const theme = (theme: Themes) =>  Themes.find(t => t.theme === theme);
 
 export const Themes: Theme[] = [
     {
-        name: "Default",
+        name: "System",
         theme: "",
     },
     {
