@@ -1,12 +1,14 @@
 import classNames from "classnames";
 import { useFormGroup } from "./FormGroupProvider";
 import React from "react";
+import { useFormContext } from "react-hook-form";
 
 export type InputComponent = React.FC<InputProps>;
 
-export const Input: InputComponent = React.forwardRef(({ className, id, ...rest }, ref) => {
+export const Input: InputComponent = React.forwardRef(({ className, id, ...rest }) => {
 
     const group = useFormGroup();
+    const { register } = useFormContext();
     id = id ?? group.groupId;
     const innerClass = rest.type === "checkbox" ? "form-check-input" : "form-control";
 
@@ -14,7 +16,7 @@ export const Input: InputComponent = React.forwardRef(({ className, id, ...rest 
 
     return (
         <Wrapper>
-            <input id={id} className={classNames(innerClass, className)} {...rest} ref={ref} />
+            <input id={id} className={classNames(innerClass, className)} {...rest} {...register(id)} />
         </Wrapper>
     );
 });

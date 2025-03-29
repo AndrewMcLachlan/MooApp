@@ -43,10 +43,10 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
         setShow(false);
     }, [props.readonly]);
 
-    const { clearable, creatable, multiSelect, readonly, labelField, valueField, onAdd, onRemove, onChange, onCreate, createLabel, search } = props;
+    const { clearable, creatable, multiSelect, readonly, labelField, valueField, onAdd, onRemove, onChange, onCreate, createLabel, search, ref } = props;
 
     return (
-        <ComboBoxContext value={{ selectedItems, setSelectedItems, text, setText, items, setItems, newItem, setNewItem, show, setShow, clear, clearable, creatable, multiSelect, readonly, labelField, valueField, onAdd, onRemove, onChange, onCreate, createLabel, search, allItems }}>
+        <ComboBoxContext value={{ selectedItems, setSelectedItems, text, setText, items, setItems, newItem, setNewItem, show, setShow, clear, clearable, creatable, multiSelect, readonly, labelField, valueField, onAdd, onRemove, onChange, onCreate, createLabel, search, allItems, ref }}>
             {props.children}
         </ComboBoxContext>
     );
@@ -84,9 +84,10 @@ export interface ComboBoxOptions {
     createLabel?: (input: string) => string;
     search?: (input: string) => any[];
     allItems?: any[];
+    ref: React.Ref<HTMLInputElement>;
 }
 
-export interface ComboBoxProps<TItem> extends RefProps<HTMLDivElement> {
+export interface ComboBoxProps<TItem> extends RefProps<HTMLInputElement> {
     id?: string;
     className?: string;
     search?: (input: string) => TItem[];

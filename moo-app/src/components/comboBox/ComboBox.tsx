@@ -4,7 +4,7 @@ import { ComboBoxContainer } from "./ComboBoxContainer";
 export const ComboBox = <T,>({ placeholder = "Select...", ...props }: ComboBoxProps<T>) => {
 
     return (
-        <ComboBoxProvider {...props}>
+        <ComboBoxProvider placeholder={placeholder} {...props}>
             <ComboBoxContainer {...props} />
         </ComboBoxProvider>
     );

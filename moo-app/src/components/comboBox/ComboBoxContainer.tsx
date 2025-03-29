@@ -10,18 +10,16 @@ import { ComboBoxList as List } from "./ComboBoxList";
 import { ComboBoxSelectedItem as SelectedItem } from "./ComboBoxSelectedItem";
 import { ComboBoxSingleSelectedItem as SingleSelectedItem } from "./ComboBoxSingleSelectedItem";
 
-export const ComboBoxContainer: React.FC<ComboBoxContainerProps> = ({ placeholder = "Select...", readonly = false, hidden = false, id, className, ref }) => {
+export const ComboBoxContainer: React.FC<ComboBoxContainerProps> = ({ placeholder = "Select...", readonly = false, hidden = false, id, className }) => {
 
     const { multiSelect, selectedItems, show, setShow, valueField } = useComboBox();
 
     const divRef = useRef<HTMLDivElement>(null);
 
-    const theRef = ref || divRef;
-
-    useClickAway(setShow, theRef as React.RefObject<any>);
+    useClickAway(setShow, divRef as React.RefObject<any>);
 
     return (
-        <div id={id} className={classNames("combo-box", readonly ? "readonly" : "", className)} hidden={hidden} ref={theRef} onClick={() => setShow(!show)} onKeyUp={key => key.key === "Escape" && setShow(false)}>
+        <div id={id} ref={divRef} className={classNames("combo-box", readonly ? "readonly" : "", className)} hidden={hidden} onClick={() => setShow(!show)} onKeyUp={key => key.key === "Escape" && setShow(false)}>
             <div>
                 {!!multiSelect && selectedItems.map(item => <SelectedItem key={valueField(item)?.toString()} item={item} />)}
                 {!multiSelect && selectedItems.length > 0 && <SingleSelectedItem />}

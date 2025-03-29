@@ -1,5 +1,7 @@
 import { Page, Form, SectionForm, FormComboBox } from "@andrewmclachlan/mooapp"
 import { useState } from "react";
+import { Button } from "react-bootstrap";
+import { useForm } from "react-hook-form";
 
 export const FormSample = () => {
 
@@ -18,36 +20,51 @@ export const FormSample = () => {
 
     const [value, setValue] = useState<string | undefined>(undefined);
 
+    const form = useForm<FormSample>();
+
     return (
         <Page title="Form Sample" className="form-sample-page">
             <div>
                 <h2>Form Sample</h2>
 
-                <SectionForm onSubmit={() => { }}>
+                <SectionForm form={form} onSubmit={(data) => { console.log(data); }}>
                     <Form.Group groupId="group1">
-                        <Form.Label htmlFor="input1">Input 1</Form.Label>
-                        <Form.Input id="input1" name="input1" placeholder="Input 1" required />
+                        <Form.Label>Input 1</Form.Label>
+                        <Form.Input placeholder="Input 1" required />
                     </Form.Group>
                     <Form.Group groupId="group2">
-                        <Form.Label htmlFor="input2">Input 2</Form.Label>
-                        <Form.Input id="input2" name="input2" placeholder="Input 2" required />
+                        <Form.Label>Input 2</Form.Label>
+                        <Form.Input placeholder="Input 2" />
                     </Form.Group>
                     <Form.Group groupId="group3">
-                        <Form.Label htmlFor="input3">Input 3</Form.Label>
-                        <FormComboBox<{ id: string, text: string }> items={selectItems} labelField={i => i.text} valueField={i => i.id} selectedItems={[]} />
+                        <Form.Label>Input 3</Form.Label>
+                        <FormComboBox<{ id: string, text: string }> items={selectItems} multiSelect labelField={i => i.text} valueField={i => i.id} />
                     </Form.Group>
                     <Form.Group groupId="group4">
-                        <Form.Label htmlFor="input4">Input 4</Form.Label>
-                        <Form.Select id="input4" name="input4" required>
+                        <Form.Label>Input 4</Form.Label>
+                        <Form.Select>
                             <option value="">Select an option</option>
                             <option value="1">Option 1</option>
                             <option value="2">Option 2</option>
                             <option value="3">Option 3</option>
                             <option value="4">Option 4</option>
                         </Form.Select>
-                        </Form.Group>
+                    </Form.Group>
+                    <Form.Group groupId="group5">
+                        <Form.Label>Input 5</Form.Label>
+                        <FormComboBox<{ id: string, text: string }> items={selectItems} labelField={i => i.text} valueField={i => i.id} clearable />
+                    </Form.Group>
+                    <Button type="submit" variant="primary">Submit</Button>
                 </SectionForm>
             </div>
         </Page>
     );
+}
+
+interface FormSample {
+    group1: string;
+    group2: string;
+    group3: string[];
+    group4: string;
+    group5: string;
 }
