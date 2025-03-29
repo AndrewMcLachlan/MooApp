@@ -12,4 +12,4 @@ export const FormComboBox = <T,>({ id, ref, ...rest }: ComboBoxProps<T>) => {
     );
 };
 
-FormComboBox.displayName = "FormSelect";
+FormComboBox.displayName = "FormComboBox";
