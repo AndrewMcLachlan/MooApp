@@ -87,6 +87,8 @@ export interface ComboBoxOptions {
 }
 
 export interface ComboBoxProps<TItem> extends RefProps<HTMLDivElement> {
+    id?: string;
+    className?: string;
     search?: (input: string) => TItem[];
     onCreate?: (name: string) => void;
     onAdd?: (item: TItem) => void;

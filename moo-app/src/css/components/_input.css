@@ -12,3 +12,7 @@ input.clearable {
         fill: hsl(0, 0%, 40%);
     }
 }
+
+input.form-control {
+    padding: var(--input-padding-v) var(--input-padding-h);
+}
