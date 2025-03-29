@@ -36,7 +36,6 @@ export const FormSample = () => {
                 <SectionForm form={form} onSubmit={(data) => { console.log(data); }}>
                     <Form.Group groupId="group1">
                         <Form.Label>Input 1</Form.Label>
-                        <input type="text" className="form-control" {...form.register("group1")} />
                         <Form.Input placeholder="Input 1" required />
                     </Form.Group>
                     <Form.Group groupId="group2">
