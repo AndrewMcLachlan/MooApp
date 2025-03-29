@@ -10,8 +10,12 @@ export const Input: InputComponent = React.forwardRef(({ className, id, ...rest 
     id = id ?? group.groupId;
     const innerClass = rest.type === "checkbox" ? "form-check-input" : "form-control";
 
+    const Wrapper: React.ElementType = rest.type === "checkbox" ? "div" : React.Fragment;
+
     return (
-        <input id={id} className={classNames(innerClass, className)} {...rest} ref={ref} />
+        <Wrapper>
+            <input id={id} className={classNames(innerClass, className)} {...rest} ref={ref} />
+        </Wrapper>
     );
 });
 
