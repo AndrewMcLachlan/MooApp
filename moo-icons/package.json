@@ -25,7 +25,8 @@
     "start": "vite",
     "build-vite": "tsc -b && vite build",
     "build": "rollup -c",
-    "lint": "eslint .",
+    "lint": "eslint ./src/**/*.ts",
+    "lint-fix": "eslint ./src/**/*.ts --fix",
     "preview": "vite preview"
   },
   "peerDependencies": {
@@ -33,6 +34,7 @@
     "react-dom": ">=19.0.0"
   },
   "devDependencies": {
+    "eslint": "^9.23.0",
     "rollup-plugin-terser": "^7.0.2"
   }
 }

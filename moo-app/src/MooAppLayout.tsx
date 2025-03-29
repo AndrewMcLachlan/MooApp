@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from "react-router";
 
 import { Alerts, Layout } from "./layout";
-import { FooterProps, HeaderProps, SidebarProps } from "./layout/Types";
+import { HeaderProps, SidebarProps } from "./layout/Types";
 import { ErrorBoundary } from "react-error-boundary";
 import { Error } from "./pages/Error";
 import { Notifications } from "./layout/Notifications";
