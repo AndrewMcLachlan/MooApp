@@ -4,16 +4,16 @@ import React from "react";
 
 export type LabelComponent = React.FC<LabelProps>;
 
-export const Label: LabelComponent = React.forwardRef(({ className, htmlFor, ...rest }, ref) => {
+export const Label: LabelComponent = ({ className, htmlFor, ...rest }) => {
 
     const group = useFormGroup();
 
     htmlFor = htmlFor ?? group.groupId;
 
     return (
-        <label htmlFor={htmlFor} className={classNames("form-label", className)} {...rest} ref={ref} />
+        <label htmlFor={htmlFor} className={classNames("form-label", className)} {...rest} />
     );
-});
+};
 
 Label.displayName = "Label";
 

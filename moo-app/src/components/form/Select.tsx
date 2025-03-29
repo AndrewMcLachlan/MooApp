@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 
 export type SelectComponent = React.FC<SelectProps>;
 
-export const Select: SelectComponent = React.forwardRef(({ className, id, ...rest }) => {
+export const Select: SelectComponent = ({ className, id, ...rest }) => {
 
     const group = useFormGroup();
     const { register } = useFormContext();
@@ -15,7 +15,7 @@ export const Select: SelectComponent = React.forwardRef(({ className, id, ...res
     return (
         <select id={id} className={classNames("form-select", className)} {...rest} {...register(id)} />
     );
-});
+};
 
 Select.displayName = "Select";
 

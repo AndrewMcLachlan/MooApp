@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 
 export type InputComponent = React.FC<InputProps>;
 
-export const Input: InputComponent = React.forwardRef(({ className, id, ...rest }) => {
+export const Input: InputComponent = ({ className, id, ...rest }) => {
 
     const group = useFormGroup();
     const { register } = useFormContext();
@@ -19,7 +19,7 @@ export const Input: InputComponent = React.forwardRef(({ className, id, ...rest 
             <input id={id} className={classNames(innerClass, className)} {...rest} {...register(id)} />
         </Wrapper>
     );
-});
+};
 
 Input.displayName = "Input";
 

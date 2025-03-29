@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { FormProvider, SubmitHandler, useForm, UseFormReturn } from "react-hook-form";
+import { Check, CheckComponent } from "./Check";
 import { Group, GroupComponent } from "./Group";
 import { Input, InputComponent } from "./Input";
 import { Label, LabelComponent } from "./Label";
@@ -8,6 +9,7 @@ import { TextArea, TextAreaComponent } from "./TextArea";
 import { Password, PasswordComponent } from "./Password";
 
 export type FormComponent<TFormValues> = React.FC<PropsWithChildren<FormProps<TFormValues>>> & {
+    Check: CheckComponent;
     Input: InputComponent;
     Select: SelectComponent;
     Group: GroupComponent;
@@ -27,6 +29,7 @@ export const Form: FormComponent<any> = <TFormValues,>({ onSubmit, children, cla
     );
 }
 
+Form.Check = Check;
 Form.Group = Group;
 Form.Input = Input;
 Form.Label = Label;

@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 
 export type TextAreaComponent = React.FC<TextAreaProps>;
 
-export const TextArea: TextAreaComponent = React.forwardRef(({ className, id, ...rest }) => {
+export const TextArea: TextAreaComponent = ({ className, id, ...rest }) => {
 
     const { register } = useFormContext();
     const group = useFormGroup();
@@ -15,7 +15,7 @@ export const TextArea: TextAreaComponent = React.forwardRef(({ className, id, ..
     return (
         <textarea id={id} className={classNames("form-control", className)} {...rest} {...register(id)} />
     );
-});
+};
 
 TextArea.displayName = "TextArea";
 
