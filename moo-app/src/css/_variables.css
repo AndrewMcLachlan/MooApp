@@ -31,6 +31,9 @@
 
   --nav-link-active: var(--primary);
 
+  --input-padding-v: 0.75rem;
+  --input-padding-h: 0.75rem;
+
   --dark-body-bg: rgb(23, 18, 17);
   --default-primary: #8b0000;
   --light-body-bg: #FFF;

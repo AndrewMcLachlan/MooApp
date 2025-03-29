@@ -24,6 +24,11 @@ const App = () => {
       image: <Icon icon={User} />
     },
     {
+      text: "Forms",
+      route: "/form",
+      image: <Icon icon={User} />
+    },
+    {
       text: "Notifications",
       route: "/notifications",
       image: <Stack />

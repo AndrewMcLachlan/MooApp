@@ -8,7 +8,7 @@ import { Components } from "./pages/Components";
 import { IconButtonComponent } from "./pages/components/IconButtonComponent";
 import { IconLinkButtonComponent } from "./pages/components/IconLinkButtonComponent";
 import { LinkBoxComponent } from "./pages/components/LinkBoxComponent";
-import { PasswordComponent } from "./pages/components/form/PasswordComponent";
+import { PasswordComponent } from "./pages/form/PasswordComponent";
 import { FormComponent } from "./pages/components/Form";
 import { Home } from "./pages/Home";
 import { Profile } from "./pages/Profile";
@@ -17,6 +17,7 @@ import { TagPanel } from "./pages/components/TagPanel";
 import { error } from "console";
 import { ErrorPage } from "./pages/ErrorPage";
 import { Notifications } from "./pages/Notifications";
+import { FormSample } from "./pages/form/FormSample";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -38,7 +39,8 @@ const router = createMooAppBrowserRouter({
       iconButton: { path: "/components/icon-button", element: <IconButtonComponent /> },
       linkBox: { path: "/components/link-box", element: <LinkBoxComponent /> },
       form: {
-        path: "/components/form", element: <FormComponent />, children: {
+        path: "/form", element: <FormComponent />, children: {
+          sample: { path: "", element: <FormSample /> },
           password: { path: "password", element: <PasswordComponent /> },
         },
       },
