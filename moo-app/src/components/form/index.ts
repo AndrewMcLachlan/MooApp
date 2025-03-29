@@ -6,3 +6,4 @@ export * from "./Label";
 export * from "./Password";
 export * from "./Select";
 export * from "./TextArea";
+export { useFormGroup } from "./FormGroupProvider";
