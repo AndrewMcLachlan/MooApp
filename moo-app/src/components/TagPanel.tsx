@@ -45,7 +45,7 @@ export interface Props<TData, TElement extends ElementType> {
     selectedItems: TData[];
     items: TData[];
     labelField: (item: TData) => string;
-    valueField: (item: TData) => string;
+    valueField: (item: TData) => any;
 
     onAdd?: (item: TData) => void;
     onRemove?: (item: TData) => void;

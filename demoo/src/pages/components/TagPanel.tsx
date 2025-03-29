@@ -17,8 +17,8 @@ export const TagPanel = () => {
 
     return (
         <Page title="Tag Panel">
-            <TagPanelComponent<item> items={items} labelField={i => i.text} valueField={i => i.id.toString()} selectedItems={selectedItems} onChange={i => setSelectedItems(i)}  />
-            <ComboBox items={items} labelField={i => i.text} valueField={i => i.id.toString()} selectedItems={selectedItems} onChange={i => setSelectedItems(i)} multiSelect clearable />
+            <TagPanelComponent<item> items={items} labelField={i => i.text} valueField={i => i.id} selectedItems={selectedItems} onChange={i => setSelectedItems(i)}  />
+            <ComboBox items={items} labelField={i => i.text} valueField={i => i.id} selectedItems={selectedItems} onChange={i => setSelectedItems(i)} multiSelect clearable />
         </Page>
     );
 }

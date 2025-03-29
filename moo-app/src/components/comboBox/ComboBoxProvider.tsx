@@ -76,7 +76,7 @@ export interface ComboBoxOptions {
     multiSelect?: boolean;
     readonly?: boolean;
     labelField: (item: any) => ReactNode;
-    valueField: (item: any) => string;
+    valueField: (item: any) => any;
     onCreate?: (name: string) => void;
     onAdd?: (item: any) => void;
     onRemove?: (item: any) => void;
@@ -96,7 +96,7 @@ export interface ComboBoxProps<TItem> extends RefProps<HTMLInputElement> {
     onRemove?: (item: TItem) => void;
     onChange?: (items: TItem[]) => void;
     labelField: (item: TItem) => ReactNode;
-    valueField: (item: TItem) => string;
+    valueField: (item: TItem) => any;
     items?: TItem[];
     hidden?: boolean;
     selectedItems?: TItem[];
