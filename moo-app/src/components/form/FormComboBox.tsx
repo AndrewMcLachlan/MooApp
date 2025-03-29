@@ -13,8 +13,8 @@ export const FormComboBox = <T,>({ id, ref, ...rest }: Omit<ComboBoxProps<T>, "s
             render={({ field }) => {
 
                 const selectedItems = rest.multiSelect ?
-                    rest.items.filter(i => field.value?.some((v: any) => v === rest.valueField(i))) :
-                    rest.items.filter(i => field.value === rest.valueField(i));
+                    rest.items?.filter(i => field.value?.some((v: any) => v === rest.valueField(i))) :
+                    rest.items?.filter(i => field.value === rest.valueField(i));
 
                 const onChange = (items: T[]) => {
                     console.log("onChange", items);
@@ -26,7 +26,7 @@ export const FormComboBox = <T,>({ id, ref, ...rest }: Omit<ComboBoxProps<T>, "s
                 };
 
                 return (
-                    <ComboBox id={id} {...rest} ref={ref} selectedItems={selectedItems} onChange={onChange} />
+                    <ComboBox id={id} {...rest} ref={ref} selectedItems={selectedItems ?? []} onChange={onChange} />
                 );
             }} />
     );

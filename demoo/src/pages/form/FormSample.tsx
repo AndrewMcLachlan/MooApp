@@ -18,9 +18,15 @@ export const FormSample = () => {
         { id: "10", text: "Option 10" },
     ];
 
-    const [value, setValue] = useState<string | undefined>(undefined);
+    const existing: FormSample = {
+        group1: "Existing value 1",
+        group2: "Existing value 2",
+        group3: ["1", "2"],
+        group4: "2",
+        group5: "3",
+    };
 
-    const form = useForm<FormSample>();
+    const form = useForm<FormSample>({defaultValues: existing});
 
     return (
         <Page title="Form Sample" className="form-sample-page">
