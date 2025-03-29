@@ -26,7 +26,7 @@ export const FormComboBox = <T,>({ id, ref, ...rest }: Omit<ComboBoxProps<T>, "s
                 };
 
                 return (
-                    <ComboBox id={id} {...rest} ref={ref} selectedItems={selectedItems} onChange={onChange} />
+                    <ComboBox id={id} {...rest} ref={ref} selectedItems={selectedItems ?? []} onChange={onChange} />
                 );
             }} />
     );
