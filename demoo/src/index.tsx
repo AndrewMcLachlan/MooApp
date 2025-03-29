@@ -40,7 +40,7 @@ const router = createMooAppBrowserRouter({
       linkBox: { path: "/components/link-box", element: <LinkBoxComponent /> },
       form: {
         path: "/form", element: <FormComponent />, children: {
-          smaple: { path: "", element: <FormSample /> },
+          sample: { path: "", element: <FormSample /> },
           password: { path: "password", element: <PasswordComponent /> },
         },
       },
