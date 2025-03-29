@@ -9,7 +9,7 @@ import { Password, PasswordComponent } from "./Password";
 
 export type FormComponent<TFormValues> = React.FC<PropsWithChildren<FormProps<TFormValues>>> & {
     Input: InputComponent;
-    Select: <TItem>() => SelectComponent<TItem>;
+    Select: SelectComponent;
     Group: GroupComponent;
     Label: LabelComponent
     Password: PasswordComponent;

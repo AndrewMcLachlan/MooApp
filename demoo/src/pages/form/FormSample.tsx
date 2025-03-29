@@ -1,4 +1,5 @@
-import { Page, Form, SectionForm, ComboBox } from "@andrewmclachlan/mooapp"
+import { Page, Form, SectionForm, FormComboBox } from "@andrewmclachlan/mooapp"
+import { useState } from "react";
 
 export const FormSample = () => {
 
@@ -15,6 +16,7 @@ export const FormSample = () => {
         { id: "10", text: "Option 10" },
     ];
 
+    const [value, setValue] = useState<string | undefined>(undefined);
 
     return (
         <Page title="Form Sample" className="form-sample-page">
@@ -32,8 +34,18 @@ export const FormSample = () => {
                     </Form.Group>
                     <Form.Group groupId="group3">
                         <Form.Label htmlFor="input3">Input 3</Form.Label>
-                        <Form.Select items={selectItems} labelField={i => i.text} valueField={i => i.id} selectedItems={[]} />
+                        <FormComboBox<{ id: string, text: string }> items={selectItems} labelField={i => i.text} valueField={i => i.id} selectedItems={[]} />
                     </Form.Group>
+                    <Form.Group groupId="group4">
+                        <Form.Label htmlFor="input4">Input 4</Form.Label>
+                        <Form.Select id="input4" name="input4" required>
+                            <option value="">Select an option</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                            <option value="4">Option 4</option>
+                        </Form.Select>
+                        </Form.Group>
                 </SectionForm>
             </div>
         </Page>

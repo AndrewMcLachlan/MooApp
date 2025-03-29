@@ -1,4 +1,5 @@
 export * from "./Form";
+export * from "./FormComboBox";
 export * from "./Group";
 export * from "./Input";
 export * from "./Label";

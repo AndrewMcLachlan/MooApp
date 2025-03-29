@@ -1,18 +1,21 @@
+import classNames from "classnames";
 import { useFormGroup } from "./FormGroupProvider";
 import React from "react";
-import { ComboBox, ComboBoxProps } from "../comboBox";
 
-export type SelectComponent<T> = React.FC<ComboBoxProps<T>>;
+export type SelectComponent = React.FC<SelectProps>;
 
-export const Select: SelectComponent<any> = <T,>({ id, ref, ...rest }: ComboBoxProps<T>) => {
+export const Select: SelectComponent = React.forwardRef(({ className, id, ...rest }, ref) => {
 
     const group = useFormGroup();
 
     id = id ?? group.groupId;
 
     return (
-        <ComboBox id={id} {...rest} ref={ref} />
+        <select id={id} className={classNames("form-select", className)} {...rest} ref={ref} />
     );
 });
 
 Select.displayName = "Select";
+
+export interface SelectProps extends React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> {
+}

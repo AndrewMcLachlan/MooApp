@@ -65,13 +65,30 @@ form .form-group {
     border-color: var(--primary);
 }
 
-input.form-control:read-only {
-    background-color: var(--bs-disabled-bg);
-    cursor: default;
+input.form-control {
+    &:read-only {
+        background-color: var(--bs-disabled-bg);
+        cursor: default;
+
+        &:focus {
+            box-shadow: none;
+            border-color: var(--bs-border-color);
+            background-color: var(--bs-disabled-bg);
+        }
+    }
 
     &:focus {
-        box-shadow: none;
-        border-color: var(--bs-border-color);
-        background-color: var(--bs-disabled-bg);
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--primary) 25%, transparent);
+    }
+}
+
+.form-select {
+    padding: var(--input-padding-v) calc(var(--input-padding-h) + 16px) var(--input-padding-v) var(--input-padding-h);
+    background-size: 16px;
+
+    &:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--primary) 25%, transparent);
     }
 }
