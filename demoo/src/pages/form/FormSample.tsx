@@ -18,9 +18,15 @@ export const FormSample = () => {
         { id: "10", text: "Option 10" },
     ];
 
-    const [value, setValue] = useState<string | undefined>(undefined);
+    const existing: FormSample = {
+        group1: "Existing value 1",
+        group2: "Existing value 2",
+        group3: ["1", "2"],
+        group4: "2",
+        group5: "3",
+    };
 
-    const form = useForm<FormSample>();
+    const form = useForm<FormSample>({defaultValues: existing});
 
     return (
         <Page title="Form Sample" className="form-sample-page">
@@ -30,6 +36,7 @@ export const FormSample = () => {
                 <SectionForm form={form} onSubmit={(data) => { console.log(data); }}>
                     <Form.Group groupId="group1">
                         <Form.Label>Input 1</Form.Label>
+                        <input type="text" className="form-control" {...form.register("group1")} />
                         <Form.Input placeholder="Input 1" required />
                     </Form.Group>
                     <Form.Group groupId="group2">
