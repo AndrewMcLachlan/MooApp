@@ -38,5 +38,5 @@ Form.displayName = "Form";
 
 export interface FormProps<TFormValues> extends Omit<React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement>, "onSubmit"> {
     onSubmit: SubmitHandler<TFormValues>;
-    form?: UseFormReturn<TFormValues>;
+    form: UseFormReturn<TFormValues>;
 }
