@@ -8,7 +8,7 @@ updates:
       day: "monday"
       time: '06:00'
     reviewers:
-      - andrewmcLachlan
+      - AndrewMcLachlan
     groups:
       dev-dependencies:
         applies-to: version-updates
@@ -30,7 +30,7 @@ updates:
       day: monday
       time: '06:00'
     reviewers:
-      - andrewmcLachlan
+      - AndrewMcLachlan
     groups:
       dev-dependencies:
         applies-to: version-updates
@@ -51,7 +51,7 @@ updates:
       day: monday
       time: '06:00'
     reviewers:
-      - andrewmcLachlan
+      - AndrewMcLachlan
     groups:
       dev-dependencies:
         applies-to: version-updates
@@ -72,7 +72,7 @@ updates:
       day: monday
       time: '06:00'
     reviewers:
-      - andrewmcLachlan
+      - AndrewMcLachlan
     groups:
       dev-dependencies:
         applies-to: version-updates
@@ -93,4 +93,4 @@ updates:
       day: monday
       time: '06:00'
     reviewers:
-      - andrewmcLachlan
+      - AndrewMcLachlan
