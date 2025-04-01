@@ -40,11 +40,12 @@ export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => 
     }
 
     return (
-        <input type="text" ref={ref} placeholder={selectedItems?.length == 0 && !props.readonly ? placeholder : ""} onChange={onChange} onKeyUp={keyUp} value={text} tabIndex={1} autoCapitalize="off" autoComplete="off" autoCorrect="off" spellCheck={false} role="combobox" aria-expanded={items?.length > 0} />
+        <input type="text" ref={ref} placeholder={selectedItems?.length == 0 && !props.readonly ? placeholder : ""} onChange={onChange} onKeyUp={keyUp} value={text} tabIndex={props.tabIndex} autoCapitalize="off" autoComplete="off" autoCorrect="off" spellCheck={false} role="combobox" aria-expanded={items?.length > 0} />
     );
 }
 
 export interface ComboBoxInputProps {
     placeholder: string;
     readonly: boolean;
+    tabIndex?: number;
 }

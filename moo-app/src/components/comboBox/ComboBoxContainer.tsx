@@ -10,7 +10,7 @@ import { ComboBoxList as List } from "./ComboBoxList";
 import { ComboBoxSelectedItem as SelectedItem } from "./ComboBoxSelectedItem";
 import { ComboBoxSingleSelectedItem as SingleSelectedItem } from "./ComboBoxSingleSelectedItem";
 
-export const ComboBoxContainer: React.FC<ComboBoxContainerProps> = ({ placeholder = "Select...", readonly = false, hidden = false, id, className }) => {
+export const ComboBoxContainer: React.FC<ComboBoxContainerProps> = ({ placeholder = "Select...", readonly = false, hidden = false, id, className, tabIndex }) => {
 
     const { multiSelect, selectedItems, show, setShow, valueField } = useComboBox();
 
@@ -23,7 +23,7 @@ export const ComboBoxContainer: React.FC<ComboBoxContainerProps> = ({ placeholde
             <div>
                 {!!multiSelect && selectedItems.map(item => <SelectedItem key={valueField(item)?.toString()} item={item} />)}
                 {!multiSelect && selectedItems.length > 0 && <SingleSelectedItem />}
-                <Input placeholder={placeholder} readonly={readonly} />
+                <Input placeholder={placeholder} readonly={readonly} tabIndex={tabIndex}  />
                 <Controls />
             </div>
             <List />
@@ -33,5 +33,5 @@ export const ComboBoxContainer: React.FC<ComboBoxContainerProps> = ({ placeholde
 
 ComboBoxContainer.displayName = "ComboBoxContainer";
 
-interface ComboBoxContainerProps extends Pick<ComboBoxProps<any>, "placeholder" | "readonly" | "hidden" | "id" | "className" | "ref" > {
+interface ComboBoxContainerProps extends Pick<ComboBoxProps<any>, "placeholder" | "readonly" | "hidden" | "id" | "className" | "ref" | "tabIndex" > {
 }

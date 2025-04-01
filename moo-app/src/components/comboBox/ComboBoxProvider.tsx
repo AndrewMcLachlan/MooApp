@@ -105,6 +105,7 @@ export interface ComboBoxProps<TItem> extends RefProps<HTMLInputElement> {
     multiSelect?: boolean;
     placeholder?: string;
     readonly?: boolean;
+    tabIndex?: number;
     createLabel?: (input: string) => string;
 }
 
