@@ -37,6 +37,8 @@
   --dark-body-bg: rgb(23, 18, 17);
   --default-primary: #8b0000;
   --light-body-bg: #FFF;
+  --light-section-bg: (251, 248, 244);
+  --dark-section-bg: rgb(31, 27, 24);
 }
 
 @media (prefers-color-scheme: light) {

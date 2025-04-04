@@ -9,7 +9,7 @@ export const ComboBoxSingleSelectedItem: React.FC = () => {
 
     return (
         <div className="single-item">
-            <span>{labelField(selectedItems[0])}</span>
+            <span>{selectedItems?.[0] ? labelField(selectedItems[0]) : ""}</span>
         </div>
     );
 
