@@ -37,14 +37,15 @@
         display: flex;
         gap: 0.75rem;
         align-items: center;
+        flex-wrap: wrap;
     }
 
     input {
         padding: var(--input-padding-v) var(--input-padding-h) var(--input-padding-v) 0;
         border: none;
-        width: 100%;
         z-index: 10;
         background-color: transparent;
+        flex-grow: 1;
 
         &:focus {
             outline: none;
