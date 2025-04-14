@@ -19,7 +19,7 @@ jobs:
       uses: actions/checkout@v4
     - name: Set version number
       id: set-version-number
-      uses: andrewmclachlan/actions/set-version-number-npm@v2
+      uses: andrewmclachlan/actions/set-version-number-npm@v3
       with:
         packageFilePath: 'package.json'
     - name: Setup node and npm
