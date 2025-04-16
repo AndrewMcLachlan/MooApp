@@ -15,6 +15,7 @@ export const Components = () => {
             <Section title="Components">
                 <Button size="sm" variant="link">Sample</Button>
                 <Button>Sample 2</Button>
+                <Button variant="outline-primary">Sample 3</Button>
             </Section>
 
             <SectionTable title="Table" striped hover titleSize={2}>
