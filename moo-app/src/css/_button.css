@@ -25,7 +25,6 @@ button {
 }
 
 .btn-primary {
-    --bs-btn-color: var(--bs-body-color);
     --bs-btn-bg: var(--primary);
     --bs-btn-border-color: var(--primary);
     --bs-btn-hover-bg: var(--primary-dark);
@@ -50,6 +49,6 @@ button {
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --bs-btn-disabled-color: var(--primary);
     --bs-btn-disabled-bg: transparent;
-    --bs-btn-disabled-border-color: var(--primary)
+    --bs-btn-disabled-border-color: var(--primary);
     --bs-gradient: none;
 }
