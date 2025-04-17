@@ -34,6 +34,13 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, cli
     }
   });
 
+  useEffect(() => {
+    const meta = document.createElement("meta");
+    meta.setAttribute("name", "version")
+    meta.setAttribute("content", version);
+    document.head.appendChild(meta);
+  }, []);
+
   if (!msalInstance) return null;
 
   return (
