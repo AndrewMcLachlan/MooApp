@@ -1,11 +1,12 @@
-input.clearable {
+.clearable-input {
     position: relative;
 
     svg.clear-input {
         position: absolute;
         right: 0.6rem;
-        top: calc(1rem - 7px);
-        fill: hsl(0, 0%, 80%);
+        top: 50%;
+        transform: translateY(-50%);
+        fill: var(bs-body-color);
     }
 
     input:focus + svg.clear-input {

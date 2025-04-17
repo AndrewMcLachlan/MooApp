@@ -38,9 +38,14 @@ h2 {
   }
 }
 
+.drop-down-chevron {
+  stroke: var(--bs-body-color);
+}
+
+
 .clearable {
     svg.clear-input {
-      fill: hsl(0, 0%, 80%);
+      fill: var(--bs-body-color);
   }
 }
 

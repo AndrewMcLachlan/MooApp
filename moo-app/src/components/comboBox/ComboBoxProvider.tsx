@@ -22,6 +22,7 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
         e.preventDefault();
         e.stopPropagation();
         setSelectedItems([]);
+        onChange?.([]);
         setText("");
         resetItems();
     }

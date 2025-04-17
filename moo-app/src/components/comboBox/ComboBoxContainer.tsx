@@ -21,10 +21,12 @@ export const ComboBoxContainer: React.FC<ComboBoxContainerProps> = ({ placeholde
     return (
         <div id={id} ref={divRef} className={classNames("combo-box", readonly ? "readonly" : "", className)} hidden={hidden} onClick={() => setShow(!show)} onKeyUp={key => key.key === "Escape" && setShow(false)}>
             <div>
+            <div className="body">
                 {!!multiSelect && selectedItems.map(item => <SelectedItem key={valueField(item)?.toString()} item={item} />)}
                 {!multiSelect && selectedItems.length > 0 && <SingleSelectedItem />}
                 <Input placeholder={placeholder} readonly={readonly} tabIndex={tabIndex}  />
-                <Controls />
+                </div>
+            <Controls />
             </div>
             <List />
         </div>
