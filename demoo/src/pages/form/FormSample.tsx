@@ -36,7 +36,7 @@ export const FormSample = () => {
                 <SectionForm form={form} onSubmit={(data) => { console.log(data); }}>
                     <Form.Group groupId="group1">
                         <Form.Label>Input 1</Form.Label>
-                        <Form.Input placeholder="Input 1" required />
+                        <Form.Input placeholder="Input 1" required clearable />
                     </Form.Group>
                     <Form.Group groupId="group2">
                         <Form.Label>Input 2</Form.Label>
@@ -44,16 +44,15 @@ export const FormSample = () => {
                     </Form.Group>
                     <Form.Group groupId="group3">
                         <Form.Label>Input 3</Form.Label>
-                        <FormComboBox<{ id: string, text: string }> items={selectItems} multiSelect labelField={i => i.text} valueField={i => i.id} />
+                        <FormComboBox<{ id: string, text: string }> items={selectItems} multiSelect labelField={i => i.text} valueField={i => i.id} clearable />
                     </Form.Group>
                     <Form.Group groupId="group4">
                         <Form.Label>Input 4</Form.Label>
                         <Form.Select>
                             <option value="">Select an option</option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="3">Option 3</option>
-                            <option value="4">Option 4</option>
+                            {selectItems.map((item) => (
+                                <option key={item.id} value={item.id}>{item.text}</option>
+                            ))}
                         </Form.Select>
                     </Form.Group>
                     <Form.Group groupId="group5">

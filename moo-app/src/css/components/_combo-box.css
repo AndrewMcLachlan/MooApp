@@ -33,11 +33,20 @@
     }
 
     >div {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .body {
         padding-left: var(--input-padding-h);
         display: flex;
         gap: 0.75rem;
         align-items: center;
         flex-wrap: wrap;
+        flex-grow: 1;
     }
 
     input {
@@ -79,10 +88,15 @@
     .controls {
         display: flex;
         align-items: center;
+        justify-self: flex-end;
 
         div {
             margin: var(--input-padding-v) 0;
             padding: 0 var(--input-padding-h);
+        }
+
+        &.clearable div:last-child {
+            border-left: var(--bs-border-width) solid var(--bs-body-color);
         }
     }
 
