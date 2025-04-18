@@ -55,6 +55,7 @@
         z-index: 10;
         background-color: transparent;
         flex: 1 1 100px;
+        min-width: 100px;
 
         &:focus {
             outline: none;
