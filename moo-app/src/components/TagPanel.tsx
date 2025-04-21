@@ -2,7 +2,7 @@ import { ComboBox, useClickAway } from "@andrewmclachlan/mooapp";
 import classNames from "classnames";
 import { ElementType, useRef, useState } from "react";
 
-export const TagPanel = <T,>({ as = "div", readonly = false, alwaysShowEditPanel = false, ...props }: TagPanelProps<T, any>) => {
+export const TagPanel = <T,>({ as = "div", readonly = false, alwaysShowEditPanel = false, className, ...props }: TagPanelProps<T, any>) => {
 
     const [editMode, setEditMode] = useState(false);
     const ref = useRef(null);
@@ -26,7 +26,7 @@ export const TagPanel = <T,>({ as = "div", readonly = false, alwaysShowEditPanel
     const As = as;
 
     return (
-        <As ref={ref} className={classNames("tag-panel", displayEdit && "edit-mode")} onClick={onClick} onKeyUp={props.onKeyUp ?? keyUp} onTouchStart={() => setEditMode(true)}>
+        <As ref={ref} className={classNames("tag-panel", displayEdit && "edit-mode", className)} onClick={onClick} onKeyUp={props.onKeyUp ?? keyUp} onTouchStart={() => setEditMode(true)}>
             <ComboBox<T> {...props} multiSelect clearable createLabel={() => "Create new tag..."} readonly={isReadonly} />
         </As>
     );
