@@ -18,7 +18,7 @@ export const Components = () => {
                 <Button variant="outline-primary">Sample 3</Button>
             </Section>
 
-            <SectionTable title="Table" striped hover titleSize={2}>
+            <SectionTable header="Table" striped hover headerSize={2}>
                 <thead>
                     <tr>
                         <th>Header 1</th>
@@ -69,7 +69,7 @@ export const Components = () => {
             </SectionTable>
 
 
-            <SectionTable className="section" striped hover titleSize={2}>
+            <SectionTable striped hover headerSize={2}>
                 <thead>
                     <tr>
                         <th>Header 1</th>

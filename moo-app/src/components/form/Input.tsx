@@ -13,12 +13,8 @@ export const Input: InputComponent = ({ className, id, ...rest }) => {
     id = id ?? group.groupId;
     const innerClass = rest.type === "checkbox" ? "form-check-input" : "form-control";
 
-    const Wrapper: React.ElementType = rest.type === "checkbox" ? "div" : React.Fragment;
-
     return (
-        <Wrapper>
-            <ClearableInput id={id} className={classNames(innerClass, className)} {...rest} {...register(id)} />
-        </Wrapper>
+        <ClearableInput id={id} className={classNames(innerClass, className)} {...rest} {...register(id)} />
     );
 };
 

@@ -16,8 +16,9 @@ Widget.displayName = "Widget";
 
 export interface WidgetProps {
     loading?: boolean;
-    title?: string;
+    header?: string | React.ReactNode;
     size: "single" | "double";
-    titleSize?: 1 | 2 | 3 | 4 | 5 | 6;
+    headerSize?: 1 | 2 | 3 | 4 | 5 | 6;
+    to?: string;
     className?: string;
 }

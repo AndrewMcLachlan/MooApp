@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { SectionSubheading, SectionSubheadingComponent } from "./SectionSubheading";
 import { SectionHeader, SectionHeaderComponent } from "./SectionHeader";
 import { SectionBody, SectionBodyComponent } from "./SectionBody";
+import { Link } from "react-router";
 
 export type SectionComponent = React.FC<React.PropsWithChildren<SectionProps>> & {
     Body: SectionBodyComponent;
@@ -9,14 +10,20 @@ export type SectionComponent = React.FC<React.PropsWithChildren<SectionProps>> &
     Subheading: SectionSubheadingComponent;
 };
 
-const Section: SectionComponent = ({ title, titleSize = 2, children, className, ...rest }) => {
+const Section: SectionComponent = ({ header, headerSize = 2, to, children, className, ...rest }) => {
 
-    const H: any = `h${titleSize}`;
+    const H: any = `h${headerSize}`;
+
+    const headerLinkNode = to ? <Link to={to}>{header}</Link> : header;
+
+    const headerNode = typeof header === "string" ? (<H className="section-header">{headerLinkNode}</H>) : headerLinkNode;
+
+
 
     return (
 
         <section className={classNames("section", className)} {...rest}>
-            {title && <H>{title}</H>}
+            {headerNode}
             {children}
         </section>
     );
@@ -29,6 +36,7 @@ Section.Subheading = SectionSubheading;
 export { Section };
 
 export interface SectionProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
-    title?: string;
-    titleSize?: 1 | 2 | 3 | 4 | 5 | 6;
+    header?: string | React.ReactNode;
+    headerSize?: 1 | 2 | 3 | 4 | 5 | 6;
+    to?: string;
 }

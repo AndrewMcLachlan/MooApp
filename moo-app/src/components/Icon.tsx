@@ -4,13 +4,13 @@ import classNames from "classnames";
 import { ElementType } from "react";
 import { IconType } from "../types";
 
-export const Icon: React.FC<IconProps> = ({ icon, onClick }) => {
+export const Icon: React.FC<IconProps> = ({ icon, onClick, title }) => {
 
     const CustomIconElement = icon as ElementType;
 
     const clickableClassName = onClick ? "clickable" : "";
 
-    const IconNode = typeof icon === "function" ? <CustomIconElement className={classNames("custom-icon", clickableClassName)} {...onClick} /> : <FontAwesomeIcon icon={icon as IconProp} className={clickableClassName} {...onClick} />;
+    const IconNode = typeof icon === "function" ? <CustomIconElement className={classNames("custom-icon", clickableClassName)} {...onClick} title={title} /> : <FontAwesomeIcon icon={icon as IconProp} className={clickableClassName} {...onClick} title={title} />;
 
     return (
         <>{IconNode}</>
@@ -20,6 +20,7 @@ export const Icon: React.FC<IconProps> = ({ icon, onClick }) => {
 export interface IconProps {
     icon?: IconType;
     onClick?: () => void;
+    title?: string;
 }
 
 Icon.displayName = "Icon";

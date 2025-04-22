@@ -11,7 +11,7 @@ export const Home = () => {
 
     return (
         <Page title="Home">
-            <Section title="Home">
+            <Section title="Home" header="Home" to="/components" headerSize={3}>
                 <Button size="sm" variant="link">Sample</Button>
                 <Button onClick={addAlert}>Show Alert</Button>
             </Section>

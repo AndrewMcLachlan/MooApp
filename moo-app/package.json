@@ -1,6 +1,5 @@
 {
   "name": "@andrewmclachlan/mooapp",
-  "version": "3.0.0",
   "main": "dist/index.js",
   "author": {
     "name": "Andrew McLachlan",

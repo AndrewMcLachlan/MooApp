@@ -1,19 +1,19 @@
+import { SectionProps } from "../../dist";
 import { Form, FormProps } from "../components";
 import { PropsWithChildren } from "react";
 
-export const SectionForm = <TFormValues,>({ title, titleSize = 2, children, ...rest }: PropsWithChildren<SectionFormProps<TFormValues>>) => {
+export const SectionForm = <TFormValues,>({ header, headerSize = 2, children, ...rest }: PropsWithChildren<SectionFormProps<TFormValues>>) => {
 
-    const H: any = `h${titleSize}`;
+    const H: any = `h${headerSize}`;
+    const headerNode = typeof header === "string" ? (header = <H>{header}</H>) : header;
 
     return (
         <Form className="section" {...rest}>
-            {title && <H>{title}</H>}
+            {headerNode}
             {children}
         </Form>
     );
 }
 
-export interface SectionFormProps<TFormValues> extends FormProps<TFormValues> {
-    title?: string;
-    titleSize?: 1 | 2 | 3 | 4 | 5 | 6;
+export interface SectionFormProps<TFormValues> extends FormProps<TFormValues>, Pick<SectionProps, "header" | "headerSize"> {
 }
