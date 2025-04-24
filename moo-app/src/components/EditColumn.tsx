@@ -3,7 +3,7 @@ import React from "react";
 import { useClickAway } from "../hooks";
 import { ChangeEventHandler, FocusEventHandler, KeyboardEventHandler, PropsWithChildren, useEffect, useRef, useState } from "react";
 
-export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({children, type = "text", ...props }) => {
+export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({children, className, type = "text", ...props }) => {
 
     const ref = useRef<HTMLInputElement>();
 
@@ -36,7 +36,7 @@ export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({childr
     }
 
     return (
-        <td onClick={() => setEditing(true)}>
+        <td onClick={() => setEditing(true)} className={className}>
             {!editing && (children ?? props.value)}
             {editing &&
                 <input className="form-control" type={type} value={value} onChange={onChange} onBlur={onBlur} onKeyUp={onKey} ref={ref} autoFocus />
