@@ -29,7 +29,7 @@ button {
     --bs-btn-border-color: var(--primary);
     --bs-btn-hover-bg: var(--primary-dark);
     --bs-btn-hover-border-color: var(--primary-dark);
-    --bs-btn-focus-shadow-rgb: 156, 38, 38;
+    --bs-btn-focus-shadow-rgb: var(--btn-focus-shadow-rgb);
     --bs-btn-active-bg: var(--primary-dark);
     --bs-btn-active-border-color: var(--primary-dark);
     --bs-btn-disabled-bg: var(--primary);

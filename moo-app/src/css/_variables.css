@@ -39,11 +39,13 @@
   --light-body-bg: #FFF;
   --light-section-bg: (251, 248, 244);
   --dark-section-bg: rgb(31, 27, 24);
+
+  --btn-focus-shadow-rgb: 156, 38, 38;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    
+
     color-scheme: light;
     --primary: var(--default-primary);
 
@@ -113,7 +115,7 @@
 [data-bs-theme="light"] {
   color-scheme: light;
   --primary: var(--default-primary);
-  
+
   --bs-body-bg: #FFF;
   --bs-body-color: rgb(46, 41, 36);
   --body-colour-bold: #000;
@@ -166,6 +168,7 @@
   --bs-link-color: rgb(102, 102, 185.4);
   --bs-link-hover-color: rgb(132.6, 132.6, 199.32);
   --base-bg: rgb(27, 27, 29);
+  --btn-focus-shadow-rgb: 38, 38, 156;
 }
 
 .dark,
