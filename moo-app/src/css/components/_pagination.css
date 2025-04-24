@@ -1,6 +1,9 @@
-.pagination {
+ul.pagination {
     justify-content: flex-end;
 
     --bs-pagination-active-bg: var(--primary);
     --bs-pagination-active-border-color: var(--primary);
+
+        margin-bottom: 0;
+        padding: 0.5rem 0;
 }

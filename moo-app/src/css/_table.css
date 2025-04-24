@@ -9,6 +9,7 @@
 
   td {
     vertical-align: middle;
+    height: 4rem;
   }
 
   .row-action {
@@ -22,5 +23,29 @@
         padding-right: 0;
       }
     }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .table {
+      --bs-table-striped-bg: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.dark {
+  .table {
+      --bs-table-striped-bg: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .table {
+      --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.light {
+  .table {
+      --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
   }
 }
