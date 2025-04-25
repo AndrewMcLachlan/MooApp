@@ -5,7 +5,7 @@ import { ChangeEventHandler, FocusEventHandler, KeyboardEventHandler, PropsWithC
 
 export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({children, className, type = "text", ...props }) => {
 
-    const ref = useRef<HTMLInputElement>();
+    const ref = useRef<HTMLInputElement>(undefined);
 
     const [editing, setEditing] = useState(false);
 
