@@ -5,7 +5,7 @@ export const ComboBox = <T,>({ placeholder = "Select...", ...props }: ComboBoxPr
 
     return (
         <ComboBoxProvider placeholder={placeholder} {...props}>
-            <ComboBoxContainer {...props} />
+            <ComboBoxContainer placeholder={placeholder} {...props} />
         </ComboBoxProvider>
     );
 };

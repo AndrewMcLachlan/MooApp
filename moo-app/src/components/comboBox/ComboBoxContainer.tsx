@@ -10,7 +10,7 @@ import { ComboBoxList as List } from "./ComboBoxList";
 import { ComboBoxSelectedItem as SelectedItem } from "./ComboBoxSelectedItem";
 import { ComboBoxSingleSelectedItem as SingleSelectedItem } from "./ComboBoxSingleSelectedItem";
 
-export const ComboBoxContainer: React.FC<ComboBoxContainerProps> = ({ placeholder = "Select...", readonly = false, hidden = false, id, className, tabIndex }) => {
+export const ComboBoxContainer: React.FC<ComboBoxContainerProps> = ({ placeholder, readonly = false, hidden = false, id, className, tabIndex }) => {
 
     const { multiSelect, selectedItems, show, setShow, valueField } = useComboBox();
 

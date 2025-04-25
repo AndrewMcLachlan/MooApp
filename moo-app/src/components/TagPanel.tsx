@@ -1,4 +1,5 @@
-import { ComboBox, useClickAway } from "@andrewmclachlan/mooapp";
+import { ComboBox } from "./comboBox/ComboBox";
+import { useClickAway } from "../hooks";
 import classNames from "classnames";
 import { ElementType, useRef, useState } from "react";
 
