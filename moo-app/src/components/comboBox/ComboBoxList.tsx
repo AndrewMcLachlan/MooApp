@@ -3,7 +3,7 @@ import { useComboBox } from "./ComboBoxProvider";
 
 export const ComboBoxList = () => {
 
-    const { creatable, items, multiSelect, onAdd, onChange, onCreate, show, setShow, newItem, selectedItems, setSelectedItems, setText, valueField } = useComboBox();
+    const { creatable, items, multiSelect, onAdd, onChange, onCreate, show, setShow, newItem, selectedItems, setSelectedItems, setText, text, valueField } = useComboBox();
 
     if (!show) return null;
 
@@ -27,7 +27,7 @@ export const ComboBoxList = () => {
     }
 
     const onItemCreated = () => {
-        onCreate?.(newItem.label);
+        onCreate?.(text);
         setShow(false);
     }
 

@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useInnerRef } from "../hooks";
 
 export const ClearableInput: React.FC<ClearableInputProps> = (({clearable = false, ref, ...rest}) => {
-    const innerRef = useRef<HTMLInputElement>(null);
+    const innerRef = useInnerRef<HTMLInputElement>(ref);
 
     const onClick = () => {
         const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement!.prototype, "value")!.set!;
@@ -11,14 +11,6 @@ export const ClearableInput: React.FC<ClearableInputProps> = (({clearable = fals
         innerRef.current!.dispatchEvent(new Event("input", { bubbles: true }));
     }
 
-    useEffect(() => {
-        if (!ref) return;
-        if (typeof ref === "function") {
-            ref(innerRef.current);
-        } else {
-            ref.current = innerRef.current;
-        }
-    }, [ref, innerRef, innerRef.current]);
 
 
     const input = <input ref={innerRef} {...rest} />;
