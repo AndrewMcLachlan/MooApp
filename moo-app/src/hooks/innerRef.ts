@@ -11,7 +11,7 @@ export const useInnerRef = <T extends HTMLElement>(ref: React.Ref<T>) => {
         } else {
             ref.current = innerRef.current;
         }
-    }, [ref, innerRef, innerRef.current]);
+    }, [ref, innerRef]);
 
     return innerRef;
 };
