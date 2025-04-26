@@ -13,15 +13,17 @@ export const SortablePaginationTh: React.FC<PropsWithChildren<SortablePagination
     }
 
     return (
-        <th className={classNames("sortable", "pagination-th", className)} onClick={(e) => clickHandler(e, field)} {...rest}>
-            <div>
-                {children}
-                <SortIcon direction={sortDirection} hidden={field !== sortField} />
+        <th className={classNames("sortable", className)} onClick={(e) => clickHandler(e, field)} {...rest}>
+            <div className="pagination-th">
+                <div>
+                    {children}
+                    <SortIcon direction={sortDirection} hidden={field !== sortField} />
+                </div>
+                <MiniPagination
+                    pageNumber={pageNumber}
+                    numberOfPages={numberOfPages}
+                    onChange={onChange} />
             </div>
-            <MiniPagination
-                pageNumber={pageNumber}
-                numberOfPages={numberOfPages}
-                onChange={onChange} />
         </th>
     );
 };
