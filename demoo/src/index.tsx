@@ -18,6 +18,7 @@ import { error } from "console";
 import { ErrorPage } from "./pages/ErrorPage";
 import { Notifications } from "./pages/Notifications";
 import { FormSample } from "./pages/form/FormSample";
+import { Table } from "./pages/Table";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -48,6 +49,7 @@ const router = createMooAppBrowserRouter({
       tagPanel: { path: "/components/tag-panel", element: <TagPanel /> },
       settings: { path: "/settings", element: <Components /> },
       profile: { path: "/profile", element: <Profile /> },
+      table: {path: "/table", element: <Table /> },
       fallback: { path: "*", element: <NotFound /> },
     }
   }

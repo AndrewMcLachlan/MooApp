@@ -7,3 +7,33 @@ ul.pagination {
         margin-bottom: 0;
         padding: 0.5rem 0;
 }
+
+.pagination-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+    justify-content: flex-end;
+
+    .page-size {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        select {
+            max-width: 75px;
+        }
+    }
+}
+
+.pagination-th {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .pagination {
+        padding: 0;
+        --bs-pagination-padding-y: 0;
+    }
+}
