@@ -1,4 +1,4 @@
-import { Section, useHttpClient, Page, NavItemDivider, IconButton, SectionTable, EditColumn, Pagination, PageSize, PaginationControls, PaginationTh } from "@andrewmclachlan/mooapp";
+import { Section, useHttpClient, Page, NavItemDivider, IconButton, SectionTable, EditColumn, Pagination, PageSize, PaginationControls, SortablePaginationTh, changeSortDirection, SortDirection } from "@andrewmclachlan/mooapp";
 import { Button } from "react-bootstrap";
 import { Tags } from "../assets";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -13,6 +13,9 @@ export const Table = () => {
 
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(10);
+    const [sortField, setSortField] = useState<string>("a");
+    const [sortDirection, setSortDirection] = useState<SortDirection>("Ascending");
+
 
     const numberOfPages = Math.ceil(tableData.length / pageSize);
 
@@ -30,7 +33,9 @@ export const Table = () => {
                     <tr>
                         <th>Header 1</th>
                         <th>Header 2</th>
-                        <PaginationTh numberOfPages={numberOfPages} onChange={(_, newPage) => setPageNumber(newPage)  } pageNumber={pageNumber}>Header 3</PaginationTh>
+                        <SortablePaginationTh
+                         sortDirection={sortDirection} sortField={sortField} field="c" onSort={(field) => { setSortField(field); setSortDirection(changeSortDirection(sortDirection)) }}
+                         numberOfPages={numberOfPages} onChange={(_, newPage) => setPageNumber(newPage)  } pageNumber={pageNumber}>Header 3</SortablePaginationTh>
                     </tr>
                 </thead>
                 <tbody>

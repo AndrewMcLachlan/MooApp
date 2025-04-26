@@ -22,6 +22,7 @@ export * from "./PaginationTh";
 export * from "./PageSize";
 export * from "./SaveIcon";
 export * from "./SortableTh";
+export * from "./SortablePaginationTh";
 export * from "./SortIcon";
 export * from "./SearchBox";
 export * from "./SpinnerContainer";
