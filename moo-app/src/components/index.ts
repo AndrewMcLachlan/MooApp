@@ -14,8 +14,12 @@ export * from "./IconLinkButton";
 export * from "./LinkBox";
 export * from "./LoadingTableRow";
 export * from "./LoadingTableRows";
+export * from "./MiniPagination";
 export * from "./NavItemDivider";
-export * from "./Paginaton";
+export * from "./Paginaton"
+export * from "./PaginationControls";
+export * from "./PaginationTh";
+export * from "./PageSize";
 export * from "./SaveIcon";
 export * from "./SortableTh";
 export * from "./SortIcon";
