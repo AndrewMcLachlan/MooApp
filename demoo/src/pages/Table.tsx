@@ -12,7 +12,7 @@ export const Table = () => {
     const [tableNumValue, setTableNumValue] = useState<number | undefined>(1);
 
     const [pageNumber, setPageNumber] = useState<number>(1);
-    const [pageSize, setPageSize] = useState<number>(9);
+    const [pageSize, setPageSize] = useState<number>(10);
 
     const numberOfPages = Math.ceil(tableData.length / pageSize);
 

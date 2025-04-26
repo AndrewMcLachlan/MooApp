@@ -11,7 +11,7 @@ export const Pagination : React.FC<PaginationProps> = ({pageNumber, numberOfPage
     return (
         <BSPagination>
             <BSPagination.First disabled={!showPrev} onClick={() => onChange(pageNumber, 1)} />
-            <BSPagination.Prev disabled={!showPrev} onClick={() => onChange(pageNumber, Math.max(0, pageNumber-1))} />
+            <BSPagination.Prev disabled={!showPrev} onClick={() => onChange(pageNumber, Math.max(1, pageNumber-1))} />
             {pagesToDisplay.map((page) => (
                 <BSPagination.Item key={page} active={page === pageNumber} onClick={() => onChange(pageNumber, page)}>
                     {page}
