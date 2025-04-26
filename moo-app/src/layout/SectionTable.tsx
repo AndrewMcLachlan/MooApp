@@ -6,7 +6,7 @@ import classNames from "classnames";
 export const SectionTable: React.FC<PropsWithChildren<SectionTableProps & React.RefAttributes<HTMLTableElement>>> = ({ header, headerSize, className, ...rest }) => (
     <>
         {header &&
-            <Section className="table" header={header} headerSize={headerSize}>
+            <Section className="section-table" header={header} headerSize={headerSize}>
                 <Table className={className} {...rest} />
             </Section>
         }
