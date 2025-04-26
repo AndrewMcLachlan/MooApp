@@ -12,21 +12,26 @@ import { ComboBoxSingleSelectedItem as SingleSelectedItem } from "./ComboBoxSing
 
 export const ComboBoxContainer: React.FC<ComboBoxContainerProps> = ({ placeholder, readonly = false, hidden = false, id, className, tabIndex }) => {
 
-    const { multiSelect, selectedItems, show, setShow, valueField } = useComboBox();
+    const { multiSelect, selectedItems, show, setShow, setShowInput, valueField } = useComboBox();
 
     const divRef = useRef<HTMLDivElement>(null);
 
-    useClickAway(setShow, divRef as React.RefObject<any>);
+    const setAllShow = (show: boolean) => {
+        setShow(show);
+        setShowInput(show);
+    };
+
+    useClickAway(setAllShow, divRef as React.RefObject<any>);
 
     return (
-        <div id={id} ref={divRef} className={classNames("combo-box", readonly ? "readonly" : "", className)} hidden={hidden} onClick={() => setShow(!show)} onKeyUp={key => key.key === "Escape" && setShow(false)}>
+        <div id={id} ref={divRef} className={classNames("combo-box", readonly ? "readonly" : "", className)} hidden={hidden} onClick={() => { setShow(!show); setShowInput(true); }} onKeyUp={key => key.key === "Escape" && setShow(false)}>
             <div>
-            <div className="body">
-                {!!multiSelect && selectedItems.map(item => <SelectedItem key={valueField(item)?.toString()} item={item} />)}
-                {!multiSelect && selectedItems.length > 0 && <SingleSelectedItem />}
-                <Input placeholder={placeholder} readonly={readonly} tabIndex={tabIndex}  />
+                <div className="body">
+                    {!!multiSelect && selectedItems.map(item => <SelectedItem key={valueField(item)?.toString()} item={item} />)}
+                    {!multiSelect && selectedItems.length > 0 && <SingleSelectedItem />}
+                    <Input placeholder={placeholder} readonly={readonly} tabIndex={tabIndex} />
                 </div>
-            <Controls />
+                <Controls />
             </div>
             <List />
         </div>
@@ -35,5 +40,5 @@ export const ComboBoxContainer: React.FC<ComboBoxContainerProps> = ({ placeholde
 
 ComboBoxContainer.displayName = "ComboBoxContainer";
 
-interface ComboBoxContainerProps extends Pick<ComboBoxProps<any>, "placeholder" | "readonly" | "hidden" | "id" | "className" | "ref" | "tabIndex" > {
+interface ComboBoxContainerProps extends Pick<ComboBoxProps<any>, "placeholder" | "readonly" | "hidden" | "id" | "className" | "ref" | "tabIndex"> {
 }

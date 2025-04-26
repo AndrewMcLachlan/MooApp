@@ -10,6 +10,7 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
     const [items, setItems] = useState<T[]>(props.items);
     const [newItem, setNewItem] = useState(null as any);
     const [show, setShow] = useState(false);
+    const [showInput, setShowInput] = useState(false);
 
     const allItems = useMemo(() => {
         if (!props.multiSelect) return props.items ? props.items : []
@@ -47,7 +48,7 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
     const { clearable, creatable, multiSelect, readonly, labelField, valueField, onAdd, onRemove, onChange, onCreate, createLabel, search, ref } = props;
 
     return (
-        <ComboBoxContext value={{ selectedItems, setSelectedItems, text, setText, items, setItems, newItem, setNewItem, show, setShow, clear, clearable, creatable, multiSelect, readonly, labelField, valueField, onAdd, onRemove, onChange, onCreate, createLabel, search, allItems, ref }}>
+        <ComboBoxContext value={{ selectedItems, setSelectedItems, text, setText, items, setItems, newItem, setNewItem, show, setShow, showInput, setShowInput, clear, clearable, creatable, multiSelect, readonly, labelField, valueField, onAdd, onRemove, onChange, onCreate, createLabel, search, allItems, ref }}>
             {props.children}
         </ComboBoxContext>
     );
@@ -71,6 +72,8 @@ export interface ComboBoxOptions {
     setNewItem: (item: any) => void;
     show: boolean;
     setShow: (show: boolean) => void
+    showInput: boolean;
+    setShowInput: (show: boolean) => void;
     clear: (e: React.MouseEvent<any>) => void;
     clearable?: boolean;
     creatable?: boolean;

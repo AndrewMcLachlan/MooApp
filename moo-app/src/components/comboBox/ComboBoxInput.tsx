@@ -1,9 +1,11 @@
+import { useLayoutEffect } from "react";
 import { useComboBox } from "./ComboBoxProvider";
 import { useDebounce } from "use-debounce";
+import { useInnerRef } from "../../hooks";
 
 export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => {
 
-    const { createLabel, creatable, allItems, items, labelField, search, setItems, selectedItems, newItem, setNewItem, text, setText, setShow, ref } = useComboBox();
+    const { createLabel, creatable, allItems, items, labelField, search, setItems, selectedItems, newItem, setNewItem, showInput, text, setText, setShow, ref } = useComboBox();
 
     const [debouncedSearch] = useDebounce(search, 300);
 
@@ -39,8 +41,19 @@ export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => 
         }
     }
 
+    const show = selectedItems?.length === 0 || !!showInput;
+
+    const innerRef = useInnerRef<HTMLInputElement>(ref);
+
+    useLayoutEffect(() => {
+        if (!props.readonly) {
+            innerRef.current.focus();
+        }
+    }, [props.readonly, innerRef]);
+
+
     return (
-        <input type="text" ref={ref} placeholder={selectedItems?.length == 0 && !props.readonly ? placeholder : ""} onChange={onChange} onKeyUp={keyUp} value={text} tabIndex={props.tabIndex} autoCapitalize="off" autoComplete="off" autoCorrect="off" spellCheck={false} role="combobox" aria-expanded={items?.length > 0} />
+        <input type="text" ref={innerRef} hidden={!show} placeholder={selectedItems?.length == 0 && !props.readonly ? placeholder : ""} onChange={onChange} onKeyUp={keyUp} value={text} tabIndex={props.tabIndex} autoFocus autoCapitalize="off" autoComplete="off" autoCorrect="off" spellCheck={false} role="combobox" aria-expanded={items?.length > 0} />
     );
 }
 
