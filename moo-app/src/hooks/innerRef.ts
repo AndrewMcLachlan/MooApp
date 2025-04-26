@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 export const useInnerRef = <T extends HTMLElement>(ref: React.Ref<T>) => {
 
-    const innerRef = useRef<T extends HTMLElement>(null);
+    const innerRef = useRef<T>(null);
 
     useEffect(() => {
         if (!ref) return;
