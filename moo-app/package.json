@@ -18,7 +18,7 @@
   "typings": "dist/index.d.ts",
   "dependencies": {
     "@azure/msal-browser": "^4.11.0",
-    "axios": "^1.8.4",
+    "axios": "^1.9.0",
     "bootstrap": "^5.3.5",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
