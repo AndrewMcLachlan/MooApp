@@ -17,12 +17,12 @@
   },
   "typings": "dist/index.d.ts",
   "dependencies": {
-    "@azure/msal-browser": "^4.11.0",
+    "@azure/msal-browser": "^4.11.1",
     "axios": "^1.9.0",
     "bootstrap": "^5.3.5",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
-    "react-error-boundary": "^5.0.0",
+    "react-error-boundary": "^6.0.0",
     "react-toastify": "^11.0.5",
     "use-debounce": "^10.0.4"
   },
