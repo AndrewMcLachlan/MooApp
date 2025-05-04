@@ -9,8 +9,8 @@
 
     height: var(--header-height);
 
-    .logo {
-        margin-right: 10px;
+    .logo:focus-visible {
+        outline: none;
     }
 
     .container,

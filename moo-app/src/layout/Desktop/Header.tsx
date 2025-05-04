@@ -17,11 +17,9 @@ export const Header: HeaderComponent = (props) => {
     return (
         <header className="d-none d-lg-block">
             <Container fluid className="first-header">
-                <div>
-                    <Link to="/">
-                        <img src="/logo.svg" alt={`${appName} home`} height={logoHeight} className="logo" />
-                    </Link>
-                </div>
+                <Link to="/" className="logo">
+                    <img src="/logo.svg" alt={`${appName} home`} height={logoHeight} />
+                </Link>
                 <div className="search">
                     {props.search}
                 </div>
