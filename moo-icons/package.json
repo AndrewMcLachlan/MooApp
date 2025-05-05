@@ -33,7 +33,7 @@
     "react-dom": ">=19.0.0"
   },
   "devDependencies": {
-    "eslint": "^9.25.1",
+    "eslint": "^9.26.0",
     "rollup-plugin-terser": "^7.0.2"
   }
 }
