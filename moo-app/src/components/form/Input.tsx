@@ -14,7 +14,14 @@ export const Input: InputComponent = ({ className, id, ...rest }) => {
     const innerClass = rest.type === "checkbox" ? "form-check-input" : "form-control";
 
     return (
-        <ClearableInput id={id} className={classNames(innerClass, className)} {...rest} {...register(id)} />
+        <ClearableInput id={id} className={classNames(innerClass, className)} {...rest} {...register(id, {
+            setValueAs(value) {
+                if (rest.type === "number") {
+                    return value ? Number(value) : undefined;
+                }
+                return value;
+            },
+        })} />
     );
 };
 
