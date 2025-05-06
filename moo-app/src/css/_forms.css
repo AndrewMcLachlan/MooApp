@@ -124,3 +124,15 @@ input.form-control {
     font-size: 1.5rem;
     margin-right: 0;
 }
+
+.form-horizontal {
+    .form-group {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+
+    .form-label {
+        flex: 0 0 100px;
+    }
+}
