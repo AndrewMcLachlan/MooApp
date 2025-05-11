@@ -35,8 +35,8 @@
         "vite-tsconfig-paths": "^5.1.4"
     },
     "optionalDependencies": {
-        "@esbuild/linux-arm64": "0.25.3",
-        "@rollup/rollup-linux-arm64-gnu": "4.40.1"
+        "@esbuild/linux-arm64": "0.25.4",
+        "@rollup/rollup-linux-arm64-gnu": "4.40.2"
     },
     "peerDependencies": {
         "react": ">=19.0.0",
@@ -50,6 +50,6 @@
         "lint-fix": "npm run lint-fix --workspaces"
     },
     "dependencies": {
-        "bootstrap": "^5.3.5"
+        "bootstrap": "^5.3.6"
     }
 }
