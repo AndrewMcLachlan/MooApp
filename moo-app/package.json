@@ -17,9 +17,9 @@
   },
   "typings": "dist/index.d.ts",
   "dependencies": {
-    "@azure/msal-browser": "^4.11.1",
+    "@azure/msal-browser": "^4.12.0",
     "axios": "^1.9.0",
-    "bootstrap": "^5.3.5",
+    "bootstrap": "^5.3.6",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "react-error-boundary": "^6.0.0",
