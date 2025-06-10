@@ -1,0 +1,25 @@
+{
+  ".storybook/main.ts": {
+    "@typescript-eslint/no-explicit-any": {
+      "count": 1
+    }
+  },
+  "src/stories/components/EditColumn.stories.tsx": {
+    "@typescript-eslint/no-explicit-any": {
+      "count": 2
+    },
+    "@typescript-eslint/no-unused-vars": {
+      "count": 1
+    }
+  },
+  "src/stories/components/Upload.stories.ts": {
+    "@typescript-eslint/no-unused-vars": {
+      "count": 1
+    }
+  },
+  "vite.config.ts": {
+    "@typescript-eslint/no-unused-vars": {
+      "count": 1
+    }
+  }
+}

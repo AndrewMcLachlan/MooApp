@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-//import { fn } from "@storybook/test";
-import { useArgs } from "@storybook/store";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+//import { fn } from "storybook/test";
+import { useArgs } from "storybook/preview-api";
 
 import { EditColumn } from "@andrewmclachlan/mooapp";
 
@@ -47,7 +47,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Normal = (args: any) => {
+export const Normal: Story = (args: any) => {
   const [{...rest}, setArgs] = useArgs();
 
   const onChange = (target: any) => {

@@ -1,5 +1,5 @@
-import type { Preview } from "@storybook/react";
-import { themes } from "@storybook/theming";
+import type { Preview } from "@storybook/react-vite";
+import { themes } from "storybook/theming";
 import "../../moo-app/src/css/mooapp.css";
 
 const preview: Preview = {

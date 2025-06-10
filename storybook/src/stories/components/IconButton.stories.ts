@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "storybook/test";
 
 import { default as ReactSvg } from "../../assets/react.svg?react";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
