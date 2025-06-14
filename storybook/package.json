@@ -8,6 +8,9 @@
     "lint": "eslint .",
     "storybook": "storybook dev -p 6006 --no-open"
   },
+  "engines": {
+    "node" : ">=22.0.0"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
