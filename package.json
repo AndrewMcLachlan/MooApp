@@ -39,7 +39,7 @@
   },
   "optionalDependencies": {
     "@esbuild/linux-arm64": "0.25.5",
-    "@rollup/rollup-linux-arm64-gnu": "4.43.0"
+    "@rollup/rollup-linux-arm64-gnu": "4.44.0"
   },
   "peerDependencies": {
     "react": ">=19.0.0",
@@ -53,6 +53,6 @@
     "lint-fix": "npm run lint-fix --workspaces"
   },
   "dependencies": {
-    "bootstrap": "^5.3.6"
+    "bootstrap": "^5.3.7"
   }
 }
