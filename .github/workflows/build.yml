@@ -21,7 +21,7 @@ jobs:
       id: set-version-number
       uses: andrewmclachlan/actions/set-version-number-npm@v4
       with:
-        packageFilePath: 'package.json'
+        package-file-path: 'package.json'
     - name: Setup node and npm
       uses: actions/setup-node@v4
       with:
