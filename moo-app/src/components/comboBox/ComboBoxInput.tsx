@@ -45,15 +45,15 @@ export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => 
 
     const innerRef = useInnerRef<HTMLInputElement>(ref);
 
-    useLayoutEffect(() => {
+    /*useLayoutEffect(() => {
         if (!props.readonly) {
             innerRef.current.focus();
         }
-    }, [props.readonly, innerRef]);
+    }, [props.readonly, innerRef]);*/
 
 
     return (
-        <input type="text" ref={innerRef} hidden={!show} placeholder={selectedItems?.length == 0 && !props.readonly ? placeholder : ""} onChange={onChange} onKeyUp={keyUp} value={text} tabIndex={props.tabIndex} autoFocus autoCapitalize="off" autoComplete="off" autoCorrect="off" spellCheck={false} role="combobox" aria-expanded={items?.length > 0} />
+        <input type="text" ref={innerRef} hidden={!show} placeholder={selectedItems?.length == 0 && !props.readonly ? placeholder : ""} onChange={onChange} onKeyUp={keyUp} value={text} tabIndex={props.tabIndex} autoCapitalize="off" autoComplete="off" autoCorrect="off" spellCheck={false} role="combobox" aria-expanded={items?.length > 0} />
     );
 }
 

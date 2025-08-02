@@ -1,9 +1,14 @@
 .table {
+  --bs-table-bg: var(--table-bg);
   --bs-table-striped-bg: var(--table-striped-bg);
 
   th {
     background-color: var(--section-bg);
     font-weight: 600;
+  }
+
+  tfoot td {
+    background-color: var(--section-bg);
   }
 
 
@@ -24,28 +29,23 @@
       }
     }
   }
-}
 
-@media (prefers-color-scheme: dark) {
-  .table {
-      --bs-table-striped-bg: rgba(0, 0, 0, 0.5);
-  }
-}
+  .group-row {
+    height: 1rem;
+    font-size: 0.8rem;
 
-.dark {
-  .table {
-      --bs-table-striped-bg: rgba(0, 0, 0, 0.5);
-  }
-}
+      &:hover {
+        box-shadow: none;
+      }
 
-@media (prefers-color-scheme: light) {
-  .table {
-      --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
-  }
-}
+    td {
+      background-color: var(--section-bg);
+      height: 1rem;
+      text-transform: uppercase;
 
-.light {
-  .table {
-      --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
+      &:hover {
+        box-shadow: none;
+      }
+    }
   }
 }
