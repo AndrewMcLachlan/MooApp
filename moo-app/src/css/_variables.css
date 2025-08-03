@@ -98,7 +98,6 @@
     --breadcrumb-bg: var(--base-bg);
 
     --hover: #6E6E6E;
-    --bs-border-color: rgba(251, 248, 244, .1);
 
     --header-text: var(--bs-body-color);
     --footer-text: var(--bs-body-color);
@@ -127,7 +126,7 @@
   --body-colour-bold: #000;
   --body-colour-dim: rgb(136, 131, 126);
 
-  --bs-border-color: rgba(46, 41, 36, .12);
+  --bs-border-color: rgb(230, 224, 220);
 
   --header-bg: #FFF;
   --header-text: var(--bs-body-color);
@@ -177,7 +176,7 @@
   --bs-emphasis-color: rgb(204, 208, 211);
   --body-color-bold: rgb(204, 208, 211);
   --body-colour-dim: rgba(204, 208, 211, .65);
-  --bs-border-color: rgba(204, 208, 211, .15);
+  --bs-border-color: rgb(50, 54, 57);
 
   /* --bs-emphasis-color: #9696FF; */
   --bs-link-color: rgb(102, 102, 185.4);
@@ -197,7 +196,7 @@
   --bs-emphasis-color: rgb(211, 208, 204);
   --body-color-bold: rgb(211, 208, 204);
   --body-colour-dim: rgba(211, 208, 204, .65);
-  --bs-border-color: rgba(211, 208, 204, .15);
+  --bs-border-color: rgb(57, 54, 50);
 
   --base-bg: rgb(31, 27, 24);
   --header-bg: var(--base-bg);

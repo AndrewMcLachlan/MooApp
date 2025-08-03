@@ -10,7 +10,7 @@ export const Icon: React.FC<IconProps> = ({ icon, onClick, title }) => {
 
     const clickableClassName = onClick ? "clickable" : "";
 
-    const IconNode = typeof icon === "function" ? <CustomIconElement className={classNames("custom-icon", clickableClassName)} {...onClick} title={title} /> : <FontAwesomeIcon icon={icon as IconProp} className={clickableClassName} {...onClick} title={title} />;
+    const IconNode = typeof icon === "function" ? <CustomIconElement className={classNames("custom-icon", clickableClassName)} onClick={onClick} title={title} /> : <FontAwesomeIcon icon={icon as IconProp} className={clickableClassName} onClick={onClick} title={title} />;
 
     return (
         <>{IconNode}</>
