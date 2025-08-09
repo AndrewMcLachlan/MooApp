@@ -1,4 +1,4 @@
-import { Section, useHttpClient, Page, NavItemDivider, IconButton, SectionTable, EditColumn, ComboBox } from "@andrewmclachlan/mooapp";
+import { Section, useHttpClient, Page, NavItemDivider, IconButton, SectionTable, EditColumn, ComboBox } from "@andrewmclachlan/moo-ds";
 import { Button, Table } from "react-bootstrap";
 import { Tags } from "../assets";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";

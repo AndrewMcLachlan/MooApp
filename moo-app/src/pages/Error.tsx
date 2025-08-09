@@ -1,5 +1,5 @@
-import { ErrorFallback } from "../components";
-import { Page } from "../layout";
+import { ErrorFallback } from "@andrewmclachlan/moo-ds";
+import { Page } from "@andrewmclachlan/moo-ds";
 import React from "react";
 import { Container } from "react-bootstrap";
 import { FallbackProps } from "react-error-boundary";

@@ -1,7 +1,7 @@
 import "./App.css";
-import "../../moo-app/src/css/mooapp.css";
+import "../../moo-ds/src/css/mooapp.css";
 
-import { Icon, MooAppLayout, SearchBox } from "@andrewmclachlan/mooapp";
+import { Icon, MooAppLayout, SearchBox } from "@andrewmclachlan/moo-ds";
 import { useIsAuthenticated } from "@azure/msal-react";
 import { Link } from "react-router";
 import { Application, Budget, Tags, User, Stack, Users } from "@andrewmclachlan/mooicons";

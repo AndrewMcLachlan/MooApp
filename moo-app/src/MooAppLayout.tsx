@@ -1,10 +1,10 @@
 import { Outlet, useLocation } from "react-router";
 
-import { Alerts, Layout } from "./layout";
-import { HeaderProps, SidebarProps } from "./layout/Types";
+import { Alerts, Layout } from "@andrewmcolachlan/moo-ds";
+import { HeaderProps, SidebarProps } from "@andrewmclachlan/moo-ds";
 import { ErrorBoundary } from "react-error-boundary";
 import { Error } from "./pages/Error";
-import { Notifications } from "./layout/Notifications";
+import { Notifications } from "@andrewmclachlan/moo-ds";
 
 export const MooAppLayout: React.FC<MooAppLayoutProps> = ({ header, sidebar }) => {
 

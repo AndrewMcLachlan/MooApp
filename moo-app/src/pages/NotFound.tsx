@@ -1,4 +1,4 @@
-import { Page } from "../layout";
+import { Page } from "@andrewmclachlan/moo-ds";
 
 export const NotFound = () =>
     <Page title="Not Found">

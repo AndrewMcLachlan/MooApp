@@ -1,4 +1,4 @@
-import { Section, useHttpClient, Page, NavItemDivider } from "@andrewmclachlan/mooapp";
+import { Section, useHttpClient, Page, NavItemDivider } from "@andrewmclachlan/moo-ds";
 import { Button } from "react-bootstrap";
 import { Tags } from "../assets";
 

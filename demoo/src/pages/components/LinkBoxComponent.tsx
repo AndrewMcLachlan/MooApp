@@ -1,4 +1,4 @@
-import { Icon, LinkBox, Page } from "@andrewmclachlan/mooapp";
+import { Icon, LinkBox, Page } from "@andrewmclachlan/moo-ds";
 import { Col, Row } from "react-bootstrap";
 
 export const LinkBoxComponent = () => {

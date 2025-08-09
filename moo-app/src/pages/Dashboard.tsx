@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 
-import { Page, PageProps } from "../layout";
+import { Page, PageProps } from "@andrewmclachlan/moo-ds";
 import { Row } from "react-bootstrap";
 import classNames from "classnames";
 

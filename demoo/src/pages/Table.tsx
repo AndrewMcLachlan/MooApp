@@ -1,4 +1,4 @@
-import { Section, useHttpClient, Page, NavItemDivider, IconButton, SectionTable, EditColumn, Pagination, PageSize, PaginationControls, SortablePaginationTh, changeSortDirection, SortDirection } from "@andrewmclachlan/mooapp";
+import { Section, useHttpClient, Page, NavItemDivider, IconButton, SectionTable, EditColumn, Pagination, PageSize, PaginationControls, SortablePaginationTh, changeSortDirection, SortDirection } from "@andrewmclachlan/moo-ds";
 import { Button } from "react-bootstrap";
 import { Tags } from "../assets";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";

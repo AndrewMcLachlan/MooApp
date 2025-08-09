@@ -1,4 +1,4 @@
-import { IconButton, Page, Section } from "@andrewmclachlan/mooapp";
+import { IconButton, Page, Section } from "@andrewmclachlan/moo-ds";
 import { HamburgerMenu, Tags, UpDownArrow } from "../../assets";
 
 export const IconButtonComponent = () => {
