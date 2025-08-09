@@ -16,6 +16,7 @@ export * from "./LoadingTableRow";
 export * from "./LoadingTableRows";
 export * from "./MiniPagination";
 export * from "./NavItemDivider";
+export * from "./NavItemList";
 export * from "./Paginaton"
 export * from "./PaginationControls";
 export * from "./PaginationTh";

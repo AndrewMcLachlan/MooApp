@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { Avatar } from "../components";
 import { NavItem } from "../models";
-import { renderMenu } from "../utils";
+import { NavItemList } from "../components/NavItemList";
 
 export const UserMenu: React.FC<UserMenuProps> = ({userMenu = []}) => {
     const msal = useMsal();
@@ -16,7 +16,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({userMenu = []}) => {
             <Popover.Header as="h3"><Avatar />{msal.instance.getActiveAccount()?.name}</Popover.Header>
             <Popover.Body>
                 <ul>
-                    {renderMenu(userMenu, "li", "menuitem")}
+                    <NavItemList navItems={userMenu} as="li" role="menuitem" />
                     <li className="divider" />
                     <li className="clickable" onClick={() => msal.instance.logoutRedirect()} role="menuitem"><FontAwesomeIcon icon="arrow-right-from-bracket" />Sign out</li>
                 </ul>

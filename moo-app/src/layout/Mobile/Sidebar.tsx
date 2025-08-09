@@ -1,11 +1,8 @@
 
 import { SidebarComponent } from "../Types";
 import { useLayout } from "../../providers";
-import React, { ReactNode, isValidElement } from "react";
-import { Button, Nav, Offcanvas } from "react-bootstrap";
-import { NavLink } from "react-router";
-import { LayoutContext } from "../../models";
-import { NavItem } from "@andrewmclachlan/moo-ds";
+import { Nav, Offcanvas } from "react-bootstrap";
+import { NavItemList } from "@andrewmclachlan/moo-ds";
 
 export const Sidebar: SidebarComponent = ({ navItems = [] }) => {
 
@@ -16,11 +13,11 @@ export const Sidebar: SidebarComponent = ({ navItems = [] }) => {
             <Offcanvas.Header closeButton onHide={() => layout.setShowSidebar(false)} />
             <Offcanvas.Body className="d-lg-none sidebar">
                 <Nav className="flex-column ">
-                    {renderMenu(layout, navItems)}
+                    <NavItemList navItems={navItems} role="menuitem" onClick={() => layout.setShowSidebar(false)} />
                     {layout.secondaryNav.length > 0 &&
                         <>
                             <Nav.Item className="divider" />
-                            {renderMenu(layout, layout.secondaryNav)}
+                            <NavItemList navItems={layout.secondaryNav} role="menuitem" onClick={() => layout.setShowSidebar(false)} />
                         </>
                     }
                 </Nav>
@@ -28,32 +25,3 @@ export const Sidebar: SidebarComponent = ({ navItems = [] }) => {
         </Offcanvas>
     );
 };
-
-const renderMenu = (layout: LayoutContext, navItems: (NavItem | ReactNode)[]) => {
-
-    const items: React.ReactNode[] = navItems.map((item, index) => {
-
-        if (isValidElement(item)) {
-            return <React.Fragment key={`node${index}`}>{item}</React.Fragment>;
-        };
-
-        const navItem = item as NavItem;
-
-        const image = typeof navItem.image === "string" ? <img src={navItem.image} alt="" /> : navItem.image ?? <svg></svg>;
-
-        const onClick = () => { layout.setShowSidebar(false); if (navItem.onClick) { navItem.onClick(); } };
-
-        if (navItem.route) {
-            return <NavLink className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`} to={navItem.route} key={`route${index}`} onClick={onClick} title={navItem.text}>{image}<span>{navItem.text}</span></NavLink>;
-        }
-        else if (navItem.onClick) {
-            return <Nav.Link as={Button} key={`click${index}`} variant="link" onClick={onClick} title={navItem.text}>{image}<span>{navItem.text}</span></Nav.Link>;
-        }
-        else {
-            throw "Invalid nav item, specify a route and/or an onClick handler.";
-        }
-    });
-
-    return items;
-
-}

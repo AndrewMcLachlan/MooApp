@@ -1,8 +1,10 @@
 import classNames from "classnames";
 import { PropsWithChildren, ReactNode } from "react";
-import { Link } from "react-router";
+import { useLink } from "../providers/LinkProvider";
 
 export const LinkBox: React.FC<PropsWithChildren<LinkBoxProps>> = ({ href, to, children, image, className, ...rest }) => {
+
+    const LinkComponent = useLink();
 
     let imageComponent = image;
 
@@ -24,7 +26,7 @@ export const LinkBox: React.FC<PropsWithChildren<LinkBoxProps>> = ({ href, to, c
         </a>;
     }
     else if (to) {
-        component = <Link to={to} className={combinedClassName} {...rest}>{component}</Link>;
+        component = <LinkComponent to={to} className={combinedClassName} {...rest}>{component}</LinkComponent>;
     }
     else {
         component = <div className={combinedClassName} {...rest}>{component}</div>;
