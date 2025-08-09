@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { LayoutProvider, Page } from "@andrewmclachlan/moo-ds";
+import { LayoutProvider, Page } from "@andrewmclachlan/moo-app";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {

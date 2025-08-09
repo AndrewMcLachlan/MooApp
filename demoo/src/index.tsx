@@ -1,4 +1,4 @@
-import { MooApp, NotFound, createMooAppBrowserRouter } from "@andrewmclachlan/moo-ds";
+import { MooApp, NotFound, createMooAppBrowserRouter } from "@andrewmclachlan/moo-app";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowLeft, faArrowsRotate, faCheck, faCheckCircle, faChevronDown, faChevronRight, faChevronUp, faCircleChevronLeft, faFilterCircleXmark, faInfoCircle, faLongArrowDown, faLongArrowUp, faPenToSquare, faPlus, faTimesCircle, faTrashAlt, faUpload, faXmark } from "@fortawesome/free-solid-svg-icons";
 import ReactDOM from "react-dom/client";

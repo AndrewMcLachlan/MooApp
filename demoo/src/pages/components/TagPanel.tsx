@@ -1,4 +1,5 @@
-import { ComboBox, Page, TagPanel as TagPanelComponent } from "@andrewmclachlan/moo-ds";
+import { Page } from "@andrewmclachlan/moo-app";
+import { ComboBox, TagPanel as TagPanelComponent } from "@andrewmclachlan/moo-ds";
 import { useMemo, useState } from "react";
 
 type item = { id: number, text: string };

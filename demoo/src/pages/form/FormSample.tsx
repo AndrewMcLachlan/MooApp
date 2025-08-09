@@ -1,4 +1,5 @@
-import { Page, Form, SectionForm, FormComboBox } from "@andrewmclachlan/moo-ds"
+import { Page } from "@andrewmclachlan/moo-app";
+import { Form, SectionForm, FormComboBox } from "@andrewmclachlan/moo-ds"
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
