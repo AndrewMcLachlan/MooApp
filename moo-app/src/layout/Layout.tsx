@@ -1,7 +1,8 @@
 import { PropsWithChildren } from "react";
+import { ThemeProvider } from "@andrewmclachlan/moo-ds";
 
 import { Footer } from "./Desktop/Footer";
-import { LayoutProvider, ThemeProvider } from "../providers";
+import { LayoutProvider } from "../providers";
 import { size } from "../models/Layout";
 import { Header } from "./Desktop/Header";
 import { Header as MHeader } from "./Mobile/Header";

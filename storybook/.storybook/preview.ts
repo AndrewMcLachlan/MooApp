@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/react-vite";
 import { themes } from "storybook/theming";
-import "../../moo-app/src/css/mooapp.css";
+import "../../moo-ds/src/css/mooapp.css";
 
 const preview: Preview = {
   parameters: {

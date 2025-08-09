@@ -1,7 +1,5 @@
-import { Breadcrumb } from "../../components";
-import { MenuToggle } from "../../layout/MenuToggle";
-import { HeaderComponent } from "../../layout/Types";
-import { UserMenu } from "../../layout/UserMenu";
+import { Breadcrumb, MenuToggle, UserMenu } from "@andrewmclachlan/moo-ds";
+import { HeaderComponent } from "../Types";
 import { useApp, useLayout } from "../../providers";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router";

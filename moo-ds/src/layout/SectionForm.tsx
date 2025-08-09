@@ -1,4 +1,4 @@
-import { SectionProps } from "../../dist";
+import { SectionProps } from "./Section/Section";
 import { Form, FormProps } from "../components";
 import { PropsWithChildren } from "react";
 

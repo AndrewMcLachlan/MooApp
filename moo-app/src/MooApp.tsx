@@ -1,7 +1,8 @@
 import React, { PropsWithChildren, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { AppProvider, HttpClientProvider, MessageProvider } from "./providers";
+import { AppProvider, HttpClientProvider } from "./providers";
+import { MessageProvider } from "@andrewmclachlan/moo-ds";
 
 import getMsalInstance from "./login/msal";
 

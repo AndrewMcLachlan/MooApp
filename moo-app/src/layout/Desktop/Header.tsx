@@ -1,11 +1,9 @@
 import { Container } from "react-bootstrap";
 import { Link } from "react-router";
 
-import { Breadcrumb } from "../../components";
 import { HeaderComponent } from "../Types";
 import { useApp, useLayout } from "../../providers";
-import { UserMenu } from "../UserMenu";
-import { MenuToggle } from "../MenuToggle";
+import { Breadcrumb, MenuToggle, UserMenu } from "@andrewmclachlan/moo-ds";
 
 export const Header: HeaderComponent = (props) => {
 

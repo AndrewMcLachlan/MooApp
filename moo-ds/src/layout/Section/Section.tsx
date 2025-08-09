@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { SectionSubheading, SectionSubheadingComponent } from "./SectionSubheading";
 import { SectionHeader, SectionHeaderComponent } from "./SectionHeader";
 import { SectionBody, SectionBodyComponent } from "./SectionBody";
-import { Link } from "react-router";
+import { useLink } from "../../providers/LinkProvider";
 
 export type SectionComponent = React.FC<React.PropsWithChildren<SectionProps>> & {
     Body: SectionBodyComponent;
@@ -13,6 +13,7 @@ export type SectionComponent = React.FC<React.PropsWithChildren<SectionProps>> &
 const Section: SectionComponent = ({ header, headerSize = 2, to, children, className, ...rest }) => {
 
     const H: any = `h${headerSize}`;
+    const Link = useLink();
 
     const headerLinkNode = to ? <Link to={to}>{header}</Link> : header;
 

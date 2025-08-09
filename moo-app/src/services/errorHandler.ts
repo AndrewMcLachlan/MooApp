@@ -1,4 +1,4 @@
-import { useMessages } from "../providers/MessageProvider";
+import { useMessages } from "@andrewmclachlan/moo-ds";
 
 export const useErrorHandler = () => {
 

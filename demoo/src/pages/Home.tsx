@@ -1,4 +1,5 @@
-import { Section, useHttpClient, Page, NavItemDivider, useMessages } from "@andrewmclachlan/mooapp";
+import { Page } from "@andrewmclachlan/moo-app";
+import { Section, useMessages } from "@andrewmclachlan/moo-ds";
 import { Button } from "react-bootstrap";
 
 export const Home = () => {

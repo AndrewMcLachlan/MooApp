@@ -1,5 +1,5 @@
 export * from "./clickAway";
-export * from "./idParams";
+export * from "./errorHandler";
 export * from "./innerRef";
 export * from "./localStorage";
 export * from "./sessionStorage";

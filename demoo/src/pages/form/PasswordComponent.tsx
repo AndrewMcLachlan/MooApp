@@ -1,4 +1,5 @@
-import { Password, Page } from "@andrewmclachlan/mooapp";
+import { Page } from "@andrewmclachlan/moo-app";
+import { Password } from "@andrewmclachlan/moo-ds";
 
 export const PasswordComponent = () => {
     return (

@@ -1,4 +1,4 @@
-import { Page } from "../layout";
+import { Page } from "../layout/Page";
 
 export const NotFound = () =>
     <Page title="Not Found">

@@ -1,5 +1,5 @@
-import { Section, ThemeSelector, useHttpClient, Page, NavItemDivider } from "@andrewmclachlan/mooapp";
-import { Button, Col, Row } from "react-bootstrap";
+import { Page } from "@andrewmclachlan/moo-app";
+import { Section, ThemeSelector } from "@andrewmclachlan/moo-ds";
 
 export const Profile = () => {
 
