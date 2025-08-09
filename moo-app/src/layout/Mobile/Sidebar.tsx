@@ -4,7 +4,8 @@ import { useLayout } from "../../providers";
 import React, { ReactNode, isValidElement } from "react";
 import { Button, Nav, Offcanvas } from "react-bootstrap";
 import { NavLink } from "react-router";
-import { LayoutContext, NavItem } from "../../models";
+import { LayoutContext } from "../../models";
+import { NavItem } from "@andrewmclachlan/moo-ds";
 
 export const Sidebar: SidebarComponent = ({ navItems = [] }) => {
 

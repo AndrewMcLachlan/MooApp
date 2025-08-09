@@ -1,7 +1,8 @@
 import { Outlet, useLocation } from "react-router";
 
-import { Alerts, Layout } from "@andrewmcolachlan/moo-ds";
-import { HeaderProps, SidebarProps } from "@andrewmclachlan/moo-ds";
+import { Alerts } from "@andrewmclachlan/moo-ds";
+import { HeaderProps, SidebarProps } from "./layout/Types";
+import { Layout } from "./layout/Layout";
 import { ErrorBoundary } from "react-error-boundary";
 import { Error } from "./pages/Error";
 import { Notifications } from "@andrewmclachlan/moo-ds";

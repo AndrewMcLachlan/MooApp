@@ -1,7 +1,7 @@
 import { useIsAuthenticated } from "@azure/msal-react";
-import { usePageTitle } from "../../../moo-app/src/hooks/pageTitle";
+import { usePageTitle } from "../hooks/pageTitle";
 import { Container } from "react-bootstrap";
-import { NavItem } from "../models";
+import { NavItem } from "@andrewmclachlan/moo-ds";
 import { useLayout } from "../providers"
 import { ReactNode, useEffect } from "react";
 

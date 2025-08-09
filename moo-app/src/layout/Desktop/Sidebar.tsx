@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { useLayout } from "../../providers";
 import { Nav } from "react-bootstrap";
 import { SidebarComponent } from "../Types";
-import { renderMenu } from "../../utils";
+import { renderMenu } from "@andrewmclachlan/moo-ds";
 
 export const Sidebar: SidebarComponent = ({ navItems = [] }) => {
 

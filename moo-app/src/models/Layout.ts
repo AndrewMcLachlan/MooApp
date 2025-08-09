@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { NavItem } from "./NavItem";
+import { NavItem } from "@andrewmclachlan/moo-ds";
 
 export type size = "small" | "default";
 

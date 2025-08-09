@@ -54,9 +54,6 @@
     ]
   },
   "devDependencies": {
-    "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^12.1.4",
-    "@svgr/rollup": "^8.1.0",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
@@ -68,15 +65,12 @@
     "@typescript-eslint/eslint-plugin": "^8.10.0",
     "@typescript-eslint/parser": "^8.10.0",
     "@vitejs/plugin-react": "^4.7.0",
-    "eslint": "^9.32.0",
-    "eslint-plugin-react": "^7.37.5",
     "globals": "^16.3.0",
     "postcss-import": "^16.1.1",
     "rimraf": "^6.0.1",
     "rollup": "^4.46.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-postcss": "^4.0.2",
-    "typescript": "^5.8.3"
+    "rollup-plugin-postcss": "^4.0.2"
   },
   "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": ">=6.6.0",
