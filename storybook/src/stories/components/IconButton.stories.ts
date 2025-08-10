@@ -4,7 +4,7 @@ import { fn } from "storybook/test";
 import { default as ReactSvg } from "../../assets/react.svg?react";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 
-import { IconButton } from "@andrewmclachlan/mooapp";
+import { IconButton } from "@andrewmclachlan/moo-ds";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {

@@ -21,7 +21,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.ts"), //fileURLToPath(new URL("./src/index.ts")),
-      name: "mooapp",
+      name: "moo-app",
       fileName: (format) => `moo-app.${format}.js`,
     },
     rollupOptions: {

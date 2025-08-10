@@ -1,4 +1,4 @@
-import { Page } from '@andrewmclachlan/mooapp';
+import { Page } from '@andrewmclachlan/moo-app';
 import { Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 

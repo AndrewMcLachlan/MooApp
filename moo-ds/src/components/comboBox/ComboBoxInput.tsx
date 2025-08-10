@@ -1,4 +1,3 @@
-import { useLayoutEffect } from "react";
 import { useComboBox } from "./ComboBoxProvider";
 import { useDebounce } from "use-debounce";
 import { useInnerRef } from "../../hooks";

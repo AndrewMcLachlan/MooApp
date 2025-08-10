@@ -1,0 +1,85 @@
+{
+  "name": "@andrewmclachlan/moo-ds",
+  "main": "dist/index.js",
+  "author": {
+    "name": "Andrew McLachlan",
+    "url": "https://andrewmclachlan.com"
+  },
+  "license": "MIT",
+  "description": "Base library for Moo-branded apps",
+  "module": "dist/index.es.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AndrewMcLachlan/MooApp.git"
+  },
+  "publishConfig": {
+    "@andrewmclachlan:registry": "https://npm.pkg.github.com"
+  },
+  "typings": "dist/index.d.ts",
+  "dependencies": {
+    "bootstrap": "^5.3.7",
+    "classnames": "^2.5.1",
+    "date-fns": "^4.1.0",
+    "react-error-boundary": "^6.0.0",
+    "react-toastify": "^11.0.5",
+    "use-debounce": "^10.0.5"
+  },
+  "scripts": {
+    "vite": "vite",
+    "build-vite": "tsc && vite build",
+    "start": "rollup -c -w",
+    "build": "rimraf dist && rollup -c",
+    "lint": "eslint ./src/**/*.ts ./src/**/*.tsx",
+    "lint-fix": "eslint ./src/**/*.ts ./src/**/*.tsx --fix"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "rules": {
+      "react-hooks/exhaustive-deps": 0
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.4",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
+    "@types/postcss-import": "^14.0.3",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@types/react-router-bootstrap": "^0.26.8",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.10.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "globals": "^16.3.0",
+    "postcss-import": "^16.1.1",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.46.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2"
+  },
+  "peerDependencies": {
+    "@fortawesome/fontawesome-svg-core": ">=6.6.0",
+    "@fortawesome/free-regular-svg-icons": ">=6.6.0",
+    "@fortawesome/free-solid-svg-icons": ">=6.6.0",
+    "@fortawesome/react-fontawesome": ">=0.2.2",
+    "react": ">=19.0.0",
+    "react-bootstrap": ">=2.10.1",
+    "react-dom": ">=19.0.0",
+    "react-hook-form": ">=7.54.1"
+  }
+}

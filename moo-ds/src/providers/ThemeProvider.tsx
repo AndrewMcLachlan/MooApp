@@ -1,11 +1,11 @@
 import React, { createContext, useEffect } from "react";
 import { useContext } from "react";
-import * as Models from "../models";
+import { Theme, ThemeOptions, theme } from "../models";
 import { useLocalStorage } from "../hooks/localStorage";
 
-const getDefaultTheme = () => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? Models.theme("dark") : Models.theme("light");
+const getDefaultTheme = () => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? theme("dark") : theme("light");
 
-export const ThemeContext = createContext<Models.ThemeOptions>({ defaultTheme: getDefaultTheme() });
+export const ThemeContext = createContext<ThemeOptions>({ defaultTheme: getDefaultTheme() });
 
 export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>> = ({ children }) => {
 
@@ -13,7 +13,7 @@ export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>
 
     const defaultTheme = getDefaultTheme();
 
-    const [theme, setTheme] = useLocalStorage<Models.Theme>("theme", defaultTheme);
+    const [theme, setTheme] = useLocalStorage<Theme>("theme", defaultTheme);
 
     useEffect(() => {
         colour.setAttribute("content", theme.colour);
