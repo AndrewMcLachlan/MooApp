@@ -4,8 +4,8 @@ import React from "react";
 import { NavItem } from "../models";
 import { Button, Nav } from "react-bootstrap";
 
-export const NavItemList : React.FC<NavItemListProps> = ({ navItems, as, role, onClick }) => {
-    
+export const NavItemList: React.FC<NavItemListProps> = ({ navItems, as = React.Fragment, role, onClick }) => {
+
     const As = as;
     const NavLink = useNavLink();
 
@@ -20,7 +20,7 @@ export const NavItemList : React.FC<NavItemListProps> = ({ navItems, as, role, o
         const image = typeof navItem.image === "string" ? <img src={navItem.image} alt="" /> : navItem.image ?? <></>;
 
         // TODO: Allow prevention of navItem.onClick in custom event handler.
-        const onNavItemClick = onClick ? () =>  { onClick(navItem); navItem?.onClick(); } : navItem.onClick;
+        const onNavItemClick = onClick ? () => { onClick(navItem); navItem?.onClick(); } : navItem.onClick;
 
         if (navItem.route) {
             return <As key={`route${index}`}><NavLink cl className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`} to={navItem.route} onClick={onNavItemClick} title={navItem.text} role={role}>{image}<span>{navItem.text}</span></NavLink></As>;

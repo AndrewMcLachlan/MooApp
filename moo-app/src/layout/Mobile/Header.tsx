@@ -1,12 +1,12 @@
-import { Breadcrumb, MenuToggle, UserMenu } from "@andrewmclachlan/moo-ds";
+import { Breadcrumb, MenuToggle, useLink, UserMenu } from "@andrewmclachlan/moo-ds";
 import { HeaderComponent } from "../Types";
 import { useApp, useLayout } from "../../providers";
 import { Container } from "react-bootstrap";
-import { Link } from "react-router";
 
 export const Header: HeaderComponent = (props) => {
     const { size, breadcrumbs, actions, setShowSidebar } = useLayout();
     const { name: appName } = useApp();
+    const Link = useLink();
 
     const logoHeight = size == "default" ? 80 : 40;
 

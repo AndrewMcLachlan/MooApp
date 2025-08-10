@@ -2,7 +2,7 @@ import React, { PropsWithChildren, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { AppProvider, HttpClientProvider } from "./providers";
-import { MessageProvider } from "@andrewmclachlan/moo-ds";
+import { LinkProvider, MessageProvider } from "@andrewmclachlan/moo-ds";
 
 import getMsalInstance from "./login/msal";
 
@@ -11,10 +11,12 @@ import { Login } from "./login/Login";
 
 import { faArrowRightFromBracket, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import { LinkWrapper, NavLinkWrapper } from "./components/LinkWrapper";
+import { RouterProvider, RouterProviderProps } from "react-router";
 
 library.add(faArrowRightFromBracket, faTimesCircle);
 
-export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, clientId, scopes = [], baseUrl = "/", name, version, copyrightYear }) => {
+export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, scopes = [], baseUrl = "/", name, version, copyrightYear }) => {
 
   const [msalInstance, setMsalInstance] = React.useState<any>(null);
 
@@ -49,11 +51,13 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ children, cli
       <MsalProvider instance={msalInstance}>
         <HttpClientProvider baseUrl={baseUrl} scopes={scopes}>
           <QueryClientProvider client={queryClient}>
-            <MessageProvider>
-              <Login>
-                {children}
-              </Login>
-            </MessageProvider>
+            <LinkProvider LinkComponent={LinkWrapper} NavLinkComponent={NavLinkWrapper}>
+              <MessageProvider>
+                <Login>
+                  <RouterProvider router={router} />
+                </Login>
+              </MessageProvider>
+            </LinkProvider>
           </QueryClientProvider>
         </HttpClientProvider>
       </MsalProvider>
@@ -68,4 +72,5 @@ export interface MooAppProps {
   name?: string,
   version?: string;
   copyrightYear?: number;
+  router: RouterProviderProps["router"];
 }

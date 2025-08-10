@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { LayoutProvider, Page } from "@andrewmclachlan/moo-app";
+import { AppProvider, LayoutProvider, Page } from "@andrewmclachlan/moo-app";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -16,12 +16,14 @@ const meta = {
   argTypes: {
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-  args: {  },
+  args: {},
   decorators: [
     (Story) => (
-      <LayoutProvider size="default">
-        <Story />
-      </LayoutProvider>
+      <AppProvider name="MooApp" version="1.0.0" copyrightYear={2023}>
+        <LayoutProvider size="default">
+          <Story />
+        </LayoutProvider>
+      </AppProvider>
     ),
   ],
 } satisfies Meta<typeof Page>;
@@ -29,7 +31,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
+// More on writing stories with args: https://storybook.js.org/docs/writing-stories/argse
 export const Normal: Story = {
   args: {
     title: "Page Title",

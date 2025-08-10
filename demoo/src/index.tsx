@@ -2,7 +2,6 @@ import { MooApp, NotFound, createMooAppBrowserRouter } from "@andrewmclachlan/mo
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowLeft, faArrowsRotate, faCheck, faCheckCircle, faChevronDown, faChevronRight, faChevronUp, faCircleChevronLeft, faFilterCircleXmark, faInfoCircle, faLongArrowDown, faLongArrowUp, faPenToSquare, faPlus, faTimesCircle, faTrashAlt, faUpload, faXmark } from "@fortawesome/free-solid-svg-icons";
 import ReactDOM from "react-dom/client";
-import { RouterProvider } from "react-router";
 import App from "./App";
 import { Components } from "./pages/Components";
 import { IconButtonComponent } from "./pages/components/IconButtonComponent";
@@ -14,7 +13,6 @@ import { Home } from "./pages/Home";
 import { Profile } from "./pages/Profile";
 import { Providers } from "./pages/Providers";
 import { TagPanel } from "./pages/components/TagPanel";
-import { error } from "console";
 import { ErrorPage } from "./pages/ErrorPage";
 import { Notifications } from "./pages/Notifications";
 import { FormSample } from "./pages/form/FormSample";
@@ -57,7 +55,5 @@ const router = createMooAppBrowserRouter({
 
 
 root.render(
-  <MooApp clientId="045f8afa-70f2-4700-ab75-77ac41b306f7" scopes={["api://moobank.mclachlan.family/api.read"]} name="DeMoo" version={(import.meta as any).env.VITE_REACT_APP_VERSION} copyrightYear={2022}>
-    <RouterProvider router={router} />
-  </MooApp>
+  <MooApp clientId="045f8afa-70f2-4700-ab75-77ac41b306f7" scopes={["api://moobank.mclachlan.family/api.read"]} name="DeMoo" version={(import.meta as any).env.VITE_REACT_APP_VERSION} copyrightYear={2022} router={router} />
 );
