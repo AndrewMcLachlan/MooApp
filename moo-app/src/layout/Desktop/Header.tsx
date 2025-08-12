@@ -1,9 +1,10 @@
 import { Container } from "react-bootstrap";
 import { Link } from "react-router";
 
-import { HeaderComponent } from "../Types";
+import { Breadcrumb, MenuToggle } from "@andrewmclachlan/moo-ds";
 import { useApp, useLayout } from "../../providers";
-import { Breadcrumb, MenuToggle, UserMenu } from "@andrewmclachlan/moo-ds";
+import { HeaderComponent } from "../Types";
+import { UserMenu } from "../UserMenu";
 
 export const Header: HeaderComponent = (props) => {
 

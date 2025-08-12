@@ -1,9 +1,7 @@
+import { Avatar, NavItem, NavItemList } from "@andrewmclachlan/moo-ds";
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { OverlayTrigger, Popover } from "react-bootstrap";
-import { Avatar } from "../components";
-import { NavItem } from "../models";
-import { NavItemList } from "../components/NavItemList";
 
 export const UserMenu: React.FC<UserMenuProps> = ({userMenu = []}) => {
     const msal = useMsal();

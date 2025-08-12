@@ -1,4 +1,4 @@
-import "~/react-toastify/dist/ReactToastify.css";
+import "../../../node_modules/react-toastify/dist/ReactToastify.css";
 import { Slide, ToastContainer } from "react-toastify";
 import { useTheme } from "../providers";
 
