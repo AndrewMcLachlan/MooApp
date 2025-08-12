@@ -60,7 +60,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
     "@types/postcss-import": "^14.0.3",
-    "@types/react": "^19.1.9",
+    "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@types/react-router-bootstrap": "^0.26.8",
     "@typescript-eslint/eslint-plugin": "^8.10.0",
