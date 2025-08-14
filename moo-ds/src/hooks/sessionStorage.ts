@@ -1,20 +1,4 @@
-import { useState } from "react";
+import { SetStateAction } from "react";
+import { useStorage } from "./useStorage";
 
-export const usesessionStorage = <T = undefined>(key: string, initialValue: T | undefined): [T, (value: T | undefined) => void] => {
-
-    const [storedValue, setStoredValue] = useState<T>(() => {
-        const val = window.sessionStorage.getItem(key);
-
-        if (!val) return initialValue;
-    
-        return JSON.parse(val);
-    });
-
-    const setValue = (value: T | undefined) => {
-
-        window.sessionStorage.setItem(key, JSON.stringify(value));
-        setStoredValue(value);
-    }
-
-    return [storedValue, setValue];
-}
+export const useSessionStorage = <T = undefined>(key: string, initialValue: (T | undefined) | (() => T | undefined)): [T, React.Dispatch<SetStateAction<T>>] => useStorage(window.sessionStorage, key, initialValue);

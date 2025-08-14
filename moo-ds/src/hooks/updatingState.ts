@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const useUpdatingState = <T>(value: T): [T, React.Dispatch<React.SetStateAction<T>>] => {
+export const useUpdatingState = <T>(value: T | (() => T)): [T, React.Dispatch<React.SetStateAction<T>>] => {
 
     const [state, setState] = useState<T>(value);
 
