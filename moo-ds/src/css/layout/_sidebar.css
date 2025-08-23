@@ -2,7 +2,8 @@
     grid-area: sidebar;
 
     height: 100%;
-    width: 100%;
+    width: 200px; /* Set explicit width instead of 100% */
+    min-width: 200px; /* Set initial min-width */
     background-color: var(--sidebar-bg);
     font-family: var(--font-family-alt);
 
@@ -13,14 +14,11 @@
     justify-content: space-between;
     overflow: hidden;
 
-    transition: width 350ms ease-in-out;
-
-    .nav-link span {
-        transition: opacity 100ms linear;
-    }
+    transition: width 350ms ease-in-out, min-width 350ms ease-in-out;
 
     &.collapsed {
         width: 50px;
+        min-width: 50px;
         align-content: center;
         padding-right: 0;
 
@@ -41,6 +39,10 @@
         gap: 8px;
 
         color: var(--bs-secondary-color);
+
+        span {
+            transition: opacity 350ms ease-in-out;
+        }
 
         &:visited {
             color: var(--bs-secondary-color);
@@ -76,11 +78,6 @@
             height: 1.5rem;
             width: 1.5rem;
         }
-    }
-
-    /* Required to enforce minimum width while retaining the transition animation */
-    .spacer {
-        width: 200px;
     }
 
     .divider {

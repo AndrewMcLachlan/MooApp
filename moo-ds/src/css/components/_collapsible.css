@@ -1,0 +1,11 @@
+details.collapsible {
+    .collapsible-icon {
+        margin-left: 1ch;
+        display: inline-block;
+        transition: 0.2s;
+    }
+
+    &[open] > summary .collapsible-icon {
+        transform: rotate(90deg);
+    }
+}
