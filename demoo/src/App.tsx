@@ -22,7 +22,7 @@ const App = () => {
     {
       text: "Components",
       route: "/components",
-      image: <Icon icon={User} />
+      image: <Icon icon="https://avatars.githubusercontent.com/u/3093264?v=4" />
     },
     {
       text: "Forms",

@@ -1,6 +1,6 @@
 .btn svg {
-stroke: var(--bs-btn-color);
-fill: var(--bs-btn-color);
+    stroke: var(--bs-btn-color);
+    fill: var(--bs-btn-color);
 }
 
 .btn.btn-icon div {
@@ -9,7 +9,8 @@ fill: var(--bs-btn-color);
     gap: 5px;
 }
 
-.btn svg.custom-icon {
+.btn svg.custom-icon,
+.btn img.custom-icon {
     height: 18px;
     width: 18px;
 }

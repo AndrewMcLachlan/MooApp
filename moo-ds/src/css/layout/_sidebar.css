@@ -2,8 +2,10 @@
     grid-area: sidebar;
 
     height: 100%;
-    width: 200px; /* Set explicit width instead of 100% */
-    min-width: 200px; /* Set initial min-width */
+    width: 200px;
+    /* Set explicit width instead of 100% */
+    min-width: 200px;
+    /* Set initial min-width */
     background-color: var(--sidebar-bg);
     font-family: var(--font-family-alt);
 
@@ -75,6 +77,11 @@
         svg {
             stroke: var(--bs-body-color);
             fill: var(--bs-body-color);
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+
+        img {
             height: 1.5rem;
             width: 1.5rem;
         }
