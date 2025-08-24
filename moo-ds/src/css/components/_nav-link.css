@@ -1,0 +1,14 @@
+@scope (.nav-link) {
+
+    svg {
+        stroke: var(--bs-body-color);
+        fill: var(--bs-body-color);
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+
+    img {
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+}

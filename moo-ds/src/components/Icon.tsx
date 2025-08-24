@@ -14,7 +14,7 @@ export const Icon: React.FC<IconProps> = ({ icon, onClick, title }) => {
         case "undefined":
             return null;
         case "string":
-            return <img src={icon} alt={title} className={classNames("custom-cion", clickableClassName)} onClick={onClick} title={title} />;
+            return <img src={icon} alt={title} className={classNames("custom-icon", clickableClassName)} onClick={onClick} title={title} />;
         case "function":
             return <CustomIconElement className={classNames("custom-icon", clickableClassName)} onClick={onClick} title={title} />
         default:
