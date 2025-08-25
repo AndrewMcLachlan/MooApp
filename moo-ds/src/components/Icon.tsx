@@ -4,7 +4,7 @@ import classNames from "classnames";
 import type { ElementType } from "react";
 import type { IconType } from "../types";
 
-export const Icon: React.FC<IconProps> = ({ icon, onClick, title }) => {
+export const Icon: React.FC<IconProps> = ({ icon, src, onClick, title }) => {
 
     const CustomIconElement = icon as ElementType;
 
@@ -12,9 +12,7 @@ export const Icon: React.FC<IconProps> = ({ icon, onClick, title }) => {
 
     switch (typeof icon) {
         case "undefined":
-            return null;
-        case "string":
-            return <img src={icon} alt={title} className={classNames("custom-icon", clickableClassName)} onClick={onClick} title={title} />;
+            return src ? <img src={icon} alt={title} className={classNames("custom-icon", clickableClassName)} onClick={onClick} title={title} /> : null;
         case "function":
             return <CustomIconElement className={classNames("custom-icon", clickableClassName)} onClick={onClick} title={title} />
         default:
@@ -24,6 +22,7 @@ export const Icon: React.FC<IconProps> = ({ icon, onClick, title }) => {
 
 export interface IconProps {
     icon?: IconType;
+    src?: string;
     onClick?: () => void;
     title?: string;
 }
