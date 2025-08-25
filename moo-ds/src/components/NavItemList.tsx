@@ -9,6 +9,17 @@ export const NavItemList: React.FC<NavItemListProps> = ({ navItems, as = React.F
     const As = as;
     const NavLink = useNavLink();
 
+    const [selected, setSelected] = React.useState<NavItem | null>(null);
+
+    const onNavItemClick = (e: React.MouseEvent<HTMLElement>, navItem: NavItem) => {
+        setSelected(navItem);
+        if (onClick) {
+            onClick(e, navItem);
+        }
+
+        navItem?.onClick(e);
+    }
+
     const items: React.ReactNode[] = navItems.map((item, index) => {
 
         if (isValidElement(item)) {
@@ -19,14 +30,11 @@ export const NavItemList: React.FC<NavItemListProps> = ({ navItems, as = React.F
 
         const image = typeof navItem.image === "string" ? <img src={navItem.image} alt="" /> : navItem.image ?? <></>;
 
-        // TODO: Allow prevention of navItem.onClick in custom event handler.
-        const onNavItemClick = onClick ? () => { onClick(navItem); navItem?.onClick(); } : navItem.onClick;
-
         if (navItem.route) {
-            return <As key={`route${index}`}><NavLink cl className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`} to={navItem.route} onClick={onNavItemClick} title={navItem.text} role={role}>{image}<span>{navItem.text}</span></NavLink></As>;
+            return <As key={`route${index}`}><NavLink className={({ isActive }) => `nav-link ${(!selected?.id || selected?.id === navItem.id) && isActive ? "active" : ""}`} to={navItem.route} onClick={onNavItemClick} title={navItem.text} role={role}>{image}<span>{navItem.text}</span></NavLink></As >;
         }
         else if (navItem.onClick) {
-            return <As key={`click${index}`}><Nav.Link as={Button} variant="link" onClick={onNavItemClick} title={navItem.text} role={role}>{image}<span>{navItem.text}</span></Nav.Link></As>;
+            return <As key={navItem.id ?? `click${index}`}><Nav.Link as={Button} className={selected?.id && selected?.id === navItem.id ? "active" : ""} variant="link" onClick={(e) => onNavItemClick(e, navItem)} title={navItem.text} role={role}>{image}<span>{navItem.text}</span></Nav.Link></As>;
         }
         else {
             throw "Invalid nav item, specify a route and/or an onClick handler.";
@@ -40,5 +48,5 @@ export interface NavItemListProps {
     navItems: (NavItem | React.ReactNode)[];
     as?: React.ElementType;
     role?: string;
-    onClick?: (navItem: NavItem) => void;
+    onClick?: (e: React.MouseEvent<HTMLElement>, navItem: NavItem) => void;
 }

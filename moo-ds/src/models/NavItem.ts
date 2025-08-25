@@ -1,6 +1,7 @@
 export interface NavItem {
+    id?: string;
     route?: string;
     text: string;
-    onClick?: () => void;
+    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
     image?: React.ReactNode | string;
 }

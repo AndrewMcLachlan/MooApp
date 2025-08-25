@@ -44,6 +44,12 @@ const App = () => {
       route: "/error-page",
       image: <Users />
     },
+    {
+      id: "table",
+      text: "Table",
+      onClick: () => alert("Table Clicked"),
+      image: <Icon icon={Tags} />
+    }
   ];
 
   return (
