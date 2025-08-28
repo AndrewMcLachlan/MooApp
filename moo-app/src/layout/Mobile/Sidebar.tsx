@@ -11,7 +11,7 @@ export const Sidebar: SidebarComponent = ({ navItems = [] }) => {
     return (
         <Offcanvas show={layout.showSidebar}>
             <Offcanvas.Header closeButton onHide={() => layout.setShowSidebar(false)} />
-            <Offcanvas.Body className="d-lg-none sidebar">
+            <Offcanvas.Body className="mobile sidebar">
                 <Nav className="flex-column ">
                     <NavItemList navItems={navItems} role="menuitem" onClick={() => layout.setShowSidebar(false)} />
                     {layout.secondaryNav.length > 0 &&

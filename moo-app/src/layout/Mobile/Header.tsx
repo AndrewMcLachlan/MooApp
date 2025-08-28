@@ -12,7 +12,7 @@ export const Header: HeaderComponent = (props) => {
     const logoHeight = size == "default" ? 80 : 40;
 
     return (
-        <header className=" d-lg-none">
+        <header className="mobile d-lg-none">
             <Container fluid className="first-header">
                 <Link to="/" className="logo">
                     <img src="/logo.svg" alt={`${appName} home`} height={logoHeight} />

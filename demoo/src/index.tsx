@@ -1,3 +1,9 @@
+if (import.meta.env.VITE_BS === 'true') {
+  import('./index.css');
+}
+
+console.log('VITE_BS', import.meta.env.VITE_BS);
+
 import { MooApp, NotFound, createMooAppBrowserRouter } from "@andrewmclachlan/moo-app";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowLeft, faArrowsRotate, faCheck, faCheckCircle, faChevronDown, faChevronRight, faChevronUp, faCircleChevronLeft, faFilterCircleXmark, faInfoCircle, faLongArrowDown, faLongArrowUp, faPenToSquare, faPlus, faTimesCircle, faTrashAlt, faUpload, faXmark } from "@fortawesome/free-solid-svg-icons";

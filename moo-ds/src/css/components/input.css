@@ -1,3 +1,7 @@
+input {
+    font-family: var(--primary-fonts);
+}
+
 .clearable-input {
     position: relative;
 
@@ -16,4 +20,5 @@
 
 input.form-control {
     padding: var(--input-padding-v) var(--input-padding-h);
+    border: 1px solid var(--bs-border-color);
 }

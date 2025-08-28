@@ -1,3 +1,7 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 html {
     font-size: 14px;
 }
@@ -6,6 +10,17 @@ html {
     html {
         font-size: 12px;
     }
+}
+
+body {
+    font-family: var(--primary-fonts);
+    margin: 0;
+    line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+
 }
 
 /* Reset the z-index of pagination to prevent it overlaying react-select. */
@@ -23,4 +38,12 @@ html {
 }
 .offcanvas-backdrop, .modal-backdrop {
     background-color: transparent;
+}
+
+button {
+    background-color: transparent;
+}
+
+h3 {
+    font-size: 1.75rem;
 }

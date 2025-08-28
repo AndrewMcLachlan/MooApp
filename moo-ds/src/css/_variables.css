@@ -1,7 +1,7 @@
 :root,
 [data-bs-theme=light],
 [data-bs-theme=dark] {
-  --bs-font-sans-serif: 'Inter', 'Franklin Gothic', Helvetica, 'Helvetica Neue', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --primary-fonts: 'Inter', 'Franklin Gothic', Helvetica, 'Helvetica Neue', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --secondary-fonts: 'Open Sans Condensed', 'Franklin Gothic', Helvetica, 'Helvetica Neue', nsystem-ui, -apple-system, "Segoe UI", Roboto Arial, sans-serif;
 
   --page-header-background: #111;
@@ -70,9 +70,11 @@
     --footer-bg: var(--header-bg);
     --footer-text: var(--body-color);
 
+    --link-color: var(--primary);
     --bs-link-color: var(--primary);
     --bs-link-color-rgb: 139, 0, 0;
     --bs-link-decoration: underline;
+    --link-hover-color: rgb(111.2, 0, 0);
     --bs-link-hover-color: rgb(111.2, 0, 0);
     --bs-link-hover-color-rgb: 111, 0, 0;
   }
@@ -102,6 +104,7 @@
     --header-text: var(--bs-body-color);
     --footer-text: var(--bs-body-color);
 
+    --link-colour: rgb(185.4, 102, 102);
     --bs-link-color: rgb(185.4, 102, 102);
     --bs-link-hover-color: rgb(199.32, 132.6, 132.6);
     --bs-link-color-rgb: 185, 102, 102;
@@ -138,6 +141,7 @@
   --footer-text: var(--bs-body-color);
   --hover: #E6E6E6;
 
+  --link-colour: #8b0000;
   --bs-link-color: #8b0000;
   --bs-link-color-rgb: 139, 0, 0;
   --bs-link-decoration: underline;
@@ -171,6 +175,7 @@
 
   --bs-body-bg: rgb(17, 18, 23);
 
+  --body-color: rgb(204, 208, 211);
   --bs-body-color: rgb(204, 208, 211);
   --bs-secondary-color: rgb(144, 148, 151);
   --bs-emphasis-color: rgb(204, 208, 211);
@@ -179,6 +184,7 @@
   --bs-border-color: rgb(50, 54, 57);
 
   /* --bs-emphasis-color: #9696FF; */
+  --link-colour: rgb(102, 102, 185.4);
   --bs-link-color: rgb(102, 102, 185.4);
   --bs-link-hover-color: rgb(132.6, 132.6, 199.32);
   --base-bg: rgb(27, 27, 29);
@@ -208,6 +214,7 @@
   --footer-text: var(--bs-body-color);
   --hover: #6E6E6E;
 
+  --link-colour: rgb(185.4, 102, 102);
   --bs-link-color: rgb(185.4, 102, 102);
   --bs-link-hover-color: rgb(199.32, 132.6, 132.6);
   --bs-link-color-rgb: 185, 102, 102;

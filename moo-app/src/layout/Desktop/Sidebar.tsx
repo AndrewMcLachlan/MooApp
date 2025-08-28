@@ -9,7 +9,7 @@ export const Sidebar: SidebarComponent = ({ navItems = [] }) => {
     const layout = useLayout();
 
     return (
-        <div id="sidebar" className={classNames("sidebar", layout.sidebarCollapsed ? "collapsed" : "", "d-none d-lg-flex")}>
+        <div id="sidebar" className={classNames("sidebar", "desktop", layout.sidebarCollapsed ? "collapsed" : "", "d-none d-lg-flex")}>
             <Nav className="flex-column">
                 <NavItemList navItems={navItems} />
                 {layout.secondaryNav.length > 0 &&
