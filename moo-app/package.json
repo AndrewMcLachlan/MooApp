@@ -17,6 +17,7 @@
   },
   "typings": "dist/index.d.ts",
   "dependencies": {
+    "@andrewmclachlan/moo-ds": "file:../moo-ds",
     "@azure/msal-browser": "^4.21.0",
     "axios": "^1.11.0",
     "classnames": "^2.5.1",
