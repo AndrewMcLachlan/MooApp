@@ -32,11 +32,11 @@ jobs:
     - name: npm install
       run: |
         rm -rf node_modules
-        npm ci --no-scripts --workspaces
+        npm ci --no-scripts
     - name: npm version
       run: npm version ${{ steps.set-version-number.outputs.version }} --no-git-tag-version --workspaces
     - name: npm run build
-      run: npm run build
+      run: npm run build --workspaces
     - name: npm publish
       if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
       env:
