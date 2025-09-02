@@ -3,26 +3,38 @@ import axios, { AxiosInstance } from "axios";
 
 import { loginRequest } from "../login/msal";
 
-import { useMsal } from "@azure/msal-react";
+import { IMsalContext, useMsal } from "@azure/msal-react";
 import { AuthError, InteractionRequiredAuthError, ServerError, SilentRequest } from "@azure/msal-browser";
 
 export interface HttpClientProviderProps {
-    baseUrl: string;
+    client?: AxiosInstance;
+    baseUrl?: string;
     scopes?: string[];
 }
 
 export const HttpClientContext = React.createContext<AxiosInstance | undefined>(undefined);
-export const HttpClientProvider: React.FC<React.PropsWithChildren<HttpClientProviderProps>> = ({ baseUrl, scopes = [], children }) => (
-    <HttpClientContext.Provider value={useCreateHttpClient(baseUrl, scopes)}>
-        {children}
-    </HttpClientContext.Provider>
-);
+export const HttpClientProvider: React.FC<React.PropsWithChildren<HttpClientProviderProps>> = ({ client, baseUrl, scopes = [], children }) => {
+
+    const msal = useMsal();
+
+    if (!client && !baseUrl) throw new Error("You must provide either a client or a baseUrl to HttpClientProvider");
+
+    if (!client) {
+        client = createHttpClient(baseUrl!);
+    }
+
+    addMsalInterceptor(client, msal, scopes);
+
+    return (
+        <HttpClientContext.Provider value={client}>
+            {children}
+        </HttpClientContext.Provider>
+    );
+}
 
 export const useHttpClient = () => useContext(HttpClientContext);
 
-export const useCreateHttpClient = (baseUrl: string, scopes?: string[]): AxiosInstance => {
-
-    const msal = useMsal();
+export const createHttpClient = (baseUrl: string): AxiosInstance => {
 
     const httpClient = axios.create({
         baseURL: baseUrl,
@@ -30,6 +42,11 @@ export const useCreateHttpClient = (baseUrl: string, scopes?: string[]): AxiosIn
             "Accept": "application/json",
         }
     });
+
+    return httpClient;
+}
+
+export const addMsalInterceptor = (httpClient: AxiosInstance, msal: IMsalContext, scopes: string[]) => {
 
     httpClient.interceptors.request.use(async (request) => {
 
@@ -59,6 +76,4 @@ export const useCreateHttpClient = (baseUrl: string, scopes?: string[]): AxiosIn
         request.headers.setAuthorization(`Bearer ${token.accessToken}`);
         return request;
     });
-
-    return httpClient;
 }

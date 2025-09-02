@@ -13,10 +13,11 @@ import { faArrowRightFromBracket, faTimesCircle } from "@fortawesome/free-solid-
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { LinkWrapper, NavLinkWrapper } from "./components/LinkWrapper";
 import { RouterProvider, RouterProviderProps } from "react-router";
+import { AxiosInstance } from "axios";
 
 library.add(faArrowRightFromBracket, faTimesCircle);
 
-export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, scopes = [], baseUrl = "/", name, version, copyrightYear }) => {
+export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, scopes = [], baseUrl = "/", client, name, version, copyrightYear }) => {
 
   const [msalInstance, setMsalInstance] = React.useState<any>(null);
 
@@ -49,7 +50,7 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clien
   return (
     <AppProvider name={name} version={version} copyrightYear={copyrightYear}>
       <MsalProvider instance={msalInstance}>
-        <HttpClientProvider baseUrl={baseUrl} scopes={scopes}>
+        <HttpClientProvider client={client} baseUrl={baseUrl} scopes={scopes}>
           <QueryClientProvider client={queryClient}>
             <LinkProvider LinkComponent={LinkWrapper} NavLinkComponent={NavLinkWrapper}>
               <MessageProvider>
@@ -69,6 +70,7 @@ export interface MooAppProps {
   clientId: string,
   scopes?: string[],
   baseUrl?: string,
+  client?: AxiosInstance;
   name?: string,
   version?: string;
   copyrightYear?: number;
