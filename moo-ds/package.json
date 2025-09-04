@@ -17,7 +17,7 @@
   },
   "typings": "dist/index.d.ts",
   "dependencies": {
-    "bootstrap": "^5.3.7",
+    "bootstrap": "^5.3.8",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "react-error-boundary": "^6.0.0",
