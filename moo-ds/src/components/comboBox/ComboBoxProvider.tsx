@@ -45,10 +45,10 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
         setShow(false);
     }, [props.readonly]);
 
-    const { clearable, creatable, multiSelect, readonly, labelField, valueField, onAdd, onRemove, onChange, onCreate, createLabel, search, ref } = props;
+    const { clearable, creatable, multiSelect, readonly, labelField, valueField, colourField, onAdd, onRemove, onChange, onCreate, createLabel, search, ref } = props;
 
     return (
-        <ComboBoxContext value={{ selectedItems, setSelectedItems, text, setText, items, setItems, newItem, setNewItem, show, setShow, showInput, setShowInput, clear, clearable, creatable, multiSelect, readonly, labelField, valueField, onAdd, onRemove, onChange, onCreate, createLabel, search, allItems, ref }}>
+        <ComboBoxContext value={{ selectedItems, setSelectedItems, text, setText, items, setItems, newItem, setNewItem, show, setShow, showInput, setShowInput, clear, clearable, creatable, multiSelect, readonly, labelField, valueField, colourField, onAdd, onRemove, onChange, onCreate, createLabel, search, allItems, ref }}>
             {props.children}
         </ComboBoxContext>
     );
@@ -81,6 +81,7 @@ export interface ComboBoxOptions {
     readonly?: boolean;
     labelField: (item: any) => ReactNode;
     valueField: (item: any) => any;
+    colourField?: (item: any) => string;
     onCreate?: (name: string) => void;
     onAdd?: (item: any) => void;
     onRemove?: (item: any) => void;
@@ -101,6 +102,7 @@ export interface ComboBoxProps<TItem> extends RefProps<HTMLInputElement> {
     onChange?: (items: TItem[]) => void;
     labelField: (item: TItem) => ReactNode;
     valueField: (item: TItem) => any;
+    colourField?: (item: TItem) => string;
     items?: TItem[];
     hidden?: boolean;
     selectedItems?: TItem[];

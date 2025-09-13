@@ -3,7 +3,7 @@ import { useComboBox } from "./ComboBoxProvider";
 
 export const ComboBoxSelectedItem = <T,>({item}: ComboBoxSelectedItemProps<T>) => {
 
-    const { labelField, valueField, onChange, onRemove, selectedItems, setSelectedItems } = useComboBox();
+    const { labelField, valueField, colourField, onChange, onRemove, selectedItems, setSelectedItems } = useComboBox();
 
     const removeItem = (item: T) => {
         onRemove?.(item);
@@ -15,8 +15,12 @@ export const ComboBoxSelectedItem = <T,>({item}: ComboBoxSelectedItemProps<T>) =
 
     if (item === undefined) return null;
 
+    const bgColour = colourField ? colourField(item) : "inherit";
+    const bg = colourField ? "none" : "primary";
+
+
     return (
-        <div className="item"><CloseBadge pill bg="primary" onClose={() => removeItem(item)}>{labelField(item)}</CloseBadge></div>
+        <div className="item"><CloseBadge pill bg={bg} style={{backgroundColor: bgColour}} onClose={() => removeItem(item)}>{labelField(item)}</CloseBadge></div>
     );
 }
 
