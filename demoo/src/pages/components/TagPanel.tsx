@@ -11,7 +11,11 @@ export const TagPanel = () => {
     const items = useMemo(() => {
         const items: item[] = [];
         for (let i = 0; i < 10; i++) {
-            items.push({ id: i, text: `Item ${i}`, colour: `#${i*10}${i*10}${i*10}` });
+            items.push({ 
+                id: i, 
+                text: `Item ${i}`, 
+                colour: `#${(i*10).toString(16).padStart(2, '0').repeat(3)}` 
+            });
         }
         return items;
     }, []);
