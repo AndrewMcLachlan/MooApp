@@ -15,8 +15,8 @@ export const ComboBoxSelectedItem = <T,>({item}: ComboBoxSelectedItemProps<T>) =
 
     if (item === undefined) return null;
 
-    const bgColour = colourField ? colourField(item) : "inherit";
-    const bg = colourField ? "none" : "primary";
+    const bgColour = colourField?.(item);
+    const bg = bgColour ? "none" : "primary";
 
 
     return (
