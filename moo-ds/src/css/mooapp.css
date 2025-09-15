@@ -5,7 +5,7 @@
 @import "_reset.css" layer(reset);
 @import "_variables.css" layer(reset);
 @import "_fonts.css" layer(reset);
-@import "colors.css" layer(reset);
+@import "colours.css" layer(reset);
 
 @import "_global.css" layer(layout);
 @import "_layout.css" layer(layout);
