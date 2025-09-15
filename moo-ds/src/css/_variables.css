@@ -21,6 +21,10 @@
   --amber: #FFBF00;
   --green: #5A5;
 
+  --bs-danger: var(--red);
+  --bs-warning: var(--amber);
+  --bs-success: var(--green);
+
   --table-bg: var(--bs-body-bg);
 
   --breadcrumb-bg: var(--header-bg);

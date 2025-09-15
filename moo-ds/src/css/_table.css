@@ -17,6 +17,11 @@
     height: 4rem;
   }
 
+  td.icon, th.icon {
+    width: 1rem;
+    text-align: center;
+  }
+
   .row-action {
     vertical-align: middle;
     text-align: center;

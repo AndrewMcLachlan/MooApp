@@ -4,7 +4,7 @@ import classNames from "classnames";
 import type { ElementType } from "react";
 import type { IconType } from "../types";
 
-export const Icon: React.FC<IconProps> = ({ icon, src, onClick, title }) => {
+export const Icon: React.FC<IconProps> = ({ icon, src, onClick, title, className }) => {
 
     const CustomIconElement = icon as ElementType;
 
@@ -12,11 +12,11 @@ export const Icon: React.FC<IconProps> = ({ icon, src, onClick, title }) => {
 
     switch (typeof icon) {
         case "undefined":
-            return src ? <img src={icon} alt={title} className={classNames("custom-icon", clickableClassName)} onClick={onClick} title={title} /> : null;
+            return src ? <img src={icon} alt={title} className={classNames("custom-icon", clickableClassName, className)} onClick={onClick} title={title} /> : null;
         case "function":
-            return <CustomIconElement className={classNames("custom-icon", clickableClassName)} onClick={onClick} title={title} />
+            return <CustomIconElement className={classNames("custom-icon", clickableClassName, className)} onClick={onClick} title={title} />
         default:
-            return <FontAwesomeIcon icon={icon as IconProp} className={clickableClassName} onClick={onClick} title={title} />;
+            return <FontAwesomeIcon icon={icon as IconProp} className={classNames(clickableClassName, className)} onClick={onClick} title={title} />;
     }
 }
 
@@ -25,6 +25,7 @@ export interface IconProps {
     src?: string;
     onClick?: () => void;
     title?: string;
+    className?: string;
 }
 
 Icon.displayName = "Icon";
