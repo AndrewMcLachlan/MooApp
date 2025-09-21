@@ -64,11 +64,11 @@
     "@types/react-router-bootstrap": "^0.26.8",
     "@typescript-eslint/eslint-plugin": "^8.10.0",
     "@typescript-eslint/parser": "^8.10.0",
-    "@vitejs/plugin-react": "^5.0.2",
+    "@vitejs/plugin-react": "^5.0.3",
     "globals": "^16.4.0",
     "postcss-import": "^16.1.1",
     "rimraf": "^6.0.1",
-    "rollup": "^4.50.1",
+    "rollup": "^4.52.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2"
   },
