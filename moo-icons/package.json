@@ -33,6 +33,6 @@
     "react-dom": ">=19.0.0"
   },
   "devDependencies": {
-    "eslint": "^9.38.0"
+    "eslint": "^9.39.0"
   }
 }
