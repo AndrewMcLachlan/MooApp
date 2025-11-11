@@ -39,8 +39,8 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "optionalDependencies": {
-    "@esbuild/linux-arm64": "0.25.12",
-    "@rollup/rollup-linux-arm64-gnu": "4.52.5"
+    "@esbuild/linux-arm64": "0.27.0",
+    "@rollup/rollup-linux-arm64-gnu": "4.53.1"
   },
   "peerDependencies": {
     "react": ">=19.0.0",
