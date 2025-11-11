@@ -15,12 +15,13 @@ const config: StorybookConfig = {
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
   "addons": [
-    getAbsolutePath('@storybook/addon-onboarding'),
-    getAbsolutePath('@storybook/addon-docs')
+    '@storybook/addon-onboarding',
+    '@storybook/addon-docs',
   ],
   "framework": {
-    "name": getAbsolutePath('@storybook/react-vite'),
+    "name": '@storybook/react-vite',
     "options": {}
   }
 };
+
 export default config;

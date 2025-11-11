@@ -1,4 +1,4 @@
-import { DefaultError, useMutation, UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
+import { DefaultError, MutationFunctionContext, useMutation, UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useHttpClient } from "../providers/HttpClientProvider";
 import { processAxiosError } from "./processAxiosError";
 import { useErrorHandler } from "./errorHandler";
@@ -10,11 +10,11 @@ export const useApiDelete = <Variables>(path: (variables: Variables) => string, 
 
     const { onError, ...otherOptions } = options ?? {};
 
-    const onErrorWrapper = (error: Error, variables: Variables, context: unknown) => {
+    const onErrorWrapper = (error: Error, variables: Variables, onMutateResult: unknown, context: MutationFunctionContext) => {
         errorHandler(error);
-        onError?.(error, variables, context);
+        onError?.(error, variables, onMutateResult, context);
     }
-
+    
     return useMutation<null, null, Variables>({
         mutationFn: async (variables): Promise<null> => {
             try {
