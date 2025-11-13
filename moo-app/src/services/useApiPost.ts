@@ -1,4 +1,4 @@
-import { DefaultError, useMutation, UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
+import { DefaultError, MutationFunctionContext, useMutation, UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useHttpClient } from "../providers/HttpClientProvider";
 import { processAxiosError } from "./processAxiosError";
 import { useErrorHandler } from "./errorHandler";
@@ -10,9 +10,9 @@ export const useApiPost = <Response, Variables, Data = null>(path: (variables: V
 
     const { onError, ...otherOptions } = options ?? {};
 
-    const onErrorWrapper = (error: Error, variables: [Variables, Data], context: unknown) => {
+    const onErrorWrapper = (error: Error, variables: [Variables, Data], onMutateResult: unknown, context: MutationFunctionContext) => {
         errorHandler(error);
-        onError?.(error, variables, context);
+        onError?.(error, variables, onMutateResult, context);
     }
 
     return useMutation<Response, DefaultError, [Variables, Data]>({
@@ -36,9 +36,9 @@ export const useApiPostEmpty = <Response, Variables>(path: (variables: Variables
 
     const { onError, ...otherOptions } = options ?? {};
 
-    const onErrorWrapper = (error: Error, variables: Variables, context: unknown) => {
+    const onErrorWrapper = (error: Error, variables: Variables, onMutateResult: unknown, context: MutationFunctionContext) => {
         errorHandler(error);
-        onError?.(error, variables, context);
+        onError?.(error, variables, onMutateResult, context);
     }
 
     return useMutation<Response, DefaultError, Variables>({
@@ -62,9 +62,9 @@ export const useApiPostFile = <Variables extends { file: File }>(path: (variable
 
     const { onError, ...otherOptions } = options ?? {};
 
-    const onErrorWrapper = (error: Error, variables: Variables, context: unknown) => {
+    const onErrorWrapper = (error: Error, variables: Variables, onMutateResult: unknown, context: MutationFunctionContext) => {
         errorHandler(error);
-        onError?.(error, variables, context);
+        onError?.(error, variables, onMutateResult, context);
     }
 
     return useMutation<null, DefaultError, Variables>({
