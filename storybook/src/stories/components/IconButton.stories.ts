@@ -5,6 +5,7 @@ import { default as ReactSvg } from "../../assets/react.svg?react";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 import { IconButton } from "@andrewmclachlan/moo-ds";
+import { Budget } from "@andrewmclachlan/moo-icons";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -26,18 +27,25 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const SVG: Story = {
+export const MooIcon: Story = {
   args: {
+    title: "Moo icon",
+    children: "Icon Button",
+    icon: Budget,
+  },
+};
+
+export const FontAwesome: Story = {
+  args: {
+    children: "Icon Button",
+    icon: faHome,
+  },
+};
+
+export const CustomSVG: Story = {
+  args: {
+    title: "Custom SVG",
     children: "Icon Button",
     icon: ReactSvg,
   },
 };
-
-
-export const FontAwesome: Story = {
-    args: {
-      children: "Icon Button",
-      icon: faHome,
-    },
-  };

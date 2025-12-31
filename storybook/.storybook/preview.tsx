@@ -1,7 +1,12 @@
+import { useEffect } from "react";
 import type { Preview } from "@storybook/react-vite";
 import { themes } from "storybook/theming";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import { LinkComponent, LinkProvider, NavLinkComponent } from "@andrewmclachlan/moo-ds";
 import "../../moo-ds/src/css/mooapp.css";
+
+library.add(fas);
 
 const preview: Preview = {
   parameters: {
@@ -17,6 +22,11 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => {
+      useEffect(() => {
+        document.body.classList.add("dark");
+        document.body.setAttribute("data-bs-theme", "dark");
+      }, []);
+
       // Mock Link component for Storybook
       const MockLink: LinkComponent = ({ children, className, ...props }) => (
         <a {...props} className={className}>{children}</a>
