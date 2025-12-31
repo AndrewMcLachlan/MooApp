@@ -1,8 +1,24 @@
 details.collapsible {
+    summary {
+        list-style: none;
+        cursor: pointer;
+
+        &::marker,
+        &::-webkit-details-marker {
+            display: none;
+        }
+    }
+
+    summary.header > :first-child {
+        display: flex;
+        align-items: center;
+    }
+
     .collapsible-icon {
-        margin-left: 1ch;
+        margin-right: 1ch;
         display: inline-block;
         transition: 0.2s;
+        font-size: max(1rem, 0.6em);
     }
 
     &[open] > summary .collapsible-icon {

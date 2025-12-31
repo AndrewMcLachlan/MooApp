@@ -37,7 +37,7 @@ export const Full: Story = {
         children:
             <>
                 <Section.Header>
-                    Header
+                    <h2>Header</h2>
                 </Section.Header>
                 <Section.Body>
                     Body
