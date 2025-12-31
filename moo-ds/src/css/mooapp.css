@@ -19,3 +19,4 @@
 @import "_modal.css" layer(components);
 @import "_pages.css" layer(components);
 @import "_table.css" layer(components);
+@import "_tabs.css" layer(components);
