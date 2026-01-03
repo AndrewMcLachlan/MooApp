@@ -23,7 +23,7 @@ export const Icon: React.FC<IconProps> = ({ icon, src, onClick, title, className
 export interface IconProps {
     icon?: IconType;
     src?: string;
-    onClick?: MouseEventHandler;
+    onClick?: MouseEventHandler<Element>;
     title?: string;
     className?: string;
 }
