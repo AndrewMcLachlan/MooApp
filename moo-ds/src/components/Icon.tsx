@@ -1,7 +1,7 @@
 import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
-import type { ElementType } from "react";
+import type { ElementType, MouseEventHandler } from "react";
 import type { IconType } from "../types";
 
 export const Icon: React.FC<IconProps> = ({ icon, src, onClick, title, className }) => {
@@ -23,7 +23,7 @@ export const Icon: React.FC<IconProps> = ({ icon, src, onClick, title, className
 export interface IconProps {
     icon?: IconType;
     src?: string;
-    onClick?: () => void;
+    onClick?: MouseEventHandler<Element>;
     title?: string;
     className?: string;
 }
