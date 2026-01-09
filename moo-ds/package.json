@@ -65,10 +65,10 @@
     "@typescript-eslint/eslint-plugin": "^8.10.0",
     "@typescript-eslint/parser": "^8.10.0",
     "@vitejs/plugin-react": "^5.1.2",
-    "globals": "^16.5.0",
+    "globals": "^17.0.0",
     "postcss-import": "^16.1.1",
     "rimraf": "^6.1.2",
-    "rollup": "^4.54.0",
+    "rollup": "^4.55.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2"
   },
