@@ -3,6 +3,7 @@ export { default as BarChart } from "./bar-chart.svg";
 export { default as Budget } from "./budget.svg";
 export { default as Cog } from "./cog.svg";
 export { default as Dashboard } from "./dashboard.svg";
+export { default as Database } from "./database.svg";
 export { default as HamburgerMenu } from "./hamburger-menu.svg";
 export { default as Hierarchy } from "./hierarchy.svg";
 export { default as Import } from "./import.svg";
