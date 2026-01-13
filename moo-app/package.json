@@ -21,9 +21,9 @@
     "axios": "^1.13.2",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
-    "react-error-boundary": "^6.0.1",
+    "react-error-boundary": "^6.0.3",
     "react-toastify": "^11.0.5",
-    "use-debounce": "^10.0.6"
+    "use-debounce": "^10.1.0"
   },
   "scripts": {
     "vite": "vite",
