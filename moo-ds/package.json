@@ -20,7 +20,7 @@
     "bootstrap": "^5.3.8",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
-    "react-error-boundary": "^6.0.3",
+    "react-error-boundary": "^6.1.0",
     "react-toastify": "^11.0.5",
     "use-debounce": "^10.1.0"
   },
