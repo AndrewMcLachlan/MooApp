@@ -7,6 +7,7 @@ const msalConfig: msal.Configuration = {
         authority: "https://login.microsoftonline.com/30efefb9-9034-4e0c-8c69-17f4578f5924",
         redirectUri: window.location.origin,
         postLogoutRedirectUri: window.location.origin,
+        navigateToLoginRequestUrl: true,
     },
     cache: {
         cacheLocation: "sessionStorage",
@@ -40,6 +41,7 @@ const msalConfig: msal.Configuration = {
 
 // Add here scopes for id token to be used at MS Identity Platform endpoints.
 export const loginRequest: msal.RedirectRequest = {
+
     scopes: ["openid", "profile" ],
     //forceRefresh: false // Set this to "true" to skip a cached token and go to the server to get a new token
 };
