@@ -48,7 +48,6 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clien
   useEffect(() => {
     const onAuthRecovered = () => {
       queryClient.invalidateQueries();
-      queryClient.refetchQueries({ type: "active" });
     };
 
     window.addEventListener(AUTH_RECOVERED_EVENT, onAuthRecovered);
