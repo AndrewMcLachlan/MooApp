@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo } from "react";
 import axios, { AxiosInstance } from "axios";
 
 import { IMsalContext, useMsal } from "@azure/msal-react";
-import { AuthError, InteractionRequiredAuthError, InteractionStatus, SilentRequest } from "@azure/msal-browser";
+import { AuthError, InteractionRequiredAuthError, InteractionStatus, IPublicClientApplication, SilentRequest } from "@azure/msal-browser";
 import { loginRequest } from "../login/msal";
 
 export interface HttpClientProviderProps {
@@ -12,7 +12,19 @@ export interface HttpClientProviderProps {
 }
 
 export const HttpClientContext = React.createContext<AxiosInstance | undefined>(undefined);
-let redirectInFlight = false;
+type RedirectState = {
+    redirectInFlight: boolean;
+};
+const redirectStateByClient = new WeakMap<IPublicClientApplication, RedirectState>();
+
+const getRedirectState = (client: IPublicClientApplication): RedirectState => {
+    let state = redirectStateByClient.get(client);
+    if (!state) {
+        state = { redirectInFlight: false };
+        redirectStateByClient.set(client, state);
+    }
+    return state;
+};
 
 export const HttpClientProvider: React.FC<React.PropsWithChildren<HttpClientProviderProps>> = ({ client, baseUrl, scopes = [], children }) => {
 
@@ -57,6 +69,11 @@ export const addMsalInterceptor = (httpClient: AxiosInstance, msal: IMsalContext
 
         let token = null;
         const account = msal.instance.getActiveAccount() ?? msal.instance.getAllAccounts()[0];
+        const redirectState = getRedirectState(msal.instance);
+
+        if (redirectState.redirectInFlight && msal.inProgress === InteractionStatus.None) {
+            redirectState.redirectInFlight = false;
+        }
 
         const tokenRequest: SilentRequest = {
             scopes: scopes ?? [],
@@ -77,8 +94,8 @@ export const addMsalInterceptor = (httpClient: AxiosInstance, msal: IMsalContext
                 errorCode === "consent_required";
 
             if (shouldRedirect) {
-                if (!redirectInFlight && msal.inProgress === InteractionStatus.None) {
-                    redirectInFlight = true;
+                if (!redirectState.redirectInFlight && msal.inProgress === InteractionStatus.None) {
+                    redirectState.redirectInFlight = true;
                     const interactiveScopes = Array.from(new Set([...(loginRequest.scopes ?? []), ...scopes]));
                     try {
                         await msal.instance.acquireTokenRedirect({
@@ -87,16 +104,12 @@ export const addMsalInterceptor = (httpClient: AxiosInstance, msal: IMsalContext
                             ...(account ? { account } : {})
                         });
                     } catch (redirectError) {
-                        redirectInFlight = false;
+                        redirectState.redirectInFlight = false;
                         throw redirectError;
                     }
-
-                    return request;
                 }
 
-                // Redirect is needed but cannot be initiated (e.g. already in progress).
-                // Reject the request to avoid sending an unauthenticated call.
-                return Promise.reject(error);
+                throw new axios.CanceledError("Request canceled: interactive authentication redirect required.");
             } else {
                 console.warn("Error getting token silently:", error, "errorCode:", errorCode);
             }

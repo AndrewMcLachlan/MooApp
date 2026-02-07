@@ -2,7 +2,7 @@ import { useMsal } from "@azure/msal-react";
 import { addMsalInterceptor, createHttpClient } from "../providers/HttpClientProvider";
 import { useEffect, useMemo, useState } from "react";
 
-export const usePhoto = (userName?: string) => {
+export const usePhoto = () => {
 
     const [photo, setPhoto] = useState<string>();
 
@@ -17,9 +17,9 @@ export const usePhoto = (userName?: string) => {
     }, [httpClient, msal]);
 
     useEffect(() => {
-        if (!userName) {
+        if (!msal.instance.getActiveAccount()) {
             setPhoto(undefined);
-            return;
+            return () => {};
         }
 
         let isMounted = true;
@@ -47,7 +47,7 @@ export const usePhoto = (userName?: string) => {
                 URL.revokeObjectURL(objectUrl);
             }
         };
-    }, [httpClient, userName]);
+    }, [httpClient]);
 
     return photo;
 }

@@ -1,4 +1,3 @@
-import { useMsal } from "@azure/msal-react";
 import React, { ReactNode, createContext, useState } from "react";
 import { useContext } from "react";
 import * as Models from "../models";
@@ -16,8 +15,7 @@ export const LayoutProvider: React.FC<React.PropsWithChildren<LayoutProviderProp
     const [showSidebar, setShowSidebar] = useState<boolean>(false);
     const [sidebarCollapsed, setSidebarCollapsed] = useLocalStorage<boolean>("sidebar-collapse", false);
 
-    const msal = useMsal();
-    const photo = usePhoto(msal.instance?.getActiveAccount()?.username);
+    const photo = usePhoto();
 
     return (
         <LayoutContext.Provider value={{ size, photo, breadcrumbs, setBreadcrumbs, secondaryNav, setSecondaryNav, actions, setActions, showSidebar, setShowSidebar, sidebarCollapsed, setSidebarCollapsed }}>
