@@ -7,10 +7,11 @@ const AvatarComponent = () => {
 
     const photo = useLayout().photo;
     const msal = useMsal();
+    const account = msal.instance.getActiveAccount() ?? msal.accounts[0];
 
     return useMemo(() => (
-        <DSAvatar photo={photo} name={msal.accounts[0]?.name} />
-    ), [photo, msal]);
+        <DSAvatar photo={photo} name={account?.name} />
+    ), [photo, account]);
 };
 
 AvatarComponent.displayName = "Avatar";

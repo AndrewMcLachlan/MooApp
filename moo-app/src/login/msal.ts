@@ -1,4 +1,5 @@
 import * as msal from "@azure/msal-browser";
+export const AUTH_RECOVERED_EVENT = "mooapp:auth-recovered";
 
 const msalConfig: msal.Configuration = {
     auth: {
@@ -61,22 +62,26 @@ const getMsalInstance = async (clientId: string): Promise<msal.IPublicClientAppl
     msalConfig.system.loggerOptions = {
         logLevel: msal.LogLevel.Warning
     }
-    msalInstance = await msal.PublicClientApplication.createPublicClientApplication(msalConfig);
+    msalInstance = await msal.createStandardPublicClientApplication(msalConfig);
 
     msalInstance.addEventCallback((event) => {
         if (event.eventType === msal.EventType.LOGIN_SUCCESS && event.payload) {
             const payload = event.payload as msal.AuthenticationResult;
             const account = payload.account;
             msalInstance.setActiveAccount(account);
+            window.dispatchEvent(new Event(AUTH_RECOVERED_EVENT));
         }
-        else if (event.eventType === msal.EventType.ACQUIRE_TOKEN_FAILURE) {
-            msalInstance.loginRedirect(loginRequest);
+        else if (
+            event.eventType === msal.EventType.ACQUIRE_TOKEN_SUCCESS &&
+            (event.interactionType === msal.InteractionType.Redirect || event.interactionType === msal.InteractionType.Popup)
+        ) {
+            window.dispatchEvent(new Event(AUTH_RECOVERED_EVENT));
         }
     });
 
     // Account selection logic is app dependent. Adjust as needed for different use cases.
     const accounts = msalInstance.getAllAccounts();
-    if (accounts.length > 0) {
+    if (!msalInstance.getActiveAccount() && accounts.length > 0) {
         msalInstance.setActiveAccount(accounts[0]);
     }
 
