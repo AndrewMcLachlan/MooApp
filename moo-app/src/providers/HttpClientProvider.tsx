@@ -93,7 +93,7 @@ export const addMsalInterceptor = (httpClient: AxiosInstance, msal: IMsalContext
                 }
                 return request;
             } else {
-                console.warn("Error getting token silently: " + error);
+                console.warn("Error getting token silently:", error, "errorCode:", errorCode);
             }
         }
 
