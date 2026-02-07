@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppProvider, HttpClientProvider } from "./providers";
 import { LinkProvider, MessageProvider } from "@andrewmclachlan/moo-ds";
 
-import getMsalInstance from "./login/msal";
+import getMsalInstance, { AUTH_RECOVERED_EVENT } from "./login/msal";
 
 import { MsalProvider } from "@azure/msal-react";
 import { Login } from "./login/Login";
@@ -25,7 +25,7 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clien
     getMsalInstance(clientId).then((instance) => setMsalInstance(instance));
   }, []);
 
-  const queryClient = new QueryClient({
+  const [queryClient] = React.useState(() => new QueryClient({
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
@@ -36,7 +36,7 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clien
         networkMode: "offlineFirst",
       },
     }
-  });
+  }));
 
   useEffect(() => {
     const meta = document.createElement("meta");
@@ -44,6 +44,18 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clien
     meta.setAttribute("content", version);
     document.head.appendChild(meta);
   }, []);
+
+  useEffect(() => {
+    const onAuthRecovered = () => {
+      queryClient.invalidateQueries();
+      queryClient.refetchQueries({ type: "active" });
+    };
+
+    window.addEventListener(AUTH_RECOVERED_EVENT, onAuthRecovered);
+    return () => {
+      window.removeEventListener(AUTH_RECOVERED_EVENT, onAuthRecovered);
+    };
+  }, [queryClient]);
 
   if (!msalInstance) return null;
 

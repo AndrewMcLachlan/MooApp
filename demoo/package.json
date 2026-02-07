@@ -19,12 +19,6 @@
     "react-router": "^7.13.0",
     "web-vitals": "^5.1.0"
   },
-  "overrides": {
-    "@azure/msal-react": {
-      "react": "^19.0.0",
-      "react-dom": "^19.0.0"
-    }
-  },
   "scripts": {
     "dev": "vite",
     "start": "vite",

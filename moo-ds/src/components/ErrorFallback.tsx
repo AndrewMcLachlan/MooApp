@@ -6,7 +6,7 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({ error, resetErrorB
     return (
         <Alert variant="danger" dismissible={dismissible} onClose={(a,b) => { resetErrorBoundary(); onClose?.(a,b); }}>
             <Alert.Heading>Something went wrong</Alert.Heading>
-            <pre>{error.message}</pre>
+            <pre>{(error as any)?.message}</pre>
             {message && <p>{message}</p>}
             <p>
 
