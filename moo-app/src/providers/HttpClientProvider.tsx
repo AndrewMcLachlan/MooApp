@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo } from "react";
 import axios, { AxiosInstance } from "axios";
 
 import { IMsalContext, useMsal } from "@azure/msal-react";
-import { AuthError, InteractionRequiredAuthError, InteractionStatus, IPublicClientApplication, SilentRequest } from "@azure/msal-browser";
+import { AuthError, EventType, InteractionRequiredAuthError, InteractionStatus, InteractionType, IPublicClientApplication, SilentRequest } from "@azure/msal-browser";
 import { loginRequest } from "../login/msal";
 
 export interface HttpClientProviderProps {
@@ -35,6 +35,33 @@ export const HttpClientProvider: React.FC<React.PropsWithChildren<HttpClientProv
     const resolvedClient = useMemo(() => client ?? createHttpClient(baseUrl!), [client, baseUrl]);
     const scopeKey = scopes.join(" ");
     const effectiveScopes = useMemo(() => scopes, [scopeKey]);
+
+    useEffect(() => {
+        const redirectState = getRedirectState(msal.instance);
+        const callbackId = msal.instance.addEventCallback((event) => {
+            const isInteractiveEvent =
+                event.interactionType === InteractionType.Redirect ||
+                event.interactionType === InteractionType.Popup;
+
+            const shouldReset =
+                event.eventType === EventType.HANDLE_REDIRECT_END ||
+                ((event.eventType === EventType.LOGIN_SUCCESS ||
+                    event.eventType === EventType.LOGIN_FAILURE ||
+                    event.eventType === EventType.ACQUIRE_TOKEN_SUCCESS ||
+                    event.eventType === EventType.ACQUIRE_TOKEN_FAILURE) &&
+                    isInteractiveEvent);
+
+            if (shouldReset) {
+                redirectState.redirectInFlight = false;
+            }
+        });
+
+        return () => {
+            if (callbackId) {
+                msal.instance.removeEventCallback(callbackId);
+            }
+        };
+    }, [msal.instance]);
 
     useEffect(() => {
         const interceptorId = addMsalInterceptor(resolvedClient, msal, effectiveScopes);
@@ -70,10 +97,6 @@ export const addMsalInterceptor = (httpClient: AxiosInstance, msal: IMsalContext
         let token = null;
         const account = msal.instance.getActiveAccount() ?? msal.instance.getAllAccounts()[0];
         const redirectState = getRedirectState(msal.instance);
-
-        if (redirectState.redirectInFlight && msal.inProgress === InteractionStatus.None) {
-            redirectState.redirectInFlight = false;
-        }
 
         const tokenRequest: SilentRequest = {
             scopes: scopes ?? [],
