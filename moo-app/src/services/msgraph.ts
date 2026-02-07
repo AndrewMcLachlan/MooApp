@@ -24,19 +24,25 @@ export const usePhoto = (userName?: string) => {
 
         let isMounted = true;
         let objectUrl = "";
+        const abortController = new AbortController();
 
-        httpClient.get("me/photo/$value", { responseType: "blob"}).then((response) =>
+        httpClient.get("me/photo/$value", { responseType: "blob", signal: abortController.signal }).then((response) =>
         {
             objectUrl = URL.createObjectURL(response.data);
             if (isMounted) {
                 setPhoto(objectUrl);
+            } else {
+                URL.revokeObjectURL(objectUrl);
             }
         }).catch((error) => {
-            console.warn("No photo found for user", error);
+            if (error?.code !== "ERR_CANCELED") {
+                console.warn("No photo found for user", error);
+            }
         });
 
         return () => {
             isMounted = false;
+            abortController.abort();
             if (objectUrl) {
                 URL.revokeObjectURL(objectUrl);
             }
