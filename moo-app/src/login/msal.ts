@@ -70,7 +70,10 @@ const getMsalInstance = async (clientId: string): Promise<msal.IPublicClientAppl
             msalInstance.setActiveAccount(account);
             window.dispatchEvent(new Event(AUTH_RECOVERED_EVENT));
         }
-        else if (event.eventType === msal.EventType.ACQUIRE_TOKEN_SUCCESS) {
+        else if (
+            event.eventType === msal.EventType.ACQUIRE_TOKEN_SUCCESS &&
+            (event.interactionType === msal.InteractionType.Redirect || event.interactionType === msal.InteractionType.Popup)
+        ) {
             window.dispatchEvent(new Event(AUTH_RECOVERED_EVENT));
         }
     });
