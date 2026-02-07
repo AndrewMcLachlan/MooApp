@@ -47,7 +47,7 @@ export const usePhoto = () => {
                 URL.revokeObjectURL(objectUrl);
             }
         };
-    }, [httpClient]);
+    }, [httpClient, msal.accounts]);
 
     return photo;
 }
