@@ -90,8 +90,13 @@ export const addMsalInterceptor = (httpClient: AxiosInstance, msal: IMsalContext
                         redirectInFlight = false;
                         throw redirectError;
                     }
+
+                    return request;
                 }
-                return request;
+
+                // Redirect is needed but cannot be initiated (e.g. already in progress).
+                // Reject the request to avoid sending an unauthenticated call.
+                return Promise.reject(error);
             } else {
                 console.warn("Error getting token silently:", error, "errorCode:", errorCode);
             }
