@@ -26,7 +26,10 @@
     "build": "rollup -c",
     "lint": "eslint ./src/**/*.ts",
     "lint-fix": "eslint ./src/**/*.ts --fix",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "peerDependencies": {
     "react": ">=19.0.0",

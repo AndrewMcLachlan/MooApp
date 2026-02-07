@@ -31,7 +31,10 @@
     "start": "rollup -c -w",
     "build": "rimraf dist && rollup -c",
     "lint": "eslint ./src/**/*.ts ./src/**/*.tsx",
-    "lint-fix": "eslint ./src/**/*.ts ./src/**/*.tsx --fix"
+    "lint-fix": "eslint ./src/**/*.ts ./src/**/*.tsx --fix",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "eslintConfig": {
     "extends": [
