@@ -62,8 +62,6 @@ const getMsalInstance = async (clientId: string): Promise<msal.IPublicClientAppl
     }
     msalInstance = await msal.createStandardPublicClientApplication(msalConfig);
 
-    msalInstance.handleRedirectPromise(options) =>
-
     msalInstance.addEventCallback((event) => {
         if (event.eventType === msal.EventType.LOGIN_SUCCESS && event.payload) {
             const payload = event.payload as msal.AuthenticationResult;
