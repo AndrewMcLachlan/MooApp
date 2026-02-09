@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, createContext } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router';
@@ -7,7 +7,18 @@ import { PublicClientApplication, IPublicClientApplication } from '@azure/msal-b
 import { AppProvider } from '../providers/AppProvider';
 import { HttpClientContext } from '../providers/HttpClientProvider';
 import { ThemeProvider, MessageProvider, LinkProvider } from '@andrewmclachlan/moo-ds';
-import { createAxiosMock, mockAppConfig, mockMsalAccount } from './mocks';
+import { createAxiosMock, mockAppConfig, mockMsalAccount, mockLayoutState } from './mocks';
+import { LayoutContext } from '../models';
+
+// Create a mock LayoutContext for testing
+const MockLayoutContext = createContext<LayoutContext>({ size: 'default', ...mockLayoutState });
+
+// Mock LayoutProvider that provides the mock context
+const MockLayoutProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <MockLayoutContext.Provider value={{ size: 'default', ...mockLayoutState }}>
+    {children}
+  </MockLayoutContext.Provider>
+);
 
 /**
  * Mock Link component for testing
@@ -78,7 +89,20 @@ const createMockMsalInstance = (): IPublicClientApplication => ({
   logoutPopup: () => Promise.resolve(),
   ssoSilent: () => Promise.resolve({} as any),
   getTokenCache: () => ({} as any),
-  getLogger: () => ({} as any),
+  getLogger: () => ({
+    clone: () => ({
+      error: () => {},
+      warning: () => {},
+      info: () => {},
+      verbose: () => {},
+      trace: () => {},
+    }),
+    error: () => {},
+    warning: () => {},
+    info: () => {},
+    verbose: () => {},
+    trace: () => {},
+  } as any),
   setLogger: () => {},
   setActiveAccount: () => {},
   getActiveAccount: () => mockMsalAccount as any,

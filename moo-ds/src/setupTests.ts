@@ -3,6 +3,11 @@
 
 import '@testing-library/jest-dom/vitest';
 import { vi } from 'vitest';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+
+// Add all solid icons for testing
+library.add(fas);
 
 // Mock localStorage
 const createStorageMock = () => {
