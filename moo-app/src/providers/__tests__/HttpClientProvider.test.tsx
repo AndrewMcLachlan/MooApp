@@ -13,12 +13,17 @@ import {
 // Mock MSAL
 const mockAcquireTokenSilent = vi.fn();
 const mockLoginRedirect = vi.fn();
+const mockAddEventCallback = vi.fn().mockReturnValue('callback-id');
+const mockRemoveEventCallback = vi.fn();
 
 vi.mock('@azure/msal-react', () => ({
   useMsal: () => ({
     instance: {
       acquireTokenSilent: mockAcquireTokenSilent,
       loginRedirect: mockLoginRedirect,
+      addEventCallback: mockAddEventCallback,
+      removeEventCallback: mockRemoveEventCallback,
+      getActiveAccount: vi.fn().mockReturnValue(null),
     },
     accounts: [],
     inProgress: 'none',
@@ -33,6 +38,8 @@ describe('HttpClientProvider', () => {
   beforeEach(() => {
     mockAcquireTokenSilent.mockClear();
     mockLoginRedirect.mockClear();
+    mockAddEventCallback.mockClear();
+    mockRemoveEventCallback.mockClear();
   });
 
   describe('rendering', () => {
