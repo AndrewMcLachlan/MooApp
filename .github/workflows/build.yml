@@ -35,6 +35,8 @@ jobs:
         npm ci --no-scripts
     - name: npm version
       run: npm version ${{ steps.set-version-number.outputs.version }} --no-git-tag-version --workspaces
+    - name: Run tests
+      run: npm run test:run
     - name: npm run build
       run: npm run build --workspaces
     - name: npm publish
