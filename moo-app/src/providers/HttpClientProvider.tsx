@@ -114,7 +114,8 @@ export const addMsalInterceptor = (httpClient: AxiosInstance, msal: IMsalContext
                 errorCode === "invalid_grant" ||
                 errorCode === "interaction_required" ||
                 errorCode === "login_required" ||
-                errorCode === "consent_required";
+                errorCode === "consent_required" ||
+                errorCode === "no_account_error";
 
             if (shouldRedirect) {
                 if (!redirectState.redirectInFlight && msal.inProgress === InteractionStatus.None) {
