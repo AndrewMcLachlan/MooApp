@@ -5,6 +5,7 @@ import { Login } from '../Login';
 
 // Mock MSAL authentication hook
 const mockUseMsalAuthentication = vi.fn();
+const mockUseIsAuthenticated = vi.fn();
 
 vi.mock('@azure/msal-react', () => ({
   useMsalAuthentication: (interactionType: any, request: any) => {
@@ -15,6 +16,7 @@ vi.mock('@azure/msal-react', () => ({
       error: null,
     };
   },
+  useIsAuthenticated: () => mockUseIsAuthenticated(),
 }));
 
 vi.mock('@azure/msal-browser', () => ({
@@ -32,10 +34,12 @@ vi.mock('../msal', () => ({
 describe('Login', () => {
   beforeEach(() => {
     mockUseMsalAuthentication.mockClear();
+    mockUseIsAuthenticated.mockClear();
+    mockUseIsAuthenticated.mockReturnValue(true);
   });
 
   describe('rendering', () => {
-    it('renders children', () => {
+    it('renders children when authenticated', () => {
       render(
         <Login>
           <div data-testid="child">Protected Content</div>
@@ -44,6 +48,19 @@ describe('Login', () => {
 
       expect(screen.getByTestId('child')).toBeInTheDocument();
       expect(screen.getByText('Protected Content')).toBeInTheDocument();
+    });
+
+    it('does not render children when not authenticated', () => {
+      mockUseIsAuthenticated.mockReturnValue(false);
+
+      const { container } = render(
+        <Login>
+          <div data-testid="child">Protected Content</div>
+        </Login>
+      );
+
+      expect(screen.queryByTestId('child')).not.toBeInTheDocument();
+      expect(container.innerHTML).toBe('');
     });
 
     it('renders multiple children', () => {
@@ -106,6 +123,59 @@ describe('Login', () => {
       );
 
       expect(mockUseMsalAuthentication).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls useMsalAuthentication even when not authenticated', () => {
+      mockUseIsAuthenticated.mockReturnValue(false);
+
+      render(
+        <Login>
+          <div>Content</div>
+        </Login>
+      );
+
+      expect(mockUseMsalAuthentication).toHaveBeenCalledWith(
+        'redirect',
+        expect.any(Object)
+      );
+    });
+  });
+
+  describe('authFallback', () => {
+    it('renders authFallback when not authenticated', () => {
+      mockUseIsAuthenticated.mockReturnValue(false);
+
+      render(
+        <Login authFallback={<div data-testid="loading">Loading...</div>}>
+          <div data-testid="child">Protected Content</div>
+        </Login>
+      );
+
+      expect(screen.getByTestId('loading')).toBeInTheDocument();
+      expect(screen.queryByTestId('child')).not.toBeInTheDocument();
+    });
+
+    it('renders children instead of fallback when authenticated', () => {
+      render(
+        <Login authFallback={<div data-testid="loading">Loading...</div>}>
+          <div data-testid="child">Protected Content</div>
+        </Login>
+      );
+
+      expect(screen.getByTestId('child')).toBeInTheDocument();
+      expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
+    });
+
+    it('renders nothing when not authenticated and no fallback provided', () => {
+      mockUseIsAuthenticated.mockReturnValue(false);
+
+      const { container } = render(
+        <Login>
+          <div data-testid="child">Protected Content</div>
+        </Login>
+      );
+
+      expect(container.innerHTML).toBe('');
     });
   });
 
