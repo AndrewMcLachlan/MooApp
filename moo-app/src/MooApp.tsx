@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect } from "react";
+import React, { PropsWithChildren, ReactNode, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { AppProvider, HttpClientProvider } from "./providers";
@@ -17,7 +17,7 @@ import { AxiosInstance } from "axios";
 
 library.add(faArrowRightFromBracket, faTimesCircle);
 
-export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, scopes = [], baseUrl = "/", client, name, version, copyrightYear }) => {
+export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, scopes = [], baseUrl = "/", client, name, version, copyrightYear, authFallback }) => {
 
   const [msalInstance, setMsalInstance] = React.useState<any>(null);
 
@@ -65,7 +65,7 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clien
           <QueryClientProvider client={queryClient}>
             <LinkProvider LinkComponent={LinkWrapper} NavLinkComponent={NavLinkWrapper}>
               <MessageProvider>
-                <Login>
+                <Login authFallback={authFallback}>
                   <RouterProvider router={router} />
                 </Login>
               </MessageProvider>
@@ -86,4 +86,5 @@ export interface MooAppProps {
   version?: string;
   copyrightYear?: number;
   router: RouterProviderProps["router"];
+  authFallback?: ReactNode;
 }

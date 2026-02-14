@@ -141,6 +141,44 @@ describe('Login', () => {
     });
   });
 
+  describe('authFallback', () => {
+    it('renders authFallback when not authenticated', () => {
+      mockUseIsAuthenticated.mockReturnValue(false);
+
+      render(
+        <Login authFallback={<div data-testid="loading">Loading...</div>}>
+          <div data-testid="child">Protected Content</div>
+        </Login>
+      );
+
+      expect(screen.getByTestId('loading')).toBeInTheDocument();
+      expect(screen.queryByTestId('child')).not.toBeInTheDocument();
+    });
+
+    it('renders children instead of fallback when authenticated', () => {
+      render(
+        <Login authFallback={<div data-testid="loading">Loading...</div>}>
+          <div data-testid="child">Protected Content</div>
+        </Login>
+      );
+
+      expect(screen.getByTestId('child')).toBeInTheDocument();
+      expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
+    });
+
+    it('renders nothing when not authenticated and no fallback provided', () => {
+      mockUseIsAuthenticated.mockReturnValue(false);
+
+      const { container } = render(
+        <Login>
+          <div data-testid="child">Protected Content</div>
+        </Login>
+      );
+
+      expect(container.innerHTML).toBe('');
+    });
+  });
+
   describe('with different children types', () => {
     it('renders text children', () => {
       render(<Login>Plain text content</Login>);

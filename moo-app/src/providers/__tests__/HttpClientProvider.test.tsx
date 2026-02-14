@@ -147,21 +147,132 @@ describe('createHttpClient', () => {
 });
 
 describe('addMsalInterceptor', () => {
+  const createMockMsal = (overrides: Record<string, any> = {}) => ({
+    instance: {
+      acquireTokenSilent: vi.fn(),
+      acquireTokenRedirect: vi.fn(),
+      getActiveAccount: vi.fn().mockReturnValue(null),
+      getAllAccounts: vi.fn().mockReturnValue([]),
+      ...overrides,
+    },
+    accounts: [],
+    inProgress: 'none',
+  } as any);
+
+  const createClientWithInterceptor = (msal: any, scopes: string[] = ['api://test']) => {
+    const client = axios.create();
+    client.defaults.adapter = async (config) => ({ data: {}, status: 200, statusText: 'OK', headers: {}, config } as any);
+    addMsalInterceptor(client, msal, scopes);
+    return client;
+  };
+
   it('adds request interceptor to client', () => {
     const client = axios.create();
     const originalCount = client.interceptors.request.handlers.length;
 
-    const msal = {
-      instance: {
-        acquireTokenSilent: mockAcquireTokenSilent,
-        loginRedirect: mockLoginRedirect,
-      },
-      accounts: [],
-      inProgress: 'none' as const,
-    } as any;
-
+    const msal = createMockMsal();
     addMsalInterceptor(client, msal, ['api://test']);
 
     expect(client.interceptors.request.handlers.length).toBe(originalCount + 1);
+  });
+
+  it('sets Authorization header on successful silent token acquisition', async () => {
+    const msal = createMockMsal({
+      acquireTokenSilent: vi.fn().mockResolvedValue({ accessToken: 'test-token-123' }),
+    });
+    const client = createClientWithInterceptor(msal);
+
+    const response = await client.get('/api/data');
+
+    expect(response.config.headers.getAuthorization()).toBe('Bearer test-token-123');
+  });
+
+  it('does not set Authorization header when acquireTokenSilent returns no accessToken', async () => {
+    const msal = createMockMsal({
+      acquireTokenSilent: vi.fn().mockResolvedValue({ accessToken: null }),
+    });
+    const client = createClientWithInterceptor(msal);
+
+    const response = await client.get('/api/data');
+
+    expect(response.config.headers.getAuthorization()).toBeUndefined();
+  });
+
+  describe('no_account_error handling', () => {
+    it('cancels request when acquireTokenSilent throws no_account_error', async () => {
+      const error = Object.assign(new Error('No account'), { errorCode: 'no_account_error' });
+      const msal = createMockMsal({
+        acquireTokenSilent: vi.fn().mockRejectedValue(error),
+        acquireTokenRedirect: vi.fn().mockResolvedValue(null),
+      });
+      const client = createClientWithInterceptor(msal);
+
+      await expect(client.get('/api/data')).rejects.toThrow('Request canceled');
+    });
+
+    it('triggers acquireTokenRedirect when inProgress is None', async () => {
+      const error = Object.assign(new Error('No account'), { errorCode: 'no_account_error' });
+      const mockRedirect = vi.fn().mockResolvedValue(null);
+      const msal = createMockMsal({
+        acquireTokenSilent: vi.fn().mockRejectedValue(error),
+        acquireTokenRedirect: mockRedirect,
+      });
+      msal.inProgress = 'none';
+      const client = createClientWithInterceptor(msal);
+
+      await expect(client.get('/api/data')).rejects.toThrow();
+
+      expect(mockRedirect).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not trigger acquireTokenRedirect when inProgress is Startup', async () => {
+      const error = Object.assign(new Error('No account'), { errorCode: 'no_account_error' });
+      const mockRedirect = vi.fn().mockResolvedValue(null);
+      const msal = createMockMsal({
+        acquireTokenSilent: vi.fn().mockRejectedValue(error),
+        acquireTokenRedirect: mockRedirect,
+      });
+      msal.inProgress = 'startup';
+      const client = createClientWithInterceptor(msal);
+
+      await expect(client.get('/api/data')).rejects.toThrow('Request canceled');
+
+      expect(mockRedirect).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('other shouldRedirect errors', () => {
+    it.each([
+      'invalid_grant',
+      'interaction_required',
+      'login_required',
+      'consent_required',
+    ])('cancels request for %s error', async (errorCode) => {
+      const error = Object.assign(new Error(errorCode), { errorCode });
+      const msal = createMockMsal({
+        acquireTokenSilent: vi.fn().mockRejectedValue(error),
+        acquireTokenRedirect: vi.fn().mockResolvedValue(null),
+      });
+      const client = createClientWithInterceptor(msal);
+
+      await expect(client.get('/api/data')).rejects.toThrow('Request canceled');
+    });
+  });
+
+  describe('non-redirect errors', () => {
+    it('sends request without Authorization for unknown errors', async () => {
+      const error = Object.assign(new Error('Unknown'), { errorCode: 'some_other_error' });
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const msal = createMockMsal({
+        acquireTokenSilent: vi.fn().mockRejectedValue(error),
+      });
+      const client = createClientWithInterceptor(msal);
+
+      const response = await client.get('/api/data');
+
+      expect(response.config.headers.getAuthorization()).toBeUndefined();
+      expect(consoleSpy).toHaveBeenCalled();
+      consoleSpy.mockRestore();
+    });
   });
 });
