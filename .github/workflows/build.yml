@@ -23,7 +23,15 @@ jobs:
         versionSpec: '6.x'
     - id: gitversion
       uses: gittools/actions/gitversion/execute@v4.2.0
-    - run: echo "::notice::Version ${{ steps.gitversion.outputs.semVer }} (Full ${{ steps.gitversion.outputs.fullSemVer }})"
+    - name: Set version
+      id: version
+      run: |
+        if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+          echo "version=${{ steps.gitversion.outputs.major }}.${{ steps.gitversion.outputs.minor }}.${{ steps.gitversion.outputs.commitsSinceVersionSource }}" >> "$GITHUB_OUTPUT"
+        else
+          echo "version=${{ steps.gitversion.outputs.semVer }}" >> "$GITHUB_OUTPUT"
+        fi
+    - run: echo "::notice::Version ${{ steps.version.outputs.version }} (GitVersion ${{ steps.gitversion.outputs.semVer }})"
     - uses: actions/setup-node@v6
       with:
         node-version: 22
@@ -31,7 +39,7 @@ jobs:
         cache-dependency-path: 'package-lock.json'
         registry-url: "https://npm.pkg.github.com"
     - run: npm ci --no-scripts
-    - run: npm version ${{ steps.gitversion.outputs.semVer }} --no-git-tag-version --workspaces
+    - run: npm version ${{ steps.version.outputs.version }} --no-git-tag-version --workspaces
     - run: npm run test:run
     - run: npm run build --workspaces
     - if: github.ref == 'refs/heads/main'
