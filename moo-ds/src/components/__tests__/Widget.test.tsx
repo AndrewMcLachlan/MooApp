@@ -69,18 +69,19 @@ describe('Widget', () => {
   });
 
   describe('layout', () => {
-    it('renders in a Col container', () => {
+    it('renders in a div container with size class', () => {
       const { container } = render(<Widget size="single">Content</Widget>);
 
-      // Bootstrap Col renders with responsive classes like col-xxl-4
-      expect(container.querySelector('[class*="col-"]')).toBeInTheDocument();
+      const wrapper = container.firstElementChild;
+      expect(wrapper?.tagName).toBe('DIV');
+      expect(wrapper).toHaveClass('single');
     });
 
-    it('applies responsive column classes', () => {
-      const { container } = render(<Widget size="single">Content</Widget>);
+    it('renders double size in a div with double class', () => {
+      const { container } = render(<Widget size="double">Content</Widget>);
 
-      const col = container.querySelector('[class*="col-xxl"]');
-      expect(col).toBeInTheDocument();
+      const wrapper = container.firstElementChild;
+      expect(wrapper).toHaveClass('double');
     });
   });
 
