@@ -1,6 +1,4 @@
 import { Children, isValidElement, PropsWithChildren } from "react";
-import { PageSize } from "./PageSize";
-import { Pagination } from "./Paginaton";
 
 export const PaginationControls: React.FC<PropsWithChildren<PaginationControlsProps>> = ({ children }) => {
 

@@ -23,8 +23,6 @@ jobs:
         versionSpec: '6.x'
     - id: gitversion
       uses: gittools/actions/gitversion/execute@v4.2.0
-      with:
-        useConfigFile: true
     - run: echo "::notice::Version ${{ steps.gitversion.outputs.semVer }} (Full ${{ steps.gitversion.outputs.fullSemVer }})"
     - uses: actions/setup-node@v6
       with:
