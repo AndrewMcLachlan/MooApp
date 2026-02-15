@@ -1,5 +1,5 @@
 import { PaginationBase } from "./PaginationBase";
-import { PaginationProps } from "./Paginaton";
+import { PaginationProps } from "./Pagination";
 
 export const MiniPagination : React.FC<PaginationProps> = ({pageNumber, numberOfPages, onChange}) => {
 

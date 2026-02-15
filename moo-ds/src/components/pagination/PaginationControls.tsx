@@ -5,8 +5,8 @@ export const PaginationControls: React.FC<PropsWithChildren<PaginationControlsPr
     Children.forEach(children, (child) => {
         if (isValidElement(child)) {
             const childName = (child.type as any)?.displayName;
-            if (childName !== "PageSize" && childName !== "Pagination") {
-                console.warn("PaginationControls can only accept PageSize and Pagination as children.", child.type);
+            if (childName !== "PageSize" && childName !== "Pagination" && childName !== "MiniPagination") {
+                console.warn(`PaginationControls can only accept PageSize, Pagination, or MiniPagination as children. Got "${childName ?? child.type}".`);
             }
         }
     });

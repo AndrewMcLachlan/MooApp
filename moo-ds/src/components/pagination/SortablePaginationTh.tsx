@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
-import { SortIcon } from "./SortIcon";
+import { SortIcon } from "../SortIcon";
 import classNames from "classnames";
-import { SortableThProps } from "./SortableTh";
+import { SortableThProps } from "../SortableTh";
 import { PaginationThProps } from "./PaginationTh";
 import { MiniPagination } from "./MiniPagination";
 

@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { PaginationControls } from '../PaginationControls';
 import { PageSize } from '../PageSize';
-import { Pagination } from '../Paginaton';
+import { Pagination } from '../Pagination';
 
 describe('PaginationControls', () => {
   describe('rendering', () => {
@@ -71,8 +71,7 @@ describe('PaginationControls', () => {
       );
 
       expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('PaginationControls can only accept PageSize and Pagination'),
-        expect.anything()
+        expect.stringContaining('PaginationControls can only accept PageSize, Pagination, or MiniPagination')
       );
 
       consoleSpy.mockRestore();
