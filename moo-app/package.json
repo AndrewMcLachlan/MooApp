@@ -1,5 +1,6 @@
 {
   "name": "@andrewmclachlan/moo-app",
+  "version": "4.0.0",
   "type": "module",
   "main": "dist/index.es.js",
   "types": "dist/index.d.ts",
