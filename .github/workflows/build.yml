@@ -39,7 +39,7 @@ jobs:
         cache-dependency-path: 'package-lock.json'
         registry-url: "https://npm.pkg.github.com"
     - run: npm ci --no-scripts
-    - run: npm version ${{ steps.version.outputs.version }} --no-git-tag-version --workspace=moo-ds --workspace=moo-app --workspace=moo-icons
+    - run: npm pkg set version=${{ steps.version.outputs.version }} --workspace=moo-ds --workspace=moo-app --workspace=moo-icons
     - run: npm run test:run
     - run: npm run build --workspace=moo-ds --workspace=moo-app --workspace=moo-icons
     - if: github.ref == 'refs/heads/main'
