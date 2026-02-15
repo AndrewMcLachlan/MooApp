@@ -31,7 +31,7 @@
 
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
-    "react-error-boundary": "^6.1.0",
+    "react-error-boundary": "^6.1.1",
     "react-toastify": "^11.0.5",
     "use-debounce": "^10.1.0"
   },
