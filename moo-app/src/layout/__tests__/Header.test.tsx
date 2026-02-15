@@ -21,10 +21,6 @@ vi.mock('@andrewmclachlan/moo-ds', () => ({
   MenuToggle: ({ onClick }: { onClick: () => void }) => (
     <button data-testid="menu-toggle" onClick={onClick}>Toggle</button>
   ),
-}));
-
-// Mock react-bootstrap
-vi.mock('react-bootstrap', () => ({
   Container: ({ children, className }: any) => (
     <div className={className} data-testid="container">{children}</div>
   ),

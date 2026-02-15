@@ -1,4 +1,4 @@
-import { Container } from "react-bootstrap";
+import { Container } from "@andrewmclachlan/moo-ds";
 import { Link } from "react-router";
 
 import { Breadcrumb, MenuToggle } from "@andrewmclachlan/moo-ds";

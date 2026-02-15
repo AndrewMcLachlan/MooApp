@@ -1,0 +1,65 @@
+/* Navigation styles - derived from Bootstrap v5.3 */
+
+.nav {
+    --nav-link-padding-x: 1rem;
+    --nav-link-padding-y: 0.5rem;
+    --nav-link-color: rgba(var(--link-color-rgb), 1);
+    --nav-link-hover-color: rgba(var(--link-hover-color-rgb), 1);
+    --nav-link-disabled-color: var(--secondary-color);
+
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.nav-link {
+    display: block;
+    padding: var(--nav-link-padding-y) var(--nav-link-padding-x);
+    font-size: inherit;
+    color: var(--nav-link-color);
+    text-decoration: none;
+    background: none;
+    border: 0;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    color: var(--nav-link-hover-color);
+}
+
+.nav-link.active {
+    color: var(--nav-link-active, var(--primary));
+}
+
+.nav-link.disabled {
+    color: var(--nav-link-disabled-color);
+    pointer-events: none;
+    cursor: default;
+}
+
+.nav-item {
+    /* Base nav item - no special styling needed */
+}
+
+.nav-column {
+    flex-direction: column;
+}
+
+/* Nav link icon styling */
+@scope (.nav-link) {
+
+    svg {
+        stroke: var(--body-color);
+        fill: var(--body-color);
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+
+    img {
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+}

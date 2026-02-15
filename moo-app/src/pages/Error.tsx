@@ -1,7 +1,6 @@
-import { ErrorFallback } from "@andrewmclachlan/moo-ds";
+import { Container, ErrorFallback } from "@andrewmclachlan/moo-ds";
 import { Page } from "../layout/Page";
 import React from "react";
-import { Container } from "react-bootstrap";
 import { FallbackProps } from "react-error-boundary";
 import { useNavigate } from "react-router";
 

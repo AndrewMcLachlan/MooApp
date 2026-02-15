@@ -147,7 +147,7 @@ export const MultipleColumns: Story = {
     },
     decorators: [
         (Story) => (
-            <div className="dark" data-bs-theme="dark">
+            <div className="dark" data-theme="dark">
                 <table className="table table-bordered table-striped">
                     <thead>
                         <tr>

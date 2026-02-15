@@ -1,13 +1,13 @@
 article {
 
     flex: 1 0 auto;
-    background-color: var(--bs-body-bg);
-    color: var(--bs-body-color);
+    background-color: var(--body-bg);
+    color: var(--body-color);
 
     &>header {
         background-color: var(--page-header-background);
         color: var(--page-header-text);
-        
+
         h2 {
             font-size: var(--h2-size);
         }
@@ -25,10 +25,10 @@ article {
         .buttons {
             display: flex;
             gap: 10px;
-        
+
             svg {
                 display: block;
             }
-        }  
+        }
     }
 }

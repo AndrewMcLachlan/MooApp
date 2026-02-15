@@ -1,6 +1,6 @@
 .btn svg {
-    stroke: var(--bs-btn-color);
-    fill: var(--bs-btn-color);
+    stroke: var(--btn-color);
+    fill: var(--btn-color);
 }
 
 .btn.btn-icon div {

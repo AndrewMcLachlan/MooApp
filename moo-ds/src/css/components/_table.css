@@ -1,0 +1,135 @@
+/* Table styles - derived from Bootstrap v5.3 */
+
+.table {
+    --table-color: var(--body-color);
+    --table-bg: var(--body-bg);
+    --table-border-color: var(--border-color, #dee2e6);
+    --table-striped-color: var(--body-color);
+    --table-striped-bg: rgba(0, 0, 0, 0.05);
+    --table-hover-color: var(--body-color);
+    --table-hover-bg: rgba(0, 0, 0, 0.075);
+
+    width: 100%;
+    margin-bottom: 1rem;
+    vertical-align: top;
+    border-color: var(--table-border-color);
+}
+
+.table > :not(caption) > * > * {
+    padding: 0.5rem 0.5rem;
+    color: var(--table-color);
+    background-color: var(--table-bg);
+    border-bottom-width: var(--border-width, 1px);
+}
+
+.table > tbody {
+    vertical-align: inherit;
+}
+
+.table > thead {
+    vertical-align: bottom;
+}
+
+.table th {
+    background-color: var(--section-bg);
+    font-weight: 600;
+}
+
+.table tfoot td {
+    background-color: var(--section-bg);
+}
+
+.table td {
+    vertical-align: middle;
+    height: 4rem;
+}
+
+.table td.icon,
+.table th.icon {
+    width: 1rem;
+    text-align: center;
+}
+
+.table .row-action {
+    vertical-align: middle;
+    text-align: center;
+
+    svg {
+        margin-right: 8px;
+
+        &:last-child {
+            padding-right: 0;
+        }
+    }
+}
+
+.table .group-row {
+    height: 1rem;
+    font-size: 0.8rem;
+
+    &:hover {
+        box-shadow: none;
+    }
+
+    td {
+        background-color: var(--section-bg);
+        height: 1rem;
+        text-transform: uppercase;
+
+        &:hover {
+            box-shadow: none;
+        }
+    }
+}
+
+/* Column width utilities */
+.table .column-5 { width: 5%; }
+.table .column-10 { width: 10%; }
+.table .column-15 { width: 15%; }
+.table .column-20 { width: 20%; }
+.table .column-25 { width: 25%; }
+.table .column-30 { width: 30%; }
+.table .column-35 { width: 35%; }
+.table .column-40 { width: 40%; }
+.table .column-45 { width: 45%; }
+.table .column-50 { width: 50%; }
+.table .column-55 { width: 55%; }
+.table .column-60 { width: 60%; }
+.table .column-65 { width: 65%; }
+.table .column-70 { width: 70%; }
+.table .column-75 { width: 75%; }
+.table .column-80 { width: 80%; }
+.table .column-85 { width: 85%; }
+.table .column-90 { width: 90%; }
+.table .column-95 { width: 95%; }
+.table .column-100 { width: 100%; }
+
+/* Striped */
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: var(--table-striped-bg, rgba(0, 0, 0, 0.05));
+}
+
+/* Hover */
+.table-hover > tbody > tr:hover > * {
+    background-color: var(--table-hover-bg, rgba(0, 0, 0, 0.075));
+}
+
+/* Bordered */
+.table-bordered > :not(caption) > * {
+    border-width: var(--border-width, 1px) 0;
+}
+
+.table-bordered > :not(caption) > * > * {
+    border-width: 0 var(--border-width, 1px);
+}
+
+/* Borderless */
+.table-borderless > :not(caption) > * > * {
+    border-bottom-width: 0;
+}
+
+/* Responsive */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}

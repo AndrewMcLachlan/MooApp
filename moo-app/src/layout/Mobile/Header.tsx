@@ -1,8 +1,7 @@
-import { Breadcrumb, MenuToggle, useLink } from "@andrewmclachlan/moo-ds";
+import { Breadcrumb, Container, MenuToggle, useLink } from "@andrewmclachlan/moo-ds";
 import { UserMenu } from "../UserMenu";
 import { HeaderComponent } from "../Types";
 import { useApp, useLayout } from "../../providers";
-import { Container } from "react-bootstrap";
 
 export const Header: HeaderComponent = (props) => {
     const { size, breadcrumbs, actions, setShowSidebar } = useLayout();

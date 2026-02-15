@@ -2,7 +2,8 @@ import { isValidElement } from "react";
 import { useNavLink } from "../providers";
 import React from "react";
 import { NavItem } from "../models";
-import { Button, Nav } from "react-bootstrap";
+import { Button } from "./Button";
+import { Nav } from "./Nav";
 
 export const NavItemList: React.FC<NavItemListProps> = ({ navItems, as = React.Fragment, role, onClick }) => {
 

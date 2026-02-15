@@ -15,10 +15,6 @@ vi.mock('@andrewmclachlan/moo-ds', () => ({
   NavItemList: ({ navItems }: { navItems: any[] }) => (
     <div data-testid="nav-items">{navItems?.length ?? 0} items</div>
   ),
-}));
-
-// Mock react-bootstrap
-vi.mock('react-bootstrap', () => ({
   Nav: Object.assign(
     ({ children, className }: any) => (
       <nav className={className} data-testid="nav">{children}</nav>

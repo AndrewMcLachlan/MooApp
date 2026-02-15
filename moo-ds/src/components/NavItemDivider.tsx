@@ -1,4 +1,4 @@
-import { Nav } from "react-bootstrap";
+import { Nav } from "./Nav";
 
 export const NavItemDivider = () => <Nav.Item className="divider" />;
 

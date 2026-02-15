@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useMemo } from "react";
-import axios, { AxiosInstance } from "axios";
+import React, { useContext, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
 import { IMsalContext, useMsal } from "@azure/msal-react";
 import { AuthError, EventType, InteractionRequiredAuthError, InteractionStatus, InteractionType, IPublicClientApplication, SilentRequest } from "@azure/msal-browser";
@@ -36,6 +36,14 @@ export const HttpClientProvider: React.FC<React.PropsWithChildren<HttpClientProv
     const scopeKey = scopes.join(" ");
     const effectiveScopes = useMemo(() => scopes, [scopeKey]);
 
+    // Use refs so the interceptor always reads the latest MSAL context and scopes
+    // without needing to be torn down and recreated on every context change.
+    const msalRef = useRef(msal);
+    msalRef.current = msal;
+
+    const scopesRef = useRef(effectiveScopes);
+    scopesRef.current = effectiveScopes;
+
     useEffect(() => {
         const redirectState = getRedirectState(msal.instance);
         const callbackId = msal.instance.addEventCallback((event) => {
@@ -63,12 +71,18 @@ export const HttpClientProvider: React.FC<React.PropsWithChildren<HttpClientProv
         };
     }, [msal.instance]);
 
-    useEffect(() => {
-        const interceptorId = addMsalInterceptor(resolvedClient, msal, effectiveScopes);
+    // useLayoutEffect fires before children's useEffect, ensuring the interceptor
+    // is in place before React Query (or any other data-fetching library) triggers
+    // its first request. Using refs avoids recreating the interceptor when the MSAL
+    // context or scopes change — the interceptor reads the latest values at call time.
+    useLayoutEffect(() => {
+        const interceptorId = resolvedClient.interceptors.request.use(
+            (request) => acquireTokenForRequest(request, msalRef, scopesRef)
+        );
         return () => {
             resolvedClient.interceptors.request.eject(interceptorId);
         };
-    }, [resolvedClient, msal, effectiveScopes]);
+    }, [resolvedClient]);
 
     return (
         <HttpClientContext.Provider value={resolvedClient}>
@@ -91,58 +105,71 @@ export const createHttpClient = (baseUrl: string): AxiosInstance => {
     return httpClient;
 }
 
-export const addMsalInterceptor = (httpClient: AxiosInstance, msal: IMsalContext, scopes: string[]) => {
-    return httpClient.interceptors.request.use(async (request) => {
+const acquireTokenForRequest = async (
+    request: InternalAxiosRequestConfig,
+    msalRef: React.RefObject<IMsalContext>,
+    scopesRef: React.RefObject<string[]>,
+): Promise<InternalAxiosRequestConfig> => {
+    const msal = msalRef.current;
+    const scopes = scopesRef.current;
 
-        let token = null;
-        const account = msal.instance.getActiveAccount() ?? msal.instance.getAllAccounts()[0];
-        const redirectState = getRedirectState(msal.instance);
+    let token = null;
+    const account = msal.instance.getActiveAccount() ?? msal.instance.getAllAccounts()[0];
+    const redirectState = getRedirectState(msal.instance);
 
-        const tokenRequest: SilentRequest = {
-            scopes: scopes ?? [],
-            ...(account ? { account } : {})
-        };
+    const tokenRequest: SilentRequest = {
+        scopes: scopes ?? [],
+        ...(account ? { account } : {})
+    };
 
-        try {
-            token = await msal.instance.acquireTokenSilent(tokenRequest);
-        }
-        catch (error) {
-            const isInteractionRequiredError = error instanceof InteractionRequiredAuthError;
-            const errorCode = (error as AuthError)?.errorCode;
-            const shouldRedirect =
-                isInteractionRequiredError ||
-                errorCode === "invalid_grant" ||
-                errorCode === "interaction_required" ||
-                errorCode === "login_required" ||
-                errorCode === "consent_required" ||
-                errorCode === "no_account_error";
+    try {
+        token = await msal.instance.acquireTokenSilent(tokenRequest);
+    }
+    catch (error) {
+        const isInteractionRequiredError = error instanceof InteractionRequiredAuthError;
+        const errorCode = (error as AuthError)?.errorCode;
+        const shouldRedirect =
+            isInteractionRequiredError ||
+            errorCode === "invalid_grant" ||
+            errorCode === "interaction_required" ||
+            errorCode === "login_required" ||
+            errorCode === "consent_required" ||
+            errorCode === "no_account_error";
 
-            if (shouldRedirect) {
-                if (!redirectState.redirectInFlight && msal.inProgress === InteractionStatus.None) {
-                    redirectState.redirectInFlight = true;
-                    const interactiveScopes = Array.from(new Set([...(loginRequest.scopes ?? []), ...scopes]));
-                    try {
-                        await msal.instance.acquireTokenRedirect({
-                            ...loginRequest,
-                            scopes: interactiveScopes,
-                            ...(account ? { account } : {})
-                        });
-                    } catch (redirectError) {
-                        redirectState.redirectInFlight = false;
-                        throw redirectError;
-                    }
+        if (shouldRedirect) {
+            if (!redirectState.redirectInFlight && msal.inProgress === InteractionStatus.None) {
+                redirectState.redirectInFlight = true;
+                const interactiveScopes = Array.from(new Set([...(loginRequest.scopes ?? []), ...scopes]));
+                try {
+                    await msal.instance.acquireTokenRedirect({
+                        ...loginRequest,
+                        scopes: interactiveScopes,
+                        ...(account ? { account } : {})
+                    });
+                } catch (redirectError) {
+                    redirectState.redirectInFlight = false;
+                    throw redirectError;
                 }
-
-                throw new axios.CanceledError("Request canceled: interactive authentication redirect required.");
-            } else {
-                console.warn("Error getting token silently:", error, "errorCode:", errorCode);
             }
-        }
 
-        if (token?.accessToken) {
-            request.headers.setAuthorization(`Bearer ${token.accessToken}`);
+            throw new axios.CanceledError("Request canceled: interactive authentication redirect required.");
+        } else {
+            console.warn("Error getting token silently:", error, "errorCode:", errorCode);
+            throw new axios.CanceledError("Request canceled: unable to acquire authentication token.");
         }
+    }
 
-        return request;
-    });
+    if (token?.accessToken) {
+        request.headers.setAuthorization(`Bearer ${token.accessToken}`);
+    }
+
+    return request;
+};
+
+export const addMsalInterceptor = (httpClient: AxiosInstance, msal: IMsalContext, scopes: string[]) => {
+    const msalRef = { current: msal } as React.RefObject<IMsalContext>;
+    const scopesRef = { current: scopes } as React.RefObject<string[]>;
+    return httpClient.interceptors.request.use(
+        (request) => acquireTokenForRequest(request, msalRef, scopesRef)
+    );
 }

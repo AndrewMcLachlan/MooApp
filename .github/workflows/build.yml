@@ -15,32 +15,28 @@ jobs:
       contents: read
       packages: write
     steps:
-    - name: checkout
-      uses: actions/checkout@v6
-    - name: Set version number
-      id: set-version-number
-      uses: andrewmclachlan/actions/set-version-number-npm@v4
+    - uses: actions/checkout@v6
       with:
-        package-file-path: 'package.json'
-    - name: Setup node and npm
-      uses: actions/setup-node@v6
+        fetch-depth: 0
+    - uses: gittools/actions/gitversion/setup@v4.2.0
+      with:
+        versionSpec: '6.x'
+    - id: gitversion
+      uses: gittools/actions/gitversion/execute@v4.2.0
+      with:
+        useConfigFile: true
+    - run: echo "::notice::Version ${{ steps.gitversion.outputs.semVer }} (Full ${{ steps.gitversion.outputs.fullSemVer }})"
+    - uses: actions/setup-node@v6
       with:
         node-version: 22
         cache: npm
         cache-dependency-path: 'package-lock.json'
         registry-url: "https://npm.pkg.github.com"
-    - name: npm install
-      run: |
-        rm -rf node_modules
-        npm ci --no-scripts
-    - name: npm version
-      run: npm version ${{ steps.set-version-number.outputs.version }} --no-git-tag-version --workspaces
-    - name: Run tests
-      run: npm run test:run
-    - name: npm run build
-      run: npm run build --workspaces
-    - name: npm publish
-      if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    - run: npm ci --no-scripts
+    - run: npm version ${{ steps.gitversion.outputs.semVer }} --no-git-tag-version --workspaces
+    - run: npm run test:run
+    - run: npm run build --workspaces
+    - if: github.ref == 'refs/heads/main'
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npm publish --workspaces

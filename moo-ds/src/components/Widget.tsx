@@ -1,6 +1,6 @@
 import { Section } from "../layout/Section/Section";
 import { PropsWithChildren } from "react";
-import { Col } from "react-bootstrap";
+import { Col } from "./Col";
 import { SpinnerContainer } from "./SpinnerContainer";
 
 export const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({ children, loading = false, size = "single", ...rest }) => (

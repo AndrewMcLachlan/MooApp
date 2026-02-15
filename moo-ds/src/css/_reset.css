@@ -7,20 +7,3 @@ html {
         font-size: 12px;
     }
 }
-
-/* Reset the z-index of pagination to prevent it overlaying react-select. */
-.page-item.active > .page-link {
-    z-index: 0;
-}
-
-
-.offcanvas-backdrop.show, .modal-backdrop.show {
-    backdrop-filter: blur(1px) grayscale(0.5) brightness(0.5);
-}
-
-.offcanvas-backdrop.fade, .modal-backdrop.fade {
-    opacity: 1;
-}
-.offcanvas-backdrop, .modal-backdrop {
-    background-color: transparent;
-}

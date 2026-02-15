@@ -1,18 +1,16 @@
 :root,
-[data-bs-theme=light],
-[data-bs-theme=dark] {
-  --bs-font-sans-serif: 'Inter', 'Franklin Gothic', Helvetica, 'Helvetica Neue', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+[data-theme=light],
+[data-theme=dark] {
+  --font-sans-serif: 'Inter', 'Franklin Gothic', Helvetica, 'Helvetica Neue', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --secondary-fonts: 'Open Sans Condensed', 'Franklin Gothic', Helvetica, 'Helvetica Neue', nsystem-ui, -apple-system, "Segoe UI", Roboto Arial, sans-serif;
 
   --page-header-background: #111;
   --page-header-text: #F6F6F6;
 
-  --bs-body-colour: var(--bs-body-color);
+  --body-colour: var(--body-color);
 
   --primary-rgb: 139, 0, 0;
   --primary-dark: #6f0000;
-  --bs-primary: var(--primary);
-  --bs-primary-rgb: var(--primary-rgb);
 
   --input-border: #666;
   --disabled: #999;
@@ -21,16 +19,16 @@
   --amber: #FFBF00;
   --green: #5A5;
 
-  --bs-danger: var(--red);
-  --bs-warning: var(--amber);
-  --bs-success: var(--green);
+  --danger: var(--red);
+  --warning: var(--amber);
+  --success: var(--green);
 
-  --table-bg: var(--bs-body-bg);
+  --table-bg: var(--body-bg);
 
   --breadcrumb-bg: var(--header-bg);
-  --header-text: var(--bs-body-color);
+  --header-text: var(--body-color);
   --footer-bg: var(--header-bg);
-  --footer-text: var(--bs-body-color);
+  --footer-text: var(--body-color);
 
   --toastify-color-progress-light: var(--primary);
   --toastify-color-progress-dark: var(--primary);
@@ -47,6 +45,10 @@
   --dark-section-bg: rgb(31, 27, 24);
 
   --btn-focus-shadow-rgb: 156, 38, 38;
+
+  --disabled-bg: #e9ecef;
+  --border-width: 1px;
+  --border-radius: 0.375rem;
 }
 
 @media (prefers-color-scheme: light) {
@@ -57,11 +59,13 @@
 
     --base-bg: rgb(17, 18, 23);
 
-    --bs-body-color: rgb(46, 41, 36);
+    --body-bg: #FFF;
+    --body-color: rgb(46, 41, 36);
     --body-colour-bold: #000;
     --body-colour-dim: rgb(76, 71, 66);
 
-    --bs-secondary-color: rgb(36, 32, 27);
+    --border-color: rgb(230, 224, 220);
+    --secondary-color: rgb(36, 32, 27);
 
     --header-bg: #FFF;
     --section-bg: rgb(251, 248, 244);
@@ -70,15 +74,16 @@
     --hover: #E6E6E6;
 
     --breadcrumb-bg: var(--header-bg);
-    --header-text: var(--bs-body-color);
+    --header-text: var(--body-color);
     --footer-bg: var(--header-bg);
     --footer-text: var(--body-color);
 
-    --bs-link-color: var(--primary);
-    --bs-link-color-rgb: 139, 0, 0;
-    --bs-link-decoration: underline;
-    --bs-link-hover-color: rgb(111.2, 0, 0);
-    --bs-link-hover-color-rgb: 111, 0, 0;
+    --link-color: var(--primary);
+    --link-color-rgb: 139, 0, 0;
+    --link-decoration: underline;
+    --link-hover-color: rgb(111.2, 0, 0);
+    --link-hover-color-rgb: 111, 0, 0;
+
   }
 }
 
@@ -87,12 +92,13 @@
     color-scheme: dark;
     --primary: var(--default-primary);
 
-    --bs-body-bg: rgb(23, 18, 17);
-    --bs-body-color: rgb(211, 208, 204);
+    --body-bg: rgb(23, 18, 17);
+    --body-color: rgb(211, 208, 204);
     --body-colour-bold: rgb(251, 248, 244);
     --body-colour-dim: rgba(251, 248, 244, .65);
 
-    --bs-secondary-color: rgb(151, 148, 144);
+    --border-color: rgb(57, 54, 50);
+    --secondary-color: rgb(151, 148, 144);
 
     --base-bg: rgb(31, 27, 24);
     --header-bg: var(--base-bg);
@@ -103,14 +109,17 @@
 
     --hover: #6E6E6E;
 
-    --header-text: var(--bs-body-color);
-    --footer-text: var(--bs-body-color);
+    --header-text: var(--body-color);
+    --footer-text: var(--body-color);
 
-    --bs-link-color: rgb(185.4, 102, 102);
-    --bs-link-hover-color: rgb(199.32, 132.6, 132.6);
-    --bs-link-color-rgb: 185, 102, 102;
-    --bs-link-hover-color-rgb: 199, 133, 133;
-    --bs-code-color: rgb(230.4, 132.6, 181.2);
+    --link-color: rgb(185.4, 102, 102);
+    --link-hover-color: rgb(199.32, 132.6, 132.6);
+    --link-color-rgb: 185, 102, 102;
+    --link-hover-color-rgb: 199, 133, 133;
+    --code-color: rgb(230.4, 132.6, 181.2);
+
+    --disabled-bg: #495057;
+
   }
 
   body {
@@ -119,39 +128,39 @@
 }
 
 .light,
-[data-bs-theme="light"] {
+[data-theme="light"] {
   color-scheme: light;
   --primary: var(--default-primary);
 
   --base-bg: rgb(17, 18, 23);
 
-  --bs-body-bg: #FFF;
-  --bs-body-color: rgb(46, 41, 36);
+  --body-bg: #FFF;
+  --body-color: rgb(46, 41, 36);
   --body-colour-bold: #000;
   --body-colour-dim: rgb(136, 131, 126);
 
-  --bs-border-color: rgb(230, 224, 220);
+  --border-color: rgb(230, 224, 220);
 
   --header-bg: #FFF;
-  --header-text: var(--bs-body-color);
+  --header-text: var(--body-color);
   --breadcrumb-bg: var(--header-bg);
   --section-bg: rgb(251, 248, 244);
-  --sidebar-bg: var(--bs-body-bg);
+  --sidebar-bg: var(--body-bg);
 
   --footer-bg: #FFF;
-  --footer-text: var(--bs-body-color);
+  --footer-text: var(--body-color);
   --hover: #E6E6E6;
 
-  --bs-link-color: #8b0000;
-  --bs-link-color-rgb: 139, 0, 0;
-  --bs-link-decoration: underline;
-  --bs-link-hover-color: rgb(111.2, 0, 0);
-  --bs-link-hover-color-rgb: 111, 0, 0;
+  --link-color: #8b0000;
+  --link-color-rgb: 139, 0, 0;
+  --link-decoration: underline;
+  --link-hover-color: rgb(111.2, 0, 0);
+  --link-hover-color-rgb: 111, 0, 0;
 
   --table-striped-bg: rgba(from var(--section-bg) r g b / 0.25);
 
-  --popover-bg: var(--bs-body-bg);
-  --popover-header-bg: var(--bs-body-bg);
+  --popover-bg: var(--body-bg);
+  --popover-header-bg: var(--body-bg);
   --popover-border-color: #f0f0f0;
   --popover-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
 
@@ -173,34 +182,34 @@
   --primary-rgb: 47, 95, 173;
   --primary-dark: #2F4C84;
 
-  --bs-body-bg: rgb(17, 18, 23);
+  --body-bg: rgb(17, 18, 23);
 
-  --bs-body-color: rgb(204, 208, 211);
-  --bs-secondary-color: rgb(144, 148, 151);
-  --bs-emphasis-color: rgb(204, 208, 211);
+  --body-color: rgb(204, 208, 211);
+  --secondary-color: rgb(144, 148, 151);
+  --emphasis-color: rgb(204, 208, 211);
   --body-color-bold: rgb(204, 208, 211);
   --body-colour-dim: rgba(204, 208, 211, .65);
-  --bs-border-color: rgb(50, 54, 57);
+  --border-color: rgb(50, 54, 57);
 
-  /* --bs-emphasis-color: #9696FF; */
-  --bs-link-color: rgb(102, 102, 185.4);
-  --bs-link-hover-color: rgb(132.6, 132.6, 199.32);
+  --link-color: rgb(102, 102, 185.4);
+  --link-hover-color: rgb(132.6, 132.6, 199.32);
   --base-bg: rgb(27, 27, 29);
   --btn-focus-shadow-rgb: 38, 38, 156;
+
 }
 
 .dark,
-[data-bs-theme="dark"] {
+[data-theme="dark"] {
   color-scheme: dark;
   --primary: var(--default-primary);
 
-  --bs-body-bg: rgb(23, 18, 17);
-  --bs-body-color: rgb(211, 208, 204);
-  --bs-secondary-color: rgb(151, 148, 144);
-  --bs-emphasis-color: rgb(211, 208, 204);
+  --body-bg: rgb(23, 18, 17);
+  --body-color: rgb(211, 208, 204);
+  --secondary-color: rgb(151, 148, 144);
+  --emphasis-color: rgb(211, 208, 204);
   --body-color-bold: rgb(211, 208, 204);
   --body-colour-dim: rgba(211, 208, 204, .65);
-  --bs-border-color: rgb(57, 54, 50);
+  --border-color: rgb(57, 54, 50);
 
   --base-bg: rgb(31, 27, 24);
   --header-bg: var(--base-bg);
@@ -209,14 +218,14 @@
   --footer-bg: var(--base-bg);
   --breadcrumb-bg: var(--base-bg);
 
-  --footer-text: var(--bs-body-color);
+  --footer-text: var(--body-color);
   --hover: #6E6E6E;
 
-  --bs-link-color: rgb(185.4, 102, 102);
-  --bs-link-hover-color: rgb(199.32, 132.6, 132.6);
-  --bs-link-color-rgb: 185, 102, 102;
-  --bs-link-hover-color-rgb: 199, 133, 133;
-  --bs-code-color: rgb(230.4, 132.6, 181.2);
+  --link-color: rgb(185.4, 102, 102);
+  --link-hover-color: rgb(199.32, 132.6, 132.6);
+  --link-color-rgb: 185, 102, 102;
+  --link-hover-color-rgb: 199, 133, 133;
+  --code-color: rgb(230.4, 132.6, 181.2);
 
   --table-striped-bg: rgba(from var(--section-bg) r g b / 0.75);
 
@@ -224,4 +233,5 @@
   --popover-header-bg: #1A1A1A;
   --popover-border-color: #333;
   --popover-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+
 }

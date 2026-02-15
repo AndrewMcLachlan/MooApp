@@ -1,5 +1,5 @@
 import { getPagesToDisplay } from "../utils/paging";
-import { Pagination as BSPagination } from "react-bootstrap"
+import { PaginationBase } from "./PaginationBase";
 
 export const Pagination : React.FC<PaginationProps> = ({pageNumber, numberOfPages, onChange}) => {
 
@@ -9,17 +9,17 @@ export const Pagination : React.FC<PaginationProps> = ({pageNumber, numberOfPage
     const pagesToDisplay = getPagesToDisplay(pageNumber, numberOfPages);
 
     return (
-        <BSPagination>
-            <BSPagination.First disabled={!showPrev} onClick={() => onChange(pageNumber, 1)} />
-            <BSPagination.Prev disabled={!showPrev} onClick={() => onChange(pageNumber, Math.max(1, pageNumber-1))} />
+        <PaginationBase>
+            <PaginationBase.First disabled={!showPrev} onClick={() => onChange(pageNumber, 1)} />
+            <PaginationBase.Prev disabled={!showPrev} onClick={() => onChange(pageNumber, Math.max(1, pageNumber-1))} />
             {pagesToDisplay.map((page) => (
-                <BSPagination.Item key={page} active={page === pageNumber} onClick={() => onChange(pageNumber, page)}>
+                <PaginationBase.Item key={page} active={page === pageNumber} onClick={() => onChange(pageNumber, page)}>
                     {page}
-                </BSPagination.Item>
+                </PaginationBase.Item>
             ))}
-            <BSPagination.Next disabled={!showNext} onClick={() => onChange(pageNumber, Math.min(pageNumber + 1, numberOfPages))} />
-            <BSPagination.Last disabled={!showNext} onClick={() => onChange(pageNumber, numberOfPages)} />
-        </BSPagination>
+            <PaginationBase.Next disabled={!showNext} onClick={() => onChange(pageNumber, Math.min(pageNumber + 1, numberOfPages))} />
+            <PaginationBase.Last disabled={!showNext} onClick={() => onChange(pageNumber, numberOfPages)} />
+        </PaginationBase>
     );
 }
 

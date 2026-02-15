@@ -1,4 +1,4 @@
-import { Pagination as BSPagination } from "react-bootstrap"
+import { PaginationBase } from "./PaginationBase";
 import { PaginationProps } from "./Paginaton";
 
 export const MiniPagination : React.FC<PaginationProps> = ({pageNumber, numberOfPages, onChange}) => {
@@ -7,10 +7,10 @@ export const MiniPagination : React.FC<PaginationProps> = ({pageNumber, numberOf
     const showPrev = pageNumber > 1;
 
     return (
-        <BSPagination>
-            <BSPagination.Prev title="Previous page" disabled={!showPrev} onClick={() => onChange(pageNumber, Math.max(1, pageNumber-1))} />
-            <BSPagination.Next title="Next page" disabled={!showNext} onClick={() => onChange(pageNumber, Math.min(pageNumber + 1, numberOfPages))} />
-        </BSPagination>
+        <PaginationBase>
+            <PaginationBase.Prev title="Previous page" disabled={!showPrev} onClick={() => onChange(pageNumber, Math.max(1, pageNumber-1))} />
+            <PaginationBase.Next title="Next page" disabled={!showNext} onClick={() => onChange(pageNumber, Math.min(pageNumber + 1, numberOfPages))} />
+        </PaginationBase>
     );
 }
 

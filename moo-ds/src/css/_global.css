@@ -39,13 +39,13 @@ h2 {
 }
 
 .drop-down-chevron {
-  stroke: var(--bs-body-color);
+  stroke: var(--body-color);
 }
 
 
 .clearable {
     svg.clear-input {
-      fill: var(--bs-body-color);
+      fill: var(--body-color);
   }
 }
 

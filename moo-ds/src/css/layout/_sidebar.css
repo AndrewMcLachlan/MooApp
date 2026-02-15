@@ -9,7 +9,7 @@
     background-color: var(--sidebar-bg);
     font-family: var(--font-family-alt);
 
-    border-right: 1px solid var(--bs-border-color);
+    border-right: 1px solid var(--border-color);
 
     display: flex;
     flex-direction: column;
@@ -40,14 +40,14 @@
         align-items: center;
         gap: 8px;
 
-        color: var(--bs-secondary-color);
+        color: var(--secondary-color);
 
         span {
             transition: opacity 350ms ease-in-out;
         }
 
         &:visited {
-            color: var(--bs-secondary-color);
+            color: var(--secondary-color);
         }
 
         &:hover {
@@ -56,11 +56,11 @@
 
         &:hover,
         &.active {
-            color: var(--bs-body-color);
+            color: var(--body-color);
 
             svg {
-                stroke: var(--bs-body-color);
-                fill: var(--bs-body-color);
+                stroke: var(--body-color);
+                fill: var(--body-color);
             }
         }
 
@@ -75,8 +75,8 @@
         }
 
         svg {
-            stroke: var(--bs-body-color);
-            fill: var(--bs-body-color);
+            stroke: var(--body-color);
+            fill: var(--body-color);
             height: 1.5rem;
             width: 1.5rem;
         }
@@ -88,6 +88,6 @@
     }
 
     .divider {
-        border-top: 1px solid var(--bs-border-color);
+        border-top: 1px solid var(--border-color);
     }
 }

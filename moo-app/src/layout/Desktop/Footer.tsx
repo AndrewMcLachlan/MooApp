@@ -1,6 +1,6 @@
 import { FooterComponent } from "../Types";
 import { useApp } from "../../providers";
-import { Container } from "react-bootstrap";
+import { Container } from "@andrewmclachlan/moo-ds";
 
 export const Footer: FooterComponent = ({ copyrightYear, ...rest }) => {
 

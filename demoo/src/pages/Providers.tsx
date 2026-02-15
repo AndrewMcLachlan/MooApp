@@ -1,6 +1,5 @@
 import { Page, useHttpClient } from "@andrewmclachlan/moo-app";
-import { Section } from "@andrewmclachlan/moo-ds";
-import { Button } from "react-bootstrap";
+import { Section, Button } from "@andrewmclachlan/moo-ds";
 import { Tags } from "../assets";
 
 export const Providers = () => {

@@ -1,4 +1,4 @@
-import Spinner from "react-bootstrap/Spinner";
+import { Spinner } from "./Spinner";
 
 export const SpinnerContainer: React.FC = () => (
     <div className="spinner-container">

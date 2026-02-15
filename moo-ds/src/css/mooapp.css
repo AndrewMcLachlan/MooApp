@@ -1,22 +1,16 @@
-@layer bootstrap, reset, layout, components;
-
-@import "../../../node_modules/bootstrap/dist/css/bootstrap.css" layer(bootstrap);
-
+@layer reset, base, components, layout;
 @import "_reset.css" layer(reset);
 @import "_variables.css" layer(reset);
 @import "_fonts.css" layer(reset);
 @import "colours.css" layer(reset);
 
-@import "_global.css" layer(layout);
-@import "_layout.css" layer(layout);
-
+@import "_moo-base.css" layer(base);
+@import "_moo-grid.css" layer(base);
+@import "_moo-utilities.css" layer(base);
+@import "_global.css" layer(base);
 
 @import "_article.css" layer(components);
-@import "_button.css" layer(components);
 @import "_components.css" layer(components);
-@import "_usermenu.css" layer(components);
-@import "_forms.css" layer(components);
-@import "_modal.css" layer(components);
 @import "_pages.css" layer(components);
-@import "_table.css" layer(components);
-@import "_tabs.css" layer(components);
+
+@import "_layout.css" layer(layout);

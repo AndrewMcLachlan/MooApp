@@ -1,11 +1,11 @@
 .danger {
-    color: var(--bs-danger);
+    color: var(--danger);
 }
 
 .warning {
-    color: var(--bs-warning);
+    color: var(--warning);
 }
 
 .success {
-    color: var(--bs-success);
+    color: var(--success);
 }

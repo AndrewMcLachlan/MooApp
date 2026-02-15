@@ -1,18 +1,17 @@
 
 import { SidebarComponent } from "../Types";
 import { useLayout } from "../../providers";
-import { Nav, Offcanvas } from "react-bootstrap";
-import { NavItemList } from "@andrewmclachlan/moo-ds";
+import { Nav, NavItemList, Drawer } from "@andrewmclachlan/moo-ds";
 
 export const Sidebar: SidebarComponent = ({ navItems = [] }) => {
 
     const layout = useLayout();
 
     return (
-        <Offcanvas show={layout.showSidebar}>
-            <Offcanvas.Header closeButton onHide={() => layout.setShowSidebar(false)} />
-            <Offcanvas.Body className="d-lg-none sidebar">
-                <Nav className="flex-column ">
+        <Drawer show={layout.showSidebar} onHide={() => layout.setShowSidebar(false)}>
+            <Drawer.Header closeButton />
+            <Drawer.Body className="d-lg-none sidebar">
+                <Nav column>
                     <NavItemList navItems={navItems} role="menuitem" onClick={() => layout.setShowSidebar(false)} />
                     {layout.secondaryNav.length > 0 &&
                         <>
@@ -21,7 +20,7 @@ export const Sidebar: SidebarComponent = ({ navItems = [] }) => {
                         </>
                     }
                 </Nav>
-            </Offcanvas.Body>
-        </Offcanvas>
+            </Drawer.Body>
+        </Drawer>
     );
 };

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Alerts, MessageProvider } from "@andrewmclachlan/moo-ds";
-import { Alert } from "react-bootstrap";
+import { Alerts, MessageProvider, Alert } from "@andrewmclachlan/moo-ds";
 
 const meta = {
     title: "Moo App/Layout/Alerts",

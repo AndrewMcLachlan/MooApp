@@ -1,0 +1,34 @@
+/* Breadcrumb styles - derived from Bootstrap v5.3 */
+
+.breadcrumb {
+    --breadcrumb-padding-x: 0;
+    --breadcrumb-padding-y: 0;
+    --breadcrumb-margin-bottom: 1rem;
+    --breadcrumb-font-size: inherit;
+    --breadcrumb-divider-color: var(--secondary-color);
+    --breadcrumb-item-padding-x: 0.5rem;
+    --breadcrumb-item-active-color: var(--secondary-color);
+
+    display: flex;
+    flex-wrap: wrap;
+    padding: var(--breadcrumb-padding-y) var(--breadcrumb-padding-x);
+    margin-bottom: var(--breadcrumb-margin-bottom);
+    font-size: var(--breadcrumb-font-size);
+    list-style: none;
+    background-color: var(--breadcrumb-bg);
+}
+
+.breadcrumb-item + .breadcrumb-item {
+    padding-left: var(--breadcrumb-item-padding-x);
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    float: left;
+    padding-right: var(--breadcrumb-item-padding-x);
+    color: var(--breadcrumb-divider-color);
+    content: var(--breadcrumb-divider, "/");
+}
+
+.breadcrumb-item.active {
+    color: var(--breadcrumb-item-active-color);
+}
