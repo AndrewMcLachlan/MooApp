@@ -69,7 +69,7 @@ export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
     }, [show, updatePosition]);
 
     useEffect(() => {
-        if (!show || !rootClose) return;
+        if (!show || !rootClose) return () => {};
 
         const handleClickOutside = (e: MouseEvent) => {
             if (

@@ -7,7 +7,6 @@ const msalConfig: msal.Configuration = {
         authority: "https://login.microsoftonline.com/30efefb9-9034-4e0c-8c69-17f4578f5924",
         redirectUri: window.location.origin,
         postLogoutRedirectUri: window.location.origin,
-        navigateToLoginRequestUrl: true,
     },
     cache: {
         cacheLocation: "sessionStorage",

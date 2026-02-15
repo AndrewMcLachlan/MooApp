@@ -1,12 +1,13 @@
 import classNames from "classnames";
-import React from "react";
+import React, { MouseEventHandler } from "react";
 
 export interface PaginationBaseProps extends React.HTMLAttributes<HTMLUListElement> {
 }
 
-export interface PageItemProps extends React.HTMLAttributes<HTMLLIElement> {
+export interface PageItemProps extends Omit<React.HTMLAttributes<HTMLLIElement>, "onClick"> {
     active?: boolean;
     disabled?: boolean;
+    onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 const PageItem: React.FC<React.PropsWithChildren<PageItemProps>> = ({ active, disabled, className, children, onClick, title, ...rest }) => (

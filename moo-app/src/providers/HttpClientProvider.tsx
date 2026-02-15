@@ -54,7 +54,6 @@ export const HttpClientProvider: React.FC<React.PropsWithChildren<HttpClientProv
             const shouldReset =
                 event.eventType === EventType.HANDLE_REDIRECT_END ||
                 ((event.eventType === EventType.LOGIN_SUCCESS ||
-                    event.eventType === EventType.LOGIN_FAILURE ||
                     event.eventType === EventType.ACQUIRE_TOKEN_SUCCESS ||
                     event.eventType === EventType.ACQUIRE_TOKEN_FAILURE) &&
                     isInteractiveEvent);

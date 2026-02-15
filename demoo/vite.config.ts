@@ -21,6 +21,9 @@ export default defineConfig({
     }),
     react(),
   ],
+  build: {
+    chunkSizeWarningLimit: Infinity,
+  },
   server: {
     port: 3002
   },

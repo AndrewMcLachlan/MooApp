@@ -31,7 +31,7 @@ jobs:
         else
           echo "version=${{ steps.gitversion.outputs.semVer }}" >> "$GITHUB_OUTPUT"
         fi
-    - run: echo "::notice::Version ${{ steps.version.outputs.version }} (GitVersion ${{ steps.gitversion.outputs.semVer }})"
+    - run: echo "::notice::Version ${{ steps.version.outputs.version }}"
     - uses: actions/setup-node@v6
       with:
         node-version: 22
