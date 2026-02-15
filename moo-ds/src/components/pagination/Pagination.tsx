@@ -1,4 +1,4 @@
-import { getPagesToDisplay } from "../utils/paging";
+import { getPagesToDisplay } from "../../utils/paging";
 import { PaginationBase } from "./PaginationBase";
 
 export const Pagination : React.FC<PaginationProps> = ({pageNumber, numberOfPages, onChange}) => {

@@ -24,6 +24,10 @@
     display: none;
 }
 
+.badge.rounded-pill {
+    border-radius: 50rem;
+}
+
 .bg-primary { background-color: var(--primary) !important; }
 .bg-secondary { background-color: #6c757d !important; }
 .bg-success { background-color: var(--green) !important; }

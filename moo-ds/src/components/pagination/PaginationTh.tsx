@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { PaginationProps } from "./Paginaton";
+import { PaginationProps } from "./Pagination";
 import { MiniPagination } from "./MiniPagination";
 
 export const PaginationTh: React.FC<PropsWithChildren<PaginationThProps>> = ({ children, ...props }) => {
