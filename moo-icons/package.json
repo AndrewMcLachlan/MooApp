@@ -4,9 +4,15 @@
   "files": [
     "dist"
   ],
-  "main": "dist/index.js",
+  "main": "dist/index.es.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js"
+    }
+  },
   "author": {
     "name": "Andrew McLachlan",
     "url": "https://andrewmclachlan.com"
@@ -21,12 +27,9 @@
     "@andrewmclachlan:registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "start": "vite",
-    "build-vite": "tsc -b && vite build",
-    "build": "rollup -c",
+    "build": "vite build",
     "lint": "eslint ./src/**/*.ts",
     "lint-fix": "eslint ./src/**/*.ts --fix",
-    "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage"

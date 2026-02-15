@@ -28,12 +28,18 @@ const config: StorybookConfig = {
   viteFinal: async (config) => {
     config.server = config.server || {};
     config.server.watch = config.server.watch || {};
-    config.server.watch.ignored = ['!**/node_modules/@andrewmclachlan/moo-ds/**'];
+    config.server.watch.ignored = [
+      '!**/node_modules/@andrewmclachlan/moo-ds/**',
+      '!**/node_modules/@andrewmclachlan/moo-app/**',
+      '!**/node_modules/@andrewmclachlan/moo-icons/**',
+    ];
 
     config.resolve = config.resolve || {};
     config.resolve.alias = {
       ...config.resolve.alias,
       '@andrewmclachlan/moo-ds': resolve(__dirname, '../../moo-ds/src'),
+      '@andrewmclachlan/moo-app': resolve(__dirname, '../../moo-app/src'),
+      '@andrewmclachlan/moo-icons': resolve(__dirname, '../../moo-icons/src'),
     };
 
     return config;

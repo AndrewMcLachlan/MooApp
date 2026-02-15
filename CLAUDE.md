@@ -46,7 +46,7 @@ Builds on moo-ds to provide a complete authenticated SPA framework:
 - **createMooAppBrowserRouter**: Utility to convert route definitions to React Router format
 
 ### @andrewmclachlan/moo-icons
-SVG icons compiled as React components via Rollup/SVGR.
+SVG icons compiled as React components via SVGR.
 
 ### demoo
 Demo application showcasing the libraries.
@@ -57,7 +57,9 @@ Demo application showcasing the libraries.
 
 **API hooks**: All API hooks use React Query and automatically acquire MSAL tokens via HttpClientProvider interceptors.
 
-**Build tooling**: Libraries use Rollup to output both CJS and ESM formats with TypeScript declarations.
+**Build tooling**: Libraries use Vite library mode to output ESM with TypeScript declarations (via vite-plugin-dts). Peer dependencies are externalized via rollup-plugin-peer-deps-external.
+
+**Dev workflow**: demoo and storybook resolve `@andrewmclachlan/moo-*` imports directly to library source via Vite aliases — no rebuild needed for library changes to flow through.
 
 ## Requirements
 

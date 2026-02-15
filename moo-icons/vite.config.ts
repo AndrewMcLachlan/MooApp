@@ -1,26 +1,35 @@
-import { defineConfig } from "vite";
-import { resolve } from "path";
-import react from "@vitejs/plugin-react";
-import dts from "vite-plugin-dts";
-import svgr from "vite-plugin-svgr";
+import { defineConfig } from "vite"
+import svgr from "vite-plugin-svgr"
+import dts from "vite-plugin-dts"
+import external from "rollup-plugin-peer-deps-external"
+import { fileURLToPath } from "url"
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    svgr(),
-    react(),
-    dts({
-      insertTypesEntry: true,
+    svgr({
+      svgrOptions: {
+        plugins: ["@svgr/plugin-svgo", "@svgr/plugin-jsx"],
+        svgoConfig: {
+          plugins: [{
+            name: "preset-default",
+            params: { overrides: { removeViewBox: false, cleanupIds: false } },
+          }],
+        },
+      },
+      include: "**/*.svg",
     }),
+    dts({ exclude: ["src/**/*.test.*", "src/**/__tests__/**", "src/setupTests.*"] }),
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.ts"),
-      name: "MooIcons",
-      fileName: (format) => `index.${format}.js`,
+      entry: fileURLToPath(new URL("src/index.ts", import.meta.url)),
+      formats: ["es"],
+      fileName: () => "index.es.js",
+    },
+    sourcemap: true,
+    minify: false,
+    rollupOptions: {
+      plugins: [external()],
     },
   },
-  server: {
-    port: 3000,
-  }
-});
+})
