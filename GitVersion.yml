@@ -1,7 +1,7 @@
-mode: ContinuousDeployment
+workflow: GitHubFlow
 next-version: 4.0.0
 branches:
   main:
     is-mainline: true
   feature:
-    tag: beta
+    label: beta
