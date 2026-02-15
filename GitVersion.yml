@@ -1,7 +1,7 @@
-workflow: GitHubFlow
+workflow: GitHubFlow/v1
 next-version: 4.0.0
 branches:
   main:
-    is-mainline: true
+    is-main-branch: true
   feature:
     label: beta
