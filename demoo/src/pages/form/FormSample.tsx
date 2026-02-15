@@ -1,7 +1,6 @@
 import { Page } from "@andrewmclachlan/moo-app";
-import { Form, SectionForm, FormComboBox } from "@andrewmclachlan/moo-ds"
+import { Form, SectionForm, FormComboBox, Button, Section, Upload } from "@andrewmclachlan/moo-ds"
 import { useState } from "react";
-import { Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 export const FormSample = () => {
@@ -63,6 +62,14 @@ export const FormSample = () => {
                     <Button type="submit" variant="primary">Submit</Button>
                 </SectionForm>
             </div>
+
+            <Section title="File Uploads" header="File Uploads" headerSize={4}>
+                <h5>Attach Supporting Documents</h5>
+                <Upload allowMultiple accept=".pdf,.jpg,.png,.doc,.docx" />
+
+                <h5 style={{ marginTop: "1.5rem" }}>Upload Avatar</h5>
+                <Upload accept="image/*" />
+            </Section>
         </Page>
     );
 }

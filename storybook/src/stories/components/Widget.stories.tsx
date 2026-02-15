@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Widget } from "@andrewmclachlan/moo-ds";
-import { Row } from "react-bootstrap";
+import { Widget, Row } from "@andrewmclachlan/moo-ds";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const meta = {

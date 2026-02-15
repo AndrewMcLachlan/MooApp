@@ -1,23 +1,51 @@
+import classNames from "classnames";
+import React from "react";
 import { NavItem } from "../models";
-import { Breadcrumb as BSBreadcrumb, BreadcrumbProps as BSBreadcrumbProps } from "react-bootstrap";
 import { useLink } from "../providers";
 
-export const Breadcrumb: React.FC<BreadcrumbProps> = ({ breadcrumbs = [], ...rest }) => {
+export interface BreadcrumbProps extends React.HTMLAttributes<HTMLElement> {
+    breadcrumbs?: NavItem[];
+    as?: React.ElementType;
+    label?: string;
+}
+
+export interface BreadcrumbItemProps extends React.HTMLAttributes<HTMLLIElement> {
+    active?: boolean;
+    linkAs?: React.ElementType;
+    linkProps?: Record<string, any>;
+    href?: string;
+}
+
+const BreadcrumbItem: React.FC<React.PropsWithChildren<BreadcrumbItemProps>> = ({ active, linkAs, linkProps, href, className, children, ...rest }) => {
+    const Tag = linkAs || "a";
+    return (
+        <li className={classNames("breadcrumb-item", active && "active", className)} {...rest}>
+            {active ? children : <Tag href={href} {...linkProps}>{children}</Tag>}
+        </li>
+    );
+};
+
+BreadcrumbItem.displayName = "Breadcrumb.Item";
+
+const BreadcrumbComponent: React.FC<React.PropsWithChildren<BreadcrumbProps>> = ({ breadcrumbs = [], as: Tag = "nav", label = "breadcrumb", className, children, ...rest }) => {
 
     const Link = useLink();
 
     return (
-        <BSBreadcrumb {...rest}>
-            <BSBreadcrumb.Item linkProps={{ to: "/" }} linkAs={Link}>Home</BSBreadcrumb.Item>
-            {breadcrumbs.map((item, index) =>
-                <BSBreadcrumb.Item key={index} linkProps={{ to: item.route }} linkAs={Link}>{item.text}</BSBreadcrumb.Item>
-            )}
-        </BSBreadcrumb>
+        <Tag aria-label={label} {...rest}>
+            <ol className={classNames("breadcrumb", className)}>
+                <BreadcrumbItem linkProps={{ to: "/" }} linkAs={Link}>Home</BreadcrumbItem>
+                {breadcrumbs.map((item, index) =>
+                    <BreadcrumbItem key={index} linkProps={{ to: item.route }} linkAs={Link}>{item.text}</BreadcrumbItem>
+                )}
+                {children}
+            </ol>
+        </Tag>
     );
 };
 
-Breadcrumb.displayName = "Breadcrumb";
+BreadcrumbComponent.displayName = "Breadcrumb";
 
-export interface BreadcrumbProps extends BSBreadcrumbProps {
-    breadcrumbs?: NavItem[];
-}
+export const Breadcrumb = Object.assign(BreadcrumbComponent, {
+    Item: BreadcrumbItem,
+});

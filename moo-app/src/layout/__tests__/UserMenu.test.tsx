@@ -25,15 +25,6 @@ vi.mock('@andrewmclachlan/moo-ds', () => ({
   NavItemList: ({ navItems }: { navItems: any[] }) => (
     <div data-testid="nav-items">{navItems?.length ?? 0} items</div>
   ),
-}));
-
-// Mock Avatar component
-vi.mock('../../components', () => ({
-  Avatar: () => <div data-testid="avatar">Avatar</div>,
-}));
-
-// Mock react-bootstrap
-vi.mock('react-bootstrap', () => ({
   OverlayTrigger: ({ children, overlay }: any) => (
     <div data-testid="overlay-trigger">
       {children}
@@ -49,6 +40,11 @@ vi.mock('react-bootstrap', () => ({
       Body: ({ children }: any) => <div data-testid="popover-body">{children}</div>,
     }
   ),
+}));
+
+// Mock Avatar component
+vi.mock('../../components', () => ({
+  Avatar: () => <div data-testid="avatar">Avatar</div>,
 }));
 
 // Mock FontAwesome

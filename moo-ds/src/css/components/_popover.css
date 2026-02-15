@@ -1,0 +1,92 @@
+/* Popover styles - derived from Bootstrap v5.3 */
+
+.popover {
+    z-index: 1070;
+    max-width: 276px;
+    font-size: 1rem;
+    word-wrap: break-word;
+    background-color: var(--popover-bg, var(--body-bg));
+    background-clip: padding-box;
+    border: var(--border-width, 1px) solid var(--popover-border-color, rgba(0, 0, 0, 0.175));
+    border-radius: var(--border-radius, 0.5rem);
+    box-shadow: var(--popover-box-shadow, 0 0.5rem 1rem rgba(0, 0, 0, 0.15));
+}
+
+.popover-header {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    color: var(--body-color);
+    background-color: var(--popover-header-bg, var(--body-bg));
+    border-bottom: var(--border-width, 1px) solid var(--popover-border-color, rgba(0, 0, 0, 0.175));
+    border-top-left-radius: calc(var(--border-radius, 0.5rem) - var(--border-width, 1px));
+    border-top-right-radius: calc(var(--border-radius, 0.5rem) - var(--border-width, 1px));
+
+}
+
+.popover-header:empty {
+    display: none;
+}
+
+.popover-body {
+    padding: 1rem;
+    color: var(--body-color);
+}
+
+/* User menu popover specific styles */
+.user-popover {
+    max-width: none;
+    width: max-content;
+}
+
+@scope (.user-popover) {
+    .popover-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        font-size: 1.3rem;
+        padding: 0.75rem 1rem;
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    li {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        gap: .75rem;
+
+        &.divider {
+            border-top: 2px solid var(--border-color);
+            margin: 1rem 0;
+        }
+    }
+
+    a.nav-link {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .avatar {
+
+        img,
+        .initials {
+            height: 40px;
+            width: 40px;
+            border-radius: 20px;
+        }
+
+        .initials {
+            border: 1px solid var(--body-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

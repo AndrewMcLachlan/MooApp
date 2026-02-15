@@ -1,7 +1,7 @@
 .section {
     background-color: var(--section-bg);
     padding: 15px;
-    border: 1px solid var(--bs-border-color);
+    border: 1px solid var(--border-color);
     border-radius: 2px;
 
     position: relative;
@@ -10,48 +10,50 @@
         flex: 1;
     }
 
-    .section-header{
-        a {
-            color: var(--bs-body-color);
-            text-decoration: none;
-            &:hover {
-                text-decoration: underline;
-            }
-        }
+    .subheading {
+        padding: 1rem 0;
     }
+}
 
+@scope (.section) to (.body) {
     h1,h2,h3,h4,h5,h6 {
         padding: 0 0 1rem;
         margin: 0;
     }
 
-    &.section-table {
-        h1,h2,h3,h4,h5,h6 {
-            padding: 1rem;
-            border-bottom: 1px solid var(--bs-border-color);
-            margin: 0;
+    .section-header a {
+        color: var(--body-color);
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
         }
+    }
+}
 
-        th:first-child, td:first-child {
-            padding-left: 1rem;
-        }
-
-        th:last-child, td:last-child {
-            padding-left: 1rem;
-        }
-
-        padding: 0;
-
-        > table {
-            margin-bottom: 0;
-        }
-
-        border-bottom-width: 0;
+@scope (.section.section-table) to (.body) {
+    h1,h2,h3,h4,h5,h6 {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border-color);
+        margin: 0;
     }
 
-    .subheading {
-        padding: 1rem 0;
+    th:first-child, td:first-child {
+        padding-left: 1rem;
     }
+
+    th:last-child, td:last-child {
+        padding-left: 1rem;
+    }
+}
+
+.section.section-table {
+    padding: 0;
+
+    > table {
+        margin-bottom: 0;
+    }
+
+    border-bottom-width: 0;
 }
 
 .section-group {

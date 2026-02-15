@@ -1,6 +1,7 @@
 import { useTheme } from "../providers"
 import { Themes } from "../models";
-import { Col, Row } from "react-bootstrap";
+import { Col } from "./Col";
+import { Row } from "./Row";
 import { ThemeSample } from "./ThemeSample";
 
 export const ThemeSelector = () => {

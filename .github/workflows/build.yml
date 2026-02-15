@@ -17,11 +17,15 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v6
-    - name: Set version number
-      id: set-version-number
-      uses: andrewmclachlan/actions/set-version-number-npm@v4
       with:
-        package-file-path: 'package.json'
+        fetch-depth: 0
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v3.2.1
+      with:
+        versionSpec: '6.x'
+    - name: Determine version
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v3.2.1
     - name: Setup node and npm
       uses: actions/setup-node@v6
       with:
@@ -34,7 +38,7 @@ jobs:
         rm -rf node_modules
         npm ci --no-scripts
     - name: npm version
-      run: npm version ${{ steps.set-version-number.outputs.version }} --no-git-tag-version --workspaces
+      run: npm version ${{ steps.gitversion.outputs.semVer }} --no-git-tag-version --workspaces
     - name: Run tests
       run: npm run test:run
     - name: npm run build

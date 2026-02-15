@@ -4,7 +4,7 @@ import { ThemeProvider, MessageProvider } from "@andrewmclachlan/moo-ds";
  * Decorator for table header components (th elements)
  */
 export const TableDecorator = (Story: React.ComponentType) => (
-    <div className="dark" data-bs-theme="dark">
+    <div className="dark" data-theme="dark">
         <table className="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -24,7 +24,7 @@ export const TableDecorator = (Story: React.ComponentType) => (
  * Decorator for table body components (tr elements)
  */
 export const TableBodyDecorator = (Story: React.ComponentType) => (
-    <div className="dark" data-bs-theme="dark">
+    <div className="dark" data-theme="dark">
         <table className="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -62,7 +62,7 @@ export const MessageDecorator = (Story: React.ComponentType) => (
  * Decorator for nav items
  */
 export const NavDecorator = (Story: React.ComponentType) => (
-    <nav className="nav flex-column">
+    <nav className="nav nav-column">
         <Story />
     </nav>
 );

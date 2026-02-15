@@ -1,0 +1,7 @@
+mode: ContinuousDeployment
+next-version: 4.0.0
+branches:
+  main:
+    is-mainline: true
+  feature:
+    tag: beta

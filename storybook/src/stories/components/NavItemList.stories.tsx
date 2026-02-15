@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
-import { NavItemList, NavItemDivider } from "@andrewmclachlan/moo-ds";
+import { NavItemList, NavItemDivider, Nav } from "@andrewmclachlan/moo-ds";
 import { sampleNavItems, navItemsWithClick, navItemsWithImages } from "../utils/mockData";
-import { Nav } from "react-bootstrap";
 
 const meta = {
     title: "Moo App/Components/NavItemList",
@@ -26,7 +25,7 @@ const meta = {
     },
     decorators: [
         (Story) => (
-            <Nav className="flex-column" style={{ width: "200px" }}>
+            <Nav column style={{ width: "200px" }}>
                 <Story />
             </Nav>
         ),

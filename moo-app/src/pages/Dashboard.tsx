@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 
 import { Page, PageProps } from "../layout/Page";
-import { Row } from "react-bootstrap";
+import { Row } from "@andrewmclachlan/moo-ds";
 import classNames from "classnames";
 
 export const Dashboard: React.FC<PropsWithChildren<DashboardProps>> = ({className, children, ...rest}) => (

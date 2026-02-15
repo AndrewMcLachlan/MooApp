@@ -1,11 +1,21 @@
-import { Section, NavItemDivider, IconButton, SectionTable, EditColumn, Pagination, PageSize, PaginationControls, SortablePaginationTh, changeSortDirection, SortDirection } from "@andrewmclachlan/moo-ds";
-import { useHttpClient, Page } from "@andrewmclachlan/moo-app";
-import { Button } from "react-bootstrap";
+import { Section, NavItemDivider, IconButton, SectionTable, Pagination, PageSize, PaginationControls, SortablePaginationTh, changeSortDirection, SortDirection, Button, LoadingTableRows, MiniPagination } from "@andrewmclachlan/moo-ds";
+import { Page } from "@andrewmclachlan/moo-app";
 import { Tags } from "../assets";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 const tableData = Array.from({ length: 100 }, (_, i) => ({ a: `Row ${i + 1} Data 1`, b: `Row ${i + 1} Data 2`, c: `Row ${i + 1} Data 3` }));
+
+const miniTableData = [
+    { name: "Alice", role: "Admin", status: "Active" },
+    { name: "Bob", role: "Editor", status: "Active" },
+    { name: "Charlie", role: "Viewer", status: "Inactive" },
+    { name: "Diana", role: "Editor", status: "Active" },
+    { name: "Eve", role: "Admin", status: "Active" },
+    { name: "Frank", role: "Viewer", status: "Inactive" },
+    { name: "Grace", role: "Editor", status: "Active" },
+    { name: "Hank", role: "Viewer", status: "Active" },
+];
 
 export const Table = () => {
 
@@ -17,19 +27,28 @@ export const Table = () => {
     const [sortField, setSortField] = useState<string>("a");
     const [sortDirection, setSortDirection] = useState<SortDirection>("Ascending");
 
+    const [isTableLoading, setIsTableLoading] = useState(false);
+    const [miniPage, setMiniPage] = useState(1);
 
     const numberOfPages = Math.ceil(tableData.length / pageSize);
+    const miniPageSize = 3;
+    const miniNumberOfPages = Math.ceil(miniTableData.length / miniPageSize);
+
+    const simulateLoading = () => {
+        setIsTableLoading(true);
+        setTimeout(() => setIsTableLoading(false), 2000);
+    };
 
     return (
-        <Page title="Components" breadcrumbs={[{ route: "/components", text: "Components" }]} navItems={[{ route: "/components/iconlinkbutton", image: <Tags />, text: "Icon Link Button" }, { route: "/components/iconbutton", image: <Tags />, text: "Icon Button" }, <NavItemDivider />,
+        <Page title="Table" breadcrumbs={[{ route: "/table", text: "Table" }]} navItems={[{ route: "/components/iconlinkbutton", image: <Tags />, text: "Icon Link Button" }, { route: "/components/iconbutton", image: <Tags />, text: "Icon Button" }, <NavItemDivider />,
         { route: "/components/tag-panel", image: <Tags />, text: "Tag Panel" }]} actions={[<IconButton icon={faPlus}>Create</IconButton>]}>
-            <Section title="Components">
+            <Section title="Paginated Table">
                 <Button size="sm" variant="link">Sample</Button>
                 <Button>Sample 2</Button>
                 <Button variant="outline-primary">Sample 3</Button>
             </Section>
 
-            <SectionTable header="Table" striped hover headerSize={2}>
+            <SectionTable header="Paginated Table" striped hover headerSize={2}>
                 <thead>
                     <tr>
                         <th>Header 1</th>
@@ -59,6 +78,63 @@ export const Table = () => {
                     </tr>
                 </tfoot>
             </SectionTable>
+
+            <Section title="Loading Table Rows" header="Loading Table Rows" headerSize={4}>
+                <Button onClick={simulateLoading} disabled={isTableLoading}>
+                    {isTableLoading ? "Loading..." : "Simulate Loading"}
+                </Button>
+            </Section>
+
+            <SectionTable header="Data Table" striped hover headerSize={2}>
+                <thead>
+                    <tr>
+                        <th>Column A</th>
+                        <th>Column B</th>
+                        <th>Column C</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {isTableLoading ? (
+                        <LoadingTableRows rows={5} cols={3} />
+                    ) : (
+                        tableData.slice(0, 5).map((row) => (
+                            <tr key={row.a}>
+                                <td>{row.a}</td>
+                                <td>{row.b}</td>
+                                <td>{row.c}</td>
+                            </tr>
+                        ))
+                    )}
+                </tbody>
+            </SectionTable>
+
+            <Section title="Mini Pagination" header="Mini Pagination" headerSize={4}>
+                <SectionTable striped hover headerSize={2}>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {miniTableData.slice((miniPage - 1) * miniPageSize, miniPage * miniPageSize).map((row) => (
+                            <tr key={row.name}>
+                                <td>{row.name}</td>
+                                <td>{row.role}</td>
+                                <td>{row.status}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colSpan={3}>
+                                <MiniPagination pageNumber={miniPage} numberOfPages={miniNumberOfPages} onChange={(_, newPage) => setMiniPage(newPage)} />
+                            </td>
+                        </tr>
+                    </tfoot>
+                </SectionTable>
+            </Section>
         </Page>
     );
 }

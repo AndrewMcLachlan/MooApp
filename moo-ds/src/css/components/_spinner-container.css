@@ -10,7 +10,7 @@
     z-index: 1000;
 
     .spinner-border {
-        --bs-spinner-width: 3rem;
-        --bs-spinner-height: 3rem;
+        --spinner-width: 3rem;
+        --spinner-height: 3rem;
     }
 }

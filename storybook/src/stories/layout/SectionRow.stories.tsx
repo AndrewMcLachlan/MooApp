@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { SectionRow } from "@andrewmclachlan/moo-ds";
-import { Col } from "react-bootstrap";
+import { Col } from "@andrewmclachlan/moo-ds";
 
 const meta = {
     title: "Moo App/Layout/SectionRow",

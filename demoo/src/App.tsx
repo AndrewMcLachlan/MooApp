@@ -5,7 +5,7 @@ import { MooAppLayout } from "@andrewmclachlan/moo-app";
 import { Icon, SearchBox } from "@andrewmclachlan/moo-ds";
 import { useIsAuthenticated } from "@azure/msal-react";
 import { Link } from "react-router";
-import { Application, Budget, Tags, User, Stack, Users } from "@andrewmclachlan/moo-icons";
+import { Application, Budget, Tags, User, Stack, Users, Sliders } from "@andrewmclachlan/moo-icons";
 
 const App = () => {
 
@@ -23,6 +23,11 @@ const App = () => {
       text: "Components",
       route: "/components",
       image: <Icon icon="https://avatars.githubusercontent.com/u/3093264?v=4" />
+    },
+    {
+      text: "Overlays",
+      route: "/overlays",
+      image: <Icon icon={Sliders} />
     },
     {
       text: "Forms",
@@ -45,9 +50,8 @@ const App = () => {
       image: <Users />
     },
     {
-      id: "table",
       text: "Table",
-      onClick: () => alert("Table Clicked"),
+      route: "/table",
       image: <Icon icon={Tags} />
     }
   ];

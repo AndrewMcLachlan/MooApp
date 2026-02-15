@@ -260,7 +260,7 @@ describe('addMsalInterceptor', () => {
   });
 
   describe('non-redirect errors', () => {
-    it('sends request without Authorization for unknown errors', async () => {
+    it('cancels request for unknown errors instead of sending without auth', async () => {
       const error = Object.assign(new Error('Unknown'), { errorCode: 'some_other_error' });
       const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       const msal = createMockMsal({
@@ -268,9 +268,7 @@ describe('addMsalInterceptor', () => {
       });
       const client = createClientWithInterceptor(msal);
 
-      const response = await client.get('/api/data');
-
-      expect(response.config.headers.getAuthorization()).toBeUndefined();
+      await expect(client.get('/api/data')).rejects.toThrow('Request canceled');
       expect(consoleSpy).toHaveBeenCalled();
       consoleSpy.mockRestore();
     });

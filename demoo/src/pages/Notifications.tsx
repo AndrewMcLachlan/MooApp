@@ -1,5 +1,5 @@
 import { Page } from '@andrewmclachlan/moo-app';
-import { Button } from 'react-bootstrap';
+import { Button } from '@andrewmclachlan/moo-ds';
 import { toast } from 'react-toastify';
 
 export const Notifications = () => {

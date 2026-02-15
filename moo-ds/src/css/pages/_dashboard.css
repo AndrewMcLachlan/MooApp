@@ -1,6 +1,6 @@
 main.dashboard {
     .row {
-        --bs-gutter-y: 1.5rem;
+        --gutter-y: 1.5rem;
 
         > div {
 

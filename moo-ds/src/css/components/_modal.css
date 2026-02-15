@@ -1,0 +1,126 @@
+/* Modal styles - derived from Bootstrap v5.3 */
+
+.modal {
+    --modal-width: 500px;
+    --modal-padding: 1rem;
+    --modal-margin: 0.5rem;
+    --modal-color: var(--body-color);
+    --modal-bg: var(--body-bg);
+    --modal-border-color: var(--border-color, rgba(0, 0, 0, 0.175));
+    --modal-border-width: var(--border-width, 1px);
+    --modal-border-radius: var(--border-radius, 0.5rem);
+    --modal-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    --modal-inner-border-radius: calc(var(--border-radius, 0.5rem) - var(--border-width, 1px));
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1055;
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+}
+
+.modal.show {
+    display: block;
+}
+
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: var(--modal-margin);
+    pointer-events: none;
+}
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: var(--modal-width);
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--modal-color);
+    pointer-events: auto;
+    background-color: var(--modal-bg);
+    background-clip: padding-box;
+    border: var(--modal-border-width) solid var(--modal-border-color);
+    border-radius: var(--modal-border-radius);
+    box-shadow: var(--modal-box-shadow);
+    outline: 0;
+}
+
+.modal-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    padding: var(--modal-padding);
+    border-bottom: var(--modal-border-width) solid var(--modal-border-color);
+    border-top-left-radius: var(--modal-inner-border-radius);
+    border-top-right-radius: var(--modal-inner-border-radius);
+    color: var(--header-text);
+    background-color: var(--header-bg);
+
+    .h4 {
+        font-weight: bold;
+    }
+
+    .btn-close {
+        padding: calc(var(--modal-padding) * 0.5);
+        margin: calc(-0.5 * var(--modal-padding)) calc(-0.5 * var(--modal-padding)) calc(-0.5 * var(--modal-padding)) auto;
+    }
+}
+
+.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: var(--modal-padding);
+}
+
+.modal-footer {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: calc(var(--modal-padding) - 0.25rem);
+    border-top: var(--modal-border-width) solid var(--modal-border-color);
+    border-bottom-right-radius: var(--modal-inner-border-radius);
+    border-bottom-left-radius: var(--modal-inner-border-radius);
+}
+
+.modal-footer > * {
+    margin: 0.25rem;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+}
+
+.modal-backdrop.fade {
+    opacity: 0;
+}
+
+.modal-backdrop.show {
+    opacity: 1;
+    backdrop-filter: blur(1px) grayscale(0.5) brightness(0.5);
+}

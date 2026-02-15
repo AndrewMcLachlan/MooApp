@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { Table, TableProps } from "react-bootstrap"
+import { Table, TableProps } from "../components/Table";
 import { Section, SectionProps } from "./Section/Section";
 import classNames from "classnames";
 

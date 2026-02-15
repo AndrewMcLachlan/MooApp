@@ -45,7 +45,7 @@ describe('Theme Persistence Integration', () => {
     vi.clearAllMocks();
     localStorage.clear();
     document.body.className = '';
-    document.body.removeAttribute('data-bs-theme');
+    document.body.removeAttribute('data-theme');
   });
 
   describe('initial theme loading', () => {
@@ -239,7 +239,7 @@ describe('Theme Persistence Integration', () => {
   });
 
   describe('body attributes', () => {
-    it('sets data-bs-theme attribute for Bootstrap', async () => {
+    it('sets data-theme attribute', async () => {
       render(
         <ThemeProvider>
           <ThemeController />
@@ -249,11 +249,11 @@ describe('Theme Persistence Integration', () => {
       await user.click(screen.getByTestId('theme-btn-dark'));
 
       await waitFor(() => {
-        expect(document.body.getAttribute('data-bs-theme')).toBe('dark');
+        expect(document.body.getAttribute('data-theme')).toBe('dark');
       });
     });
 
-    it('sets light data-bs-theme for light themes', async () => {
+    it('sets light data-theme for light themes', async () => {
       const darkTheme: Theme = { name: 'Dark warm', theme: 'dark', colour: '#1F1B18' };
       localStorage.setItem('theme', JSON.stringify(darkTheme));
 
@@ -266,7 +266,7 @@ describe('Theme Persistence Integration', () => {
       await user.click(screen.getByTestId('theme-btn-light'));
 
       await waitFor(() => {
-        expect(document.body.getAttribute('data-bs-theme')).toBe('light');
+        expect(document.body.getAttribute('data-theme')).toBe('light');
       });
     });
   });

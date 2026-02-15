@@ -1,0 +1,91 @@
+/* Offcanvas styles - derived from Bootstrap v5.3 */
+
+.offcanvas {
+    --offcanvas-width: 400px;
+    --offcanvas-height: 30vh;
+    --offcanvas-padding-x: 1rem;
+    --offcanvas-padding-y: 1rem;
+    --offcanvas-color: var(--body-color);
+    --offcanvas-bg: var(--body-bg);
+    --offcanvas-border-width: var(--border-width, 1px);
+    --offcanvas-border-color: var(--border-color, rgba(0, 0, 0, 0.175));
+    --offcanvas-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --offcanvas-transition: transform 0.3s ease-in-out;
+    --offcanvas-title-line-height: 1.5;
+
+    position: fixed;
+    bottom: 0;
+    z-index: 1045;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    color: var(--offcanvas-color);
+    visibility: hidden;
+    background-color: var(--offcanvas-bg);
+    background-clip: padding-box;
+    outline: 0;
+    transition: var(--offcanvas-transition);
+}
+
+.offcanvas-start {
+    top: 0;
+    left: 0;
+    width: var(--offcanvas-width);
+    border-right: var(--offcanvas-border-width) solid var(--offcanvas-border-color);
+    transform: translateX(-100%);
+}
+
+.offcanvas-end {
+    top: 0;
+    right: 0;
+    left: auto;
+    width: var(--offcanvas-width);
+    border-left: var(--offcanvas-border-width) solid var(--offcanvas-border-color);
+    transform: translateX(100%);
+}
+
+.offcanvas.show {
+    transform: none;
+    visibility: visible;
+}
+
+.offcanvas-header {
+    display: flex;
+    align-items: center;
+    padding: var(--offcanvas-padding-y) var(--offcanvas-padding-x);
+
+    .btn-close {
+        padding: calc(var(--offcanvas-padding-y) * 0.5) calc(var(--offcanvas-padding-x) * 0.5);
+        margin: calc(-0.5 * var(--offcanvas-padding-y)) calc(-0.5 * var(--offcanvas-padding-x)) calc(-0.5 * var(--offcanvas-padding-y)) auto;
+    }
+}
+
+.offcanvas-title {
+    margin-bottom: 0;
+    line-height: var(--offcanvas-title-line-height);
+}
+
+.offcanvas-body {
+    flex-grow: 1;
+    padding: var(--offcanvas-padding-y) var(--offcanvas-padding-x);
+    overflow-y: auto;
+}
+
+.offcanvas-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+}
+
+.offcanvas-backdrop.fade {
+    opacity: 0;
+}
+
+.offcanvas-backdrop.show {
+    opacity: 1;
+    backdrop-filter: blur(1px) grayscale(0.5) brightness(0.5);
+}

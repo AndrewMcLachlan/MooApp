@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { PropsWithChildren } from "react";
-import { Button, ButtonProps } from "react-bootstrap";
+import { Button, ButtonProps } from "./Button";
 import { IconType } from "../types";
 import { Icon } from "./Icon";
 

@@ -24,7 +24,7 @@ const preview: Preview = {
     (Story) => {
       useEffect(() => {
         document.body.classList.add("dark");
-        document.body.setAttribute("data-bs-theme", "dark");
+        document.body.setAttribute("data-theme", "dark");
       }, []);
 
       // Mock Link component for Storybook

@@ -18,13 +18,13 @@ export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>
     useEffect(() => {
         colour.setAttribute("content", theme.colour);
         document.body.setAttribute("class", theme.theme);
-        document.body.setAttribute("data-bs-theme", theme.theme === "" ? defaultTheme.theme : theme.theme.startsWith("dark") ? "dark" : "light");
+        document.body.setAttribute("data-theme", theme.theme === "" ? defaultTheme.theme : theme.theme.startsWith("dark") ? "dark" : "light");
     }, [theme]);
 
     useEffect(() => {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
             if (theme.name !== "Default") return;
-            document.body.setAttribute("data-bs-theme", event.matches ? "dark" : "light");
+            document.body.setAttribute("data-theme", event.matches ? "dark" : "light");
         });
 
         return () => window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', () => { });

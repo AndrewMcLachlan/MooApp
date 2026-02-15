@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { NavItemDivider } from "@andrewmclachlan/moo-ds";
-import { Nav } from "react-bootstrap";
+import { NavItemDivider, Nav } from "@andrewmclachlan/moo-ds";
 
 const meta = {
     title: "Moo App/Components/NavItemDivider",
@@ -11,7 +10,7 @@ const meta = {
     tags: ["autodocs"],
     decorators: [
         (Story) => (
-            <Nav className="flex-column" style={{ width: "200px" }}>
+            <Nav column style={{ width: "200px" }}>
                 <Nav.Link>Item Above</Nav.Link>
                 <Story />
                 <Nav.Link>Item Below</Nav.Link>

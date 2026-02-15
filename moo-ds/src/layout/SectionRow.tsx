@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { Row, RowProps } from "react-bootstrap";
+import { Row, RowProps } from "../components/Row";
 
 export type SectionRowComponent = React.FC<PropsWithChildren<SectionRowProps>>;
 

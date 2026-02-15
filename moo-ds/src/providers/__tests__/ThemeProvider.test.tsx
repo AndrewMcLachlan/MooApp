@@ -24,7 +24,7 @@ describe('ThemeProvider', () => {
 
     // Reset body attributes
     document.body.removeAttribute('class');
-    document.body.removeAttribute('data-bs-theme');
+    document.body.removeAttribute('data-theme');
 
     // Remove existing meta elements
     document.querySelectorAll('meta[name="theme-color"]').forEach(el => el.remove());
@@ -175,7 +175,7 @@ describe('ThemeProvider', () => {
       expect(document.body.getAttribute('class')).toBe('dark');
     });
 
-    it('updates data-bs-theme attribute for Bootstrap', () => {
+    it('updates data-theme attribute', () => {
       const wrapper = ({ children }: { children: React.ReactNode }) => (
         <ThemeProvider>{children}</ThemeProvider>
       );
@@ -188,10 +188,10 @@ describe('ThemeProvider', () => {
         result.current.setTheme?.(darkTheme);
       });
 
-      expect(document.body.getAttribute('data-bs-theme')).toBe('dark');
+      expect(document.body.getAttribute('data-theme')).toBe('dark');
     });
 
-    it('sets data-bs-theme to light for light themes', () => {
+    it('sets data-theme to light for light themes', () => {
       const wrapper = ({ children }: { children: React.ReactNode }) => (
         <ThemeProvider>{children}</ThemeProvider>
       );
@@ -204,7 +204,7 @@ describe('ThemeProvider', () => {
         result.current.setTheme?.(lightTheme);
       });
 
-      expect(document.body.getAttribute('data-bs-theme')).toBe('light');
+      expect(document.body.getAttribute('data-theme')).toBe('light');
     });
 
     it('accesses theme-color meta element on mount', () => {

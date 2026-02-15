@@ -1,8 +1,8 @@
 .avatar {
     img {
-        height: var(--user-image);
-        width: var(--user-image);
-        border-radius: var(--user-radius);
+        height: var(--user-image, 40px);
+        width: var(--user-image, 40px);
+        border-radius: var(--user-radius, 20px);
         cursor: pointer;
     }
 
@@ -10,7 +10,7 @@
         height: var(--user-image);
         width: var(--user-image);
         border-radius: var(--user-radius);
-        border: 1px solid var(--bs-body-color);
+        border: 1px solid var(--body-color);
         display: flex;
         align-items: center;
         justify-content: center;

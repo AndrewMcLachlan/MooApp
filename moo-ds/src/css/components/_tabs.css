@@ -1,0 +1,42 @@
+/* Tabs variant */
+@scope (.nav-tabs) {
+    :scope {
+        --nav-tabs-border-width: var(--border-width, 1px);
+        --nav-tabs-border-color: var(--border-color, #dee2e6);
+        --nav-tabs-link-hover-border-color: var(--secondary-color);
+        --nav-tabs-link-active-color: var(--body-color);
+        --nav-tabs-link-active-border-color: var(--primary);
+
+        border-bottom: 1px solid var(--nav-tabs-border-color);
+        gap: 1.5rem;
+    }
+
+    .nav-link {
+        border: none;
+        border-bottom: 2px solid transparent;
+        background: transparent;
+        color: var(--secondary-color);
+        padding: 0.5rem 0;
+        transition: color 0.15s, border-color 0.15s;
+
+        &:hover {
+            border-color: var(--nav-tabs-link-hover-border-color);
+            color: var(--nav-tabs-link-active-color);
+        }
+
+        &.active {
+            background: transparent;
+            border-color: var(--nav-tabs-link-active-border-color);
+            color: var(--nav-tabs-link-active-color);
+        }
+    }
+}
+
+/* Tab pane visibility */
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}

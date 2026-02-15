@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { ButtonProps } from "react-bootstrap";
+import { ButtonProps } from "./Button";
 import { IconType } from "../types";
 import { Icon } from "./Icon";
 import { useLink } from "../providers/LinkProvider";
