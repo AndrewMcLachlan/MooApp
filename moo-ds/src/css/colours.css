@@ -1,11 +1,19 @@
-.danger {
+.danger, .text-danger {
     color: var(--danger);
 }
 
-.warning {
+.warning, .text-warning {
     color: var(--warning);
 }
 
-.success {
+.success, .text-success {
     color: var(--success);
+}
+
+.text-muted {
+    color: var(--secondary-color);
+}
+
+.text-primary {
+    color: var(--primary);
 }

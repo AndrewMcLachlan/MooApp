@@ -1,14 +1,13 @@
 import React, { PropsWithChildren } from "react";
 
 import { Page, PageProps } from "../layout/Page";
-import { Row } from "@andrewmclachlan/moo-ds";
 import classNames from "classnames";
 
 export const Dashboard: React.FC<PropsWithChildren<DashboardProps>> = ({className, children, ...rest}) => (
     <Page className={classNames("dashboard", className)} {...rest}>
-        <Row>
+        <div className="dashboard-grid">
             {children}
-        </Row>
+        </div>
     </Page>
 );
 

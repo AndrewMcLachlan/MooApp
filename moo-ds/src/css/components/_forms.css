@@ -38,13 +38,13 @@ input.form-control {
     padding: var(--input-padding-v) var(--input-padding-h);
 
     &:read-only {
-        background-color: var(--disabled-bg, #e9ecef);
+        background-color: transparent;
         cursor: default;
 
         &:focus {
             box-shadow: none;
             border-color: var(--border-color, #dee2e6);
-            background-color: var(--disabled-bg, #e9ecef);
+            background-color: transparent;
         }
     }
 }
