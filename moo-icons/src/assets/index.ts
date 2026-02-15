@@ -10,6 +10,7 @@ export { default as Import } from "./import.svg";
 export { default as LeftRightArrow } from "./left-right-arrow.svg";
 export { default as PieChart } from "./pie-chart.svg";
 export { default as PiggyBank } from "./piggybank.svg";
+export { default as PullRequest } from "./pull-request.svg";
 export { default as Reports } from "./reports.svg";
 export { default as Rules } from "./rules.svg";
 export { default as Sliders } from "./sliders.svg";
