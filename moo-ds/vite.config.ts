@@ -1,45 +1,25 @@
 import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react"
-import svgr from "vite-plugin-svgr";
-import { resolve } from "path";
-import { fileURLToPath } from "url";
-import dts from "vite-plugin-dts";
-
-import typescript from "@rollup/plugin-typescript"
+import dts from "vite-plugin-dts"
 import external from "rollup-plugin-peer-deps-external"
-import postcss from "rollup-plugin-postcss"
+import { fileURLToPath } from "url"
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    svgr(),
-    react(),
-    dts({
-      insertTypesEntry: true,
-    }),
-  ],
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.ts"), //fileURLToPath(new URL("./src/index.ts")),
-      name: "moo-ds",
-      fileName: (format) => `moo-ds.${format}.js`,
+      entry: fileURLToPath(new URL("src/index.ts", import.meta.url)),
+      formats: ["es"],
+      fileName: () => "index.es.js",
     },
+    sourcemap: true,
+    minify: false,
     rollupOptions: {
-      plugins: [
-        external(),
-        postcss({
-          modules: false,
-          extensions: [".scss"],
-          sourceMap: true
-        }),
-        svgr(),
-        typescript(),
-      ],
+      plugins: [external()],
+      output: {
+        assetFileNames: "index[extname]",
+      },
     },
   },
-  resolve: {
-    alias: {
-      "~": fileURLToPath(new URL("../node_modules/", import.meta.url)),
-    }
-  }
+  plugins: [
+    dts({ exclude: ["src/**/*.test.*", "src/**/__tests__/**", "src/test-utils/**", "src/setupTests.*"] }),
+  ],
 })

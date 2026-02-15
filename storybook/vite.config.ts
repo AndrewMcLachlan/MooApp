@@ -5,7 +5,21 @@ import { fileURLToPath } from "url";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr()],
+  plugins: [
+    react(),
+    svgr({
+      svgrOptions: {
+        plugins: ["@svgr/plugin-svgo", "@svgr/plugin-jsx"],
+        svgoConfig: {
+          plugins: [{
+            name: "preset-default",
+            params: { overrides: { removeViewBox: false, cleanupIds: false } },
+          }],
+        },
+      },
+      include: "**/*.svg",
+    }),
+  ],
   resolve: {
     alias: {
       "~": fileURLToPath(new URL("../node_modules/", import.meta.url)),
