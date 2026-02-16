@@ -7,16 +7,17 @@ const getDefaultTheme = () => window.matchMedia && window.matchMedia('(prefers-c
 
 export const ThemeContext = createContext<ThemeOptions>({ defaultTheme: getDefaultTheme() });
 
-export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>> = ({ children }) => {
+export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>> = ({ children, ...props }) => {
 
     const colour = document.getElementsByName("theme-color")[0];
+    if (!colour) logger.warn("No theme colour meta tag found. Theme colour will not be applied.");
 
-    const defaultTheme = getDefaultTheme();
+    const defaultTheme = props.defaultTheme ?? getDefaultTheme();
 
     const [theme, setTheme] = useLocalStorage<Theme>("theme", defaultTheme);
 
     useEffect(() => {
-        colour.setAttribute("content", theme.colour);
+        colour?.setAttribute("content", theme.colour);
         document.body.setAttribute("class", theme.theme);
         document.body.setAttribute("data-theme", theme.theme === "" ? defaultTheme.theme : theme.theme.startsWith("dark") ? "dark" : "light");
     }, [theme]);
@@ -40,6 +41,7 @@ export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>
 export const useTheme = () => useContext(ThemeContext);
 
 export interface ThemeProviderProps {
+    defaultTheme?: ThemeOptions;
 }
 
 ThemeProvider.displayName = "ThemeProvider";

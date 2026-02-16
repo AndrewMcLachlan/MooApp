@@ -90,7 +90,13 @@ export const HttpClientProvider: React.FC<React.PropsWithChildren<HttpClientProv
     );
 }
 
-export const useHttpClient = () => useContext(HttpClientContext);
+export const useHttpClient = () => {
+    const context = useContext(HttpClientContext);
+    if (!context) {
+        throw new Error("useHttpClient must be used within a HttpClientProvider");
+    }
+    return context;
+};
 
 export const createHttpClient = (baseUrl: string): AxiosInstance => {
 

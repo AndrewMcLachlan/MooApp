@@ -17,7 +17,7 @@ export const Notifications: React.FC = () => {
             pauseOnFocusLoss
             draggable
             pauseOnHover
-            theme={theme.theme === "" ? defaultTheme.theme : theme.theme.startsWith("dark") ? "dark" : "light"}
+            theme={(!theme && !defaultTheme) ? "dark" : theme.theme === "" ? defaultTheme.theme : theme.theme.startsWith("dark") ? "dark" : "light"}
             transition={Slide}
         />
     );
