@@ -37,6 +37,9 @@
     "vite-plugin-svgr": "^4.5.0",
     "vitest": "^4.0.18"
   },
+    "overrides": {
+    "eslint": "$eslint"
+  },
   "optionalDependencies": {
     "@esbuild/linux-arm64": "0.27.3",
     "@rollup/rollup-linux-arm64-gnu": "4.57.1"
