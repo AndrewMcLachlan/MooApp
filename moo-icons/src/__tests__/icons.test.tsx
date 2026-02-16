@@ -16,6 +16,7 @@ const iconNames = [
   'LeftRightArrow',
   'PieChart',
   'PiggyBank',
+  'PullRequest',
   'Reports',
   'Rules',
   'Sliders',
@@ -41,9 +42,9 @@ describe('moo-icons', () => {
       });
     });
 
-    it('exports exactly 25 icons', () => {
+    it('exports exactly 26 icons', () => {
       const exportedKeys = Object.keys(Icons);
-      expect(exportedKeys).toHaveLength(25);
+      expect(exportedKeys).toHaveLength(26);
     });
   });
 
