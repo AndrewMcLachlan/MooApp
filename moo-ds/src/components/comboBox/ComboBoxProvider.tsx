@@ -56,7 +56,13 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
 
 ComboBoxProvider.displayName = "ComboBoxProvider";
 
-export const useComboBox = () => useContext(ComboBoxContext);
+export const useComboBox = () => {
+    const context = useContext(ComboBoxContext);
+    if (!context) {
+        throw new Error("useComboBox must be used within a ComboBox");
+    }
+    return context;
+};
 
 export interface ComboBoxProviderProps<TItem> extends ComboBoxProps<TItem> {
 }

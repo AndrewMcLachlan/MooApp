@@ -25,14 +25,14 @@ const ContextConsumer = () => {
   const context = useComboBox();
   return (
     <div>
-      <span data-testid="selected-count">{context?.selectedItems?.length ?? 0}</span>
-      <span data-testid="items-count">{context?.items?.length ?? 0}</span>
-      <span data-testid="text">{context?.text ?? ''}</span>
-      <span data-testid="show">{context?.show ? 'true' : 'false'}</span>
-      <button onClick={() => context?.setShow(true)}>Open</button>
-      <button onClick={() => context?.setText('test')}>Set Text</button>
-      <button onClick={() => context?.setSelectedItems([items[0]])}>Select First</button>
-      <button onClick={(e) => context?.clear(e as any)}>Clear</button>
+      <span data-testid="selected-count">{context.selectedItems?.length ?? 0}</span>
+      <span data-testid="items-count">{context.items?.length ?? 0}</span>
+      <span data-testid="text">{context.text ?? ''}</span>
+      <span data-testid="show">{context.show ? 'true' : 'false'}</span>
+      <button onClick={() => context.setShow(true)}>Open</button>
+      <button onClick={() => context.setText('test')}>Set Text</button>
+      <button onClick={() => context.setSelectedItems([items[0]])}>Select First</button>
+      <button onClick={(e) => context.clear(e as any)}>Clear</button>
     </div>
   );
 };
@@ -133,7 +133,7 @@ describe('ComboBoxProvider', () => {
   describe('props', () => {
     it('exposes clearable prop', () => {
       const ClearableCheck = () => {
-        const { clearable } = useComboBox() ?? {};
+        const { clearable } = useComboBox();
         return <span data-testid="clearable">{clearable ? 'yes' : 'no'}</span>;
       };
 
@@ -148,7 +148,7 @@ describe('ComboBoxProvider', () => {
 
     it('exposes creatable prop', () => {
       const CreatableCheck = () => {
-        const { creatable } = useComboBox() ?? {};
+        const { creatable } = useComboBox();
         return <span data-testid="creatable">{creatable ? 'yes' : 'no'}</span>;
       };
 
@@ -163,7 +163,7 @@ describe('ComboBoxProvider', () => {
 
     it('exposes multiSelect prop', () => {
       const MultiSelectCheck = () => {
-        const { multiSelect } = useComboBox() ?? {};
+        const { multiSelect } = useComboBox();
         return <span data-testid="multiSelect">{multiSelect ? 'yes' : 'no'}</span>;
       };
 
@@ -178,7 +178,7 @@ describe('ComboBoxProvider', () => {
 
     it('exposes readonly prop', () => {
       const ReadonlyCheck = () => {
-        const { readonly } = useComboBox() ?? {};
+        const { readonly } = useComboBox();
         return <span data-testid="readonly">{readonly ? 'yes' : 'no'}</span>;
       };
 
@@ -195,7 +195,7 @@ describe('ComboBoxProvider', () => {
   describe('multi-select item filtering', () => {
     it('filters out selected items from available items in multi-select', () => {
       const ItemsCheck = () => {
-        const { items } = useComboBox() ?? { items: [] };
+        const { items } = useComboBox();
         return <span data-testid="available">{items.length}</span>;
       };
 

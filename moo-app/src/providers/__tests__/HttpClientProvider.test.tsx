@@ -103,10 +103,8 @@ describe('HttpClientProvider', () => {
 });
 
 describe('useHttpClient', () => {
-  it('returns undefined outside provider', () => {
-    const { result } = renderHook(() => useHttpClient());
-
-    expect(result.current).toBeUndefined();
+  it('throws error outside provider', () => {
+    expect(() => renderHook(() => useHttpClient())).toThrow("useHttpClient must be used within a HttpClientProvider");
   });
 
   it('returns http client inside provider', () => {
@@ -119,7 +117,7 @@ describe('useHttpClient', () => {
     const { result } = renderHook(() => useHttpClient(), { wrapper });
 
     expect(result.current).toBeDefined();
-    expect(result.current?.defaults.baseURL).toBe('https://api.example.com');
+    expect(result.current.defaults.baseURL).toBe('https://api.example.com');
   });
 });
 

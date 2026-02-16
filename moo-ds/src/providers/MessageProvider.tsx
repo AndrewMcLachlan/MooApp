@@ -26,7 +26,13 @@ export const MessageProvider: React.FC<React.PropsWithChildren<MessageProviderPr
     );
 }
 
-export const useMessages = () => useContext(MessageContext);
+export const useMessages = () => {
+    const context = useContext(MessageContext);
+    if (!context) {
+        throw new Error("useMessages must be used within a MessageProvider");
+    }
+    return context;
+};
 
 export interface MessageProviderProps {
 }

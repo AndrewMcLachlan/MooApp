@@ -156,11 +156,8 @@ describe('Alerts', () => {
   });
 
   describe('without MessageProvider', () => {
-    it('renders empty container when context is undefined', () => {
-      const { container } = render(<Alerts />);
-
-      expect(container.querySelector('.alerts')).toBeInTheDocument();
-      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    it('throws error when used outside MessageProvider', () => {
+      expect(() => render(<Alerts />)).toThrow("useMessages must be used within a MessageProvider");
     });
   });
 });

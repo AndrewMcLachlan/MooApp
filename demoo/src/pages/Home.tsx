@@ -8,7 +8,7 @@ export const Home = () => {
     const [widgetLoading, setWidgetLoading] = useState(false);
 
     const addAlert = () => {
-        messages?.sendMessage({ key:"m1", message: "This is a test alert", variant: "danger" });
+        messages.sendMessage({ key:"m1", message: "This is a test alert", variant: "danger" });
     }
 
     return (

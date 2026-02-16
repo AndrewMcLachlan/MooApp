@@ -36,7 +36,7 @@ describe('AppProvider', () => {
     it('provides name to children', () => {
       const TestConsumer = () => {
         const app = useApp();
-        return <div data-testid="name">{app?.name}</div>;
+        return <div data-testid="name">{app.name}</div>;
       };
 
       render(
@@ -51,7 +51,7 @@ describe('AppProvider', () => {
     it('provides version to children', () => {
       const TestConsumer = () => {
         const app = useApp();
-        return <div data-testid="version">{app?.version}</div>;
+        return <div data-testid="version">{app.version}</div>;
       };
 
       render(
@@ -66,7 +66,7 @@ describe('AppProvider', () => {
     it('provides copyrightYear when specified', () => {
       const TestConsumer = () => {
         const app = useApp();
-        return <div data-testid="year">{app?.copyrightYear}</div>;
+        return <div data-testid="year">{app.copyrightYear}</div>;
       };
 
       render(
@@ -81,7 +81,7 @@ describe('AppProvider', () => {
     it('copyrightYear is undefined when not provided', () => {
       const TestConsumer = () => {
         const app = useApp();
-        return <div data-testid="year">{app?.copyrightYear ?? 'undefined'}</div>;
+        return <div data-testid="year">{app.copyrightYear ?? 'undefined'}</div>;
       };
 
       render(
@@ -96,10 +96,8 @@ describe('AppProvider', () => {
 });
 
 describe('useApp', () => {
-  it('returns undefined outside provider', () => {
-    const { result } = renderHook(() => useApp());
-
-    expect(result.current).toBeUndefined();
+  it('throws error outside provider', () => {
+    expect(() => renderHook(() => useApp())).toThrow("useApp must be used within an AppProvider");
   });
 
   it('returns app options inside provider', () => {
@@ -112,9 +110,9 @@ describe('useApp', () => {
     const { result } = renderHook(() => useApp(), { wrapper });
 
     expect(result.current).toBeDefined();
-    expect(result.current?.name).toBe('Test App');
-    expect(result.current?.version).toBe('1.0.0');
-    expect(result.current?.copyrightYear).toBe(2024);
+    expect(result.current.name).toBe('Test App');
+    expect(result.current.version).toBe('1.0.0');
+    expect(result.current.copyrightYear).toBe(2024);
   });
 
   it('returns all app properties', () => {
