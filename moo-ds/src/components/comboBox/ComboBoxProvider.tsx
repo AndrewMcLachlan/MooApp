@@ -59,7 +59,7 @@ ComboBoxProvider.displayName = "ComboBoxProvider";
 export const useComboBox = () => {
     const context = useContext(ComboBoxContext);
     if (!context) {
-        throw new Error("useComboBox must be used within a ComboBox");
+        throw new Error("useComboBox must be used within a ComboBoxProvider");
     }
     return context;
 };
