@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent, act, renderHook } from '@testing-library/react';
 import { ComboBoxProvider, useComboBox } from '../ComboBoxProvider';
 
 interface Item {
@@ -207,6 +207,12 @@ describe('ComboBoxProvider', () => {
 
       // Should have 2 available items (3 total - 1 selected)
       expect(screen.getByTestId('available')).toHaveTextContent('2');
+    });
+  });
+
+  describe('useComboBox', () => {
+    it('throws error outside provider', () => {
+      expect(() => renderHook(() => useComboBox())).toThrow("useComboBox must be used within a ComboBox");
     });
   });
 
