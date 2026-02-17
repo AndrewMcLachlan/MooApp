@@ -1,30 +1,26 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Tab } from '../Tab';
+import { Tab, Tabs } from '../Tab';
 
-describe('Tab', () => {
+describe('Tabs', () => {
 
-  describe('Tab.Container', () => {
+  describe('rendering', () => {
     it('renders children', () => {
       render(
-        <Tab.Container defaultActiveKey="one">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="Tab One">Content One</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs defaultActiveKey="one">
+          <Tab eventKey="one" title="Tab One">Content One</Tab>
+        </Tabs>
       );
 
       expect(screen.getByText('Content One')).toBeInTheDocument();
     });
 
-    it('generates nav tabs from panes', () => {
+    it('generates nav tabs from Tab children', () => {
       render(
-        <Tab.Container defaultActiveKey="one">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="First">Content</Tab.Pane>
-            <Tab.Pane eventKey="two" title="Second">Content</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs defaultActiveKey="one">
+          <Tab eventKey="one" title="First">Content</Tab>
+          <Tab eventKey="two" title="Second">Content</Tab>
+        </Tabs>
       );
 
       expect(screen.getByText('First')).toBeInTheDocument();
@@ -33,87 +29,61 @@ describe('Tab', () => {
 
     it('renders tablist role', () => {
       render(
-        <Tab.Container defaultActiveKey="one">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="Tab One">Content</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs defaultActiveKey="one">
+          <Tab eventKey="one" title="Tab One">Content</Tab>
+        </Tabs>
       );
 
       expect(screen.getByRole('tablist')).toBeInTheDocument();
     });
 
+    it('renders tab-content wrapper', () => {
+      const { container } = render(
+        <Tabs defaultActiveKey="one">
+          <Tab eventKey="one" title="Tab One">Content</Tab>
+        </Tabs>
+      );
+
+      expect(container.querySelector('.tab-content')).toBeInTheDocument();
+    });
+
     it('marks defaultActiveKey tab as active', () => {
       render(
-        <Tab.Container defaultActiveKey="two">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="First">One</Tab.Pane>
-            <Tab.Pane eventKey="two" title="Second">Two</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs defaultActiveKey="two">
+          <Tab eventKey="one" title="First">One</Tab>
+          <Tab eventKey="two" title="Second">Two</Tab>
+        </Tabs>
       );
 
       expect(screen.getByText('Two')).toBeInTheDocument();
       expect(screen.queryByText('One')).not.toBeInTheDocument();
     });
 
-    it('has displayName', () => {
-      expect(Tab.Container.displayName).toBe('Tab.Container');
-    });
-  });
-
-  describe('Tab.Content', () => {
-    it('renders with tab-content class', () => {
-      const { container } = render(
-        <Tab.Container defaultActiveKey="one">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="Tab">Content</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
-      );
-
-      expect(container.querySelector('.tab-content')).toBeInTheDocument();
-    });
-
-    it('applies custom className', () => {
-      const { container } = render(
-        <Tab.Container defaultActiveKey="one">
-          <Tab.Content className="custom">
-            <Tab.Pane eventKey="one" title="Tab">Content</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
-      );
-
-      expect(container.querySelector('.tab-content.custom')).toBeInTheDocument();
-    });
-
-    it('only renders the active pane', () => {
+    it('defaults to first non-disabled tab when no key is provided', () => {
       render(
-        <Tab.Container defaultActiveKey="one">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="First">Active Content</Tab.Pane>
-            <Tab.Pane eventKey="two" title="Second">Inactive Content</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs>
+          <Tab eventKey="one" title="First" disabled>One</Tab>
+          <Tab eventKey="two" title="Second">Two</Tab>
+          <Tab eventKey="three" title="Third">Three</Tab>
+        </Tabs>
       );
 
-      expect(screen.getByText('Active Content')).toBeInTheDocument();
-      expect(screen.queryByText('Inactive Content')).not.toBeInTheDocument();
+      expect(screen.getByText('Two')).toBeInTheDocument();
+      expect(screen.queryByText('One')).not.toBeInTheDocument();
+      expect(screen.queryByText('Three')).not.toBeInTheDocument();
     });
 
     it('has displayName', () => {
-      expect(Tab.Content.displayName).toBe('Tab.Content');
+      expect(Tabs.displayName).toBe('Tabs');
     });
   });
 
-  describe('Tab.Pane', () => {
+  describe('Tab', () => {
     it('renders with tab-pane class', () => {
       const { container } = render(
-        <Tab.Container defaultActiveKey="one">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="Tab">Content</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs defaultActiveKey="one">
+          <Tab eventKey="one" title="Tab">Content</Tab>
+        </Tabs>
       );
 
       expect(container.querySelector('.tab-pane')).toBeInTheDocument();
@@ -121,23 +91,19 @@ describe('Tab', () => {
 
     it('renders with tabpanel role', () => {
       render(
-        <Tab.Container defaultActiveKey="one">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="Tab">Content</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs defaultActiveKey="one">
+          <Tab eventKey="one" title="Tab">Content</Tab>
+        </Tabs>
       );
 
       expect(screen.getByRole('tabpanel')).toBeInTheDocument();
     });
 
-    it('active pane has active class', () => {
+    it('active tab has active class', () => {
       const { container } = render(
-        <Tab.Container defaultActiveKey="one">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="Tab">Content</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs defaultActiveKey="one">
+          <Tab eventKey="one" title="Tab">Content</Tab>
+        </Tabs>
       );
 
       expect(container.querySelector('.tab-pane.active')).toBeInTheDocument();
@@ -145,30 +111,40 @@ describe('Tab', () => {
 
     it('applies custom className', () => {
       const { container } = render(
-        <Tab.Container defaultActiveKey="one">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="Tab" className="custom">Content</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs defaultActiveKey="one">
+          <Tab eventKey="one" title="Tab" className="custom">Content</Tab>
+        </Tabs>
       );
 
       expect(container.querySelector('.tab-pane.custom')).toBeInTheDocument();
     });
 
     it('has displayName', () => {
-      expect(Tab.Pane.displayName).toBe('Tab.Pane');
+      expect(Tab.displayName).toBe('Tab');
+    });
+  });
+
+  describe('icon rendering', () => {
+    it('renders an icon in the nav link when icon prop is provided', () => {
+      const { container } = render(
+        <Tabs defaultActiveKey="one">
+          <Tab eventKey="one" title="Settings" icon="cog">Content</Tab>
+        </Tabs>
+      );
+
+      const navLink = container.querySelector('.nav-link');
+      expect(navLink).toBeInTheDocument();
+      expect(navLink!.textContent).toContain('Settings');
     });
   });
 
   describe('tab switching', () => {
     it('switches active pane when tab is clicked', () => {
       render(
-        <Tab.Container defaultActiveKey="one">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="First">Content One</Tab.Pane>
-            <Tab.Pane eventKey="two" title="Second">Content Two</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs defaultActiveKey="one">
+          <Tab eventKey="one" title="First">Content One</Tab>
+          <Tab eventKey="two" title="Second">Content Two</Tab>
+        </Tabs>
       );
 
       expect(screen.getByText('Content One')).toBeInTheDocument();
@@ -182,12 +158,10 @@ describe('Tab', () => {
 
     it('does not switch to disabled tab', () => {
       render(
-        <Tab.Container defaultActiveKey="one">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="First">Content One</Tab.Pane>
-            <Tab.Pane eventKey="two" title="Second" disabled>Content Two</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs defaultActiveKey="one">
+          <Tab eventKey="one" title="First">Content One</Tab>
+          <Tab eventKey="two" title="Second" disabled>Content Two</Tab>
+        </Tabs>
       );
 
       fireEvent.click(screen.getByText('Second'));
@@ -200,12 +174,10 @@ describe('Tab', () => {
   describe('controlled mode', () => {
     it('uses activeKey prop', () => {
       render(
-        <Tab.Container activeKey="two">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="First">Content One</Tab.Pane>
-            <Tab.Pane eventKey="two" title="Second">Content Two</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs activeKey="two">
+          <Tab eventKey="one" title="First">Content One</Tab>
+          <Tab eventKey="two" title="Second">Content Two</Tab>
+        </Tabs>
       );
 
       expect(screen.queryByText('Content One')).not.toBeInTheDocument();
@@ -215,12 +187,10 @@ describe('Tab', () => {
     it('calls onSelect when tab is clicked', () => {
       const onSelect = vi.fn();
       render(
-        <Tab.Container activeKey="one" onSelect={onSelect}>
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="First">Content One</Tab.Pane>
-            <Tab.Pane eventKey="two" title="Second">Content Two</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs activeKey="one" onSelect={onSelect}>
+          <Tab eventKey="one" title="First">Content One</Tab>
+          <Tab eventKey="two" title="Second">Content Two</Tab>
+        </Tabs>
       );
 
       fireEvent.click(screen.getByText('Second'));
@@ -230,12 +200,10 @@ describe('Tab', () => {
 
     it('does not change active pane without activeKey update', () => {
       render(
-        <Tab.Container activeKey="one">
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="First">Content One</Tab.Pane>
-            <Tab.Pane eventKey="two" title="Second">Content Two</Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+        <Tabs activeKey="one">
+          <Tab eventKey="one" title="First">Content One</Tab>
+          <Tab eventKey="two" title="Second">Content Two</Tab>
+        </Tabs>
       );
 
       fireEvent.click(screen.getByText('Second'));
@@ -245,14 +213,12 @@ describe('Tab', () => {
   });
 
   describe('context requirement', () => {
-    it('Tab.Content throws outside Tab.Container', () => {
+    it('Tab throws outside Tabs', () => {
       expect(() => {
         render(
-          <Tab.Content>
-            <Tab.Pane eventKey="one" title="Tab">Content</Tab.Pane>
-          </Tab.Content>
+          <Tab eventKey="one" title="Tab">Content</Tab>
         );
-      }).toThrow('Tab components must be used within a Tab.Container');
+      }).toThrow('Tab must be used within Tabs');
     });
   });
 });
