@@ -1,0 +1,6 @@
+.data-grid { width: 100%; }
+.data-grid .table tfoot td { padding: 0.25rem 0.5rem; }
+.data-grid .table tbody td.data-grid-empty {
+    text-align: center; padding: 2rem 0.5rem;
+    color: var(--secondary-color, #6c757d); font-style: italic;
+}

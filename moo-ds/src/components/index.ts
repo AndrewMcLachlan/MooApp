@@ -11,6 +11,7 @@ export * from "./Col";
 export * from "./Collapsible";
 export * from "./comboBox";
 export * from "./Container";
+export * from "./dataGrid";
 export * from "./DeleteIcon";
 export * from "./EditColumn";
 export * from "./ErrorFallback";

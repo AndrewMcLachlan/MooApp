@@ -17,6 +17,7 @@ import { ErrorPage } from "./pages/ErrorPage";
 import { Notifications } from "./pages/Notifications";
 import { FormSample } from "./pages/form/FormSample";
 import { Table } from "./pages/Table";
+import { DataGridPage } from "./pages/DataGrid";
 import { Overlays } from "./pages/Overlays";
 
 const root = ReactDOM.createRoot(
@@ -49,6 +50,7 @@ const router = createMooAppBrowserRouter({
       settings: { path: "/settings", element: <Components /> },
       profile: { path: "/profile", element: <Profile /> },
       table: {path: "/table", element: <Table /> },
+      dataGrid: { path: "/data-grid", element: <DataGridPage /> },
       overlays: { path: "/overlays", element: <Overlays /> },
       fallback: { path: "*", element: <NotFound /> },
     }
