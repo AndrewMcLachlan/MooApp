@@ -5,7 +5,7 @@ export const NavLink: NavLinkComponent = ({ className, to, href, ...props }) => 
 
     let activeClassName: string;
     let baseClassName: string;
-    if (props.className && typeof className === "function") {
+    if (className && typeof className === "function") {
         activeClassName = className({ isActive: true });
         baseClassName = className({ isActive: false });
     }
