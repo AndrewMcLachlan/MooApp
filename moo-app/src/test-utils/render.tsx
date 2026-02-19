@@ -1,7 +1,6 @@
 import React, { ReactElement, createContext } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { MemoryRouter } from 'react-router';
 import { MsalProvider } from '@azure/msal-react';
 import { PublicClientApplication, IPublicClientApplication } from '@azure/msal-browser';
 import { AppProvider } from '../providers/AppProvider';
@@ -137,10 +136,6 @@ interface WrapperProps {
 
 interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
   /**
-   * Initial route for MemoryRouter (default: '/')
-   */
-  route?: string;
-  /**
    * Custom QueryClient instance
    */
   queryClient?: QueryClient;
@@ -155,7 +150,6 @@ interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
  */
 const createWrapper = (options: CustomRenderOptions = {}) => {
   const {
-    route = '/',
     queryClient = createTestQueryClient(),
     httpClient = createAxiosMock(),
   } = options;
@@ -170,9 +164,7 @@ const createWrapper = (options: CustomRenderOptions = {}) => {
             <ThemeProvider>
               <MessageProvider>
                 <LinkProvider LinkComponent={MockLink} NavLinkComponent={MockNavLink}>
-                  <MemoryRouter initialEntries={[route]}>
-                    {children}
-                  </MemoryRouter>
+                  {children}
                 </LinkProvider>
               </MessageProvider>
             </ThemeProvider>
@@ -212,9 +204,9 @@ const customRender = (
   ui: ReactElement,
   options: CustomRenderOptions = {}
 ) => {
-  const { route, queryClient, httpClient, ...renderOptions } = options;
+  const { queryClient, httpClient, ...renderOptions } = options;
   return render(ui, {
-    wrapper: createWrapper({ route, queryClient, httpClient }),
+    wrapper: createWrapper({ queryClient, httpClient }),
     ...renderOptions,
   });
 };

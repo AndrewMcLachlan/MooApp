@@ -2,10 +2,10 @@ import { describe, it, expect, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useIdParams } from '../idParams';
 
-// Mock useParams from react-router
+// Mock useParams from @tanstack/react-router
 const mockUseParams = vi.fn();
 
-vi.mock('react-router', () => ({
+vi.mock('@tanstack/react-router', () => ({
   useParams: () => mockUseParams(),
 }));
 
