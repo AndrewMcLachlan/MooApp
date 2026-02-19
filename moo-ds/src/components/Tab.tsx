@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import React, { useState, useCallback, useMemo, useContext, createContext } from "react";
+import { Icon } from "./Icon";
 import { Nav } from "./Nav";
+import type { IconType } from "../types";
 
 interface TabContextValue {
     activeKey: string;
@@ -12,43 +14,26 @@ const TabContext = createContext<TabContextValue | undefined>(undefined);
 const useTabContext = () => {
     const context = useContext(TabContext);
     if (!context) {
-        throw new Error("Tab components must be used within a Tab.Container");
+        throw new Error("Tab must be used within Tabs");
     }
     return context;
 };
 
-export interface TabContainerProps {
+export interface TabsProps {
     defaultActiveKey?: string;
     activeKey?: string;
     onSelect?: (key: string) => void;
     children: React.ReactNode;
 }
 
-export interface TabContentProps extends React.HTMLAttributes<HTMLDivElement> {
-}
-
-export interface TabPaneProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TabProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
     eventKey: string;
+    title: React.ReactNode;
+    icon?: IconType;
     disabled?: boolean;
 }
 
-const TabContent: React.FC<React.PropsWithChildren<TabContentProps>> = ({ className, children, ...rest }) => {
-    const { activeKey } = useTabContext();
-
-    const activePane = React.Children.toArray(children).find(
-        (child) => React.isValidElement<TabPaneProps>(child) && child.props.eventKey === activeKey
-    );
-
-    return (
-        <div className={classNames("tab-content", className)} {...rest}>
-            {activePane}
-        </div>
-    );
-};
-
-TabContent.displayName = "Tab.Content";
-
-const TabPane: React.FC<React.PropsWithChildren<TabPaneProps>> = ({ eventKey, className, children, ...rest }) => {
+export const Tab: React.FC<React.PropsWithChildren<TabProps>> = ({ eventKey, title: _title, icon: _icon, disabled: _disabled, className, children, ...rest }) => {
     const { activeKey } = useTabContext();
     const isActive = activeKey === eventKey;
 
@@ -63,10 +48,22 @@ const TabPane: React.FC<React.PropsWithChildren<TabPaneProps>> = ({ eventKey, cl
     );
 };
 
-TabPane.displayName = "Tab.Pane";
+Tab.displayName = "Tab";
 
-const TabContainer: React.FC<TabContainerProps> = ({ defaultActiveKey, activeKey: controlledKey, onSelect, children }) => {
-    const [uncontrolledKey, setUncontrolledKey] = useState(defaultActiveKey ?? "");
+export const Tabs: React.FC<TabsProps> = ({ defaultActiveKey, activeKey: controlledKey, onSelect, children }) => {
+
+    // Collect Tab children to build the nav
+    const tabs: TabProps[] = [];
+    React.Children.forEach(children, (child) => {
+        if (React.isValidElement<TabProps>(child) && (child.type as any)?.displayName === "Tab") {
+            tabs.push(child.props);
+        }
+    });
+
+    // Default to first non-disabled tab when no key is provided
+    const defaultKey = defaultActiveKey ?? tabs.find(t => !t.disabled)?.eventKey ?? "";
+
+    const [uncontrolledKey, setUncontrolledKey] = useState(defaultKey);
 
     const isControlled = controlledKey !== undefined;
     const activeKey = isControlled ? controlledKey : uncontrolledKey;
@@ -80,43 +77,31 @@ const TabContainer: React.FC<TabContainerProps> = ({ defaultActiveKey, activeKey
 
     const contextValue = useMemo(() => ({ activeKey, onSelect: handleSelect }), [activeKey, handleSelect]);
 
-    // Collect Tab.Pane children from Tab.Content to build the nav
-    let panes: TabPaneProps[] = [];
-    React.Children.forEach(children, (child) => {
-        if (React.isValidElement<React.PropsWithChildren>(child) && (child.type as any)?.displayName === "Tab.Content") {
-            React.Children.forEach(child.props.children, (paneChild) => {
-                if (React.isValidElement<TabPaneProps>(paneChild) && (paneChild.type as any)?.displayName === "Tab.Pane") {
-                    panes.push(paneChild.props);
-                }
-            });
-        }
-    });
+    const activePane = React.Children.toArray(children).find(
+        (child) => React.isValidElement<TabProps>(child) && child.props.eventKey === activeKey
+    );
 
     return (
         <TabContext.Provider value={contextValue}>
             <Nav variant="tabs" role="tablist">
-                {panes.map((pane) => (
-                    <Nav.Item key={pane.eventKey}>
+                {tabs.map((tab) => (
+                    <Nav.Item key={tab.eventKey}>
                         <Nav.Link
-                            active={activeKey === pane.eventKey}
-                            disabled={pane.disabled}
-                            onClick={() => !pane.disabled && handleSelect(pane.eventKey)}
+                            active={activeKey === tab.eventKey}
+                            disabled={tab.disabled}
+                            onClick={() => !tab.disabled && handleSelect(tab.eventKey)}
                             role="tab"
                         >
-                            {pane.title}
+                            {tab.icon && <Icon icon={tab.icon} />}{tab.title}
                         </Nav.Link>
                     </Nav.Item>
                 ))}
             </Nav>
-            {children}
+            <div className="tab-content">
+                {activePane}
+            </div>
         </TabContext.Provider>
     );
 };
 
-TabContainer.displayName = "Tab.Container";
-
-export const Tab = {
-    Container: TabContainer,
-    Content: TabContent,
-    Pane: TabPane,
-};
+Tabs.displayName = "Tabs";

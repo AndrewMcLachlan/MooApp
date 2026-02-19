@@ -1,5 +1,5 @@
 import { Page } from "@andrewmclachlan/moo-app";
-import { Section, NavItemDivider, IconButton, SectionTable, EditColumn, ComboBox, Button, Modal, ButtonGroup, Badge, CloseBadge, Alert, Nav, Tab, Collapsible } from "@andrewmclachlan/moo-ds";
+import { Section, NavItemDivider, IconButton, SectionTable, EditColumn, ComboBox, Button, Modal, ButtonGroup, Badge, CloseBadge, Alert, Nav, Tabs, Tab, Collapsible } from "@andrewmclachlan/moo-ds";
 import { Tags } from "../assets";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -96,22 +96,20 @@ export const Components = () => {
             </Section>
 
             <Section title="Tabs" header="Tabs" headerSize={4}>
-                <Tab.Container defaultActiveKey="tab1">
-                    <Tab.Content>
-                        <Tab.Pane eventKey="tab1" title="Overview">
-                            <p>This is the Overview panel content.</p>
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="tab2" title="Details">
-                            <p>This is the Details panel with more information.</p>
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="tab3" title="Settings">
-                            <p>Settings panel where you can configure options.</p>
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="tab4" title="Disabled" disabled>
-                            <p>This should not be visible.</p>
-                        </Tab.Pane>
-                    </Tab.Content>
-                </Tab.Container>
+                <Tabs defaultActiveKey="tab1">
+                    <Tab eventKey="tab1" title="Overview">
+                        <p>This is the Overview panel content.</p>
+                    </Tab>
+                    <Tab eventKey="tab2" title="Details">
+                        <p>This is the Details panel with more information.</p>
+                    </Tab>
+                    <Tab eventKey="tab3" title="Settings">
+                        <p>Settings panel where you can configure options.</p>
+                    </Tab>
+                    <Tab eventKey="tab4" title="Disabled" disabled>
+                        <p>This should not be visible.</p>
+                    </Tab>
+                </Tabs>
             </Section>
 
             <Section title="Nav Pills" header="Nav - Pills" headerSize={4}>
