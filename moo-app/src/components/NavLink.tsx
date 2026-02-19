@@ -1,21 +1,21 @@
 import type { NavLinkComponent } from "@andrewmclachlan/moo-ds";
 import { Link } from "@tanstack/react-router"
 
-export const NavLink: NavLinkComponent = (props) => {
+export const NavLink: NavLinkComponent = ({ className, to, href, ...props }) => {
 
     let activeClassName: string;
-    let className: string;
-    if (props.className && typeof props.className === "function") {
-        activeClassName = props.className({ isActive: true });
-        className = props.className({ isActive: false });
+    let baseClassName: string;
+    if (props.className && typeof className === "function") {
+        activeClassName = className({ isActive: true });
+        baseClassName = className({ isActive: false });
     }
     else {
-        activeClassName = props.className as string;
-        className = props.className as string;
+        activeClassName = className as string;
+        baseClassName = className as string;
     }
 
     return (
-        <Link className={className} activeProps={{className: activeClassName}} to={props.to || props.href}>
+        <Link className={baseClassName} activeProps={{className: activeClassName}} to={to || href || ""} {...props}>
             {props.children}
         </Link>
     );

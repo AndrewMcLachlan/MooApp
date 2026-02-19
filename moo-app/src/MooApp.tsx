@@ -1,8 +1,8 @@
 import React, { PropsWithChildren, ReactNode, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AnyRouter, Link, RouterProvider } from "@tanstack/react-router";
+import { AnyRouter, RouterProvider } from "@tanstack/react-router";
 
-import { NavLink } from "./components";
+import { Link, NavLink } from "./components";
 import { AppProvider, HttpClientProvider } from "./providers";
 import { LinkProvider, MessageProvider } from "@andrewmclachlan/moo-ds";
 
