@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router";
+import { Outlet, useLocation } from "@tanstack/react-router";
 
 import { Alerts } from "@andrewmclachlan/moo-ds";
 import { HeaderProps, SidebarProps } from "./layout/Types";
