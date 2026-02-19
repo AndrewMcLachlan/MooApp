@@ -1,6 +1,8 @@
 import React, { PropsWithChildren, ReactNode, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AnyRouter, RouterProvider } from "@tanstack/react-router";
 
+import { Link, NavLink } from "./components";
 import { AppProvider, HttpClientProvider } from "./providers";
 import { LinkProvider, MessageProvider } from "@andrewmclachlan/moo-ds";
 
@@ -11,9 +13,8 @@ import { Login } from "./login/Login";
 
 import { faArrowRightFromBracket, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { LinkWrapper, NavLinkWrapper } from "./components/LinkWrapper";
-import { RouterProvider, RouterProviderProps } from "react-router";
 import { AxiosInstance } from "axios";
+
 
 library.add(faArrowRightFromBracket, faTimesCircle);
 
@@ -63,7 +64,7 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clien
       <MsalProvider instance={msalInstance}>
         <HttpClientProvider client={client} baseUrl={baseUrl} scopes={scopes}>
           <QueryClientProvider client={queryClient}>
-            <LinkProvider LinkComponent={LinkWrapper} NavLinkComponent={NavLinkWrapper}>
+            <LinkProvider LinkComponent={Link} NavLinkComponent={NavLink}>
               <MessageProvider>
                 <Login authFallback={authFallback}>
                   <RouterProvider router={router} />
@@ -85,6 +86,6 @@ export interface MooAppProps {
   name?: string,
   version?: string;
   copyrightYear?: number;
-  router: RouterProviderProps["router"];
+  router: AnyRouter;
   authFallback?: ReactNode;
 }

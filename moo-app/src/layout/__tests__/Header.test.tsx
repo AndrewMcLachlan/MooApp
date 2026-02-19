@@ -26,8 +26,8 @@ vi.mock('@andrewmclachlan/moo-ds', () => ({
   ),
 }));
 
-// Mock react-router
-vi.mock('react-router', () => ({
+// Mock @tanstack/react-router
+vi.mock('@tanstack/react-router', () => ({
   Link: ({ children, to, className }: any) => (
     <a href={to} className={className} data-testid="link">{children}</a>
   ),

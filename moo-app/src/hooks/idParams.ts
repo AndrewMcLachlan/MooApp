@@ -1,7 +1,7 @@
-import { useParams } from "react-router";
+import { useParams } from "@tanstack/react-router";
 
 export const useIdParams = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams({ strict: false });
     if (!id) throw Error("bad params");
 
     return id;

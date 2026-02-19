@@ -2,12 +2,11 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Error as ErrorPage } from '../Error';
 
-// Mock react-router
-const mockNavigate = vi.fn();
+// Mock @tanstack/react-router
+const mockHistoryBack = vi.fn();
 
-vi.mock('react-router', () => ({
-  useNavigate: () => mockNavigate,
-  useLocation: () => ({ pathname: '/error' }),
+vi.mock('@tanstack/react-router', () => ({
+  useRouter: () => ({ history: { back: mockHistoryBack } }),
 }));
 
 // Mock useIsAuthenticated for Page component
@@ -89,7 +88,7 @@ describe('Error Page', () => {
       const closeButton = container.querySelector('.btn-close');
       fireEvent.click(closeButton!);
 
-      expect(mockNavigate).toHaveBeenCalledWith(-1);
+      expect(mockHistoryBack).toHaveBeenCalled();
     });
 
     it('calls resetErrorBoundary when dismissed', () => {

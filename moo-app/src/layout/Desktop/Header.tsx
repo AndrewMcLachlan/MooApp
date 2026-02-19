@@ -1,5 +1,5 @@
 import { Container } from "@andrewmclachlan/moo-ds";
-import { Link } from "react-router";
+import { Link } from "@tanstack/react-router";
 
 import { Breadcrumb, MenuToggle } from "@andrewmclachlan/moo-ds";
 import { useApp, useLayout } from "../../providers";

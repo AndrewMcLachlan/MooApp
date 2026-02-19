@@ -1,2 +1,3 @@
 export * from "./Avatar";
-export * from "./LinkWrapper";
+export * from "./Link";
+export * from "./NavLink";

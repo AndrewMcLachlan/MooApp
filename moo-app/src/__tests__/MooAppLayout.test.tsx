@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { MooAppLayout } from '../MooAppLayout';
 
-// Mock react-router
-vi.mock('react-router', () => ({
+// Mock @tanstack/react-router
+vi.mock('@tanstack/react-router', () => ({
   Outlet: () => <div data-testid="outlet">Outlet Content</div>,
   useLocation: () => ({ pathname: '/test' }),
 }));
