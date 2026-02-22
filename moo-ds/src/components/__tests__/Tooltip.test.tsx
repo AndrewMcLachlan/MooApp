@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Tooltip } from '../Tooltip';
 
 describe('Tooltip', () => {
@@ -19,12 +19,23 @@ describe('Tooltip', () => {
       expect(svg).toHaveAttribute('data-icon', 'circle-info');
     });
 
-    it('renders children as tooltip content', () => {
-      render(<Tooltip id="test">Tooltip content</Tooltip>);
+    it('shows tooltip content on hover', () => {
+      const { container } = render(<Tooltip id="test">Tooltip content</Tooltip>);
 
-      // The tooltip content is rendered but hidden until hover
-      // We verify the component renders without error
-      expect(screen.getByRole('img', { hidden: true })).toBeInTheDocument();
+      const wrapper = container.querySelector('.tooltip-wrapper')!;
+      fireEvent.mouseEnter(wrapper);
+
+      expect(screen.getByRole('tooltip')).toHaveTextContent('Tooltip content');
+    });
+
+    it('hides tooltip content on mouse leave', () => {
+      const { container } = render(<Tooltip id="test">Tooltip content</Tooltip>);
+
+      const wrapper = container.querySelector('.tooltip-wrapper')!;
+      fireEvent.mouseEnter(wrapper);
+      fireEvent.mouseLeave(wrapper);
+
+      expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
     });
   });
 
