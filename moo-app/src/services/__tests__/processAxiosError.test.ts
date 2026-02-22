@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { AxiosError, AxiosHeaders } from 'axios';
+import { AxiosError } from 'axios';
 import { processAxiosError } from '../processAxiosError';
 
 describe('processAxiosError', () => {

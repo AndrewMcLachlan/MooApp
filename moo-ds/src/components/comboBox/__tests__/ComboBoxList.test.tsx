@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ComboBoxList } from '../ComboBoxList';
-import { ComboBoxProvider } from '../ComboBoxProvider';
+import { ComboBoxProvider, ComboBoxProps } from '../ComboBoxProvider';
 import { ComboBoxContainer } from '../ComboBoxContainer';
 
 interface Item {
@@ -23,7 +22,7 @@ const defaultProps = {
 };
 
 // Helper to render with container (which manages show state)
-const renderWithContainer = (providerProps: Partial<typeof defaultProps> = {}) => {
+const renderWithContainer = (providerProps: Partial<ComboBoxProps<Item>> = {}) => {
   return render(
     <ComboBoxProvider {...defaultProps} {...providerProps}>
       <ComboBoxContainer placeholder="Select..." />

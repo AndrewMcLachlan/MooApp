@@ -263,7 +263,7 @@ describe('useApiPostFile', () => {
   it('appends file with correct name', async () => {
     mockPost.mockResolvedValue({ data: null });
     let capturedFormData: FormData | null = null;
-    mockPost.mockImplementation((path: string, data: FormData) => {
+    mockPost.mockImplementation((_path: string, data: FormData) => {
       capturedFormData = data;
       return Promise.resolve({ data: null });
     });

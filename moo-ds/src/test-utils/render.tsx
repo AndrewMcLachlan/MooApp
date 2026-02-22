@@ -3,18 +3,14 @@ import { render, RenderOptions } from '@testing-library/react';
 import { ThemeProvider } from '../providers/ThemeProvider';
 import { MessageProvider } from '../providers/MessageProvider';
 import { LinkProvider } from '../providers/LinkProvider';
+import { LinkComponent, NavLinkComponent } from '../models/LinkComponents';
 
 /**
  * Mock Link component for testing
  * Renders as an anchor tag with the same props
  */
-const MockLink: React.FC<{ to: string; children: React.ReactNode; className?: string }> = ({
-  to,
-  children,
-  className,
-  ...props
-}) => (
-  <a href={to} className={className} {...props}>
+const MockLink: LinkComponent = ({ to, href, children, className, ...props }) => (
+  <a href={to ?? href} className={className as string} {...props}>
     {children}
   </a>
 );
@@ -23,16 +19,14 @@ const MockLink: React.FC<{ to: string; children: React.ReactNode; className?: st
  * Mock NavLink component for testing
  * Renders as an anchor tag with the same props
  */
-const MockNavLink: React.FC<{ to: string; children: React.ReactNode; className?: string }> = ({
-  to,
-  children,
-  className,
-  ...props
-}) => (
-  <a href={to} className={className} {...props}>
-    {children}
-  </a>
-);
+const MockNavLink: NavLinkComponent = ({ to, href, children, className, ...props }) => {
+  const resolvedClassName = typeof className === 'function' ? className({ isActive: false }) : className;
+  return (
+    <a href={to ?? href} className={resolvedClassName} {...props}>
+      {children}
+    </a>
+  );
+};
 
 interface AllProvidersProps {
   children: React.ReactNode;

@@ -1,10 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, renderHook } from '@testing-library/react';
 import React from 'react';
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 import {
   HttpClientProvider,
-  HttpClientContext,
   useHttpClient,
   createHttpClient,
   addMsalInterceptor,
@@ -25,7 +24,7 @@ vi.mock('@azure/msal-react', () => ({
       removeEventCallback: mockRemoveEventCallback,
       getActiveAccount: vi.fn().mockReturnValue(null),
     },
-    accounts: [],
+    accounts: [] as any[],
     inProgress: 'none',
   }),
 }));

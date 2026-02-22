@@ -56,7 +56,7 @@ describe('SortableTh', () => {
 
   describe('sort icon', () => {
     it('renders sort icon component when field matches sortField', () => {
-      const { container } = renderInTable(
+      renderInTable(
         <SortableTh {...defaultProps} field="name" sortField="name">
           Name
         </SortableTh>
@@ -69,7 +69,7 @@ describe('SortableTh', () => {
     });
 
     it('passes hidden prop to sort icon when field does not match sortField', () => {
-      const { container } = renderInTable(
+      renderInTable(
         <SortableTh {...defaultProps} field="name" sortField="email">
           Name
         </SortableTh>

@@ -1,34 +1,18 @@
-import React, { ReactElement, createContext } from 'react';
+import React, { ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MsalProvider } from '@azure/msal-react';
-import { PublicClientApplication, IPublicClientApplication } from '@azure/msal-browser';
+import { IPublicClientApplication } from '@azure/msal-browser';
 import { AppProvider } from '../providers/AppProvider';
 import { HttpClientContext } from '../providers/HttpClientProvider';
-import { ThemeProvider, MessageProvider, LinkProvider } from '@andrewmclachlan/moo-ds';
-import { createAxiosMock, mockAppConfig, mockMsalAccount, mockLayoutState } from './mocks';
-import { LayoutContext } from '../models';
-
-// Create a mock LayoutContext for testing
-const MockLayoutContext = createContext<LayoutContext>({ size: 'default', ...mockLayoutState });
-
-// Mock LayoutProvider that provides the mock context
-const MockLayoutProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <MockLayoutContext.Provider value={{ size: 'default', ...mockLayoutState }}>
-    {children}
-  </MockLayoutContext.Provider>
-);
+import { ThemeProvider, MessageProvider, LinkProvider, LinkComponent, NavLinkComponent } from '@andrewmclachlan/moo-ds';
+import { createAxiosMock, mockAppConfig, mockMsalAccount } from './mocks';
 
 /**
  * Mock Link component for testing
  */
-const MockLink: React.FC<{ to: string; children: React.ReactNode; className?: string }> = ({
-  to,
-  children,
-  className,
-  ...props
-}) => (
-  <a href={to} className={className} {...props}>
+const MockLink: LinkComponent = ({ to, href, children, className, ...props }) => (
+  <a href={to ?? href} className={className as string} {...props}>
     {children}
   </a>
 );
@@ -36,16 +20,14 @@ const MockLink: React.FC<{ to: string; children: React.ReactNode; className?: st
 /**
  * Mock NavLink component for testing
  */
-const MockNavLink: React.FC<{ to: string; children: React.ReactNode; className?: string }> = ({
-  to,
-  children,
-  className,
-  ...props
-}) => (
-  <a href={to} className={className} {...props}>
-    {children}
-  </a>
-);
+const MockNavLink: NavLinkComponent = ({ to, href, children, className, ...props }) => {
+  const resolvedClassName = typeof className === 'function' ? className({ isActive: false }) : className;
+  return (
+    <a href={to ?? href} className={resolvedClassName} {...props}>
+      {children}
+    </a>
+  );
+};
 
 /**
  * Creates a mock MSAL PublicClientApplication instance

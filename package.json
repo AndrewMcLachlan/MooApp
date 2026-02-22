@@ -20,6 +20,7 @@
     "@types/node": "^25.2.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@typescript/native-preview": "^7.0.0-dev.20260222.1",
     "@vitejs/plugin-react": "^5.1.4",
     "@vitest/coverage-v8": "^4.0.18",
     "esbuild": "^0.27.3",
@@ -54,6 +55,7 @@
     "build": "npm run build --workspaces",
     "lint": "npm run lint --workspaces",
     "lint-fix": "npm run lint-fix --workspaces",
+    "type-check": "tsgo -p moo-ds/tsconfig.json && tsgo -p moo-app/tsconfig.json && tsgo -p moo-icons/tsconfig.json",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage"

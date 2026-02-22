@@ -18,7 +18,14 @@ export default defineConfig({
       },
       include: "**/*.svg",
     }),
-    dts({ exclude: ["src/**/*.test.*", "src/**/__tests__/**", "src/setupTests.*"] }),
+    dts({
+      exclude: ["src/**/*.test.*", "src/**/__tests__/**", "src/setupTests.*"],
+      afterDiagnostic(diagnostics) {
+        if (diagnostics.length > 0) {
+          throw new Error(`Declaration generation failed with ${diagnostics.length} error(s)`);
+        }
+      },
+    }),
   ],
   build: {
     lib: {

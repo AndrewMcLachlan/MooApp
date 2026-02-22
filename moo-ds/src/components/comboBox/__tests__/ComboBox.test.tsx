@@ -143,7 +143,7 @@ describe('ComboBox', () => {
     });
 
     it('renders with selected items in multiSelect mode', () => {
-      const { container } = render(
+      render(
         <ComboBox
           {...defaultProps}
           multiSelect

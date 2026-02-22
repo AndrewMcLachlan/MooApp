@@ -69,12 +69,12 @@ export const mockLightModePreference = () => {
  * Resets localStorage mock to empty state
  */
 export const resetLocalStorage = () => {
-  (window.localStorage.clear as ReturnType<typeof vi.fn>)();
+  (window.localStorage.clear as unknown as () => void)();
 };
 
 /**
  * Resets sessionStorage mock to empty state
  */
 export const resetSessionStorage = () => {
-  (window.sessionStorage.clear as ReturnType<typeof vi.fn>)();
+  (window.sessionStorage.clear as unknown as () => void)();
 };

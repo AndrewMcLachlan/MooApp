@@ -1,7 +1,7 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ComboBoxContainer } from '../ComboBoxContainer';
-import { ComboBoxProvider } from '../ComboBoxProvider';
+import { ComboBoxProvider, ComboBoxProps } from '../ComboBoxProvider';
 
 interface Item {
   id: number;
@@ -22,7 +22,7 @@ const defaultProps = {
 
 const renderWithProvider = (
   containerProps: Partial<React.ComponentProps<typeof ComboBoxContainer>> = {},
-  providerProps: Partial<typeof defaultProps> = {}
+  providerProps: Partial<ComboBoxProps<Item>> = {}
 ) => {
   return render(
     <ComboBoxProvider {...defaultProps} {...providerProps}>

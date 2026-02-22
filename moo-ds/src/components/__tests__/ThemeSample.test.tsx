@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { ThemeSample } from '../ThemeSample';
 import { Theme } from '../../models';
 
@@ -47,10 +47,10 @@ describe('ThemeSample', () => {
 
   describe('different themes', () => {
     it('renders correctly for various theme configurations', () => {
-      const customTheme: Theme = { name: 'Custom', theme: 'custom-dark', colour: '#333' };
+      const customTheme: Theme = { name: 'Custom', theme: 'dark blue', colour: '#333' };
       const { container } = render(<ThemeSample theme={customTheme} onClick={() => {}} />);
 
-      expect(container.querySelector('.theme-sample')).toHaveClass('custom-dark');
+      expect(container.querySelector('.theme-sample')).toHaveClass('dark blue');
     });
   });
 });

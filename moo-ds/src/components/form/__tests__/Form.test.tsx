@@ -202,7 +202,7 @@ describe('Form.Group', () => {
   });
 
   it('hides when show is false', () => {
-    const { container } = render(
+    render(
       <TestForm>
         <Form.Group groupId="test" show={false}>
           <div data-testid="hidden-content">Hidden</div>
