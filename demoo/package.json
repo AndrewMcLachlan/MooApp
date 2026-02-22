@@ -9,7 +9,7 @@
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@fortawesome/react-fontawesome": "^3.2.0",
     "@tanstack/react-query": "^5.90.21",
-    "@tanstack/react-router": "^1.161.1",
+    "@tanstack/react-router": "^1.162.2",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
