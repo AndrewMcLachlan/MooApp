@@ -21,7 +21,7 @@ vi.mock('@andrewmclachlan/moo-ds', () => ({
   Alerts: () => <div data-testid="alerts">Alerts</div>,
   Notifications: () => <div data-testid="notifications">Notifications</div>,
   ThemeProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  useLocalStorage: (key: string, initial: any) => [initial, vi.fn()],
+  useLocalStorage: (_key: string, initial: any) => [initial, vi.fn()],
 }));
 
 // Mock Layout component
@@ -31,10 +31,10 @@ vi.mock('../layout/Layout', () => ({
       <div data-testid="layout" data-size={size}>{children}</div>
     ),
     {
-      Header: (props: any) => <div data-testid="header">Header</div>,
-      MobileHeader: (props: any) => <div data-testid="mobile-header">Mobile Header</div>,
-      Sidebar: (props: any) => <div data-testid="sidebar">Sidebar</div>,
-      MobileSidebar: (props: any) => <div data-testid="mobile-sidebar">Mobile Sidebar</div>,
+      Header: (_props: any) => <div data-testid="header">Header</div>,
+      MobileHeader: (_props: any) => <div data-testid="mobile-header">Mobile Header</div>,
+      Sidebar: (_props: any) => <div data-testid="sidebar">Sidebar</div>,
+      MobileSidebar: (_props: any) => <div data-testid="mobile-sidebar">Mobile Sidebar</div>,
     }
   ),
 }));
@@ -47,11 +47,11 @@ vi.mock('../pages/Error', () => ({
 describe('MooAppLayout', () => {
   const defaultProps = {
     header: {
-      menu: [],
-      userMenu: [],
+      menu: [] as React.ReactNode[],
+      userMenu: [] as any[],
     },
     sidebar: {
-      navItems: [],
+      navItems: [] as any[],
     },
   };
 

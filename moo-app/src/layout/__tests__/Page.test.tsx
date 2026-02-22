@@ -103,8 +103,8 @@ describe('Page', () => {
   describe('breadcrumbs', () => {
     it('sets breadcrumbs when provided', () => {
       const breadcrumbs = [
-        { text: 'Home', to: '/' },
-        { text: 'Dashboard', to: '/dashboard' },
+        { text: 'Home', route: '/' },
+        { text: 'Dashboard', route: '/dashboard' },
       ];
 
       render(<Page title="Test" breadcrumbs={breadcrumbs}>Content</Page>);
@@ -120,12 +120,12 @@ describe('Page', () => {
 
     it('updates breadcrumbs on change', () => {
       const { rerender } = render(
-        <Page title="Test" breadcrumbs={[{ text: 'Home', to: '/' }]}>
+        <Page title="Test" breadcrumbs={[{ text: 'Home', route: '/' }]}>
           Content
         </Page>
       );
 
-      const newBreadcrumbs = [{ text: 'About', to: '/about' }];
+      const newBreadcrumbs = [{ text: 'About', route: '/about' }];
       rerender(<Page title="Test" breadcrumbs={newBreadcrumbs}>Content</Page>);
 
       expect(mockSetBreadcrumbs).toHaveBeenLastCalledWith(newBreadcrumbs);

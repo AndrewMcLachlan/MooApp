@@ -3,6 +3,7 @@ import { renderHook, act } from '@testing-library/react';
 import React from 'react';
 import { useErrorHandler } from '../errorHandler';
 import { MessageProvider, MessageContext } from '../../providers/MessageProvider';
+import { Message } from '../../models/Message';
 
 describe('useErrorHandler', () => {
   const wrapper = ({ children }: { children: React.ReactNode }) => (
@@ -19,7 +20,7 @@ describe('useErrorHandler', () => {
     it('sends error message with danger variant', () => {
       const sendMessage = vi.fn();
       const mockContext = {
-        messages: [],
+        messages: [] as Message[],
         sendMessage,
         clearMessage: vi.fn(),
       };
@@ -45,7 +46,7 @@ describe('useErrorHandler', () => {
     it('uses default message when error.message is undefined', () => {
       const sendMessage = vi.fn();
       const mockContext = {
-        messages: [],
+        messages: [] as Message[],
         sendMessage,
         clearMessage: vi.fn(),
       };
@@ -73,7 +74,7 @@ describe('useErrorHandler', () => {
     it('handles multiple errors', () => {
       const sendMessage = vi.fn();
       const mockContext = {
-        messages: [],
+        messages: [] as Message[],
         sendMessage,
         clearMessage: vi.fn(),
       };
@@ -110,7 +111,7 @@ describe('useErrorHandler', () => {
     it('handles TypeError', () => {
       const sendMessage = vi.fn();
       const mockContext = {
-        messages: [],
+        messages: [] as Message[],
         sendMessage,
         clearMessage: vi.fn(),
       };
@@ -136,7 +137,7 @@ describe('useErrorHandler', () => {
     it('handles RangeError', () => {
       const sendMessage = vi.fn();
       const mockContext = {
-        messages: [],
+        messages: [] as Message[],
         sendMessage,
         clearMessage: vi.fn(),
       };

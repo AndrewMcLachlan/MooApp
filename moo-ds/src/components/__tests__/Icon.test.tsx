@@ -5,7 +5,8 @@ import { faCheck, faUser } from '@fortawesome/free-solid-svg-icons';
 
 // Mock custom icon component
 const MockCustomIcon = ({ className, onClick, title }: any) => (
-  <svg data-testid="custom-icon" className={className} onClick={onClick} title={title}>
+  <svg data-testid="custom-icon" className={className} onClick={onClick} aria-label={title}>
+    {title && <title>{title}</title>}
     <path d="M0 0h24v24H0z" />
   </svg>
 );
@@ -87,7 +88,7 @@ describe('Icon', () => {
     it('applies title to custom icon', () => {
       render(<Icon icon={MockCustomIcon} title="Custom title" />);
 
-      expect(screen.getByTestId('custom-icon')).toHaveAttribute('title', 'Custom title');
+      expect(screen.getByTestId('custom-icon')).toHaveAttribute('aria-label', 'Custom title');
     });
 
     it('handles click on custom icon', () => {

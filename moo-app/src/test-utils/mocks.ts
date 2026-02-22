@@ -177,9 +177,9 @@ export const mockAppConfig = {
  * Mock layout state for LayoutProvider
  */
 export const mockLayoutState = {
-  breadcrumbs: [],
-  secondaryNav: [],
-  actions: [],
+  breadcrumbs: [] as any[],
+  secondaryNav: [] as any[],
+  actions: [] as any[],
   showSidebar: true,
   sidebarCollapsed: false,
   setBreadcrumbs: vi.fn(),
@@ -187,5 +187,5 @@ export const mockLayoutState = {
   setActions: vi.fn(),
   setShowSidebar: vi.fn(),
   toggleSidebar: vi.fn(),
-  photo: undefined,
+  photo: undefined as string | undefined,
 };

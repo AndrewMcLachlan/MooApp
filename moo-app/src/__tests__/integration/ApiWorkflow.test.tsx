@@ -5,6 +5,7 @@ import { HttpClientContext } from '../../providers/HttpClientProvider';
 import { useApiGet } from '../../services/useApiGet';
 import { AxiosInstance } from 'axios';
 
+
 interface User {
   id: number;
   name: string;
@@ -12,7 +13,7 @@ interface User {
 }
 
 // Create a wrapper with all required providers
-const createWrapper = (mockHttpClient: Partial<AxiosInstance>) => {
+const createWrapper = (mockHttpClient: Record<string, unknown>) => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { retry: false },
@@ -22,7 +23,7 @@ const createWrapper = (mockHttpClient: Partial<AxiosInstance>) => {
 
   return ({ children }: { children: React.ReactNode }) => (
     <QueryClientProvider client={queryClient}>
-      <HttpClientContext.Provider value={mockHttpClient as AxiosInstance}>
+      <HttpClientContext.Provider value={mockHttpClient as unknown as AxiosInstance}>
         {children}
       </HttpClientContext.Provider>
     </QueryClientProvider>
@@ -30,21 +31,15 @@ const createWrapper = (mockHttpClient: Partial<AxiosInstance>) => {
 };
 
 describe('API Workflow Integration', () => {
-  let mockHttpClient: {
-    get: ReturnType<typeof vi.fn>;
-    post: ReturnType<typeof vi.fn>;
-    put: ReturnType<typeof vi.fn>;
-    delete: ReturnType<typeof vi.fn>;
+  const mockHttpClient = {
+    get: vi.fn(),
+    post: vi.fn(),
+    put: vi.fn(),
+    delete: vi.fn(),
   };
 
   beforeEach(() => {
     vi.clearAllMocks();
-    mockHttpClient = {
-      get: vi.fn(),
-      post: vi.fn(),
-      put: vi.fn(),
-      delete: vi.fn(),
-    };
   });
 
   describe('fetch and display data workflow', () => {

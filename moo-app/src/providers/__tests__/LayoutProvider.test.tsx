@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen, renderHook, act } from '@testing-library/react';
 import React from 'react';
 import { LayoutProvider, useLayout } from '../LayoutProvider';
@@ -9,7 +9,7 @@ vi.mock('@azure/msal-react', () => ({
     instance: {
       getActiveAccount: () => ({ username: 'test@example.com', name: 'Test User' }),
     },
-    accounts: [],
+    accounts: [] as any[],
     inProgress: 'none',
   }),
 }));
@@ -20,12 +20,12 @@ vi.mock('../../services', () => ({
 }));
 
 // Mock useLocalStorage
-vi.mock('@andrewmclachlan/moo-ds', () => ({
-  useLocalStorage: (key: string, initial: boolean) => {
+vi.mock('@andrewmclachlan/moo-ds', (): Record<string, any> => ({
+  useLocalStorage: (_key: string, initial: boolean) => {
     const [value, setValue] = React.useState(initial);
     return [value, setValue];
   },
-  NavItem: () => null,
+  NavItem: (): null => null,
 }));
 
 describe('LayoutProvider', () => {

@@ -3,7 +3,7 @@ import { render, screen, act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react';
 import React from 'react';
 import { ThemeProvider, useTheme } from '../ThemeProvider';
-import { Theme, Themes } from '../../models';
+import { Themes } from '../../models';
 
 // Mock meta element for theme-color
 const createMockMetaElement = () => {
@@ -15,7 +15,6 @@ const createMockMetaElement = () => {
 };
 
 describe('ThemeProvider', () => {
-  let mockMeta: HTMLMetaElement;
   let matchMediaListeners: Array<(e: MediaQueryListEvent) => void> = [];
 
   beforeEach(() => {
@@ -30,7 +29,7 @@ describe('ThemeProvider', () => {
     document.querySelectorAll('meta[name="theme-color"]').forEach(el => el.remove());
 
     // Create mock meta element
-    mockMeta = createMockMetaElement();
+    createMockMetaElement();
 
     // Reset matchMedia listeners
     matchMediaListeners = [];

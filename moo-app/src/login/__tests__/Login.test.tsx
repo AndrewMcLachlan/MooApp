@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 import { Login } from '../Login';
 
 // Mock MSAL authentication hook
@@ -12,8 +11,8 @@ vi.mock('@azure/msal-react', () => ({
     mockUseMsalAuthentication(interactionType, request);
     return {
       login: vi.fn(),
-      result: null,
-      error: null,
+      result: null as any,
+      error: null as any,
     };
   },
   useIsAuthenticated: () => mockUseIsAuthenticated(),

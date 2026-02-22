@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen, act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react';
 import React from 'react';
-import { MessageProvider, useMessages, MessageContext } from '../MessageProvider';
+import { MessageProvider, useMessages } from '../MessageProvider';
 
 describe('MessageProvider', () => {
   describe('rendering', () => {

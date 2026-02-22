@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ComboBoxSelectedItem } from '../ComboBoxSelectedItem';
-import { ComboBoxProvider } from '../ComboBoxProvider';
+import { ComboBoxProvider, ComboBoxProps } from '../ComboBoxProvider';
 
 interface Item {
   id: number;
@@ -23,7 +23,7 @@ const defaultProps = {
 
 const renderWithProvider = (
   itemProps: { item: Item },
-  providerProps: Partial<typeof defaultProps> = {}
+  providerProps: Partial<ComboBoxProps<Item>> = {}
 ) => {
   return render(
     <ComboBoxProvider {...defaultProps} {...providerProps}>
@@ -75,7 +75,7 @@ describe('ComboBoxSelectedItem', () => {
     it('uses custom color when colourField is provided', () => {
       const { container } = renderWithProvider(
         { item: items[1] },
-        { colourField: (item) => item.color }
+        { colourField: (item: Item) => item.color }
       );
 
       const badge = container.querySelector('.badge');

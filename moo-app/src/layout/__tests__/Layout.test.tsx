@@ -9,21 +9,21 @@ vi.mock('@azure/msal-react', () => ({
     instance: {
       getActiveAccount: () => ({ username: 'test@example.com', name: 'Test User' }),
     },
-    accounts: [],
+    accounts: [] as any[],
     inProgress: 'none',
   }),
 }));
 
 // Mock usePhoto service
-vi.mock('../../services', () => ({
+vi.mock('../../services', (): { usePhoto: () => null } => ({
   usePhoto: () => null,
 }));
 
 // Mock moo-ds components
-vi.mock('@andrewmclachlan/moo-ds', () => ({
+vi.mock('@andrewmclachlan/moo-ds', (): Record<string, any> => ({
   ThemeProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  useLocalStorage: (key: string, initial: any) => [initial, vi.fn()],
-  NavItemList: () => null,
+  useLocalStorage: (_key: string, initial: any) => [initial, vi.fn()],
+  NavItemList: (): null => null,
   Breadcrumb: () => <div data-testid="breadcrumb">Breadcrumb</div>,
   MenuToggle: ({ onClick }: { onClick: () => void }) => (
     <button data-testid="menu-toggle" onClick={onClick}>Toggle</button>

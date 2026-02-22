@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { loginRequest, apiRequest } from '../msal';
 
 // We can't easily test getMsalInstance as it creates a real MSAL instance

@@ -21,6 +21,13 @@ export default defineConfig({
     },
   },
   plugins: [
-    dts({ exclude: ["src/**/*.test.*", "src/**/__tests__/**", "src/test-utils/**", "src/setupTests.*"] }),
+    dts({
+      exclude: ["src/**/*.test.*", "src/**/__tests__/**", "src/test-utils/**", "src/setupTests.*"],
+      afterDiagnostic(diagnostics) {
+        if (diagnostics.length > 0) {
+          throw new Error(`Declaration generation failed with ${diagnostics.length} error(s)`);
+        }
+      },
+    }),
   ],
 })

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { useRef, createRef, forwardRef } from 'react';
+import { createRef, forwardRef } from 'react';
 import { useInnerRef } from '../innerRef';
 
 describe('useInnerRef', () => {
@@ -63,7 +63,7 @@ describe('useInnerRef', () => {
 
   describe('forwardRef pattern', () => {
     it('works with forwardRef components', () => {
-      const ForwardedComponent = forwardRef<HTMLButtonElement>((props, ref) => {
+      const ForwardedComponent = forwardRef<HTMLButtonElement>((_props, ref) => {
         const innerRef = useInnerRef<HTMLButtonElement>(ref);
         return <button ref={innerRef} data-testid="button">Click me</button>;
       });
@@ -76,7 +76,7 @@ describe('useInnerRef', () => {
     });
 
     it('allows internal use of ref alongside forwarding', () => {
-      const ForwardedComponent = forwardRef<HTMLInputElement>((props, ref) => {
+      const ForwardedComponent = forwardRef<HTMLInputElement>((_props, ref) => {
         const innerRef = useInnerRef<HTMLInputElement>(ref);
 
         const handleClick = () => {

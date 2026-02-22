@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import React from 'react';
 import { UserMenu } from '../UserMenu';
 
 // Mock MSAL
@@ -14,7 +13,7 @@ vi.mock('@azure/msal-react', () => ({
       getActiveAccount: mockGetActiveAccount,
       logoutRedirect: mockLogoutRedirect,
     },
-    accounts: [],
+    accounts: [] as any[],
     inProgress: 'none',
   }),
   useIsAuthenticated: () => mockIsAuthenticated,
