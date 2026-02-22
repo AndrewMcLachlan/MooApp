@@ -15,29 +15,36 @@ import { Table, TableProps } from "../Table";
 import { SortIcon } from "../SortIcon";
 import { LoadingTableRows } from "../LoadingTableRows";
 import { Pagination } from "../pagination/Pagination";
+import { MiniPagination } from "../pagination/MiniPagination";
 import { PageSize } from "../pagination/PageSize";
+import { PageIndicator } from "../pagination/PageIndicator";
 import { PaginationControls } from "../pagination/PaginationControls";
 import { SortDirection } from "../../models";
 
-export interface DataGridProps<TData> extends Omit<TableProps, "children"> {
+export interface DataGridState {
+    sorting: SortingState;
+    pageIndex: number;
+    pageSize: number;
+}
+
+export interface DataGridProps<TData> extends Omit<TableProps, "children" | "onChange"> {
     // Data
     data: TData[];
     columns: ColumnDef<TData, any>[];
 
+    // Server-side mode
+    server?: boolean;
+    onChange?: (state: DataGridState) => void;
+
     // Sorting
     sortable?: boolean;
-    sorting?: SortingState;
-    onSortingChange?: OnChangeFn<SortingState>;
-    manualSorting?: boolean;
 
     // Pagination
     showPagination?: boolean;
-    showPageSize?: boolean;
+    showHeaderPagination?: boolean;
+    dataType?: string;
     pageSize?: number;
     pageSizes?: number[];
-    pageIndex?: number;
-    onPaginationChange?: OnChangeFn<PaginationState>;
-    manualPagination?: boolean;
     rowCount?: number;
 
     // Loading / Empty
@@ -45,83 +52,111 @@ export interface DataGridProps<TData> extends Omit<TableProps, "children"> {
     loadingRows?: number;
     emptyMessage?: ReactNode;
 
-    // Wrapper
-    wrapperClassName?: string;
 }
 
 function DataGridInner<TData>(
     {
         data,
         columns,
+        server = false,
+        onChange,
         sortable = false,
-        sorting: sortingProp,
-        onSortingChange: onSortingChangeProp,
-        manualSorting = false,
         showPagination = false,
-        showPageSize = true,
+        showHeaderPagination = false,
+        dataType = "rows",
         pageSize: pageSizeProp = 10,
         pageSizes = [10, 20, 50, 100],
-        pageIndex: pageIndexProp,
-        onPaginationChange: onPaginationChangeProp,
-        manualPagination = false,
         rowCount,
         loading = false,
         loadingRows = 5,
         emptyMessage = "No data available.",
-        wrapperClassName,
+        className,
         ...tableProps
     }: DataGridProps<TData>,
     ref: React.ForwardedRef<HTMLTableElement>,
 ) {
-    // Internal sorting state (used when uncontrolled)
     const [internalSorting, setInternalSorting] = useState<SortingState>([]);
-    const sorting = sortingProp ?? internalSorting;
-    const onSortingChange = onSortingChangeProp ?? setInternalSorting;
-
-    // Internal pagination state (used when uncontrolled)
     const [internalPagination, setInternalPagination] = useState<PaginationState>({
-        pageIndex: pageIndexProp ?? 0,
+        pageIndex: 0,
         pageSize: pageSizeProp,
     });
-    const pagination = onPaginationChangeProp
-        ? { pageIndex: pageIndexProp ?? 0, pageSize: pageSizeProp }
-        : internalPagination;
-    const onPaginationChange = onPaginationChangeProp ?? setInternalPagination;
+
+    const handleSortingChange: OnChangeFn<SortingState> = (updater) => {
+        setInternalSorting((prev) => {
+            const next = typeof updater === "function" ? updater(prev) : updater;
+            if (server && onChange) {
+                onChange({ sorting: next, pageIndex: internalPagination.pageIndex, pageSize: internalPagination.pageSize });
+            }
+            return next;
+        });
+    };
+
+    const handlePaginationChange: OnChangeFn<PaginationState> = (updater) => {
+        setInternalPagination((prev) => {
+            const next = typeof updater === "function" ? updater(prev) : updater;
+            if (server && onChange) {
+                onChange({ sorting: internalSorting, pageIndex: next.pageIndex, pageSize: next.pageSize });
+            }
+            return next;
+        });
+    };
+
+    const hasPagination = showPagination || showHeaderPagination;
 
     const table = useReactTable({
         data,
         columns,
         state: {
-            ...(sortable ? { sorting } : {}),
-            ...(showPagination ? { pagination } : {}),
+            ...(sortable ? { sorting: internalSorting } : {}),
+            ...(hasPagination ? { pagination: internalPagination } : {}),
         },
-        onSortingChange: sortable ? onSortingChange : undefined,
-        onPaginationChange: showPagination ? onPaginationChange : undefined,
+        onSortingChange: sortable ? handleSortingChange : undefined,
+        onPaginationChange: hasPagination ? handlePaginationChange : undefined,
         getCoreRowModel: getCoreRowModel(),
-        ...(sortable && !manualSorting ? { getSortedRowModel: getSortedRowModel() } : {}),
-        ...(showPagination && !manualPagination ? { getPaginationRowModel: getPaginationRowModel() } : {}),
-        ...(manualSorting ? { manualSorting: true } : {}),
-        ...(manualPagination ? { manualPagination: true, rowCount } : {}),
+        ...(sortable && !server ? { getSortedRowModel: getSortedRowModel() } : {}),
+        ...(hasPagination && !server ? { getPaginationRowModel: getPaginationRowModel() } : {}),
+        ...(server ? { manualSorting: true, manualPagination: true, rowCount } : {}),
     });
 
     const colCount = columns.length;
     const rows = table.getRowModel().rows;
     const hasRows = rows.length > 0;
     const showFooter = showPagination && !loading && hasRows;
+    const hasHeaderPagination = showHeaderPagination && !loading && hasRows;
+
+    const pageNumber = table.getState().pagination.pageIndex + 1;
+    const pageCount = table.getPageCount();
 
     const getSortDirection = (tanstackDir: false | "asc" | "desc"): SortDirection => {
         return tanstackDir === "desc" ? "Descending" : "Ascending";
     };
 
+    const handlePageChange = (_current: number, newPage: number) => {
+        table.setPageIndex(newPage - 1);
+    };
+
     return (
-        <div className={classNames("data-grid", wrapperClassName)}>
-            <Table ref={ref} {...tableProps}>
+            <Table ref={ref} className={classNames("data-grid", className)} {...tableProps}>
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
+                            {headerGroup.headers.map((header, headerIndex) => {
                                 const canSort = sortable && header.column.getCanSort();
                                 const sorted = header.column.getIsSorted();
+                                const isLastHeader = headerIndex === headerGroup.headers.length - 1;
+                                const hasPaginationTh = hasHeaderPagination && isLastHeader;
+
+                                const headerContent = (
+                                    <>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(header.column.columnDef.header, header.getContext())}
+                                        {canSort && (
+                                            <SortIcon direction={getSortDirection(sorted)} hidden={!sorted} />
+                                        )}
+                                    </>
+                                );
+
                                 return (
                                     <th
                                         key={header.id}
@@ -129,11 +164,17 @@ function DataGridInner<TData>(
                                         onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
                                         style={canSort ? { cursor: "pointer" } : undefined}
                                     >
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(header.column.columnDef.header, header.getContext())}
-                                        {canSort && (
-                                            <SortIcon direction={getSortDirection(sorted)} hidden={!sorted} />
+                                        {hasPaginationTh ? (
+                                            <div className="pagination-th">
+                                                <div>{headerContent}</div>
+                                                <MiniPagination
+                                                    pageNumber={pageNumber}
+                                                    numberOfPages={pageCount}
+                                                    onChange={handlePageChange}
+                                                />
+                                            </div>
+                                        ) : (
+                                            headerContent
                                         )}
                                     </th>
                                 );
@@ -167,21 +208,23 @@ function DataGridInner<TData>(
                         <tr>
                             <td colSpan={colCount}>
                                 <PaginationControls>
-                                    {showPageSize && (
-                                        <PageSize
-                                            pageSizes={pageSizes}
-                                            value={table.getState().pagination.pageSize}
-                                            onChange={(newSize) => {
-                                                table.setPageSize(newSize);
-                                            }}
-                                        />
-                                    )}
-                                    <Pagination
-                                        pageNumber={table.getState().pagination.pageIndex + 1}
-                                        numberOfPages={table.getPageCount()}
-                                        onChange={(_current, newPage) => {
-                                            table.setPageIndex(newPage - 1);
+                                    <PageIndicator pageNumber={pageNumber} pageCount={pageCount} totalRows={rowCount ?? data.length} dataType={dataType} />
+                                    <PageSize
+                                        pageSizes={pageSizes}
+                                        value={table.getState().pagination.pageSize}
+                                        onChange={(newSize) => {
+                                            table.setPageSize(newSize);
                                         }}
+                                    />
+                                    <Pagination
+                                        pageNumber={pageNumber}
+                                        numberOfPages={pageCount}
+                                        onChange={handlePageChange}
+                                    />
+                                    <MiniPagination
+                                        pageNumber={pageNumber}
+                                        numberOfPages={pageCount}
+                                        onChange={handlePageChange}
                                     />
                                 </PaginationControls>
                             </td>
@@ -189,7 +232,6 @@ function DataGridInner<TData>(
                     </tfoot>
                 )}
             </Table>
-        </div>
     );
 }
 

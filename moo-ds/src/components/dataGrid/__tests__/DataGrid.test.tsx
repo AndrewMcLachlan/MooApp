@@ -49,9 +49,9 @@ describe("DataGrid", () => {
             expect((DataGrid as any).displayName).toBe("DataGrid");
         });
 
-        it("wraps in a div with data-grid class", () => {
-            const { container } = render(<DataGrid data={data} columns={columns} />);
-            expect(container.querySelector(".data-grid")).toBeInTheDocument();
+        it("adds data-grid class to the table", () => {
+            render(<DataGrid data={data} columns={columns} />);
+            expect(screen.getByRole("table")).toHaveClass("data-grid");
         });
     });
 
@@ -76,9 +76,11 @@ describe("DataGrid", () => {
             expect(container.querySelector(".table-responsive")).toBeInTheDocument();
         });
 
-        it("applies wrapperClassName", () => {
-            const { container } = render(<DataGrid data={data} columns={columns} wrapperClassName="my-grid" />);
-            expect(container.querySelector(".data-grid.my-grid")).toBeInTheDocument();
+        it("applies className alongside data-grid", () => {
+            render(<DataGrid data={data} columns={columns} className="my-grid" />);
+            const table = screen.getByRole("table");
+            expect(table).toHaveClass("data-grid");
+            expect(table).toHaveClass("my-grid");
         });
     });
 
@@ -118,7 +120,7 @@ describe("DataGrid", () => {
 
         it("hides pagination when loading", () => {
             render(<DataGrid data={data} columns={columns} loading showPagination />);
-            expect(screen.queryByText("Page Size")).not.toBeInTheDocument();
+            expect(screen.queryByText(/Page \d+ of \d+/)).not.toBeInTheDocument();
         });
     });
 
@@ -155,22 +157,27 @@ describe("DataGrid", () => {
         });
     });
 
-    describe("manual sorting", () => {
-        it("calls onSortingChange when header is clicked", () => {
-            const onSortingChange = vi.fn();
+    describe("server-side sorting", () => {
+        it("fires onChange when header is clicked", () => {
+            const onChange = vi.fn();
             render(
                 <DataGrid
                     data={data}
                     columns={columns}
                     sortable
-                    manualSorting
-                    sorting={[]}
-                    onSortingChange={onSortingChange}
+                    server
+                    onChange={onChange}
                 />,
             );
 
             fireEvent.click(screen.getByText("Name"));
-            expect(onSortingChange).toHaveBeenCalled();
+            expect(onChange).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    sorting: [{ id: "name", desc: false }],
+                    pageIndex: 0,
+                    pageSize: 10,
+                }),
+            );
         });
 
         it("does not sort data internally", () => {
@@ -179,13 +186,15 @@ describe("DataGrid", () => {
                     data={data}
                     columns={columns}
                     sortable
-                    manualSorting
-                    sorting={[{ id: "name", desc: true }]}
-                    onSortingChange={vi.fn()}
+                    server
+                    onChange={vi.fn()}
                 />,
             );
 
-            // Data should be in original order since sorting is manual
+            // Click to sort
+            fireEvent.click(screen.getByText("Name"));
+
+            // Data should be in original order since sorting is server-side
             const tbody = screen.getByRole("table").querySelector("tbody")!;
             const rows = within(tbody).getAllByRole("row");
             expect(rows[0]).toHaveTextContent("Alice");
@@ -194,9 +203,24 @@ describe("DataGrid", () => {
     });
 
     describe("client-side pagination", () => {
-        it("shows pagination controls when showPagination is true", () => {
-            render(<DataGrid data={manyRows} columns={columns} showPagination pageSize={10} />);
+        it("renders pagination footer when showPagination is true", () => {
+            const { container } = render(<DataGrid data={manyRows} columns={columns} showPagination pageSize={10} />);
+            expect(container.querySelector("tfoot")).toBeInTheDocument();
+        });
+
+        it("renders page indicator, page size, full pagination and mini pagination", () => {
+            const { container } = render(<DataGrid data={manyRows} columns={columns} showPagination pageSize={10} />);
+            expect(screen.getByText("Page 1 of 3 (25 rows)")).toBeInTheDocument();
             expect(screen.getByText("Page Size")).toBeInTheDocument();
+            // Full pagination has page number buttons
+            expect(screen.getByRole("button", { name: "2" })).toBeInTheDocument();
+            // Mini pagination has prev/next
+            expect(container.querySelector(".mini-pagination")).toBeInTheDocument();
+        });
+
+        it("uses custom dataType in page indicator", () => {
+            render(<DataGrid data={manyRows} columns={columns} showPagination pageSize={10} dataType="people" />);
+            expect(screen.getByText("Page 1 of 3 (25 people)")).toBeInTheDocument();
         });
 
         it("slices data to page size", () => {
@@ -219,6 +243,12 @@ describe("DataGrid", () => {
             expect(rows[0]).toHaveTextContent("Person 11");
         });
 
+        it("updates page indicator on navigation", () => {
+            render(<DataGrid data={manyRows} columns={columns} showPagination pageSize={10} />);
+            fireEvent.click(screen.getByRole("button", { name: "2" }));
+            expect(screen.getByText("Page 2 of 3 (25 rows)")).toBeInTheDocument();
+        });
+
         it("navigates to last page with remaining rows", () => {
             render(<DataGrid data={manyRows} columns={columns} showPagination pageSize={10} />);
 
@@ -230,41 +260,88 @@ describe("DataGrid", () => {
             expect(rows).toHaveLength(5); // 25 total, page 3 has 5
         });
 
-        it("hides page size selector when showPageSize is false", () => {
-            render(<DataGrid data={manyRows} columns={columns} showPagination showPageSize={false} pageSize={10} />);
-            expect(screen.queryByText("Page Size")).not.toBeInTheDocument();
-        });
-
         it("does not show pagination when showPagination is false", () => {
-            render(<DataGrid data={manyRows} columns={columns} />);
-            expect(screen.queryByText("Page Size")).not.toBeInTheDocument();
+            const { container } = render(<DataGrid data={manyRows} columns={columns} />);
+            expect(container.querySelector("tfoot")).not.toBeInTheDocument();
         });
 
         it("does not show pagination footer when data is empty", () => {
-            render(<DataGrid data={[]} columns={columns} showPagination />);
-            expect(screen.queryByText("Page Size")).not.toBeInTheDocument();
+            const { container } = render(<DataGrid data={[]} columns={columns} showPagination />);
+            expect(container.querySelector("tfoot")).not.toBeInTheDocument();
         });
     });
 
-    describe("manual pagination", () => {
-        it("calls onPaginationChange when page is changed", () => {
-            const onPaginationChange = vi.fn();
+    describe("header pagination", () => {
+        it("renders mini pagination in the last header cell", () => {
+            const { container } = render(
+                <DataGrid data={manyRows} columns={columns} showHeaderPagination showPagination pageSize={10} />,
+            );
+            expect(container.querySelector(".pagination-th")).toBeInTheDocument();
+        });
+
+        it("shows both header and footer pagination", () => {
+            const { container } = render(
+                <DataGrid data={manyRows} columns={columns} showHeaderPagination showPagination pageSize={10} />,
+            );
+            // Header pagination
+            expect(container.querySelector(".pagination-th")).toBeInTheDocument();
+            // Footer pagination
+            expect(container.querySelector("tfoot")).toBeInTheDocument();
+        });
+
+        it("shows header pagination without footer when showPagination is false", () => {
+            const { container } = render(
+                <DataGrid data={manyRows} columns={columns} showHeaderPagination pageSize={10} />,
+            );
+            expect(container.querySelector(".pagination-th")).toBeInTheDocument();
+            expect(container.querySelector("tfoot")).not.toBeInTheDocument();
+        });
+
+        it("navigates with header mini pagination", () => {
+            render(
+                <DataGrid data={manyRows} columns={columns} showHeaderPagination pageSize={10} />,
+            );
+
+            const headerPagination = screen.getByTitle("Next page");
+            fireEvent.click(headerPagination);
+
+            const tbody = screen.getByRole("table").querySelector("tbody")!;
+            const rows = within(tbody).getAllByRole("row");
+            expect(rows[0]).toHaveTextContent("Person 11");
+        });
+
+        it("only adds pagination-th to the last header", () => {
+            const { container } = render(
+                <DataGrid data={manyRows} columns={columns} showHeaderPagination showPagination pageSize={10} />,
+            );
+            expect(container.querySelectorAll(".pagination-th")).toHaveLength(1);
+        });
+    });
+
+    describe("server-side pagination", () => {
+        it("fires onChange when page is changed", () => {
+            const onChange = vi.fn();
             render(
                 <DataGrid
                     data={manyRows.slice(0, 10)}
                     columns={columns}
                     showPagination
-                    manualPagination
-                    pageIndex={0}
+                    server
                     pageSize={10}
                     rowCount={25}
-                    onPaginationChange={onPaginationChange}
+                    onChange={onChange}
                 />,
             );
 
             const page2 = screen.getByRole("button", { name: "2" });
             fireEvent.click(page2);
-            expect(onPaginationChange).toHaveBeenCalled();
+            expect(onChange).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    sorting: [],
+                    pageIndex: 1,
+                    pageSize: 10,
+                }),
+            );
         });
 
         it("calculates correct page count from rowCount", () => {
@@ -273,11 +350,10 @@ describe("DataGrid", () => {
                     data={manyRows.slice(0, 10)}
                     columns={columns}
                     showPagination
-                    manualPagination
-                    pageIndex={0}
+                    server
                     pageSize={10}
                     rowCount={25}
-                    onPaginationChange={vi.fn()}
+                    onChange={vi.fn()}
                 />,
             );
 

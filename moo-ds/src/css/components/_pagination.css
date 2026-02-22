@@ -100,7 +100,9 @@
         justify-content: flex-end;
         gap: 0.5rem;
         select {
-            max-width: 75px;
+            max-width: 65px;
+            padding: 0.4rem 1rem 0.4rem 0.4rem;
+            background-size: 0.8rem;
         }
     }
 }

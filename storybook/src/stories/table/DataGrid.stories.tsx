@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
-import { DataGrid, type ColumnDef, type SortingState, type PaginationState } from "@andrewmclachlan/moo-ds";
+import { useCallback, useState } from "react";
+import { DataGrid, type ColumnDef, type DataGridState } from "@andrewmclachlan/moo-ds";
 
 interface Person {
     id: number;
@@ -131,26 +131,23 @@ export const CustomEmptyMessage: Story = {
 
 export const ServerSideMode: Story = {
     render: function Render() {
-        const [sorting, setSorting] = useState<SortingState>([]);
-        const [pagination, setPagination] = useState<PaginationState>({
-            pageIndex: 0,
-            pageSize: 10,
-        });
+        const [pageData, setPageData] = useState(sampleData.slice(0, 10));
 
-        // Simulate server-side: apply sorting and pagination manually
-        const sorted = [...sampleData].sort((a, b) => {
-            if (sorting.length === 0) return 0;
-            const { id, desc } = sorting[0];
-            const aVal = a[id as keyof Person];
-            const bVal = b[id as keyof Person];
-            const cmp = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
-            return desc ? -cmp : cmp;
-        });
+        const handleChange = useCallback((state: DataGridState) => {
+            const sorted = [...sampleData].sort((a, b) => {
+                if (state.sorting.length === 0) return 0;
+                const { id, desc } = state.sorting[0];
+                const aVal = a[id as keyof Person];
+                const bVal = b[id as keyof Person];
+                const cmp = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+                return desc ? -cmp : cmp;
+            });
 
-        const pageData = sorted.slice(
-            pagination.pageIndex * pagination.pageSize,
-            (pagination.pageIndex + 1) * pagination.pageSize,
-        );
+            setPageData(sorted.slice(
+                state.pageIndex * state.pageSize,
+                (state.pageIndex + 1) * state.pageSize,
+            ));
+        }, []);
 
         return (
             <DataGrid
@@ -159,17 +156,26 @@ export const ServerSideMode: Story = {
                 striped
                 hover
                 sortable
-                manualSorting
-                sorting={sorting}
-                onSortingChange={setSorting}
+                server
                 showPagination
-                manualPagination
-                pageIndex={pagination.pageIndex}
-                pageSize={pagination.pageSize}
+                pageSize={10}
                 rowCount={sampleData.length}
-                onPaginationChange={setPagination}
+                onChange={handleChange}
             />
         );
+    },
+};
+
+export const HeaderPagination: Story = {
+    args: {
+        data: sampleData,
+        columns,
+        striped: true,
+        hover: true,
+        sortable: true,
+        showPagination: true,
+        showHeaderPagination: true,
+        pageSize: 10,
     },
 };
 

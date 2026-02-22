@@ -1,6 +1,48 @@
-.data-grid { width: 100%; }
-.data-grid .table tfoot td { padding: 0.25rem 0.5rem; }
-.data-grid .table tbody td.data-grid-empty {
+.table.data-grid { width: 100%; }
+.table.data-grid tfoot td { padding: 0.25rem 0.5rem; }
+.table.data-grid tbody td.data-grid-empty {
     text-align: center; padding: 2rem 0.5rem;
     color: var(--secondary-color, #6c757d); font-style: italic;
+}
+
+.table.data-grid tfoot .pagination-controls .page-indicator,
+.table.data-grid tfoot .pagination-controls .page-size label {
+    font-size: 0.875rem;
+    color: var(--secondary-color, #6c757d);
+    white-space: nowrap;
+    align-self: center;
+}
+
+.table.data-grid tfoot .pagination-controls .page-indicator {
+    display: none;
+}
+
+.table.data-grid tfoot .pagination-controls .pagination.mini-pagination {
+    display: flex;
+}
+
+.table.data-grid tfoot .pagination-controls .pagination:not(.mini-pagination) {
+    display: none;
+}
+
+.table.data-grid tfoot .pagination-controls .page-size label {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .table.data-grid tfoot .pagination-controls .page-indicator {
+        display: block;
+    }
+
+    .table.data-grid tfoot .pagination-controls .pagination.mini-pagination {
+        display: none;
+    }
+
+    .table.data-grid tfoot .pagination-controls .pagination:not(.mini-pagination) {
+        display: flex;
+    }
+
+    .table.data-grid tfoot .pagination-controls .page-size label {
+        display: inline;
+    }
 }
