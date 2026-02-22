@@ -32,6 +32,7 @@ export const Tooltip: React.FC<PropsWithChildren<{ id: string }>> = ({ id, child
             <span
                 ref={triggerRef}
                 className="tooltip-wrapper"
+                tabIndex={0}
                 onMouseEnter={handleShow}
                 onMouseLeave={handleHide}
                 onFocus={handleShow}

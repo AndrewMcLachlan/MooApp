@@ -36,7 +36,6 @@
 /* Portal-rendered tooltip: positioned absolutely on the body */
 .tooltip-portal {
     position: absolute;
-    transform: translateX(-50%);
 }
 
 .tooltip-portal[data-placement="top"] {
