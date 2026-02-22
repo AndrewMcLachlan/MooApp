@@ -28,7 +28,7 @@
     "@andrewmclachlan:registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
-
+    "@tanstack/react-table": "^8.21.0",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "react-error-boundary": "^6.1.1",

@@ -10,7 +10,7 @@ export const ThemeContext = createContext<ThemeOptions>({ defaultTheme: getDefau
 export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>> = ({ children, ...props }) => {
 
     const colour = document.getElementsByName("theme-color")[0];
-    if (!colour) logger.warn("No theme colour meta tag found. Theme colour will not be applied.");
+    if (!colour) console.warn("No theme colour meta tag found. Theme colour will not be applied.");
 
     const defaultTheme = props.defaultTheme ?? getDefaultTheme();
 
@@ -41,7 +41,7 @@ export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>
 export const useTheme = () => useContext(ThemeContext);
 
 export interface ThemeProviderProps {
-    defaultTheme?: ThemeOptions;
+    defaultTheme?: Theme;
 }
 
 ThemeProvider.displayName = "ThemeProvider";

@@ -19,6 +19,7 @@ import { Notifications } from "./routes/Notifications";
 import { FormSample } from "./routes/form/FormSample";
 import { Table } from "./routes/Table";
 import { Overlays } from "./routes/Overlays";
+import { DataGridPage } from "./routes/DataGrid";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -135,6 +136,12 @@ const overlaysRoute = createRoute({
   component: Overlays,
 });
 
+const dataGridRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "data-grid",
+  component: DataGridPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   componentsRoute.addChildren([
@@ -155,6 +162,7 @@ const routeTree = rootRoute.addChildren([
   profileRoute,
   tableRoute,
   overlaysRoute,
+  dataGridRoute,
 ]);
 
 const router = createRouter({ routeTree });

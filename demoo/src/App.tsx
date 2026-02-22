@@ -53,6 +53,11 @@ const App = () => {
       text: "Table",
       route: "/table",
       image: <Icon icon={Tags} />
+    },
+    {
+      text: "Data Grid",
+      route: "/data-grid",
+      image: <Icon icon={Tags} />
     }
   ];
 
