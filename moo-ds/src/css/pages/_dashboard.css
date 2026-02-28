@@ -33,6 +33,7 @@ main.dashboard {
         overflow: hidden;
 
         > *:not(.section-header) {
+            flex: none;
             min-height: 0;
             overflow: hidden;
         }
