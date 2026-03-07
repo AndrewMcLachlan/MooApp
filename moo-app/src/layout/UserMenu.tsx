@@ -5,7 +5,7 @@ import { Avatar } from "../components";
 import { useApp } from "../providers";
 
 const isDark = (themeValue: string) => themeValue === "" ?
-    window.matchMedia?.("(prefers-color-scheme: dark)").matches :
+    window.matchMedia?.("(prefers-color-scheme: dark)")?.matches ?? false :
     themeValue.startsWith("dark");
 
 export const UserMenu: React.FC<UserMenuProps> = ({userMenu = [], showAppInfo}) => {

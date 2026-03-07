@@ -11,8 +11,26 @@
  * Also injects `const _uid = React.useId();` into the component body via
  * the companion svgr-template.cjs.
  */
+
+/**
+ * Build a template literal AST node from a string containing ${_uid} placeholders.
+ * Handles any number of occurrences (0, 1, or many).
+ */
+function buildTemplateLiteral(t, str) {
+  const parts = str.split("${_uid}");
+  if (parts.length === 1) {
+    // No placeholders — return as a plain string
+    return t.stringLiteral(str);
+  }
+  const quasis = parts.map((raw, i) =>
+    t.templateElement({ raw, cooked: raw }, i === parts.length - 1)
+  );
+  const expressions = parts.slice(1).map(() => t.identifier("_uid"));
+  return t.templateLiteral(quasis, expressions);
+}
+
 module.exports = function uniqueIdPlugin(api) {
-  const { types: t, template } = api;
+  const { types: t } = api;
 
   return {
     visitor: {
@@ -44,32 +62,19 @@ module.exports = function uniqueIdPlugin(api) {
             (_, id) => "url(#${_uid}" + id + ")"
           );
           path.node.value = t.jsxExpressionContainer(
-            t.templateLiteral(
-              [
-                t.templateElement({ raw: newValue.split("${_uid}")[0], cooked: newValue.split("${_uid}")[0] }),
-                t.templateElement({ raw: newValue.split("${_uid}")[1], cooked: newValue.split("${_uid}")[1] }, true),
-              ],
-              [t.identifier("_uid")]
-            )
+            buildTemplateLiteral(t, newValue)
           );
           return;
         }
 
         // Handle JSX expression containers with string values containing url(#...)
         if (t.isJSXExpressionContainer(value) && t.isStringLiteral(value.expression) && /url\(#/.test(value.expression.value)) {
-          const val = value.expression.value;
-          const newValue = val.replace(
+          const newValue = value.expression.value.replace(
             /url\(#([^)]+)\)/g,
             (_, id) => "url(#${_uid}" + id + ")"
           );
           path.node.value = t.jsxExpressionContainer(
-            t.templateLiteral(
-              [
-                t.templateElement({ raw: newValue.split("${_uid}")[0], cooked: newValue.split("${_uid}")[0] }),
-                t.templateElement({ raw: newValue.split("${_uid}")[1], cooked: newValue.split("${_uid}")[1] }, true),
-              ],
-              [t.identifier("_uid")]
-            )
+            buildTemplateLiteral(t, newValue)
           );
         }
       },
