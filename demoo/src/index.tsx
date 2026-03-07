@@ -20,6 +20,7 @@ import { FormSample } from "./routes/form/FormSample";
 import { Table } from "./routes/Table";
 import { Overlays } from "./routes/Overlays";
 import { DataGridPage } from "./routes/DataGrid";
+import { Icons } from "./routes/Icons";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -142,6 +143,12 @@ const dataGridRoute = createRoute({
   component: DataGridPage,
 });
 
+const iconsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "icons",
+  component: Icons,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   componentsRoute.addChildren([
@@ -163,6 +170,7 @@ const routeTree = rootRoute.addChildren([
   tableRoute,
   overlaysRoute,
   dataGridRoute,
+  iconsRoute,
 ]);
 
 const router = createRouter({ routeTree });

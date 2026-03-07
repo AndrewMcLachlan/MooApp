@@ -61,16 +61,22 @@
         justify-content: left;
         align-items: center;
         gap: .75rem;
+        padding: 0.25rem 0;
 
         &.divider {
             border-top: 2px solid var(--border-color);
-            margin: 1rem 0;
+            margin: 0.75rem 0;
+            padding: 0;
         }
     }
 
     a.nav-link {
         display: flex;
         gap: 1rem;
+
+        &.active {
+            color: inherit;
+        }
     }
 
     .avatar {
@@ -88,5 +94,14 @@
             align-items: center;
             justify-content: center;
         }
+    }
+
+    .app-info {
+        margin-top: 1rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid var(--border-color);
+        font-size: 0.8rem;
+        color: var(--muted-color, #6c757d);
+        text-align: center;
     }
 }

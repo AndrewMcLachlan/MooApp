@@ -36,3 +36,31 @@
     transform: rotate(360deg);
   }
 }
+
+.icon-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  gap: 1.5rem;
+}
+
+.icon-gallery-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius, 0.5rem);
+}
+
+.icon-gallery-item svg {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.icon-gallery-item span {
+  font-size: 0.75rem;
+  text-align: center;
+  word-break: break-word;
+  color: var(--muted-color, #6c757d);
+}

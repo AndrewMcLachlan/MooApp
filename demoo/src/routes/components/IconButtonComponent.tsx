@@ -1,6 +1,6 @@
 import { Page } from "@andrewmclachlan/moo-app";
 import { IconButton, Section } from "@andrewmclachlan/moo-ds";
-import { HamburgerMenu } from "../../assets";
+import { HamburgerMenu } from "@andrewmclachlan/moo-icons";
 
 export const IconButtonComponent = () => {
     return (

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
-import * as Icons from '../assets';
+import * as Icons from '@andrewmclachlan/moo-icons';
 
 // Complete list of all icon names based on exports
 const iconNames = [
@@ -14,6 +14,8 @@ const iconNames = [
   'Hierarchy',
   'Import',
   'LeftRightArrow',
+  'List',
+  'NestedList',
   'PieChart',
   'PiggyBank',
   'PullRequest',
@@ -42,9 +44,9 @@ describe('moo-icons', () => {
       });
     });
 
-    it('exports exactly 26 icons', () => {
+    it('exports exactly 28 icons', () => {
       const exportedKeys = Object.keys(Icons);
-      expect(exportedKeys).toHaveLength(26);
+      expect(exportedKeys).toHaveLength(28);
     });
   });
 

@@ -1,22 +1,17 @@
 import { useTheme } from "../providers"
 import { Themes } from "../models";
-import { Col } from "./Col";
-import { Row } from "./Row";
 import { ThemeSample } from "./ThemeSample";
 
 export const ThemeSelector = () => {
 
-    const { setTheme } = useTheme();
+    const { theme: currentTheme, setTheme } = useTheme();
 
     return (
-        <Row>
-            {Themes.map((theme) =>
-                <Col key={theme.name} className="theme">
-                    <h4>{theme.name}</h4>
-                    <ThemeSample theme={theme} onClick={(t) => setTheme(t)} />
-                </Col>
+        <div className="theme-selector">
+            {Themes.map((t) =>
+                <ThemeSample key={t.name} theme={t} selected={currentTheme?.theme === t.theme} onClick={(t) => setTheme(t)} />
             )}
-        </Row>
+        </div>
     );
 }
 

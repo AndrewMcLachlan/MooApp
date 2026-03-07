@@ -33,17 +33,17 @@ describe('ThemeSelector', () => {
       expect(themeSamples.length).toBe(Themes.length);
     });
 
-    it('renders in a Row layout', () => {
+    it('renders in a theme-selector container', () => {
       const { container } = renderWithProvider(<ThemeSelector />);
 
-      expect(container.querySelector('.row')).toBeInTheDocument();
+      expect(container.querySelector('.theme-selector')).toBeInTheDocument();
     });
 
-    it('renders each theme in a Col', () => {
+    it('renders each theme as a theme-sample', () => {
       const { container } = renderWithProvider(<ThemeSelector />);
 
-      const cols = container.querySelectorAll('.theme');
-      expect(cols.length).toBe(Themes.length);
+      const samples = container.querySelectorAll('.theme-sample');
+      expect(samples.length).toBe(Themes.length);
     });
   });
 

@@ -27,7 +27,7 @@ vi.mock('@andrewmclachlan/moo-ds', () => ({
   OverlayTrigger: ({ children, overlay }: any) => (
     <div data-testid="overlay-trigger">
       {children}
-      <div data-testid="overlay-content">{overlay}</div>
+      <div data-testid="overlay-content">{typeof overlay === 'function' ? overlay(() => {}) : overlay}</div>
     </div>
   ),
   Popover: Object.assign(
@@ -39,11 +39,18 @@ vi.mock('@andrewmclachlan/moo-ds', () => ({
       Body: ({ children }: any) => <div data-testid="popover-body">{children}</div>,
     }
   ),
+  useTheme: () => ({ theme: { theme: 'light', name: 'Light' }, setTheme: vi.fn() }),
+  Themes: [{ theme: 'light', name: 'Light' }, { theme: 'dark', name: 'Dark' }],
 }));
 
 // Mock Avatar component
 vi.mock('../../components', () => ({
   Avatar: () => <div data-testid="avatar">Avatar</div>,
+}));
+
+// Mock useApp provider
+vi.mock('../../providers', () => ({
+  useApp: () => ({ name: 'Test App', version: '1.0.0' }),
 }));
 
 // Mock FontAwesome

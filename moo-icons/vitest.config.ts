@@ -1,8 +1,14 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
+import { fileURLToPath } from 'url';
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@andrewmclachlan/moo-icons': fileURLToPath(new URL('./src/index.ts', import.meta.url)),
+    },
+  },
   plugins: [
     svgr({
       svgrOptions: {

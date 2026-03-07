@@ -5,7 +5,7 @@ import { MooAppLayout } from "@andrewmclachlan/moo-app";
 import { Icon, SearchBox } from "@andrewmclachlan/moo-ds";
 import { useIsAuthenticated } from "@azure/msal-react";
 import { Link } from "@tanstack/react-router";
-import { Application, Budget, Tags, User, Stack, Users, Sliders } from "@andrewmclachlan/moo-icons";
+import { Application, Budget, Dashboard, Tags, User, Stack, Users, Sliders } from "@andrewmclachlan/moo-icons";
 
 const App = () => {
 
@@ -58,12 +58,17 @@ const App = () => {
       text: "Data Grid",
       route: "/data-grid",
       image: <Icon icon={Tags} />
+    },
+    {
+      text: "Icons",
+      route: "/icons",
+      image: <Icon icon={Dashboard} />
     }
   ];
 
   return (
     <MooAppLayout
-      header={{ menu: [<Link to="/"><Tags /></Link>], search: <SearchBox />, userMenu: [{ route: "/profile", text: "Profile" }] }}
+      header={{ menu: [<Link to="/"><Tags /></Link>], search: <SearchBox />, userMenu: [{ route: "/profile", text: "Profile", image: <Icon icon={User} /> }, { route: "/settings", text: "Settings", image: <Icon icon={Sliders} /> }], showAppInfo: true }}
       sidebar={{ navItems: sidebarNav }}
     />
   );

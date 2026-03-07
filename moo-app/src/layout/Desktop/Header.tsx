@@ -28,7 +28,7 @@ export const Header: HeaderComponent = (props) => {
                             <li key={i}>{item}</li>
                         ))}
                     </ul>
-                    <UserMenu userMenu={props.userMenu} />
+                    <UserMenu userMenu={props.userMenu} showAppInfo={props.showAppInfo} />
                 </nav>
             </Container>
             <Container fluid className="second-header">

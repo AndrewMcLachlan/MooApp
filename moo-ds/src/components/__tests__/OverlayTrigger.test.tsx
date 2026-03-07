@@ -94,6 +94,30 @@ describe('OverlayTrigger', () => {
     expect(screen.getByText('Overlay content')).toBeInTheDocument();
   });
 
+  describe('render function overlay', () => {
+    it('renders overlay from a function and supports close callback', () => {
+      render(
+        <OverlayTrigger
+          trigger="click"
+          overlay={(close) => (
+            <div>
+              <span>Function overlay</span>
+              <button onClick={close}>Close</button>
+            </div>
+          )}
+        >
+          <button>Toggle</button>
+        </OverlayTrigger>
+      );
+
+      fireEvent.click(screen.getByText('Toggle'));
+      expect(screen.getByText('Function overlay')).toBeInTheDocument();
+
+      fireEvent.click(screen.getByText('Close'));
+      expect(screen.queryByText('Function overlay')).not.toBeInTheDocument();
+    });
+  });
+
   it('has displayName', () => {
     expect(OverlayTrigger.displayName).toBe('OverlayTrigger');
   });

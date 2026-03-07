@@ -11,12 +11,12 @@ import getMsalInstance, { AUTH_RECOVERED_EVENT } from "./login/msal";
 import { MsalProvider } from "@azure/msal-react";
 import { Login } from "./login/Login";
 
-import { faArrowRightFromBracket, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faMoon, faSun, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { AxiosInstance } from "axios";
 
 
-library.add(faArrowRightFromBracket, faTimesCircle);
+library.add(faArrowRightFromBracket, faMoon, faSun, faTimesCircle);
 
 export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, scopes = [], baseUrl = "/", client, name, version, copyrightYear, authFallback }) => {
 

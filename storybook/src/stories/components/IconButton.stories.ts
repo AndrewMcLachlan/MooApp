@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
-import { default as ReactSvg } from "../../assets/react.svg?react";
+import { Tags } from "@andrewmclachlan/moo-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 import { IconButton } from "@andrewmclachlan/moo-ds";
@@ -46,6 +46,6 @@ export const CustomSVG: Story = {
   args: {
     title: "Custom SVG",
     children: "Icon Button",
-    icon: ReactSvg,
+    icon: Tags,
   },
 };
