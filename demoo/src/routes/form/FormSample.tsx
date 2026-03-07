@@ -1,5 +1,5 @@
 import { Page } from "@andrewmclachlan/moo-app";
-import { Form, SectionForm, FormComboBox, Button, Section, Upload } from "@andrewmclachlan/moo-ds"
+import { Form, SectionForm, FormComboBox, Button, Section, Upload, Input } from "@andrewmclachlan/moo-ds"
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -62,6 +62,13 @@ export const FormSample = () => {
                     <Button type="submit" variant="primary">Submit</Button>
                 </SectionForm>
             </div>
+
+            <Section title="Switches" header="Switches" headerSize={4}>
+                <Input.Switch id="switch1" label="Off switch" />
+                <Input.Switch id="switch2" label="On switch" defaultChecked />
+                <Input.Switch id="switch3" label="Disabled off" disabled />
+                <Input.Switch id="switch4" label="Disabled on" defaultChecked disabled />
+            </Section>
 
             <Section title="File Uploads" header="File Uploads" headerSize={4}>
                 <h5>Attach Supporting Documents</h5>

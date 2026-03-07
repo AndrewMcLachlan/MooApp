@@ -195,7 +195,7 @@ option {
     padding-left: 0;
 
     .form-check-input {
-        --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
+        --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.55%29'/%3e%3c/svg%3e");
         width: 2.8em;
         height: 1.5em;
         background-image: var(--form-switch-bg);
@@ -204,30 +204,20 @@ option {
         transition: background-position 0.15s ease-in-out;
     }
 
-    .form-check-input:focus {
-        --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%28197, 127.5, 127.5%29'/%3e%3c/svg%3e");
-    }
-
     .form-check-input:checked {
         background-position: right center;
         --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
     }
 }
 
-.blue .form-switch .form-check-input {
-    &:focus {
-        --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%28127.5, 127.5, 197.5%29'/%3e%3c/svg%3e");
-    }
-}
-
 .dark .form-switch .form-check-input,
 [data-theme="dark"] .form-switch .form-check-input {
-    --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.25%29'/%3e%3c/svg%3e");
+    --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.55%29'/%3e%3c/svg%3e");
 }
 
 @media (prefers-color-scheme: dark) {
     .form-switch .form-check-input {
-        --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.25%29'/%3e%3c/svg%3e");
+        --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.55%29'/%3e%3c/svg%3e");
     }
 }
 
