@@ -1,5 +1,4 @@
 workflow: GitHubFlow/v1
-next-version: 4.0.0
 branches:
   main:
     is-main-branch: true
