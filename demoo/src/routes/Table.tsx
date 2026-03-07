@@ -1,6 +1,6 @@
 import { Section, NavItemDivider, IconButton, SectionTable, Pagination, PageSize, PaginationControls, SortablePaginationTh, changeSortDirection, SortDirection, Button, LoadingTableRows, MiniPagination } from "@andrewmclachlan/moo-ds";
 import { Page } from "@andrewmclachlan/moo-app";
-import { Tags } from "../assets";
+import { Tags } from "@andrewmclachlan/moo-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 

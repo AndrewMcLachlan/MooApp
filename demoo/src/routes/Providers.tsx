@@ -1,6 +1,6 @@
 import { Page, useHttpClient } from "@andrewmclachlan/moo-app";
 import { Section, Button } from "@andrewmclachlan/moo-ds";
-import { Tags } from "../assets";
+import { Tags } from "@andrewmclachlan/moo-icons";
 
 export const Providers = () => {
 

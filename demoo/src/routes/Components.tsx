@@ -1,6 +1,6 @@
 import { Page } from "@andrewmclachlan/moo-app";
 import { Section, NavItemDivider, IconButton, SectionTable, EditColumn, ComboBox, Button, Modal, ButtonGroup, Badge, CloseBadge, Alert, Nav, Tabs, Tab, Collapsible } from "@andrewmclachlan/moo-ds";
-import { Tags } from "../assets";
+import { Tags } from "@andrewmclachlan/moo-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 

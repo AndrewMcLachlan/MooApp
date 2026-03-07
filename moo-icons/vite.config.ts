@@ -3,17 +3,28 @@ import svgr from "vite-plugin-svgr"
 import dts from "vite-plugin-dts"
 import external from "rollup-plugin-peer-deps-external"
 import { fileURLToPath } from "url"
+import { createRequire } from "module"
+
+const require = createRequire(import.meta.url)
 
 export default defineConfig({
   plugins: [
     svgr({
       svgrOptions: {
         plugins: ["@svgr/plugin-svgo", "@svgr/plugin-jsx"],
+        template: require("./svgr-template.cjs"),
+        jsx: {
+          babelConfig: {
+            plugins: [require.resolve("./svgr-unique-ids.cjs")],
+          },
+        },
         svgoConfig: {
           plugins: [{
             name: "preset-default",
-            params: { overrides: { removeViewBox: false, cleanupIds: false } },
-          }],
+            params: { overrides: { removeViewBox: false, cleanupIds: false, removeUselessDefs: false, removeUselessStrokeAndFill: false } },
+          },
+          "prefixIds",
+          ],
         },
       },
       include: "**/*.svg",

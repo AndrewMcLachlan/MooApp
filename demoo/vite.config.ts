@@ -2,6 +2,9 @@ import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import svgr from "vite-plugin-svgr";
 import { fileURLToPath } from "url"
+import { createRequire } from "module"
+
+const require = createRequire(import.meta.url)
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,11 +12,19 @@ export default defineConfig({
     svgr({
       svgrOptions: {
         plugins: ["@svgr/plugin-svgo", "@svgr/plugin-jsx"],
+        template: require("../moo-icons/svgr-template.cjs"),
+        jsx: {
+          babelConfig: {
+            plugins: [require.resolve("../moo-icons/svgr-unique-ids.cjs")],
+          },
+        },
         svgoConfig: {
           plugins: [{
             name: "preset-default",
-            params: { overrides: { removeViewBox: false, cleanupIds: false } },
-          }],
+            params: { overrides: { removeViewBox: false, cleanupIds: false, removeUselessDefs: false, removeUselessStrokeAndFill: false } },
+          },
+          "prefixIds",
+          ],
         },
       },
       include: "**/*.svg",

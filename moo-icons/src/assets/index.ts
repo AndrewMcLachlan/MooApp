@@ -8,6 +8,8 @@ export { default as HamburgerMenu } from "./hamburger-menu.svg";
 export { default as Hierarchy } from "./hierarchy.svg";
 export { default as Import } from "./import.svg";
 export { default as LeftRightArrow } from "./left-right-arrow.svg";
+export { default as List } from "./list.svg";
+export { default as NestedList } from "./nested-list.svg";
 export { default as PieChart } from "./pie-chart.svg";
 export { default as PiggyBank } from "./piggybank.svg";
 export { default as PullRequest } from "./pull-request.svg";

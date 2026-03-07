@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 export interface OverlayTriggerProps {
     trigger?: "click" | "hover" | "focus" | ("click" | "hover" | "focus")[];
     placement?: "top" | "bottom" | "left" | "right";
-    overlay: React.ReactElement;
+    overlay: React.ReactElement | ((close: () => void) => React.ReactElement);
     rootClose?: boolean;
     containerPadding?: number;
     children: React.ReactElement;
@@ -121,7 +121,7 @@ export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
                         zIndex: 1070,
                     }}
                 >
-                    {overlay}
+                    {typeof overlay === "function" ? overlay(() => setShow(false)) : overlay}
                 </div>,
                 document.body
             )}

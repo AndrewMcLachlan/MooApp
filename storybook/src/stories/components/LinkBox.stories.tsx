@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
-import { default as ReactSvg } from "../../assets/react.svg?react";
+import { Tags } from "@andrewmclachlan/moo-icons";
 import { LinkBox } from "@andrewmclachlan/moo-ds";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
@@ -37,7 +37,7 @@ export const string: Story = {
 export const SVG: Story = {
   args: {
     href: "https://www.example.com",
-    image: <ReactSvg />,
+    image: <Tags />,
     children: "Link Box"
   },
 };
