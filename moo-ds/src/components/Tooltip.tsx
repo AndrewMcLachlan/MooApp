@@ -1,31 +1,29 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { PropsWithChildren, useCallback, useId, useRef, useState } from "react";
+import { PropsWithChildren, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 export const Tooltip: React.FC<PropsWithChildren<{ id: string }>> = ({ id, children }) => {
     const uniqueId = useId();
-    const tooltipId = `tooltip-${id || uniqueId}`;
+    const sanitizedId = (id || uniqueId).replace(/:/g, "");
+    const tooltipId = `tooltip-${sanitizedId}`;
+    const anchorName = `--tooltip-${sanitizedId}`;
     const triggerRef = useRef<HTMLSpanElement>(null);
+    const portalRef = useRef<HTMLSpanElement>(null);
     const [show, setShow] = useState(false);
-    const [position, setPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
 
-    const updatePosition = useCallback(() => {
-        if (!triggerRef.current) return;
-        const rect = triggerRef.current.getBoundingClientRect();
-        setPosition({
-            top: rect.top + window.scrollY,
-            left: rect.left + window.scrollX + rect.width / 2,
-        });
-    }, []);
+    useLayoutEffect(() => {
+        triggerRef.current?.style.setProperty("anchor-name", anchorName);
+    }, [anchorName]);
 
-    const handleShow = useCallback(() => {
-        updatePosition();
-        setShow(true);
-    }, [updatePosition]);
-
-    const handleHide = useCallback(() => {
-        setShow(false);
-    }, []);
+    useLayoutEffect(() => {
+        if (show && portalRef.current && triggerRef.current) {
+            portalRef.current.style.setProperty("position-anchor", anchorName);
+            const triggerRect = triggerRef.current.getBoundingClientRect();
+            const portalRect = portalRef.current.getBoundingClientRect();
+            const arrowLeft = triggerRect.left + triggerRect.width / 2 - portalRect.left;
+            portalRef.current.style.setProperty("--arrow-left", `${arrowLeft}px`);
+        }
+    }, [show, anchorName]);
 
     return (
         <>
@@ -33,10 +31,10 @@ export const Tooltip: React.FC<PropsWithChildren<{ id: string }>> = ({ id, child
                 ref={triggerRef}
                 className="tooltip-wrapper"
                 tabIndex={0}
-                onMouseEnter={handleShow}
-                onMouseLeave={handleHide}
-                onFocus={handleShow}
-                onBlur={handleHide}
+                onMouseEnter={() => setShow(true)}
+                onMouseLeave={() => setShow(false)}
+                onFocus={() => setShow(true)}
+                onBlur={() => setShow(false)}
             >
                 <span className="tooltip-icon" aria-describedby={tooltipId}>
                     <FontAwesomeIcon icon="info-circle" size="1x" />
@@ -44,11 +42,10 @@ export const Tooltip: React.FC<PropsWithChildren<{ id: string }>> = ({ id, child
             </span>
             {show && createPortal(
                 <span
+                    ref={portalRef}
                     className="tooltip-content tooltip-portal"
                     id={tooltipId}
-                    data-placement="top"
                     role="tooltip"
-                    style={{ top: `${position.top}px`, left: `${position.left}px` }}
                 >
                     {children}
                 </span>,
