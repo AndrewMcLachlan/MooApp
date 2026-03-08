@@ -1,0 +1,7 @@
+/* Overlay portal styles (CSS anchor positioned) */
+
+.overlay-portal {
+    position: fixed;
+    z-index: 1070;
+    margin: var(--overlay-padding, 0);
+}

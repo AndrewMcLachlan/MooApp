@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useId, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 
 export interface OverlayTriggerProps {
@@ -10,6 +10,20 @@ export interface OverlayTriggerProps {
     children: React.ReactElement;
 }
 
+const placementToPositionArea: Record<string, string> = {
+    top: "top",
+    bottom: "bottom",
+    left: "left",
+    right: "right",
+};
+
+const placementToFlip: Record<string, string> = {
+    top: "flip-block",
+    bottom: "flip-block",
+    left: "flip-inline",
+    right: "flip-inline",
+};
+
 export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
     trigger = "click",
     placement = "bottom",
@@ -19,54 +33,28 @@ export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
     children,
 }) => {
     const [show, setShow] = useState(false);
-    const [position, setPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
     const triggerRef = useRef<HTMLElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
+    const uniqueId = useId();
+    const sanitizedId = uniqueId.replace(/:/g, "");
+    const anchorName = `--overlay-${sanitizedId}`;
 
     const triggers = Array.isArray(trigger) ? trigger : [trigger];
 
-    const updatePosition = useCallback(() => {
-        if (!triggerRef.current || !overlayRef.current) return;
+    useLayoutEffect(() => {
+        triggerRef.current?.style.setProperty("anchor-name", anchorName);
+    }, [anchorName]);
 
-        const triggerRect = triggerRef.current.getBoundingClientRect();
-        const overlayRect = overlayRef.current.getBoundingClientRect();
-        const scrollX = window.scrollX;
-        const scrollY = window.scrollY;
-
-        let top = 0;
-        let left = 0;
-
-        switch (placement) {
-            case "bottom":
-                top = triggerRect.bottom + scrollY + containerPadding;
-                left = triggerRect.left + scrollX + (triggerRect.width / 2) - (overlayRect.width / 2);
-                break;
-            case "top":
-                top = triggerRect.top + scrollY - overlayRect.height - containerPadding;
-                left = triggerRect.left + scrollX + (triggerRect.width / 2) - (overlayRect.width / 2);
-                break;
-            case "left":
-                top = triggerRect.top + scrollY + (triggerRect.height / 2) - (overlayRect.height / 2);
-                left = triggerRect.left + scrollX - overlayRect.width - containerPadding;
-                break;
-            case "right":
-                top = triggerRect.top + scrollY + (triggerRect.height / 2) - (overlayRect.height / 2);
-                left = triggerRect.right + scrollX + containerPadding;
-                break;
+    useLayoutEffect(() => {
+        if (show && overlayRef.current) {
+            overlayRef.current.style.setProperty("position-anchor", anchorName);
+            overlayRef.current.style.setProperty("position-area", placementToPositionArea[placement]);
+            overlayRef.current.style.setProperty("position-try-fallbacks", placementToFlip[placement]);
+            if (containerPadding > 0) {
+                overlayRef.current.style.setProperty("--overlay-padding", `${containerPadding}px`);
+            }
         }
-
-        // Clamp to viewport
-        left = Math.max(containerPadding, Math.min(left, window.innerWidth - overlayRect.width - containerPadding));
-
-        setPosition({ top, left });
-    }, [placement, containerPadding]);
-
-    useEffect(() => {
-        if (show) {
-            // Defer position calculation to next frame so the overlay is rendered
-            requestAnimationFrame(updatePosition);
-        }
-    }, [show, updatePosition]);
+    }, [show, anchorName, placement, containerPadding]);
 
     useEffect(() => {
         if (!show || !rootClose) return () => {};
@@ -114,12 +102,7 @@ export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
             {show && createPortal(
                 <div
                     ref={overlayRef}
-                    style={{
-                        position: "absolute",
-                        top: `${position.top}px`,
-                        left: `${position.left}px`,
-                        zIndex: 1070,
-                    }}
+                    className="overlay-portal"
                 >
                     {typeof overlay === "function" ? overlay(() => setShow(false)) : overlay}
                 </div>,

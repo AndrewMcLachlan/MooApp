@@ -33,18 +33,34 @@
     border: var(--tooltip-arrow-size) solid transparent;
 }
 
-/* Portal-rendered tooltip: positioned absolutely on the body */
+/* Portal-rendered tooltip: CSS anchor positioned */
 .tooltip-portal {
-    position: absolute;
+    position: fixed;
+    position-area: top;
+    margin-bottom: var(--tooltip-arrow-size);
+    position-try-fallbacks: flip-block;
 }
 
-.tooltip-portal[data-placement="top"] {
-    transform: translate(-50%, calc(-100% - var(--tooltip-arrow-size)));
-}
-
-.tooltip-portal[data-placement="top"]::after {
+/* Arrow pointing down (default: tooltip above trigger) */
+.tooltip-portal::after {
     top: 100%;
-    left: 50%;
+    left: var(--arrow-left, 50%);
     transform: translateX(-50%);
     border-top-color: var(--tooltip-bg);
+}
+
+/* When flipped to bottom, flip the arrow to point up */
+@container anchored(fallback: flip-block) {
+    .tooltip-portal {
+        margin-bottom: 0;
+        margin-top: var(--tooltip-arrow-size);
+    }
+
+    .tooltip-portal::after {
+        top: auto;
+        bottom: 100%;
+        left: var(--arrow-left, 50%);
+        border-top-color: transparent;
+        border-bottom-color: var(--tooltip-bg);
+    }
 }
