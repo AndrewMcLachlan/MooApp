@@ -162,7 +162,7 @@ function DataGridInner<TData>(
                                         key={header.id}
                                         className={classNames(canSort && "sortable")}
                                         onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
-                                        style={canSort ? { cursor: "pointer" } : undefined}
+
                                     >
                                         {hasPaginationTh ? (
                                             <div className="pagination-th">
