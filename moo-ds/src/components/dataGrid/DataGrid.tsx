@@ -12,10 +12,12 @@ import {
 } from "@tanstack/react-table";
 import classNames from "classnames";
 import { Table, TableProps } from "../Table";
-import { SortIcon } from "../SortIcon";
+import { SortableTh } from "../SortableTh";
 import { LoadingTableRows } from "../LoadingTableRows";
 import { Pagination } from "../pagination/Pagination";
 import { MiniPagination } from "../pagination/MiniPagination";
+import { PaginationTh } from "../pagination/PaginationTh";
+import { SortablePaginationTh } from "../pagination/SortablePaginationTh";
 import { PageSize } from "../pagination/PageSize";
 import { PageIndicator } from "../pagination/PageIndicator";
 import { PaginationControls } from "../pagination/PaginationControls";
@@ -127,8 +129,15 @@ function DataGridInner<TData>(
     const pageNumber = table.getState().pagination.pageIndex + 1;
     const pageCount = table.getPageCount();
 
-    const getSortDirection = (tanstackDir: false | "asc" | "desc"): SortDirection => {
-        return tanstackDir === "desc" ? "Descending" : "Ascending";
+    const sortField = internalSorting[0]?.id ?? "";
+    const sortDirection: SortDirection = internalSorting[0]?.desc ? "Descending" : "Ascending";
+
+    const handleSort = (field: string) => {
+        const currentSort = internalSorting.find(s => s.id === field);
+        const newSorting: SortingState = currentSort
+            ? currentSort.desc ? [] : [{ id: field, desc: true }]
+            : [{ id: field, desc: false }];
+        handleSortingChange(newSorting);
     };
 
     const handlePageChange = (_current: number, newPage: number) => {
@@ -142,40 +151,60 @@ function DataGridInner<TData>(
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map((header, headerIndex) => {
                                 const canSort = sortable && header.column.getCanSort();
-                                const sorted = header.column.getIsSorted();
                                 const isLastHeader = headerIndex === headerGroup.headers.length - 1;
                                 const hasPaginationTh = hasHeaderPagination && isLastHeader;
 
-                                const headerContent = (
-                                    <>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(header.column.columnDef.header, header.getContext())}
-                                        {canSort && (
-                                            <SortIcon direction={getSortDirection(sorted)} hidden={!sorted} />
-                                        )}
-                                    </>
-                                );
+                                const headerContent = header.isPlaceholder
+                                    ? null
+                                    : flexRender(header.column.columnDef.header, header.getContext());
+
+                                if (canSort && hasPaginationTh) {
+                                    return (
+                                        <SortablePaginationTh
+                                            key={header.id}
+                                            field={header.id}
+                                            sortField={sortField}
+                                            sortDirection={sortDirection}
+                                            onSort={handleSort}
+                                            pageNumber={pageNumber}
+                                            numberOfPages={pageCount}
+                                            onChange={handlePageChange}
+                                        >
+                                            {headerContent}
+                                        </SortablePaginationTh>
+                                    );
+                                }
+
+                                if (canSort) {
+                                    return (
+                                        <SortableTh
+                                            key={header.id}
+                                            field={header.id}
+                                            sortField={sortField}
+                                            sortDirection={sortDirection}
+                                            onSort={handleSort}
+                                        >
+                                            {headerContent}
+                                        </SortableTh>
+                                    );
+                                }
+
+                                if (hasPaginationTh) {
+                                    return (
+                                        <PaginationTh
+                                            key={header.id}
+                                            pageNumber={pageNumber}
+                                            numberOfPages={pageCount}
+                                            onChange={handlePageChange}
+                                        >
+                                            {headerContent}
+                                        </PaginationTh>
+                                    );
+                                }
 
                                 return (
-                                    <th
-                                        key={header.id}
-                                        className={classNames(canSort && "sortable")}
-                                        onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
-
-                                    >
-                                        {hasPaginationTh ? (
-                                            <div className="pagination-th">
-                                                <div>{headerContent}</div>
-                                                <MiniPagination
-                                                    pageNumber={pageNumber}
-                                                    numberOfPages={pageCount}
-                                                    onChange={handlePageChange}
-                                                />
-                                            </div>
-                                        ) : (
-                                            headerContent
-                                        )}
+                                    <th key={header.id}>
+                                        {headerContent}
                                     </th>
                                 );
                             })}
