@@ -61,6 +61,10 @@ Demo application showcasing the libraries.
 
 **Dev workflow**: demoo and storybook resolve `@andrewmclachlan/moo-*` imports directly to library source via Vite aliases — no rebuild needed for library changes to flow through.
 
+## Code Style
+
+**No inline styles**: Always use CSS classes instead of inline `style` attributes. If a class doesn't exist for the styling you need, create one in the appropriate CSS file.
+
 ## Requirements
 
 - Node.js >= 22.0.0
