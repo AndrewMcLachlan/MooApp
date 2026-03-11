@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useLayoutEffect, useMemo, useRef } from "
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
 import { IMsalContext, useMsal } from "@azure/msal-react";
-import { AuthError, EventType, InteractionRequiredAuthError, InteractionStatus, InteractionType, IPublicClientApplication, SilentRequest } from "@azure/msal-browser";
+import { AuthError, EventType, InteractionStatus, InteractionType, IPublicClientApplication, SilentRequest } from "@azure/msal-browser";
 import { loginRequest } from "../login/msal";
 
 export interface HttpClientProviderProps {
@@ -131,37 +131,38 @@ const acquireTokenForRequest = async (
         token = await msal.instance.acquireTokenSilent(tokenRequest);
     }
     catch (error) {
-        const isInteractionRequiredError = error instanceof InteractionRequiredAuthError;
         const errorCode = (error as AuthError)?.errorCode;
-        const shouldRedirect =
-            isInteractionRequiredError ||
-            errorCode === "invalid_grant" ||
-            errorCode === "interaction_required" ||
-            errorCode === "login_required" ||
-            errorCode === "consent_required" ||
-            errorCode === "no_account_error";
 
-        if (shouldRedirect) {
-            if (!redirectState.redirectInFlight && msal.inProgress === InteractionStatus.None) {
-                redirectState.redirectInFlight = true;
-                const interactiveScopes = Array.from(new Set([...(loginRequest.scopes ?? []), ...scopes]));
-                try {
-                    await msal.instance.acquireTokenRedirect({
-                        ...loginRequest,
-                        scopes: interactiveScopes,
-                        ...(account ? { account } : {})
-                    });
-                } catch (redirectError) {
-                    redirectState.redirectInFlight = false;
-                    throw redirectError;
-                }
-            }
+        // Don't redirect for non-recoverable errors (network failures,
+        // misconfiguration, or an interaction already in progress).
+        const isNonRecoverable =
+            errorCode === "network_error" ||
+            errorCode === "interaction_in_progress" ||
+            !(error instanceof AuthError);
 
-            throw new axios.CanceledError("Request canceled: interactive authentication redirect required.");
-        } else {
+        if (isNonRecoverable) {
             console.warn("Error getting token silently:", error, "errorCode:", errorCode);
             throw new axios.CanceledError("Request canceled: unable to acquire authentication token.");
         }
+
+        // For any MSAL auth error (expired tokens, consent required, iframe
+        // timeouts, etc.), fall back to interactive redirect.
+        if (!redirectState.redirectInFlight && msal.inProgress === InteractionStatus.None) {
+            redirectState.redirectInFlight = true;
+            const interactiveScopes = Array.from(new Set([...(loginRequest.scopes ?? []), ...scopes]));
+            try {
+                await msal.instance.acquireTokenRedirect({
+                    ...loginRequest,
+                    scopes: interactiveScopes,
+                    ...(account ? { account } : {})
+                });
+            } catch (redirectError) {
+                redirectState.redirectInFlight = false;
+                throw redirectError;
+            }
+        }
+
+        throw new axios.CanceledError("Request canceled: interactive authentication redirect required.");
     }
 
     if (token?.accessToken) {
