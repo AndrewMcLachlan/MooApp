@@ -32,6 +32,10 @@
     }
 }
 
+.tab-content {
+    margin-top: 1rem;
+}
+
 /* Tab pane visibility */
 .tab-pane {
     display: none;
