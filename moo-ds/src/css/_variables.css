@@ -119,6 +119,7 @@
     --code-color: rgb(230.4, 132.6, 181.2);
 
     --disabled-bg: #495057;
+    --input-group-text-bg: #495057;
 
   }
 
@@ -233,5 +234,7 @@
   --popover-header-bg: #1A1A1A;
   --popover-border-color: #333;
   --popover-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+
+  --input-group-text-bg: #495057;
 
 }
