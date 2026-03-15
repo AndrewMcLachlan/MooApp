@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react"
 import svgr from "vite-plugin-svgr";
 import { fileURLToPath } from "url"
 import { createRequire } from "module"
+import { Features } from "lightningcss"
 
 const require = createRequire(import.meta.url)
 
@@ -23,7 +24,7 @@ export default defineConfig({
             name: "preset-default",
             params: { overrides: { removeViewBox: false, cleanupIds: false, removeUselessDefs: false, removeUselessStrokeAndFill: false } },
           },
-          "prefixIds",
+            "prefixIds",
           ],
         },
       },
@@ -33,6 +34,14 @@ export default defineConfig({
   ],
   build: {
     chunkSizeWarningLimit: Infinity,
+    cssMinify: "esbuild",
+  },
+  css: {
+    transformer: "postcss",
+    lightningcss: {
+      include: Features.VendorPrefixes | Features.Colors | Features.Selectors,
+      exclude: Features.Nesting
+    },
   },
   server: {
     port: 3002

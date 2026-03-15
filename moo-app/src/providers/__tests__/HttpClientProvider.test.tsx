@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, renderHook } from '@testing-library/react';
 import React from 'react';
 import axios from 'axios';
+import { AuthError } from '@azure/msal-browser';
 import {
   HttpClientProvider,
   useHttpClient,
@@ -197,7 +198,7 @@ describe('addMsalInterceptor', () => {
 
   describe('no_account_error handling', () => {
     it('cancels request when acquireTokenSilent throws no_account_error', async () => {
-      const error = Object.assign(new Error('No account'), { errorCode: 'no_account_error' });
+      const error = new AuthError('no_account_error', 'No account');
       const msal = createMockMsal({
         acquireTokenSilent: vi.fn().mockRejectedValue(error),
         acquireTokenRedirect: vi.fn().mockResolvedValue(null),
@@ -208,7 +209,7 @@ describe('addMsalInterceptor', () => {
     });
 
     it('triggers acquireTokenRedirect when inProgress is None', async () => {
-      const error = Object.assign(new Error('No account'), { errorCode: 'no_account_error' });
+      const error = new AuthError('no_account_error', 'No account');
       const mockRedirect = vi.fn().mockResolvedValue(null);
       const msal = createMockMsal({
         acquireTokenSilent: vi.fn().mockRejectedValue(error),
@@ -223,7 +224,7 @@ describe('addMsalInterceptor', () => {
     });
 
     it('does not trigger acquireTokenRedirect when inProgress is Startup', async () => {
-      const error = Object.assign(new Error('No account'), { errorCode: 'no_account_error' });
+      const error = new AuthError('no_account_error', 'No account');
       const mockRedirect = vi.fn().mockResolvedValue(null);
       const msal = createMockMsal({
         acquireTokenSilent: vi.fn().mockRejectedValue(error),
@@ -245,7 +246,7 @@ describe('addMsalInterceptor', () => {
       'login_required',
       'consent_required',
     ])('cancels request for %s error', async (errorCode) => {
-      const error = Object.assign(new Error(errorCode), { errorCode });
+      const error = new AuthError(errorCode, errorCode);
       const msal = createMockMsal({
         acquireTokenSilent: vi.fn().mockRejectedValue(error),
         acquireTokenRedirect: vi.fn().mockResolvedValue(null),
