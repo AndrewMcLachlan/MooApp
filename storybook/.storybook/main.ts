@@ -42,6 +42,9 @@ const config: StorybookConfig = {
       '@andrewmclachlan/moo-icons': resolve(__dirname, '../../moo-icons/src'),
     };
 
+    config.build = config.build || {};
+    config.build.cssMinify = 'esbuild';
+
     return config;
   },
 };
