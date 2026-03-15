@@ -20,6 +20,9 @@ export default defineConfig({
       include: "**/*.svg",
     }),
   ],
+  build: {
+    cssMinify: "esbuild",
+  },
   resolve: {
     alias: {
       "~": fileURLToPath(new URL("../node_modules/", import.meta.url)),
