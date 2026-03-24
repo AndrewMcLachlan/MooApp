@@ -9,8 +9,12 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.es.js"
     },
-    "./css": "./dist/index.css"
+    "./css": {
+      "style": "./dist/index.css",
+      "default": "./dist/index.css"
+    }
   },
+  "style": "dist/index.css",
   "files": [
     "dist"
   ],
