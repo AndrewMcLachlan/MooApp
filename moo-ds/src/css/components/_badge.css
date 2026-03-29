@@ -5,7 +5,7 @@
     --badge-padding-y: 0.35em;
     --badge-font-size: 0.75em;
     --badge-font-weight: 700;
-    --badge-color: #fff;
+    --badge-colour: #fff;
     --badge-border-radius: var(--border-radius, 0.375rem);
 
     display: inline-block;
@@ -13,7 +13,7 @@
     font-size: var(--badge-font-size);
     font-weight: var(--badge-font-weight);
     line-height: 1;
-    color: var(--badge-color);
+    color: var(--badge-colour);
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;

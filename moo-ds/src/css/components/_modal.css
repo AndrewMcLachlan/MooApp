@@ -4,9 +4,9 @@
     --modal-width: 500px;
     --modal-padding: 1rem;
     --modal-margin: 0.5rem;
-    --modal-color: var(--body-color);
+    --modal-colour: var(--body-colour);
     --modal-bg: var(--body-bg);
-    --modal-border-color: var(--border-color, rgba(0, 0, 0, 0.175));
+    --modal-border-colour: var(--border-colour, rgba(0, 0, 0, 0.175));
     --modal-border-width: var(--border-width, 1px);
     --modal-border-radius: var(--border-radius, 0.5rem);
     --modal-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
@@ -48,11 +48,11 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    color: var(--modal-color);
+    color: var(--modal-colour);
     pointer-events: auto;
     background-color: var(--modal-bg);
     background-clip: padding-box;
-    border: var(--modal-border-width) solid var(--modal-border-color);
+    border: var(--modal-border-width) solid var(--modal-border-colour);
     border-radius: var(--modal-border-radius);
     box-shadow: var(--modal-box-shadow);
     outline: 0;
@@ -63,7 +63,7 @@
     flex-shrink: 0;
     align-items: center;
     padding: var(--modal-padding);
-    border-bottom: var(--modal-border-width) solid var(--modal-border-color);
+    border-bottom: var(--modal-border-width) solid var(--modal-border-colour);
     border-top-left-radius: var(--modal-inner-border-radius);
     border-top-right-radius: var(--modal-inner-border-radius);
     color: var(--header-text);
@@ -97,7 +97,7 @@
     align-items: center;
     justify-content: flex-end;
     padding: calc(var(--modal-padding) - 0.25rem);
-    border-top: var(--modal-border-width) solid var(--modal-border-color);
+    border-top: var(--modal-border-width) solid var(--modal-border-colour);
     border-bottom-right-radius: var(--modal-inner-border-radius);
     border-bottom-left-radius: var(--modal-inner-border-radius);
 }

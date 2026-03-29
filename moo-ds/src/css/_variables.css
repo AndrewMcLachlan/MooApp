@@ -1,13 +1,10 @@
-:root,
-[data-theme=light],
-[data-theme=dark] {
+:root {
   --font-sans-serif: 'Inter', 'Franklin Gothic', Helvetica, 'Helvetica Neue', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --secondary-fonts: 'Open Sans Condensed', 'Franklin Gothic', Helvetica, 'Helvetica Neue', nsystem-ui, -apple-system, "Segoe UI", Roboto Arial, sans-serif;
 
   --page-header-background: #111;
   --page-header-text: #F6F6F6;
 
-  --body-colour: var(--body-color);
 
   --primary-rgb: 139, 0, 0;
   --primary-dark: #6f0000;
@@ -16,19 +13,14 @@
   --disabled: #999;
 
   --red: rgb(194, 0, 0);
-  --amber: #FFBF00;
-  --green: #5A5;
+  --amber: #ffbf00;
+  --green: #5a5;
 
   --danger: var(--red);
   --warning: var(--amber);
   --success: var(--green);
 
   --table-bg: var(--body-bg);
-
-  --breadcrumb-bg: var(--header-bg);
-  --header-text: var(--body-color);
-  --footer-bg: var(--header-bg);
-  --footer-text: var(--body-color);
 
   --toastify-color-progress-light: var(--primary);
   --toastify-color-progress-dark: var(--primary);
@@ -40,133 +32,68 @@
 
   --dark-body-bg: rgb(23, 18, 17);
   --default-primary: #8b0000;
-  --light-body-bg: #FFF;
-  --light-section-bg: (251, 248, 244);
-  --dark-section-bg: rgb(31, 27, 24);
+  --light-body-bg: #fff;
+  --light-section-bg: rgb(251, 248, 244);
+  --dark-section-bg: rgb(21, 13, 12);
 
   --btn-focus-shadow-rgb: 156, 38, 38;
 
-  --disabled-bg: #e9ecef;
   --border-width: 1px;
   --border-radius: 0.375rem;
+
+  /* Follow system preference by default */
+  color-scheme: light dark;
+  --primary: var(--default-primary);
+
+  /* Theme-dependent colors */
+  --body-bg: light-dark(#fff, rgb(12, 9, 8));
+  --body-colour: light-dark(rgb(46, 41, 36), rgb(211, 208, 204));
+  --body-colour-bold: light-dark(#000, rgb(251, 248, 244));
+  --body-colour-dim: light-dark(rgb(136, 131, 126), rgba(211, 208, 204, .65));
+  --border-colour: light-dark(rgb(230, 224, 220), rgb(52, 49, 45));
+  --secondary-colour: light-dark(rgb(36, 32, 27), rgb(151, 148, 144));
+
+  --base-bg: light-dark(rgb(17, 18, 23), rgb(21, 13, 12));
+  --header-bg: light-dark(#fff, rgb(21, 13, 12));
+  --section-bg: light-dark(rgb(251, 248, 244), rgb(21, 13, 12));
+  --sidebar-bg: light-dark(#fff, rgb(21, 13, 12));
+  --footer-bg: light-dark(#fff, rgb(21, 13, 12));
+  --breadcrumb-bg: light-dark(#fff, rgb(21, 13, 12));
+  --header-text: var(--body-colour);
+  --footer-text: var(--body-colour);
+
+  --hover: light-dark(#e6e6e6, #6e6e6e);
+
+  --link-colour: light-dark(#8b0000, rgb(185.4, 102, 102));
+  --link-hover-colour: light-dark(rgb(111.2, 0, 0), rgb(199.32, 132.6, 132.6));
+
+  --disabled-bg: light-dark(#e9ecef, #495057);
+  --input-group-text-bg: light-dark(#e9ecef, #495057);
+
+  --table-striped-bg: light-dark(rgba(251, 248, 244, 0.25), rgba(21, 13, 12, 0.75));
+
+  --popover-bg: light-dark(#fff, #1a1a1a);
+  --popover-header-bg: light-dark(#fff, #1a1a1a);
+  --popover-border-colour: light-dark(#f0f0f0, #333);
+  --popover-box-shadow: 0 0.5rem 1rem light-dark(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.25));
+
+  --code-colour: light-dark(#d63384, rgb(230.4, 132.6, 181.2));
+  --link-decoration: underline;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-
-    color-scheme: light;
-    --primary: var(--default-primary);
-
-    --base-bg: rgb(17, 18, 23);
-
-    --body-bg: #FFF;
-    --body-color: rgb(46, 41, 36);
-    --body-colour-bold: #000;
-    --body-colour-dim: rgb(76, 71, 66);
-
-    --border-color: rgb(230, 224, 220);
-    --secondary-color: rgb(36, 32, 27);
-
-    --header-bg: #FFF;
-    --section-bg: rgb(251, 248, 244);
-    --sidebar-bg: #FFF;
-
-    --hover: #E6E6E6;
-
-    --breadcrumb-bg: var(--header-bg);
-    --header-text: var(--body-color);
-    --footer-bg: var(--header-bg);
-    --footer-text: var(--body-color);
-
-    --link-color: var(--primary);
-    --link-color-rgb: 139, 0, 0;
-    --link-decoration: underline;
-    --link-hover-color: rgb(111.2, 0, 0);
-    --link-hover-color-rgb: 111, 0, 0;
-
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --primary: var(--default-primary);
-
-    --body-bg: rgb(23, 18, 17);
-    --body-color: rgb(211, 208, 204);
-    --body-colour-bold: rgb(251, 248, 244);
-    --body-colour-dim: rgba(251, 248, 244, .65);
-
-    --border-color: rgb(57, 54, 50);
-    --secondary-color: rgb(151, 148, 144);
-
-    --base-bg: rgb(31, 27, 24);
-    --header-bg: var(--base-bg);
-    --section-bg: var(--base-bg);
-    --sidebar-bg: var(--base-bg);
-    --footer-bg: var(--base-bg);
-    --breadcrumb-bg: var(--base-bg);
-
-    --hover: #6E6E6E;
-
-    --header-text: var(--body-color);
-    --footer-text: var(--body-color);
-
-    --link-color: rgb(185.4, 102, 102);
-    --link-hover-color: rgb(199.32, 132.6, 132.6);
-    --link-color-rgb: 185, 102, 102;
-    --link-hover-color-rgb: 199, 133, 133;
-    --code-color: rgb(230.4, 132.6, 181.2);
-
-    --disabled-bg: #495057;
-    --input-group-text-bg: #495057;
-
-  }
-
-  body {
-    color-scheme: dark;
-  }
-}
-
+/* Force light mode */
 .light,
 [data-theme="light"] {
   color-scheme: light;
-  --primary: var(--default-primary);
-
-  --base-bg: rgb(17, 18, 23);
-
-  --body-bg: #FFF;
-  --body-color: rgb(46, 41, 36);
-  --body-colour-bold: #000;
-  --body-colour-dim: rgb(136, 131, 126);
-
-  --border-color: rgb(230, 224, 220);
-
-  --header-bg: #FFF;
-  --header-text: var(--body-color);
-  --breadcrumb-bg: var(--header-bg);
-  --section-bg: rgb(251, 248, 244);
-  --sidebar-bg: var(--body-bg);
-
-  --footer-bg: #FFF;
-  --footer-text: var(--body-color);
-  --hover: #E6E6E6;
-
-  --link-color: #8b0000;
-  --link-color-rgb: 139, 0, 0;
-  --link-decoration: underline;
-  --link-hover-color: rgb(111.2, 0, 0);
-  --link-hover-color-rgb: 111, 0, 0;
-
-  --table-striped-bg: rgba(from var(--section-bg) r g b / 0.25);
-
-  --popover-bg: var(--body-bg);
-  --popover-header-bg: var(--body-bg);
-  --popover-border-color: #f0f0f0;
-  --popover-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
-
 }
 
+/* Force dark mode */
+.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Theme variants */
 .light.red {
 
   --header-bg: #65000b;
@@ -179,62 +106,26 @@
 
 .dark.blue {
 
-  --primary: #2F5FAD;
+  --primary: #2f5fad;
   --primary-rgb: 47, 95, 173;
-  --primary-dark: #2F4C84;
+  --primary-dark: #2f4c84;
 
-  --body-bg: rgb(17, 18, 23);
+  --body-bg: rgb(8, 9, 12);
 
-  --body-color: rgb(204, 208, 211);
-  --secondary-color: rgb(144, 148, 151);
-  --emphasis-color: rgb(204, 208, 211);
-  --body-color-bold: rgb(204, 208, 211);
+  --body-colour: rgb(204, 208, 211);
+  --secondary-colour: rgb(144, 148, 151);
   --body-colour-dim: rgba(204, 208, 211, .65);
-  --border-color: rgb(50, 54, 57);
+  --border-colour: rgb(45, 49, 52);
 
-  --link-color: rgb(102, 102, 185.4);
-  --link-hover-color: rgb(132.6, 132.6, 199.32);
-  --base-bg: rgb(27, 27, 29);
+  --link-colour: rgb(102, 102, 185.4);
+  --link-hover-colour: rgb(132.6, 132.6, 199.32);
+  --base-bg: rgb(12, 13, 17);
+  --header-bg: rgb(12, 13, 17);
+  --section-bg: rgb(12, 13, 17);
+  --sidebar-bg: rgb(12, 13, 17);
+  --footer-bg: rgb(12, 13, 17);
+  --breadcrumb-bg: rgb(12, 13, 17);
+  --table-striped-bg: rgba(12, 13, 17, 0.75);
   --btn-focus-shadow-rgb: 38, 38, 156;
-
-}
-
-.dark,
-[data-theme="dark"] {
-  color-scheme: dark;
-  --primary: var(--default-primary);
-
-  --body-bg: rgb(23, 18, 17);
-  --body-color: rgb(211, 208, 204);
-  --secondary-color: rgb(151, 148, 144);
-  --emphasis-color: rgb(211, 208, 204);
-  --body-color-bold: rgb(211, 208, 204);
-  --body-colour-dim: rgba(211, 208, 204, .65);
-  --border-color: rgb(57, 54, 50);
-
-  --base-bg: rgb(31, 27, 24);
-  --header-bg: var(--base-bg);
-  --section-bg: var(--base-bg);
-  --sidebar-bg: var(--base-bg);
-  --footer-bg: var(--base-bg);
-  --breadcrumb-bg: var(--base-bg);
-
-  --footer-text: var(--body-color);
-  --hover: #6E6E6E;
-
-  --link-color: rgb(185.4, 102, 102);
-  --link-hover-color: rgb(199.32, 132.6, 132.6);
-  --link-color-rgb: 185, 102, 102;
-  --link-hover-color-rgb: 199, 133, 133;
-  --code-color: rgb(230.4, 132.6, 181.2);
-
-  --table-striped-bg: rgba(from var(--section-bg) r g b / 0.75);
-
-  --popover-bg: #1A1A1A;
-  --popover-header-bg: #1A1A1A;
-  --popover-border-color: #333;
-  --popover-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
-
-  --input-group-text-bg: #495057;
 
 }

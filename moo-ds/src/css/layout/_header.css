@@ -3,7 +3,7 @@
 
     background-color: var(--header-bg);
     color: var(--header-text);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-colour);
 
     color: var(--header-text);
 
@@ -40,7 +40,7 @@
 
         &.second-header {
             background-color: var(--breadcrumb-bg);
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-colour);
             padding: 0 17px;
 
             ol {
@@ -59,7 +59,7 @@
 
                 a {
                     text-decoration: none;
-                    color: var(--secondary-color);
+                    color: var(--secondary-colour);
                 }
             }
 
@@ -102,7 +102,7 @@
 
         a,
         button {
-            color: var(--body-color);
+            color: var(--body-colour);
             text-decoration: none;
             font-weight: 500;
         }
@@ -120,10 +120,10 @@
         svg {
             height: 18px;
             width: 18px;
-            color: var(--secondary-color);
+            color: var(--secondary-colour);
 
             &:hover {
-                color: var(--body-color);
+                color: var(--body-colour);
             }
         }
     }

@@ -2,13 +2,13 @@
 .table.data-grid tfoot td { padding: 0.25rem 0.5rem; }
 .table.data-grid tbody td.data-grid-empty {
     text-align: center; padding: 2rem 0.5rem;
-    color: var(--secondary-color, #6c757d); font-style: italic;
+    color: var(--secondary-colour, #6c757d); font-style: italic;
 }
 
 .table.data-grid tfoot .pagination-controls .page-indicator,
 .table.data-grid tfoot .pagination-controls .page-size label {
     font-size: 0.875rem;
-    color: var(--secondary-color, #6c757d);
+    color: var(--secondary-colour, #6c757d);
     white-space: nowrap;
     align-self: center;
 }

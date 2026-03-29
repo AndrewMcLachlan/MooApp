@@ -5,9 +5,9 @@
     --breadcrumb-padding-y: 0;
     --breadcrumb-margin-bottom: 1rem;
     --breadcrumb-font-size: inherit;
-    --breadcrumb-divider-color: var(--secondary-color);
+    --breadcrumb-divider-colour: var(--secondary-colour);
     --breadcrumb-item-padding-x: 0.5rem;
-    --breadcrumb-item-active-color: var(--secondary-color);
+    --breadcrumb-item-active-colour: var(--secondary-colour);
 
     display: flex;
     flex-wrap: wrap;
@@ -25,10 +25,10 @@
 .breadcrumb-item + .breadcrumb-item::before {
     float: left;
     padding-right: var(--breadcrumb-item-padding-x);
-    color: var(--breadcrumb-divider-color);
+    color: var(--breadcrumb-divider-colour);
     content: var(--breadcrumb-divider, "/");
 }
 
 .breadcrumb-item.active {
-    color: var(--breadcrumb-item-active-color);
+    color: var(--breadcrumb-item-active-colour);
 }

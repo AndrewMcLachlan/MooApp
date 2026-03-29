@@ -3,9 +3,9 @@
 .nav {
     --nav-link-padding-x: 1rem;
     --nav-link-padding-y: 0.5rem;
-    --nav-link-color: rgba(var(--link-color-rgb), 1);
-    --nav-link-hover-color: rgba(var(--link-hover-color-rgb), 1);
-    --nav-link-disabled-color: var(--secondary-color);
+    --nav-link-colour: var(--link-colour);
+    --nav-link-hover-colour: var(--link-hover-colour);
+    --nav-link-disabled-colour: var(--secondary-colour);
 
     display: flex;
     flex-wrap: wrap;
@@ -18,7 +18,7 @@
     display: block;
     padding: var(--nav-link-padding-y) var(--nav-link-padding-x);
     font-size: inherit;
-    color: var(--nav-link-color);
+    color: var(--nav-link-colour);
     text-decoration: none;
     background: none;
     border: 0;
@@ -28,7 +28,7 @@
 
 .nav-link:hover,
 .nav-link:focus {
-    color: var(--nav-link-hover-color);
+    color: var(--nav-link-hover-colour);
 }
 
 .nav-link.active {
@@ -36,7 +36,7 @@
 }
 
 .nav-link.disabled {
-    color: var(--nav-link-disabled-color);
+    color: var(--nav-link-disabled-colour);
     pointer-events: none;
     cursor: default;
 }
@@ -53,8 +53,8 @@
 @scope (.nav-link) {
 
     svg {
-        stroke: var(--body-color);
-        fill: var(--body-color);
+        stroke: var(--body-colour);
+        fill: var(--body-colour);
         height: 1.5rem;
         width: 1.5rem;
     }

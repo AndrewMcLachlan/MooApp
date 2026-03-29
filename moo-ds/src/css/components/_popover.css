@@ -7,7 +7,7 @@
     word-wrap: break-word;
     background-color: var(--popover-bg, var(--body-bg));
     background-clip: padding-box;
-    border: var(--border-width, 1px) solid var(--popover-border-color, rgba(0, 0, 0, 0.175));
+    border: var(--border-width, 1px) solid var(--popover-border-colour, rgba(0, 0, 0, 0.175));
     border-radius: var(--border-radius, 0.5rem);
     box-shadow: var(--popover-box-shadow, 0 0.5rem 1rem rgba(0, 0, 0, 0.15));
 }
@@ -16,9 +16,9 @@
     padding: 0.5rem 1rem;
     margin-bottom: 0;
     font-size: 1rem;
-    color: var(--body-color);
+    color: var(--body-colour);
     background-color: var(--popover-header-bg, var(--body-bg));
-    border-bottom: var(--border-width, 1px) solid var(--popover-border-color, rgba(0, 0, 0, 0.175));
+    border-bottom: var(--border-width, 1px) solid var(--popover-border-colour, rgba(0, 0, 0, 0.175));
     border-top-left-radius: calc(var(--border-radius, 0.5rem) - var(--border-width, 1px));
     border-top-right-radius: calc(var(--border-radius, 0.5rem) - var(--border-width, 1px));
 
@@ -30,7 +30,7 @@
 
 .popover-body {
     padding: 1rem;
-    color: var(--body-color);
+    color: var(--body-colour);
 }
 
 /* User menu popover specific styles */
@@ -64,7 +64,7 @@
         padding: 0.25rem 0;
 
         &.divider {
-            border-top: 2px solid var(--border-color);
+            border-top: 2px solid var(--border-colour);
             margin: 0.75rem 0;
             padding: 0;
         }
@@ -89,7 +89,7 @@
         }
 
         .initials {
-            border: 1px solid var(--body-color);
+            border: 1px solid var(--body-colour);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -99,9 +99,9 @@
     .app-info {
         margin-top: 1rem;
         padding-top: 0.5rem;
-        border-top: 1px solid var(--border-color);
+        border-top: 1px solid var(--border-colour);
         font-size: 0.8rem;
-        color: var(--muted-color, #6c757d);
+        color: var(--muted-colour, #6c757d);
         text-align: center;
     }
 }
