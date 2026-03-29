@@ -9,7 +9,7 @@
     background-color: var(--sidebar-bg);
     font-family: var(--font-family-alt);
 
-    border-right: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-colour);
 
     display: flex;
     flex-direction: column;
@@ -40,14 +40,14 @@
         align-items: center;
         gap: 8px;
 
-        color: var(--secondary-color);
+        color: var(--secondary-colour);
 
         span {
             transition: opacity 350ms ease-in-out;
         }
 
         &:visited {
-            color: var(--secondary-color);
+            color: var(--secondary-colour);
         }
 
         &:hover {
@@ -56,11 +56,11 @@
 
         &:hover,
         &.active {
-            color: var(--body-color);
+            color: var(--body-colour);
 
             svg {
-                stroke: var(--body-color);
-                fill: var(--body-color);
+                stroke: var(--body-colour);
+                fill: var(--body-colour);
             }
         }
 
@@ -75,8 +75,8 @@
         }
 
         svg {
-            stroke: var(--body-color);
-            fill: var(--body-color);
+            stroke: var(--body-colour);
+            fill: var(--body-colour);
             height: 1.5rem;
             width: 1.5rem;
         }
@@ -88,6 +88,6 @@
     }
 
     .divider {
-        border-top: 1px solid var(--border-color);
+        border-top: 1px solid var(--border-colour);
     }
 }

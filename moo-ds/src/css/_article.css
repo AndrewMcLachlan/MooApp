@@ -2,7 +2,7 @@ article {
 
     flex: 1 0 auto;
     background-color: var(--body-bg);
-    color: var(--body-color);
+    color: var(--body-colour);
 
     &>header {
         background-color: var(--page-header-background);

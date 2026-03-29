@@ -12,7 +12,7 @@ body {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: var(--body-color);
+    color: var(--body-colour);
     background-color: var(--body-bg);
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -55,12 +55,12 @@ ol, ul, dl {
 }
 
 a {
-    color: rgba(var(--link-color-rgb), 1);
+    color: var(--link-colour);
     text-decoration: var(--link-decoration, underline);
 }
 
 a:hover {
-    color: rgba(var(--link-hover-color-rgb), 1);
+    color: var(--link-hover-colour);
 }
 
 img, svg {
@@ -144,7 +144,7 @@ legend {
 }
 
 ::placeholder {
-    color: var(--secondary-color);
+    color: var(--secondary-colour);
     opacity: 1;
 }
 
@@ -162,7 +162,7 @@ pre {
 
 code {
     font-size: 0.875em;
-    color: var(--code-color, #d63384);
+    color: var(--code-colour, #d63384);
     word-wrap: break-word;
 }
 

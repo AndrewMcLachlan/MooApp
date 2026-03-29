@@ -19,17 +19,12 @@ export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>
     useEffect(() => {
         colour?.setAttribute("content", theme.colour);
         document.body.setAttribute("class", theme.theme);
-        document.body.setAttribute("data-theme", theme.theme === "" ? defaultTheme.theme : theme.theme.startsWith("dark") ? "dark" : "light");
+        if (theme.theme === "") {
+            document.body.removeAttribute("data-theme");
+        } else {
+            document.body.setAttribute("data-theme", theme.theme.startsWith("dark") ? "dark" : "light");
+        }
     }, [theme]);
-
-    useEffect(() => {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            if (theme.name !== "Default") return;
-            document.body.setAttribute("data-theme", event.matches ? "dark" : "light");
-        });
-
-        return () => window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', () => { });
-    }, []);
 
     return (
         <ThemeContext.Provider value={{ theme, setTheme, defaultTheme }}>

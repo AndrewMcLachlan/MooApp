@@ -1,23 +1,23 @@
 /* Table styles - derived from Bootstrap v5.3 */
 
 .table {
-    --table-color: var(--body-color);
+    --table-colour: var(--body-colour);
     --table-bg: var(--body-bg);
-    --table-border-color: var(--border-color, #dee2e6);
-    --table-striped-color: var(--body-color);
+    --table-border-colour: var(--border-colour, #dee2e6);
+    --table-striped-colour: var(--body-colour);
     --table-striped-bg: rgba(0, 0, 0, 0.05);
-    --table-hover-color: var(--body-color);
+    --table-hover-colour: var(--body-colour);
     --table-hover-bg: rgba(0, 0, 0, 0.075);
 
     width: 100%;
     margin-bottom: 1rem;
     vertical-align: top;
-    border-color: var(--table-border-color);
+    border-color: var(--table-border-colour);
 }
 
 .table > :not(caption) > * > * {
     padding: 0.5rem 0.5rem;
-    color: var(--table-color);
+    color: var(--table-colour);
     background-color: var(--table-bg);
     border-bottom-width: var(--border-width, 1px);
 }

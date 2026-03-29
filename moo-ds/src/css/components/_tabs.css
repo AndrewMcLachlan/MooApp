@@ -2,12 +2,12 @@
 @scope (.nav-tabs) {
     :scope {
         --nav-tabs-border-width: var(--border-width, 1px);
-        --nav-tabs-border-color: var(--border-color, #dee2e6);
-        --nav-tabs-link-hover-border-color: var(--secondary-color);
-        --nav-tabs-link-active-color: var(--body-color);
-        --nav-tabs-link-active-border-color: var(--primary);
+        --nav-tabs-border-colour: var(--border-colour, #dee2e6);
+        --nav-tabs-link-hover-border-colour: var(--secondary-colour);
+        --nav-tabs-link-active-colour: var(--body-colour);
+        --nav-tabs-link-active-border-colour: var(--primary);
 
-        border-bottom: 1px solid var(--nav-tabs-border-color);
+        border-bottom: 1px solid var(--nav-tabs-border-colour);
         gap: 1.5rem;
     }
 
@@ -15,19 +15,19 @@
         border: none;
         border-bottom: 2px solid transparent;
         background: transparent;
-        color: var(--secondary-color);
+        color: var(--secondary-colour);
         padding: 0.5rem 0;
         transition: color 0.15s, border-color 0.15s;
 
         &:hover {
-            border-color: var(--nav-tabs-link-hover-border-color);
-            color: var(--nav-tabs-link-active-color);
+            border-color: var(--nav-tabs-link-hover-border-colour);
+            color: var(--nav-tabs-link-active-colour);
         }
 
         &.active {
             background: transparent;
-            border-color: var(--nav-tabs-link-active-border-color);
-            color: var(--nav-tabs-link-active-color);
+            border-color: var(--nav-tabs-link-active-border-colour);
+            color: var(--nav-tabs-link-active-colour);
         }
     }
 }

@@ -5,10 +5,10 @@
     --offcanvas-height: 30vh;
     --offcanvas-padding-x: 1rem;
     --offcanvas-padding-y: 1rem;
-    --offcanvas-color: var(--body-color);
+    --offcanvas-colour: var(--body-colour);
     --offcanvas-bg: var(--body-bg);
     --offcanvas-border-width: var(--border-width, 1px);
-    --offcanvas-border-color: var(--border-color, rgba(0, 0, 0, 0.175));
+    --offcanvas-border-colour: var(--border-colour, rgba(0, 0, 0, 0.175));
     --offcanvas-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     --offcanvas-transition: transform 0.3s ease-in-out;
     --offcanvas-title-line-height: 1.5;
@@ -19,7 +19,7 @@
     display: flex;
     flex-direction: column;
     max-width: 100%;
-    color: var(--offcanvas-color);
+    color: var(--offcanvas-colour);
     visibility: hidden;
     background-color: var(--offcanvas-bg);
     background-clip: padding-box;
@@ -31,7 +31,7 @@
     top: 0;
     left: 0;
     width: var(--offcanvas-width);
-    border-right: var(--offcanvas-border-width) solid var(--offcanvas-border-color);
+    border-right: var(--offcanvas-border-width) solid var(--offcanvas-border-colour);
     transform: translateX(-100%);
 }
 
@@ -40,7 +40,7 @@
     right: 0;
     left: auto;
     width: var(--offcanvas-width);
-    border-left: var(--offcanvas-border-width) solid var(--offcanvas-border-color);
+    border-left: var(--offcanvas-border-width) solid var(--offcanvas-border-colour);
     transform: translateX(100%);
 }
 
