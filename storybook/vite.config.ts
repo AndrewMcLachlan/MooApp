@@ -21,6 +21,7 @@ export default defineConfig({
     }),
   ],
   build: {
+    chunkSizeWarningLimit: Infinity,
     cssMinify: "esbuild",
   },
   resolve: {

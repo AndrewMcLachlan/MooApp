@@ -30,6 +30,7 @@ export default defineConfig({
       include: "**/*.svg",
     }),
     dts({
+      entryRoot: "src",
       exclude: ["src/**/*.test.*", "src/**/__tests__/**", "src/setupTests.*"],
       afterDiagnostic(diagnostics) {
         if (diagnostics.length > 0) {

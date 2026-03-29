@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2022",
     "useDefineForClassFields": true,
     "lib": [
-      "ES2020",
+      "ES2022",
       "DOM",
       "DOM.Iterable"
     ],
@@ -12,9 +12,10 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "isolatedModules": true,
+    "declaration": true,
     "moduleDetection": "force",
     "noEmit": true,
-    "allowImportingTsExtensions": false,
+    "allowImportingTsExtensions": true,
     "jsx": "react-jsx",
     /* Linting */
     "strict": true,
@@ -23,8 +24,9 @@
     "strictNullChecks": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "rootDir": "src",
     "outDir": "dist",
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "src"

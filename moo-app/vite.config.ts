@@ -22,6 +22,7 @@ export default defineConfig({
   },
   plugins: [
     dts({
+      entryRoot: "src",
       exclude: ["src/**/*.test.*", "src/**/__tests__/**", "src/test-utils/**", "src/setupTests.*"],
       afterDiagnostic(diagnostics) {
         if (diagnostics.length > 0) {

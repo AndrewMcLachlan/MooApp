@@ -25,6 +25,8 @@ export default defineConfig({
   },
   plugins: [
     dts({
+      tsconfigPath: "./tsconfig.json",
+      entryRoot: fileURLToPath(new URL("src", import.meta.url)),
       exclude: ["src/**/*.test.*", "src/**/__tests__/**", "src/test-utils/**", "src/setupTests.*"],
       afterDiagnostic(diagnostics) {
         if (diagnostics.length > 0) {
