@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { NavItem } from "../models";
+import { type NavItem } from "../models";
 import { useLink } from "../providers";
 
 export interface BreadcrumbProps extends React.HTMLAttributes<HTMLElement> {

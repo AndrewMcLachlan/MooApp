@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { ClearableInput, ClearableInputProps } from "./ClearableInput";
+import { ClearableInput, type ClearableInputProps } from "./ClearableInput";
 
 export interface InputProps extends ClearableInputProps {
 }

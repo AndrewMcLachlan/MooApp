@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ComboBoxSelectedItem } from '../ComboBoxSelectedItem';
-import { ComboBoxProvider, ComboBoxProps } from '../ComboBoxProvider';
+import { ComboBoxProvider, type ComboBoxProps } from '../ComboBoxProvider';
 
 interface Item {
   id: number;

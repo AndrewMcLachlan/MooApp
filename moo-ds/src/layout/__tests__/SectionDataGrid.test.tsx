@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "../../test-utils";
 import { SectionDataGrid } from "../SectionDataGrid";
-import { ColumnDef } from "@tanstack/react-table";
+import { type ColumnDef } from "@tanstack/react-table";
 
 interface Item {
     name: string;

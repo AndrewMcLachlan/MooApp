@@ -1,5 +1,5 @@
 import { useFormGroup } from "./FormGroupProvider";
-import { ComboBox, ComboBoxProps } from "../comboBox";
+import { ComboBox, type ComboBoxProps } from "../comboBox";
 import { Controller } from "react-hook-form";
 
 export const FormComboBox = <T,>({ id, ref, ...rest }: Omit<ComboBoxProps<T>, "selectedItems" | "onChange">) => {

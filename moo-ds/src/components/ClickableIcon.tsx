@@ -1,5 +1,5 @@
 import React from "react";
-import { FontAwesomeIcon, FontAwesomeIconProps } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon, type FontAwesomeIconProps } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 
 /**

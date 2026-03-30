@@ -1,4 +1,4 @@
-import { ComboBoxProps, ComboBoxProvider } from "./ComboBoxProvider";
+import { type ComboBoxProps, ComboBoxProvider } from "./ComboBoxProvider";
 import { ComboBoxContainer } from "./ComboBoxContainer";
 
 export const ComboBox = <T,>({ placeholder = "Select...", ...props }: ComboBoxProps<T>) => {

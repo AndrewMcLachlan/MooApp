@@ -1,16 +1,16 @@
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 import { ThemeProvider } from "@andrewmclachlan/moo-ds";
 
 import { Footer } from "./Desktop/Footer";
 import { LayoutProvider } from "../providers";
-import { size } from "../models/Layout";
+import { type size } from "../models/Layout";
 import { Header } from "./Desktop/Header";
 import { Header as MHeader } from "./Mobile/Header";
 import { Footer as MFooter } from "./Mobile/Footer";
 import { Sidebar as MSidebar } from "./Mobile/Sidebar";
 import classNames from "classnames";
 import { Sidebar } from "./Desktop/Sidebar";
-import { FooterComponent, HeaderComponent, SidebarComponent } from "./Types";
+import { type FooterComponent, type HeaderComponent, type SidebarComponent } from "./Types";
 
 export type LayoutComponent = React.FC<PropsWithChildren<LayoutProps>> & {
   Footer: FooterComponent;

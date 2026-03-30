@@ -12,6 +12,7 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "isolatedModules": true,
+    "verbatimModuleSyntax": true,
     "declaration": true,
     "moduleDetection": "force",
     "noEmit": true,

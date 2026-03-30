@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from "react";
+import { type SetStateAction, useState } from "react";
 
 export const useStorage = <T = undefined>(storage: Storage, key: string, initialValue: (T | undefined) | (() => T | undefined)): [T, React.Dispatch<SetStateAction<T>>] => {
 

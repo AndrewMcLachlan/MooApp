@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { renderHook } from '@testing-library/react';
 import React from 'react';
 import { LinkProvider, useLink, useNavLink } from '../LinkProvider';
-import { LinkComponent, NavLinkComponent } from '../../models';
+import { type LinkComponent, type NavLinkComponent } from '../../models';
 
 // Mock Link component
 const MockLink: LinkComponent = ({ to, href, className, children, ...rest }) => (

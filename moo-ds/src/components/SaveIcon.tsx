@@ -1,4 +1,4 @@
-import { ClickableIcon, ClickableIconProps } from "./ClickableIcon";
+import { ClickableIcon, type ClickableIconProps } from "./ClickableIcon";
 
 export const SaveIcon: React.FC<SaveIconProps> = (props) => (
     <ClickableIcon icon="check-circle" title="save" size="lg" {...props} />

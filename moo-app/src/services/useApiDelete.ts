@@ -1,4 +1,4 @@
-import { DefaultError, MutationFunctionContext, useMutation, UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
+import { type DefaultError, type MutationFunctionContext, useMutation, type UseMutationOptions, type UseMutationResult } from "@tanstack/react-query";
 import { useHttpClient } from "../providers/HttpClientProvider";
 import { processAxiosError } from "./processAxiosError";
 import { useErrorHandler } from "./errorHandler";

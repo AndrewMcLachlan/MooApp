@@ -1,6 +1,6 @@
 import React from "react";
-import { DataGrid, DataGridProps } from "../components/dataGrid/DataGrid";
-import { Section, SectionProps } from "./Section/Section";
+import { DataGrid, type DataGridProps } from "../components/dataGrid/DataGrid";
+import { Section, type SectionProps } from "./Section/Section";
 import classNames from "classnames";
 
 export interface SectionDataGridProps<TData> extends DataGridProps<TData>, Pick<SectionProps, "header" | "headerSize"> {

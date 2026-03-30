@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Section } from '../Section/Section';
 import { LinkProvider } from '../../providers/LinkProvider';
-import { LinkComponent, NavLinkComponent } from '../../models';
+import { type LinkComponent, type NavLinkComponent } from '../../models';
 
 // Mock Link components
 const MockLink: LinkComponent = ({ to, children, className, ...rest }) => (

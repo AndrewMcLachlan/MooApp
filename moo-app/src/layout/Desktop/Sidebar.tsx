@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { useLayout } from "../../providers";
 import { Nav } from "@andrewmclachlan/moo-ds";
-import { SidebarComponent } from "../Types";
+import { type SidebarComponent } from "../Types";
 import { NavItemList } from "@andrewmclachlan/moo-ds";
 
 export const Sidebar: SidebarComponent = ({ navItems = [] }) => {

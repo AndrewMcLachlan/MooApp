@@ -1,6 +1,6 @@
-import React, { PropsWithChildren, ReactNode, useEffect } from "react";
+import React, { type PropsWithChildren, type ReactNode, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AnyRouter, RouterProvider } from "@tanstack/react-router";
+import { type AnyRouter, RouterProvider } from "@tanstack/react-router";
 
 import { Link, NavLink } from "./components";
 import { AppProvider, HttpClientProvider } from "./providers";
@@ -13,7 +13,7 @@ import { Login } from "./login/Login";
 
 import { faArrowRightFromBracket, faMoon, faSun, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { AxiosInstance } from "axios";
+import { type AxiosInstance } from "axios";
 
 
 library.add(faArrowRightFromBracket, faMoon, faSun, faTimesCircle);

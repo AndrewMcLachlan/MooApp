@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import { SectionSubheading, SectionSubheadingComponent } from "./SectionSubheading";
-import { SectionHeader, SectionHeaderComponent } from "./SectionHeader";
-import { SectionBody, SectionBodyComponent } from "./SectionBody";
+import { SectionSubheading, type SectionSubheadingComponent } from "./SectionSubheading";
+import { SectionHeader, type SectionHeaderComponent } from "./SectionHeader";
+import { SectionBody, type SectionBodyComponent } from "./SectionBody";
 import { useLink } from "../../providers/LinkProvider";
 
 export type SectionComponent = React.FC<React.PropsWithChildren<SectionProps>> & {

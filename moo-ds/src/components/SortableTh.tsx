@@ -1,5 +1,5 @@
-import { SortDirection } from "../models";
-import React, { HTMLAttributes, PropsWithChildren } from "react";
+import { type SortDirection } from "../models";
+import React, { type HTMLAttributes, type PropsWithChildren } from "react";
 import { SortIcon } from "./SortIcon";
 import classNames from "classnames";
 

@@ -1,5 +1,5 @@
 import { Section } from "../layout/Section/Section";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 import { SpinnerContainer } from "./SpinnerContainer";
 
 export const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({ children, loading = false, size = "single", ...rest }) => (

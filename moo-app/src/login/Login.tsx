@@ -1,6 +1,6 @@
 import { InteractionType } from "@azure/msal-browser";
 import { useIsAuthenticated, useMsalAuthentication } from "@azure/msal-react";
-import { PropsWithChildren, ReactNode } from "react";
+import { type PropsWithChildren, type ReactNode } from "react";
 import { loginRequest } from "./msal";
 
 export interface LoginProps {

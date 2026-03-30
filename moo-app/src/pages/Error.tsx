@@ -1,7 +1,7 @@
 import { Container, ErrorFallback } from "@andrewmclachlan/moo-ds";
 import { Page } from "../layout/Page";
 import React from "react";
-import { FallbackProps } from "react-error-boundary";
+import { type FallbackProps } from "react-error-boundary";
 import { useRouter } from "@tanstack/react-router";
 
 export const Error: React.FC<FallbackProps> = (props) => {

@@ -1,4 +1,4 @@
-import { NavItem, NavItemList, OverlayTrigger, Popover, useTheme, Themes } from "@andrewmclachlan/moo-ds";
+import { type NavItem, NavItemList, OverlayTrigger, Popover, useTheme, Themes } from "@andrewmclachlan/moo-ds";
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar } from "../components";

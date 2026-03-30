@@ -1,4 +1,4 @@
-import { Icon, IconProps } from "./Icon";
+import { Icon, type IconProps } from "./Icon";
 
 export const DeleteIcon: React.FC<DeleteIconProps> = (props) => (
     <Icon icon="trash-alt" title="delete" {...props} />
