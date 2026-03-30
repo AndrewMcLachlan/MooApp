@@ -5,7 +5,7 @@ import { useClickAway } from "../../hooks";
 
 import { ComboBoxInput as Input } from "./ComboBoxInput";
 import { ComboBoxControls as Controls } from "./ComboBoxControls";
-import { ComboBoxProps, useComboBox } from "./ComboBoxProvider";
+import { type ComboBoxProps, useComboBox } from "./ComboBoxProvider";
 import { ComboBoxList as List } from "./ComboBoxList";
 import { ComboBoxSelectedItem as SelectedItem } from "./ComboBoxSelectedItem";
 import { ComboBoxSingleSelectedItem as SingleSelectedItem } from "./ComboBoxSingleSelectedItem";

@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider, useTheme } from '../../providers/ThemeProvider';
-import { Theme, Themes } from '../../models/Theme';
+import { type Theme, Themes } from '../../models/Theme';
 
 // Test component to interact with theme
 const ThemeController = () => {

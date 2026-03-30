@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '../../test-utils';
 import { NavItemList } from '../NavItemList';
-import { NavItem } from '../../models';
+import { type NavItem } from '../../models';
 
 describe('NavItemList', () => {
   describe('rendering with route items', () => {

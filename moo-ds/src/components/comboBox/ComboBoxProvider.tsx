@@ -1,5 +1,5 @@
-import { RefProps } from "../../models";
-import React, { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
+import { type RefProps } from "../../models";
+import React, { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from "react";
 
 export const ComboBoxContext = createContext<ComboBoxOptions | undefined>(undefined);
 

@@ -1,4 +1,4 @@
-import { FooterComponent } from "../Types";
+import { type FooterComponent } from "../Types";
 import { useApp } from "../../providers";
 import { Container } from "@andrewmclachlan/moo-ds";
 

@@ -1,14 +1,14 @@
 import classNames from "classnames";
-import React, { PropsWithChildren } from "react";
-import { FormProvider, SubmitHandler, UseFormReturn } from "react-hook-form";
+import React, { type PropsWithChildren } from "react";
+import { FormProvider, type SubmitHandler, type UseFormReturn } from "react-hook-form";
 
-import { Check, CheckComponent } from "./Check";
-import { Group, GroupComponent } from "./Group";
-import { Input, InputComponent } from "./Input";
-import { Label, LabelComponent } from "./Label";
-import { Password, PasswordComponent } from "./Password";
-import { Select, SelectComponent } from "./Select";
-import { TextArea, TextAreaComponent } from "./TextArea";
+import { Check, type CheckComponent } from "./Check";
+import { Group, type GroupComponent } from "./Group";
+import { Input, type InputComponent } from "./Input";
+import { Label, type LabelComponent } from "./Label";
+import { Password, type PasswordComponent } from "./Password";
+import { Select, type SelectComponent } from "./Select";
+import { TextArea, type TextAreaComponent } from "./TextArea";
 
 export type FormComponent<TFormValues> = React.FC<PropsWithChildren<FormProps<TFormValues>>> & {
     Check: CheckComponent;

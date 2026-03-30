@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useLayoutEffect, useMemo, useRef } from "react";
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
+import axios, { type AxiosInstance, type InternalAxiosRequestConfig } from "axios";
 
-import { IMsalContext, useMsal } from "@azure/msal-react";
-import { AuthError, EventType, InteractionStatus, InteractionType, IPublicClientApplication, SilentRequest } from "@azure/msal-browser";
+import { type IMsalContext, useMsal } from "@azure/msal-react";
+import { AuthError, EventType, InteractionStatus, InteractionType, type IPublicClientApplication, type SilentRequest } from "@azure/msal-browser";
 import { loginRequest } from "../login/msal";
 
 export interface HttpClientProviderProps {

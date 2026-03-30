@@ -1,6 +1,6 @@
 import React, { createContext, useEffect } from "react";
 import { useContext } from "react";
-import { Theme, ThemeOptions, theme } from "../models";
+import { type Theme, type ThemeOptions, theme } from "../models";
 import { useLocalStorage } from "../hooks/localStorage";
 
 const getDefaultTheme = () => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? theme("dark") : theme("light");

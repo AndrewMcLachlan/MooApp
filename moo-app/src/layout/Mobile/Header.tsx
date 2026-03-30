@@ -1,6 +1,6 @@
 import { Breadcrumb, Container, MenuToggle, useLink } from "@andrewmclachlan/moo-ds";
 import { UserMenu } from "../UserMenu";
-import { HeaderComponent } from "../Types";
+import { type HeaderComponent } from "../Types";
 import { useApp, useLayout } from "../../providers";
 
 export const Header: HeaderComponent = (props) => {

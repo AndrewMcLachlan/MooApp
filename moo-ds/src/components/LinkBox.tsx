@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { PropsWithChildren, ReactNode } from "react";
+import { type PropsWithChildren, type ReactNode } from "react";
 import { useLink } from "../providers/LinkProvider";
 
 export const LinkBox: React.FC<PropsWithChildren<LinkBoxProps>> = ({ href, to, children, image, className, ...rest }) => {

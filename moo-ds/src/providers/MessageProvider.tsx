@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react";
 import { useContext } from "react";
-import { Message, Messages } from "../models";
+import { type Message, type Messages } from "../models";
 
 let nextKey = 0;
 

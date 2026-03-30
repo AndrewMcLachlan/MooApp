@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 
 import { Breadcrumb, MenuToggle } from "@andrewmclachlan/moo-ds";
 import { useApp, useLayout } from "../../providers";
-import { HeaderComponent } from "../Types";
+import { type HeaderComponent } from "../Types";
 import { UserMenu } from "../UserMenu";
 
 export const Header: HeaderComponent = (props) => {

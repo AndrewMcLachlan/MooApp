@@ -1,5 +1,5 @@
-import { createContext, useContext, ReactNode } from "react";
-import { LinkComponent, NavLinkComponent } from "../models";
+import { createContext, useContext, type ReactNode } from "react";
+import { type LinkComponent, type NavLinkComponent } from "../models";
 
 const LinkContext = createContext<{ Link: LinkComponent, NavLink: NavLinkComponent }>(null);
 

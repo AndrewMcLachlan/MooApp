@@ -1,4 +1,4 @@
-import { Children, isValidElement, PropsWithChildren } from "react";
+import { Children, isValidElement, type PropsWithChildren } from "react";
 
 export const PaginationControls: React.FC<PropsWithChildren<PaginationControlsProps>> = ({ children }) => {
 

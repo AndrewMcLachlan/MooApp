@@ -1,6 +1,6 @@
-import { SectionProps } from "./Section/Section";
-import { Form, FormProps } from "../components";
-import { PropsWithChildren } from "react";
+import { type SectionProps } from "./Section/Section";
+import { Form, type FormProps } from "../components";
+import { type PropsWithChildren } from "react";
 
 export const SectionForm = <TFormValues,>({ header, headerSize = 2, children, ...rest }: PropsWithChildren<SectionFormProps<TFormValues>>) => {
 

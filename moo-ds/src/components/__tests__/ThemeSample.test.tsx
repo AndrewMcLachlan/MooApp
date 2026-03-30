@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import { ThemeSample } from '../ThemeSample';
-import { Theme } from '../../models';
+import { type Theme } from '../../models';
 
 describe('ThemeSample', () => {
   const lightTheme: Theme = { name: 'Light', theme: '', colour: '#ffffff' };

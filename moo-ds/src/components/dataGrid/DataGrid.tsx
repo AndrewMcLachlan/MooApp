@@ -1,17 +1,17 @@
-import React, { ReactNode, useState } from "react";
+import React, { type ReactNode, useState } from "react";
 import {
     useReactTable,
     getCoreRowModel,
     getSortedRowModel,
     getPaginationRowModel,
     flexRender,
-    ColumnDef,
-    SortingState,
-    PaginationState,
-    OnChangeFn,
+    type ColumnDef,
+    type SortingState,
+    type PaginationState,
+    type OnChangeFn,
 } from "@tanstack/react-table";
 import classNames from "classnames";
-import { Table, TableProps } from "../Table";
+import { Table, type TableProps } from "../Table";
 import { SortableTh } from "../SortableTh";
 import { LoadingTableRows } from "../LoadingTableRows";
 import { Pagination } from "../pagination/Pagination";
@@ -21,7 +21,7 @@ import { SortablePaginationTh } from "../pagination/SortablePaginationTh";
 import { PageSize } from "../pagination/PageSize";
 import { PageIndicator } from "../pagination/PageIndicator";
 import { PaginationControls } from "../pagination/PaginationControls";
-import { SortDirection } from "../../models";
+import { type SortDirection } from "../../models";
 
 export interface DataGridState {
     sorting: SortingState;

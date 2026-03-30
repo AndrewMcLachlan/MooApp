@@ -1,5 +1,5 @@
 
-import { SidebarComponent } from "../Types";
+import { type SidebarComponent } from "../Types";
 import { useLayout } from "../../providers";
 import { Nav, NavItemList, Drawer } from "@andrewmclachlan/moo-ds";
 

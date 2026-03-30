@@ -1,4 +1,4 @@
-import { Theme } from "../models";
+import { type Theme } from "../models";
 
 export const ThemeSample: React.FC<ThemeSampleProps> = ({ onClick, theme, selected }) => (
 

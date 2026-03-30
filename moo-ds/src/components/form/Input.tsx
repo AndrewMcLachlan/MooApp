@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { useFormGroup } from "./FormGroupProvider";
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { ClearableInput, ClearableInputProps } from "../ClearableInput";
+import { ClearableInput, type ClearableInputProps } from "../ClearableInput";
 
 export type InputComponent = React.FC<InputProps>;
 

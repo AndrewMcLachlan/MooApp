@@ -1,7 +1,7 @@
-import React, { ReactNode, createContext, useState } from "react";
+import React, { type ReactNode, createContext, useState } from "react";
 import { useContext } from "react";
 import * as Models from "../models";
-import { NavItem } from "@andrewmclachlan/moo-ds";
+import { type NavItem } from "@andrewmclachlan/moo-ds";
 import { usePhoto } from "../services";
 import { useLocalStorage } from "@andrewmclachlan/moo-ds";
 

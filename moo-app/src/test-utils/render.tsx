@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react';
-import { render, RenderOptions } from '@testing-library/react';
+import React, { type ReactElement } from 'react';
+import { render, type RenderOptions } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MsalProvider } from '@azure/msal-react';
-import { IPublicClientApplication } from '@azure/msal-browser';
+import { type IPublicClientApplication } from '@azure/msal-browser';
 import { AppProvider } from '../providers/AppProvider';
 import { HttpClientContext } from '../providers/HttpClientProvider';
-import { ThemeProvider, MessageProvider, LinkProvider, LinkComponent, NavLinkComponent } from '@andrewmclachlan/moo-ds';
+import { ThemeProvider, MessageProvider, LinkProvider, type LinkComponent, type NavLinkComponent } from '@andrewmclachlan/moo-ds';
 import { createAxiosMock, mockAppConfig, mockMsalAccount } from './mocks';
 
 /**

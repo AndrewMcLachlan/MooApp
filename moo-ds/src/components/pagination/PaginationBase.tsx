@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { MouseEventHandler } from "react";
+import React, { type MouseEventHandler } from "react";
 
 export interface PaginationBaseProps extends React.HTMLAttributes<HTMLUListElement> {
 }

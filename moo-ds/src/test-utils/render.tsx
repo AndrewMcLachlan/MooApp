@@ -1,9 +1,9 @@
-import React, { ReactElement } from 'react';
-import { render, RenderOptions } from '@testing-library/react';
+import React, { type ReactElement } from 'react';
+import { render, type RenderOptions } from '@testing-library/react';
 import { ThemeProvider } from '../providers/ThemeProvider';
 import { MessageProvider } from '../providers/MessageProvider';
 import { LinkProvider } from '../providers/LinkProvider';
-import { LinkComponent, NavLinkComponent } from '../models/LinkComponents';
+import { type LinkComponent, type NavLinkComponent } from '../models/LinkComponents';
 
 /**
  * Mock Link component for testing

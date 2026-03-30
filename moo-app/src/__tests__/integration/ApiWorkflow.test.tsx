@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HttpClientContext } from '../../providers/HttpClientProvider';
 import { useApiGet } from '../../services/useApiGet';
-import { AxiosInstance } from 'axios';
+import { type AxiosInstance } from 'axios';
 
 
 interface User {

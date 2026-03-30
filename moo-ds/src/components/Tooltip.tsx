@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { PropsWithChildren, useId, useLayoutEffect, useRef, useState } from "react";
+import { type PropsWithChildren, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 export const Tooltip: React.FC<PropsWithChildren<{ id: string }>> = ({ id, children }) => {

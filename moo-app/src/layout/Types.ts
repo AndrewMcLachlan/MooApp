@@ -1,6 +1,6 @@
-import { NavItem } from "@andrewmclachlan/moo-ds";
-import { HTMLAttributes } from "react";
-import { UserMenuProps } from "./UserMenu";
+import { type NavItem } from "@andrewmclachlan/moo-ds";
+import { type HTMLAttributes } from "react";
+import { type UserMenuProps } from "./UserMenu";
 
 export type FooterComponent = React.FC<FooterProps>;
 export type HeaderComponent = React.FC<HeaderProps>;

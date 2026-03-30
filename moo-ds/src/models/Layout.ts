@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { NavItem } from "./NavItem";
+import { type ReactNode } from "react";
+import { type NavItem } from "./NavItem";
 
 export type size = "small" | "default";
 

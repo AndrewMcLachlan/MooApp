@@ -3,7 +3,7 @@ import { renderHook, act } from '@testing-library/react';
 import React from 'react';
 import { useErrorHandler } from '../errorHandler';
 import { MessageProvider, MessageContext } from '../../providers/MessageProvider';
-import { Message } from '../../models/Message';
+import { type Message } from '../../models/Message';
 
 describe('useErrorHandler', () => {
   const wrapper = ({ children }: { children: React.ReactNode }) => (

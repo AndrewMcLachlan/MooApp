@@ -1,5 +1,5 @@
-import { Alert, AlertProps } from "./Alert";
-import { FallbackProps } from "react-error-boundary";
+import { Alert, type AlertProps } from "./Alert";
+import { type FallbackProps } from "react-error-boundary";
 
 export const ErrorFallback: React.FC<ErrorFallbackProps> = ({ error, resetErrorBoundary, message, dismissible, onClose }) => {
 

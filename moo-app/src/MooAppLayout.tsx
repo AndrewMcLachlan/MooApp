@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from "@tanstack/react-router";
 
 import { Alerts } from "@andrewmclachlan/moo-ds";
-import { HeaderProps, SidebarProps } from "./layout/Types";
+import { type HeaderProps, type SidebarProps } from "./layout/Types";
 import { Layout } from "./layout/Layout";
 import { ErrorBoundary } from "react-error-boundary";
 import { Error } from "./pages/Error";

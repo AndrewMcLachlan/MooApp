@@ -1,5 +1,5 @@
 import React from "react";
-import { LoadingTableRow, LoadingTableRowProps } from "./LoadingTableRow";
+import { LoadingTableRow, type LoadingTableRowProps } from "./LoadingTableRow";
 
 export const LoadingTableRows: React.FC<LoadingTableRowsProps> = ({rows, ...rest}) =>
     Array.from({length: rows}).map((_, index) => <LoadingTableRow key={index} {...rest} />);

@@ -1,8 +1,8 @@
 import { useIsAuthenticated } from "@azure/msal-react";
 import { usePageTitle } from "../hooks/pageTitle";
-import { Container, NavItem } from "@andrewmclachlan/moo-ds";
+import { Container, type NavItem } from "@andrewmclachlan/moo-ds";
 import { useLayout } from "../providers"
-import { ReactNode, useEffect } from "react";
+import { type ReactNode, useEffect } from "react";
 
 export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, title, breadcrumbs, navItems, actions, ...rest }) => {
 

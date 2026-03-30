@@ -1,6 +1,6 @@
-import React, { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 
-import { Page, PageProps } from "../layout/Page";
+import { Page, type PageProps } from "../layout/Page";
 import classNames from "classnames";
 
 export const Dashboard: React.FC<PropsWithChildren<DashboardProps>> = ({className, children, ...rest}) => (

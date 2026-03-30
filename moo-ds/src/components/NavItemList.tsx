@@ -1,7 +1,7 @@
 import { isValidElement } from "react";
 import { useNavLink } from "../providers";
 import React from "react";
-import { NavItem } from "../models";
+import { type NavItem } from "../models";
 import { Button } from "./Button";
 import { Nav } from "./Nav";
 

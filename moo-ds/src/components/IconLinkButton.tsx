@@ -1,6 +1,6 @@
-import { PropsWithChildren } from "react";
-import { ButtonProps } from "./Button";
-import { IconType } from "../types";
+import { type PropsWithChildren } from "react";
+import { type ButtonProps } from "./Button";
+import { type IconType } from "../types";
 import { Icon } from "./Icon";
 import { useLink } from "../providers/LinkProvider";
 

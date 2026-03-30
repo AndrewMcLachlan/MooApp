@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps } from "react";
+import React, { type DetailedHTMLProps } from "react";
 import { FromGroupProvider } from "./FormGroupProvider";
 import classNames from "classnames";
 

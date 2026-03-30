@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useClickAway } from "../hooks";
-import { ChangeEventHandler, FocusEventHandler, KeyboardEventHandler, PropsWithChildren, useEffect, useRef, useState } from "react";
+import { type ChangeEventHandler, type FocusEventHandler, type KeyboardEventHandler, type PropsWithChildren, useEffect, useRef, useState } from "react";
 
 export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({children, className, type = "text", ...props }) => {
 

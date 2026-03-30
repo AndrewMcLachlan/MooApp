@@ -1,5 +1,5 @@
-import React, { PropsWithChildren } from "react";
-import { Badge, BadgeProps } from "./Badge";
+import React, { type PropsWithChildren } from "react";
+import { Badge, type BadgeProps } from "./Badge";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 

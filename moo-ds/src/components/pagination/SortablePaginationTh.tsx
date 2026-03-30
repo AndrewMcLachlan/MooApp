@@ -1,8 +1,8 @@
-import React, { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 import { SortIcon } from "../SortIcon";
 import classNames from "classnames";
-import { SortableThProps } from "../SortableTh";
-import { PaginationThProps } from "./PaginationTh";
+import { type SortableThProps } from "../SortableTh";
+import { type PaginationThProps } from "./PaginationTh";
 import { MiniPagination } from "./MiniPagination";
 
 export const SortablePaginationTh: React.FC<PropsWithChildren<SortablePaginationThProps>> = ({ field, sortField, sortDirection, onSort, className, children, onClick, pageNumber, numberOfPages, onChange, ...rest }) => {

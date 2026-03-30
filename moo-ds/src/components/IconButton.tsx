@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import { PropsWithChildren } from "react";
-import { Button, ButtonProps } from "./Button";
-import { IconType } from "../types";
+import { type PropsWithChildren } from "react";
+import { Button, type ButtonProps } from "./Button";
+import { type IconType } from "../types";
 import { Icon } from "./Icon";
 
 export const IconButton: React.FC<PropsWithChildren<IconButtonProps>> = ({ children, icon, iconSrc: src, className, ...button }) => (

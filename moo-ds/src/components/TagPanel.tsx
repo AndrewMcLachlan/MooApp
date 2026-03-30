@@ -1,7 +1,7 @@
 import { ComboBox } from "./comboBox/ComboBox";
 import { useClickAway } from "../hooks";
 import classNames from "classnames";
-import { ElementType, useRef, useState } from "react";
+import { type ElementType, useRef, useState } from "react";
 
 export const TagPanel = <T,>({ as = "div", readonly = false, alwaysShowEditPanel = false, className, ...props }: TagPanelProps<T, any>) => {
 
