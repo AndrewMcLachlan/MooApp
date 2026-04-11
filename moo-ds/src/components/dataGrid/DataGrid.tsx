@@ -5,12 +5,13 @@ import {
     getSortedRowModel,
     getPaginationRowModel,
     flexRender,
-    type ColumnDef,
     type SortingState,
     type PaginationState,
     type OnChangeFn,
 } from "@tanstack/react-table";
+import { type ColumnDef, toTanStackColumns } from "./ColumnDef";
 import classNames from "classnames";
+import { className as classNameProp } from "../../utils/className";
 import { Table, type TableProps } from "../Table";
 import { SortableTh } from "../SortableTh";
 import { LoadingTableRows } from "../LoadingTableRows";
@@ -32,7 +33,7 @@ export interface DataGridState {
 export interface DataGridProps<TData> extends Omit<TableProps, "children" | "onChange"> {
     // Data
     data: TData[];
-    columns: ColumnDef<TData, any>[];
+    columns: ColumnDef<TData>[];
 
     // Server-side mode
     server?: boolean;
@@ -77,6 +78,8 @@ function DataGridInner<TData>(
     }: DataGridProps<TData>,
     ref: React.ForwardedRef<HTMLTableElement>,
 ) {
+    const tanStackColumns = toTanStackColumns(columns);
+
     const [internalSorting, setInternalSorting] = useState<SortingState>([]);
     const [internalPagination, setInternalPagination] = useState<PaginationState>({
         pageIndex: 0,
@@ -107,7 +110,7 @@ function DataGridInner<TData>(
 
     const table = useReactTable({
         data,
-        columns,
+        columns: tanStackColumns,
         state: {
             ...(sortable ? { sorting: internalSorting } : {}),
             ...(hasPagination ? { pagination: internalPagination } : {}),
@@ -153,6 +156,7 @@ function DataGridInner<TData>(
                                 const canSort = sortable && header.column.getCanSort();
                                 const isLastHeader = headerIndex === headerGroup.headers.length - 1;
                                 const hasPaginationTh = hasHeaderPagination && isLastHeader;
+                                const headerClass = classNameProp(header.column.columnDef.headerClassName);
 
                                 const headerContent = header.isPlaceholder
                                     ? null
@@ -162,6 +166,7 @@ function DataGridInner<TData>(
                                     return (
                                         <SortablePaginationTh
                                             key={header.id}
+                                            {...headerClass}
                                             field={header.id}
                                             sortField={sortField}
                                             sortDirection={sortDirection}
@@ -179,6 +184,7 @@ function DataGridInner<TData>(
                                     return (
                                         <SortableTh
                                             key={header.id}
+                                            {...headerClass}
                                             field={header.id}
                                             sortField={sortField}
                                             sortDirection={sortDirection}
@@ -193,6 +199,7 @@ function DataGridInner<TData>(
                                     return (
                                         <PaginationTh
                                             key={header.id}
+                                            {...headerClass}
                                             pageNumber={pageNumber}
                                             numberOfPages={pageCount}
                                             onChange={handlePageChange}
@@ -203,7 +210,7 @@ function DataGridInner<TData>(
                                 }
 
                                 return (
-                                    <th key={header.id}>
+                                    <th key={header.id} {...headerClass}>
                                         {headerContent}
                                     </th>
                                 );
@@ -224,7 +231,7 @@ function DataGridInner<TData>(
                         rows.map((row) => (
                             <tr key={row.id}>
                                 {row.getVisibleCells().map((cell) => (
-                                    <td key={cell.id}>
+                                    <td key={cell.id} {...classNameProp(cell.column.columnDef.className)}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </td>
                                 ))}

@@ -1,5 +1,5 @@
 export { DataGrid } from "./DataGrid";
 export type { DataGridProps, DataGridState } from "./DataGrid";
-// Re-export key TanStack types so consumers don't need a direct dependency
-export { createColumnHelper } from "@tanstack/react-table";
-export type { ColumnDef, SortingState, PaginationState } from "@tanstack/react-table";
+export type { ColumnDef } from "./ColumnDef";
+// Re-export TanStack types used by DataGridState and server-side mode
+export type { SortingState, PaginationState } from "@tanstack/react-table";

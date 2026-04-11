@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import { DataGrid } from "../DataGrid";
-import { type ColumnDef } from "@tanstack/react-table";
+import { type ColumnDef } from "../ColumnDef";
 
 interface Person {
     name: string;
@@ -9,10 +9,10 @@ interface Person {
     city: string;
 }
 
-const columns: ColumnDef<Person, any>[] = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "age", header: "Age" },
-    { accessorKey: "city", header: "City" },
+const columns: ColumnDef<Person>[] = [
+    { field: "name", header: "Name" },
+    { field: "age", header: "Age" },
+    { field: "city", header: "City" },
 ];
 
 const data: Person[] = [

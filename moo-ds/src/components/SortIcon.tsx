@@ -2,14 +2,14 @@ import React from "react";
 import { type SortDirection } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const SortIcon: React.FC<SortIconProps> = ({ hidden = false, ...props }) => {
+export const SortIcon: React.FC<SortIconProps> = ({ hidden = false, direction }) => {
 
-    if (hidden) return null;
+    const icon = direction === "Ascending" ? "long-arrow-up" : "long-arrow-down";
 
-    const icon = props.direction === "Ascending" ? "long-arrow-up" : "long-arrow-down";
-
+    // Always render so the column reserves space; toggle visibility to avoid
+    // layout shift when a sort is applied.
     return (
-        <FontAwesomeIcon icon={icon} />
+        <FontAwesomeIcon icon={icon} style={hidden ? { visibility: "hidden" } : undefined} />
     );
 };
 

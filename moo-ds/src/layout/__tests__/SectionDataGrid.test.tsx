@@ -1,16 +1,16 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "../../test-utils";
 import { SectionDataGrid } from "../SectionDataGrid";
-import { type ColumnDef } from "@tanstack/react-table";
+import { type ColumnDef } from "../../components/dataGrid/ColumnDef";
 
 interface Item {
     name: string;
     value: number;
 }
 
-const columns: ColumnDef<Item, any>[] = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "value", header: "Value" },
+const columns: ColumnDef<Item>[] = [
+    { field: "name", header: "Name" },
+    { field: "value", header: "Value" },
 ];
 
 const data: Item[] = [

@@ -18,12 +18,12 @@ const people: Person[] = Array.from({ length: 50 }, (_, i) => ({
     role: ["Engineer", "Designer", "Manager", "Director", "Intern"][i % 5],
 }));
 
-const columns: ColumnDef<Person, any>[] = [
-    { accessorKey: "id", header: "ID" },
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "age", header: "Age" },
-    { accessorKey: "city", header: "City" },
-    { accessorKey: "role", header: "Role" },
+const columns: ColumnDef<Person>[] = [
+    { field: "id", header: "ID" },
+    { field: "name", header: "Name" },
+    { field: "age", header: "Age" },
+    { field: "city", header: "City" },
+    { field: "role", header: "Role" },
 ];
 
 export const DataGridPage = () => {
