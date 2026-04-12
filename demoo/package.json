@@ -43,15 +43,15 @@
     ]
   },
   "devDependencies": {
-    "@tanstack/router-plugin": "^1.167.12",
+    "@tanstack/router-plugin": "^1.167.18",
     "@types/jest": "^30.0.0",
-    "@types/node": "^25.5.2",
+    "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
     "esbuild": "^0.28.0",
     "typescript": "^6.0.2",
-    "vite": "^8.0.5",
+    "vite": "^8.0.8",
     "vite-plugin-svgr": "^5.2.0",
     "vite-tsconfig-paths": "^6.1.1"
   }
