@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@azure/msal-browser": "^5.6.3",
-    "axios": "^1.14.0",
+    "axios": "^1.15.0",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "react-error-boundary": "^6.1.1",
