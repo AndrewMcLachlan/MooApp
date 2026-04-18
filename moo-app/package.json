@@ -76,10 +76,10 @@
     "@fortawesome/free-regular-svg-icons": ">=6.6.0",
     "@fortawesome/free-solid-svg-icons": ">=6.6.0",
     "@fortawesome/react-fontawesome": ">=0.2.2",
-    "@tanstack/react-query": "^5.96.2",
+    "@tanstack/react-query": "^5.99.0",
     "@tanstack/react-router": "^1.168.10",
-    "react": ">=19.0.0",
-    "react-dom": ">=19.0.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
     "react-hook-form": "^7.72.1"
   }
 }
