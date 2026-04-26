@@ -36,7 +36,7 @@
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "react-error-boundary": "^6.1.1",
-    "react-toastify": "^11.0.5",
+    "react-toastify": "^11.1.0",
     "use-debounce": "^10.1.1"
   },
   "scripts": {
@@ -77,9 +77,9 @@
     "@fortawesome/fontawesome-svg-core": ">=6.6.0",
     "@fortawesome/free-regular-svg-icons": ">=6.6.0",
     "@fortawesome/free-solid-svg-icons": ">=6.6.0",
-    "@fortawesome/react-fontawesome": ">=0.2.2",
+    "@fortawesome/react-fontawesome": "^3.3.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "react-hook-form": "^7.72.1"
+    "react-hook-form": "^7.74.0"
   }
 }
