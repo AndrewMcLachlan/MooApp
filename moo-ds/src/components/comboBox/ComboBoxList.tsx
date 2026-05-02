@@ -28,6 +28,7 @@ export const ComboBoxList = () => {
 
     const onItemCreated = () => {
         onCreate?.(text);
+        setText("");
         setShow(false);
     }
 

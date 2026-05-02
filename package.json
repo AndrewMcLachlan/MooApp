@@ -52,6 +52,7 @@
   "scripts": {
     "demoo": "npm run dev --workspace=demoo",
     "start": "npm run dev --workspace=demoo",
+    "storybook": "npm run storybook --workspace=storybook",
     "build": "npm run build --workspaces",
     "lint": "npm run lint --workspaces",
     "lint-fix": "npm run lint-fix --workspaces",
