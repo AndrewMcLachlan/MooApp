@@ -30,10 +30,12 @@ describe('SortIcon', () => {
       expect(container.querySelector('svg')).toBeInTheDocument();
     });
 
-    it('renders nothing when hidden is true', () => {
+    it('renders the icon hidden when hidden is true (reserves space)', () => {
       const { container } = render(<SortIcon direction="Ascending" hidden />);
 
-      expect(container.querySelector('svg')).not.toBeInTheDocument();
+      const svg = container.querySelector('svg');
+      expect(svg).toBeInTheDocument();
+      expect(svg).toHaveStyle({ visibility: 'hidden' });
     });
 
     it('defaults hidden to false', () => {

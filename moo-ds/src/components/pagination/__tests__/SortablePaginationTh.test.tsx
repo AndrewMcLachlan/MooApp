@@ -88,15 +88,16 @@ describe('SortablePaginationTh', () => {
       expect(container.querySelector('svg[data-icon="arrow-up-long"]')).toBeInTheDocument();
     });
 
-    it('hides sort icon when field does not match sortField', () => {
+    it('hides sort icon when field does not match sortField (reserves space)', () => {
       const { container } = render(
         <table><thead><tr>
           <SortablePaginationTh {...defaultProps} field="name" sortField="other">Column</SortablePaginationTh>
         </tr></thead></table>
       );
 
-      expect(container.querySelector('svg[data-icon="arrow-up-long"]')).not.toBeInTheDocument();
-      expect(container.querySelector('svg[data-icon="arrow-down-long"]')).not.toBeInTheDocument();
+      const svg = container.querySelector('svg[data-icon="arrow-up-long"], svg[data-icon="arrow-down-long"]');
+      expect(svg).toBeInTheDocument();
+      expect(svg).toHaveStyle({ visibility: 'hidden' });
     });
 
     it('shows up arrow for ascending', () => {

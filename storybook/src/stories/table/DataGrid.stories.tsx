@@ -38,11 +38,11 @@ const sampleData: Person[] = [
     { id: 25, name: "Yara", age: 37, city: "Jakarta", role: "Engineer" },
 ];
 
-const columns: ColumnDef<Person, any>[] = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "age", header: "Age" },
-    { accessorKey: "city", header: "City" },
-    { accessorKey: "role", header: "Role" },
+const columns: ColumnDef<Person>[] = [
+    { field: "name", header: "Name" },
+    { field: "age", header: "Age" },
+    { field: "city", header: "City" },
+    { field: "role", header: "Role" },
 ];
 
 const meta = {
