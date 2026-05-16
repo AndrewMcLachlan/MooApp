@@ -2,6 +2,7 @@ import { Page } from "@andrewmclachlan/moo-app";
 import { Section, NavItemDivider, IconButton, SectionTable, EditColumn, ComboBox, Button, Modal, ButtonGroup, Badge, CloseBadge, Alert, Nav, Tabs, Tab, Collapsible } from "@andrewmclachlan/moo-ds";
 import { Tags } from "@andrewmclachlan/moo-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 
 export const Components = () => {
@@ -51,19 +52,95 @@ export const Components = () => {
             </Section>
 
             <Section title="Badges" header="Badges" headerSize={4}>
+                <h5>Semantic — solid</h5>
                 <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
                     <Badge bg="primary">Primary</Badge>
+                    <Badge bg="secondary">Secondary</Badge>
                     <Badge bg="success">Success</Badge>
                     <Badge bg="danger">Danger</Badge>
                     <Badge bg="warning">Warning</Badge>
                     <Badge bg="info">Info</Badge>
                 </div>
+                <h5>Hues — solid</h5>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+                    <Badge bg="blue">Blue</Badge>
+                    <Badge bg="indigo">Indigo</Badge>
+                    <Badge bg="purple">Purple</Badge>
+                    <Badge bg="pink">Pink</Badge>
+                    <Badge bg="rose">Rose</Badge>
+                    <Badge bg="orange">Orange</Badge>
+                    <Badge bg="amber">Amber</Badge>
+                    <Badge bg="yellow">Yellow</Badge>
+                    <Badge bg="green">Green</Badge>
+                    <Badge bg="emerald">Emerald</Badge>
+                    <Badge bg="teal">Teal</Badge>
+                    <Badge bg="cyan">Cyan</Badge>
+                    <Badge bg="slate">Slate</Badge>
+                    <Badge bg="neutral">Neutral</Badge>
+                </div>
+                <h5>Hues — muted</h5>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+                    <Badge bg="blue" muted>Blue</Badge>
+                    <Badge bg="indigo" muted>Indigo</Badge>
+                    <Badge bg="purple" muted>Purple</Badge>
+                    <Badge bg="pink" muted>Pink</Badge>
+                    <Badge bg="rose" muted>Rose</Badge>
+                    <Badge bg="orange" muted>Orange</Badge>
+                    <Badge bg="amber" muted>Amber</Badge>
+                    <Badge bg="yellow" muted>Yellow</Badge>
+                    <Badge bg="green" muted>Green</Badge>
+                    <Badge bg="emerald" muted>Emerald</Badge>
+                    <Badge bg="teal" muted>Teal</Badge>
+                    <Badge bg="cyan" muted>Cyan</Badge>
+                    <Badge bg="slate" muted>Slate</Badge>
+                    <Badge bg="neutral" muted>Neutral</Badge>
+                </div>
+                <h5>Hues — outline</h5>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+                    <Badge bg="blue" outline>Blue</Badge>
+                    <Badge bg="indigo" outline>Indigo</Badge>
+                    <Badge bg="purple" outline>Purple</Badge>
+                    <Badge bg="pink" outline>Pink</Badge>
+                    <Badge bg="rose" outline>Rose</Badge>
+                    <Badge bg="orange" outline>Orange</Badge>
+                    <Badge bg="amber" outline>Amber</Badge>
+                    <Badge bg="yellow" outline>Yellow</Badge>
+                    <Badge bg="green" outline>Green</Badge>
+                    <Badge bg="emerald" outline>Emerald</Badge>
+                    <Badge bg="teal" outline>Teal</Badge>
+                    <Badge bg="cyan" outline>Cyan</Badge>
+                    <Badge bg="slate" outline>Slate</Badge>
+                    <Badge bg="neutral" outline>Neutral</Badge>
+                </div>
+                <h5>Pills</h5>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+                    <Badge bg="primary" pill>Primary</Badge>
+                    <Badge bg="indigo" pill muted>Indigo muted</Badge>
+                    <Badge bg="teal" pill outline>Teal outline</Badge>
+                    <Badge bg="rose" pill>Rose</Badge>
+                </div>
+                <h5>Custom colour</h5>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+                    <Badge colour="#7c6cff">Hex</Badge>
+                    <Badge colour="rgb(255, 99, 132)">RGB</Badge>
+                    <Badge colour="hsl(160, 70%, 45%)">HSL</Badge>
+                    <Badge colour="var(--primary)">CSS var</Badge>
+                    <Badge colour="#fde68a" textColour="#78350f">Light bg / dark text</Badge>
+                    <Badge colour="#7c6cff" muted>Custom muted</Badge>
+                    <Badge colour="#7c6cff" outline>Custom outline</Badge>
+                </div>
+                <h5>With icon</h5>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+                    <Badge bg="primary" icon={<FontAwesomeIcon icon="star" />}>Featured</Badge>
+                    <Badge bg="success" icon={<FontAwesomeIcon icon="check" />}>Done</Badge>
+                    <Badge bg="danger" icon={<FontAwesomeIcon icon="circle-xmark" />}>Failed</Badge>
+                    <Badge bg="warning" icon={<FontAwesomeIcon icon="triangle-exclamation" />}>Warning</Badge>
+                </div>
                 <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                    <Badge bg="primary" pill>Primary Pill</Badge>
-                    <Badge bg="success" pill>Success Pill</Badge>
-                    <Badge bg="danger" pill>Danger Pill</Badge>
-                    <Badge bg="warning" pill>Warning Pill</Badge>
-                    <Badge bg="info" pill>Info Pill</Badge>
+                    <Badge bg="indigo" muted icon={<FontAwesomeIcon icon="bolt" />}>Muted</Badge>
+                    <Badge bg="teal" outline icon={<FontAwesomeIcon icon="leaf" />}>Outline</Badge>
+                    <Badge bg="rose" pill icon={<FontAwesomeIcon icon="heart" />}>Pill</Badge>
+                    <Badge colour="#7c6cff" muted icon={<FontAwesomeIcon icon="bolt" />}>Custom + muted</Badge>
                 </div>
             </Section>
 

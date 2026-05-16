@@ -20,6 +20,22 @@
   --warning: var(--amber);
   --success: var(--green);
 
+  /* Hue palette - dark-mode-first defaults; overridden under .light / [data-theme="light"]. */
+  --hue-blue:    #4d8bff;
+  --hue-indigo:  #7c6cff;
+  --hue-purple:  #a070ff;
+  --hue-pink:    #ec4899;
+  --hue-rose:    #f06292;
+  --hue-orange:  #ff8a4c;
+  --hue-amber:   #f5c451;
+  --hue-yellow:  #facc15;
+  --hue-green:   #22c55e;
+  --hue-emerald: #25c281;
+  --hue-teal:    #2bc4d4;
+  --hue-cyan:    #22d3ee;
+  --hue-slate:   #b0bccb;
+  --hue-neutral: #bac3cf;
+
   --table-bg: var(--body-bg);
 
   --toastify-color-progress-light: var(--primary);
@@ -85,6 +101,22 @@
 .light,
 [data-theme="light"] {
   color-scheme: light;
+
+  /* Hue palette - darker, more saturated for legibility on light surfaces. */
+  --hue-blue:    #2563eb;
+  --hue-indigo:  #4f46e5;
+  --hue-purple:  #7c3aed;
+  --hue-pink:    #db2777;
+  --hue-rose:    #e11d48;
+  --hue-orange:  #ea580c;
+  --hue-amber:   #d97706;
+  --hue-yellow:  #ca8a04;
+  --hue-green:   #16a34a;
+  --hue-emerald: #059669;
+  --hue-teal:    #0891b2;
+  --hue-cyan:    #0e7490;
+  --hue-slate:   #475569;
+  --hue-neutral: #64748b;
 }
 
 /* Force dark mode */

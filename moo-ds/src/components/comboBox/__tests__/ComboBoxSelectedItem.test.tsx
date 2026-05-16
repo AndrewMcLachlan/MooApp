@@ -78,8 +78,10 @@ describe('ComboBoxSelectedItem', () => {
         { colourField: (item: Item) => item.color }
       );
 
-      const badge = container.querySelector('.badge');
-      expect(badge).toHaveStyle({ backgroundColor: '#ff0000' });
+      const badge = container.querySelector<HTMLElement>('.badge')!;
+      expect(badge.style.getPropertyValue('--badge-bg')).toBe('#ff0000');
+      // bg-* class is suppressed when a custom colour is supplied
+      expect(badge).not.toHaveClass('bg-primary');
     });
   });
 
