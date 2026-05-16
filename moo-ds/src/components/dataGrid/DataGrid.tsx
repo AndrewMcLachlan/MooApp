@@ -1,4 +1,4 @@
-import React, { type ReactNode, useState } from "react";
+import React, { type ReactNode, useMemo, useState } from "react";
 import {
     useReactTable,
     getCoreRowModel,
@@ -78,7 +78,7 @@ function DataGridInner<TData>(
     }: DataGridProps<TData>,
     ref: React.ForwardedRef<HTMLTableElement>,
 ) {
-    const tanStackColumns = toTanStackColumns(columns);
+    const tanStackColumns = useMemo(() => toTanStackColumns(columns), [columns]);
 
     const [internalSorting, setInternalSorting] = useState<SortingState>([]);
     const [internalPagination, setInternalPagination] = useState<PaginationState>({

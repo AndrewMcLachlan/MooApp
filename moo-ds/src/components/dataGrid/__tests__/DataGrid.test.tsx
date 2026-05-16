@@ -318,6 +318,84 @@ describe("DataGrid", () => {
         });
     });
 
+    describe("column class names", () => {
+        it("applies headerClassName to the matching <th>", () => {
+            const cols: ColumnDef<Person>[] = [
+                { field: "name", header: "Name", headerClassName: "name-th" },
+                { field: "age", header: "Age" },
+                { field: "city", header: "City" },
+            ];
+            const { container } = render(<DataGrid data={data} columns={cols} />);
+            const headers = container.querySelectorAll("thead th");
+            expect(headers[0]).toHaveClass("name-th");
+            expect(headers[1]).not.toHaveClass("name-th");
+        });
+
+        it("applies className to every <td> in the matching column", () => {
+            const cols: ColumnDef<Person>[] = [
+                { field: "name", header: "Name" },
+                { field: "age", header: "Age", className: "age-cell" },
+                { field: "city", header: "City" },
+            ];
+            const { container } = render(<DataGrid data={data} columns={cols} />);
+            const ageCells = container.querySelectorAll("tbody tr td:nth-child(2)");
+            expect(ageCells.length).toBeGreaterThan(0);
+            ageCells.forEach((td) => expect(td).toHaveClass("age-cell"));
+            const nameCells = container.querySelectorAll("tbody tr td:nth-child(1)");
+            nameCells.forEach((td) => expect(td).not.toHaveClass("age-cell"));
+        });
+
+        it("does not emit an empty class attribute when no column class is set", () => {
+            const { container } = render(<DataGrid data={data} columns={columns} />);
+            container.querySelectorAll("thead th").forEach((th) => {
+                if (th.hasAttribute("class")) {
+                    expect(th.getAttribute("class")).not.toBe("");
+                }
+            });
+            container.querySelectorAll("tbody td").forEach((td) => {
+                if (td.hasAttribute("class")) {
+                    expect(td.getAttribute("class")).not.toBe("");
+                }
+            });
+        });
+
+        it("preserves headerClassName when the header is sortable", () => {
+            const cols: ColumnDef<Person>[] = [
+                { field: "name", header: "Name", headerClassName: "name-th" },
+                { field: "age", header: "Age" },
+                { field: "city", header: "City" },
+            ];
+            const { container } = render(<DataGrid data={data} columns={cols} sortable />);
+            const firstHeader = container.querySelector("thead th")!;
+            expect(firstHeader).toHaveClass("name-th");
+            expect(firstHeader).toHaveClass("sortable");
+        });
+    });
+
+    describe("function field columns", () => {
+        it("renders cell values computed from the row", () => {
+            const cols: ColumnDef<Person>[] = [
+                { field: (r) => `${r.name} (${r.age})`, header: "Summary", id: "summary" },
+            ];
+            render(<DataGrid data={data} columns={cols} />);
+            expect(screen.getByText("Alice (30)")).toBeInTheDocument();
+            expect(screen.getByText("Bob (25)")).toBeInTheDocument();
+        });
+
+        it("sorts by a function field when sortable", () => {
+            const cols: ColumnDef<Person>[] = [
+                { field: (r) => r.age, header: "Age", id: "computed-age" },
+            ];
+            render(<DataGrid data={data} columns={cols} sortable />);
+            fireEvent.click(screen.getByText("Age"));
+            const tbody = screen.getByRole("table").querySelector("tbody")!;
+            const rows = within(tbody).getAllByRole("row");
+            // Ascending: Eve (22), Bob (25), Diana (28), Alice (30), Charlie (35)
+            expect(rows[0]).toHaveTextContent("22");
+            expect(rows[4]).toHaveTextContent("35");
+        });
+    });
+
     describe("server-side pagination", () => {
         it("fires onChange when page is changed", () => {
             const onChange = vi.fn();
