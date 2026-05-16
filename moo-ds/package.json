@@ -36,7 +36,7 @@
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "react-error-boundary": "^6.1.1",
-    "react-toastify": "^11.0.5",
+    "react-toastify": "^11.1.0",
     "use-debounce": "^10.1.1"
   },
   "scripts": {
@@ -66,20 +66,20 @@
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/eslint-plugin": "^8.58.0",
+    "@typescript-eslint/eslint-plugin": "^8.59.2",
     "@typescript-eslint/parser": "^8.10.0",
     "@vitejs/plugin-react": "^6.0.1",
-    "globals": "^17.4.0",
-    "rollup": "^4.60.1",
+    "globals": "^17.6.0",
+    "rollup": "^4.60.3",
     "rollup-plugin-peer-deps-external": "^2.2.4"
   },
   "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": ">=6.6.0",
     "@fortawesome/free-regular-svg-icons": ">=6.6.0",
     "@fortawesome/free-solid-svg-icons": ">=6.6.0",
-    "@fortawesome/react-fontawesome": ">=0.2.2",
-    "react": ">=19.0.0",
-    "react-dom": ">=19.0.0",
-    "react-hook-form": "^7.72.1"
+    "@fortawesome/react-fontawesome": "^3.3.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-hook-form": "^7.75.0"
   }
 }
