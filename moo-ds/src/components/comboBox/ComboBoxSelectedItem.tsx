@@ -16,11 +16,9 @@ export const ComboBoxSelectedItem = <T,>({item}: ComboBoxSelectedItemProps<T>) =
     if (item === undefined) return null;
 
     const bgColour = colourField?.(item);
-    const bg = bgColour ? "none" : "primary";
-
 
     return (
-        <div className="item"><CloseBadge pill bg={bg} style={{backgroundColor: bgColour}} onClose={() => removeItem(item)}>{labelField(item)}</CloseBadge></div>
+        <div className="item"><CloseBadge pill bg="primary" colour={bgColour} onClose={() => removeItem(item)}>{labelField(item)}</CloseBadge></div>
     );
 }
 
