@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useEffect, type ReactElement } from "react";
 import { Badge } from "@andrewmclachlan/moo-ds";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -13,6 +14,31 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/**
+ * Swap the global Storybook `.dark` body class for `.light` while the story is
+ * mounted. The preview-level decorator sets `dark` on every story, so without
+ * this the "Light mode contrast" story would still render under dark-mode rules.
+ */
+const ForceLightTheme = (Story: () => ReactElement) => {
+    useEffect(() => {
+        const body = document.body;
+        const prevClasses = body.className;
+        const prevTheme = body.getAttribute("data-theme");
+        body.classList.remove("dark");
+        body.classList.add("light");
+        body.setAttribute("data-theme", "light");
+        return () => {
+            body.className = prevClasses;
+            if (prevTheme) {
+                body.setAttribute("data-theme", prevTheme);
+            } else {
+                body.removeAttribute("data-theme");
+            }
+        };
+    }, []);
+    return <Story />;
+};
 
 const semantics = ["primary", "secondary", "success", "danger", "warning", "info"] as const;
 const hues = [
@@ -74,8 +100,9 @@ export const AllHuesOutline: Story = {
 
 export const LightModeContrast: Story = {
     name: "Light mode contrast",
+    decorators: [ForceLightTheme],
     render: () => (
-        <div className="light" data-theme="light" style={{ background: "#fff", padding: "1rem", ...stack }}>
+        <div style={stack}>
             <div style={row}>{hues.map((bg) => <Badge key={`s-${bg}`} bg={bg}>{bg}</Badge>)}</div>
             <div style={row}>{hues.map((bg) => <Badge key={`m-${bg}`} bg={bg} muted>{bg}</Badge>)}</div>
             <div style={row}>{hues.map((bg) => <Badge key={`o-${bg}`} bg={bg} outline>{bg}</Badge>)}</div>

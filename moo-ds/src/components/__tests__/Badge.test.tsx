@@ -119,6 +119,18 @@ describe('Badge', () => {
       expect(badge.style.marginLeft).toBe('8px');
       expect(badge.style.getPropertyValue('--badge-bg')).toBe('#abcdef');
     });
+
+    it('also applies inline color so textColour wins over muted/outline', () => {
+      render(<Badge colour="#abcdef" textColour="#123456" muted>Muted</Badge>);
+      const badge = screen.getByText('Muted');
+      expect(badge.style.color).toBe('rgb(18, 52, 86)');
+    });
+
+    it('does not set inline color when textColour is not supplied', () => {
+      render(<Badge colour="#abcdef">Just colour</Badge>);
+      const badge = screen.getByText('Just colour');
+      expect(badge.style.color).toBe('');
+    });
   });
 
   describe('icon', () => {

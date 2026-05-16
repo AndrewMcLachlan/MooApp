@@ -1,6 +1,6 @@
 import { MooApp, NotFound } from "@andrewmclachlan/moo-app";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faArrowLeft, faArrowsRotate, faCheck, faCheckCircle, faChevronDown, faChevronRight, faChevronUp, faCircleChevronLeft, faFilterCircleXmark, faInfoCircle, faLongArrowDown, faLongArrowUp, faPenToSquare, faPlus, faTimesCircle, faTrashAlt, faUpload, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowsRotate, faBolt, faCheck, faCheckCircle, faChevronDown, faChevronRight, faChevronUp, faCircleChevronLeft, faCircleInfo, faCircleXmark, faFilterCircleXmark, faHeart, faInfoCircle, faLeaf, faLongArrowDown, faLongArrowUp, faPenToSquare, faPlus, faStar, faTimesCircle, faTrashAlt, faTriangleExclamation, faUpload, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
 import ReactDOM from "react-dom/client";
 import App from "./App";
@@ -29,7 +29,7 @@ const root = ReactDOM.createRoot(
 console.debug((import.meta as any).env);
 console.debug((import.meta as any).env.VITE_REACT_APP_VERSION);
 
-library.add(faArrowsRotate, faCheck, faCheckCircle, faTrashAlt, faChevronDown, faChevronUp, faTimesCircle, faArrowLeft, faLongArrowUp, faLongArrowDown, faChevronRight, faCircleChevronLeft, faUpload, faXmark, faFilterCircleXmark, faInfoCircle, faPenToSquare, faPlus);
+library.add(faArrowsRotate, faCheck, faCheckCircle, faTrashAlt, faChevronDown, faChevronUp, faTimesCircle, faArrowLeft, faLongArrowUp, faLongArrowDown, faChevronRight, faCircleChevronLeft, faUpload, faXmark, faFilterCircleXmark, faInfoCircle, faPenToSquare, faPlus, faStar, faTriangleExclamation, faBolt, faLeaf, faHeart, faCircleInfo, faCircleXmark);
 
 const rootRoute = createRootRoute({
   component: App,

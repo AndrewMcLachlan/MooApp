@@ -14,10 +14,9 @@
     padding: var(--badge-padding-y) var(--badge-padding-x);
     font-size: var(--badge-font-size);
     font-weight: var(--badge-font-weight);
-    line-height: 1.3;
+    line-height: 1;
     color: var(--badge-fg);
     background: var(--badge-bg);
-    border: 1px solid transparent;
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
@@ -48,14 +47,13 @@
 .badge.badge-muted {
     background: color-mix(in srgb, var(--badge-bg) 22%, #000);
     color: color-mix(in srgb, var(--badge-bg) 45%, #fff);
-    border-color: transparent;
 }
 
-/* Outline: transparent background, hue border + text */
+/* Outline: transparent background, hue ring (via inset shadow to avoid layout shift) + hue text */
 .badge.badge-outline {
     background: transparent;
     color: color-mix(in srgb, var(--badge-bg) 45%, #fff);
-    border-color: var(--badge-bg);
+    box-shadow: inset 0 0 0 1px var(--badge-bg);
 }
 
 /* Light-mode muted/outline overrides - more contrast against white surfaces */
@@ -101,52 +99,19 @@
 .bg-info      { --badge-bg: #0dcaf0;        --badge-fg: #000; }
 
 /* ---- Hue tokens ----
-   Default (dark-mode) foregrounds. Light-mode block below switches the
-   darker light-mode hues to white text for contrast. */
+   Foreground uses light-dark() so it tracks the hue palette in _variables.css.
+   First arg = light mode, second = dark mode. */
 .bg-blue    { --badge-bg: var(--hue-blue);    --badge-fg: #fff; }
 .bg-indigo  { --badge-bg: var(--hue-indigo);  --badge-fg: #fff; }
 .bg-purple  { --badge-bg: var(--hue-purple);  --badge-fg: #fff; }
 .bg-pink    { --badge-bg: var(--hue-pink);    --badge-fg: #fff; }
 .bg-rose    { --badge-bg: var(--hue-rose);    --badge-fg: #fff; }
-.bg-orange  { --badge-bg: var(--hue-orange);  --badge-fg: #1a0f00; }
-.bg-amber   { --badge-bg: var(--hue-amber);   --badge-fg: #1a1300; }
-.bg-yellow  { --badge-bg: var(--hue-yellow);  --badge-fg: #1a1700; }
-.bg-green   { --badge-bg: var(--hue-green);   --badge-fg: #001a0e; }
-.bg-emerald { --badge-bg: var(--hue-emerald); --badge-fg: #001a0e; }
-.bg-teal    { --badge-bg: var(--hue-teal);    --badge-fg: #001a1f; }
-.bg-cyan    { --badge-bg: var(--hue-cyan);    --badge-fg: #001a1f; }
-.bg-slate   { --badge-bg: var(--hue-slate);   --badge-fg: #0a0f15; }
-.bg-neutral { --badge-bg: var(--hue-neutral); --badge-fg: #0a0f15; }
-
-/* Light-mode hue foregrounds - the darker hues need white text for contrast. */
-@media (prefers-color-scheme: light) {
-    .bg-orange,
-    .bg-amber,
-    .bg-yellow,
-    .bg-green,
-    .bg-emerald,
-    .bg-teal,
-    .bg-cyan,
-    .bg-slate,
-    .bg-neutral { --badge-fg: #fff; }
-}
-
-.light .bg-orange,    [data-theme="light"] .bg-orange,
-.light .bg-amber,     [data-theme="light"] .bg-amber,
-.light .bg-yellow,    [data-theme="light"] .bg-yellow,
-.light .bg-green,     [data-theme="light"] .bg-green,
-.light .bg-emerald,   [data-theme="light"] .bg-emerald,
-.light .bg-teal,      [data-theme="light"] .bg-teal,
-.light .bg-cyan,      [data-theme="light"] .bg-cyan,
-.light .bg-slate,     [data-theme="light"] .bg-slate,
-.light .bg-neutral,   [data-theme="light"] .bg-neutral { --badge-fg: #fff; }
-
-.dark .bg-orange,    [data-theme="dark"] .bg-orange    { --badge-fg: #1a0f00; }
-.dark .bg-amber,     [data-theme="dark"] .bg-amber     { --badge-fg: #1a1300; }
-.dark .bg-yellow,    [data-theme="dark"] .bg-yellow    { --badge-fg: #1a1700; }
-.dark .bg-green,     [data-theme="dark"] .bg-green     { --badge-fg: #001a0e; }
-.dark .bg-emerald,   [data-theme="dark"] .bg-emerald   { --badge-fg: #001a0e; }
-.dark .bg-teal,      [data-theme="dark"] .bg-teal      { --badge-fg: #001a1f; }
-.dark .bg-cyan,      [data-theme="dark"] .bg-cyan      { --badge-fg: #001a1f; }
-.dark .bg-slate,     [data-theme="dark"] .bg-slate     { --badge-fg: #0a0f15; }
-.dark .bg-neutral,   [data-theme="dark"] .bg-neutral   { --badge-fg: #0a0f15; }
+.bg-orange  { --badge-bg: var(--hue-orange);  --badge-fg: light-dark(#fff, #1a0f00); }
+.bg-amber   { --badge-bg: var(--hue-amber);   --badge-fg: light-dark(#fff, #1a1300); }
+.bg-yellow  { --badge-bg: var(--hue-yellow);  --badge-fg: light-dark(#fff, #1a1700); }
+.bg-green   { --badge-bg: var(--hue-green);   --badge-fg: light-dark(#fff, #001a0e); }
+.bg-emerald { --badge-bg: var(--hue-emerald); --badge-fg: light-dark(#fff, #001a0e); }
+.bg-teal    { --badge-bg: var(--hue-teal);    --badge-fg: light-dark(#fff, #001a1f); }
+.bg-cyan    { --badge-bg: var(--hue-cyan);    --badge-fg: light-dark(#fff, #001a1f); }
+.bg-slate   { --badge-bg: var(--hue-slate);   --badge-fg: light-dark(#fff, #0a0f15); }
+.bg-neutral { --badge-bg: var(--hue-neutral); --badge-fg: light-dark(#fff, #0a0f15); }

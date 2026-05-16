@@ -39,13 +39,16 @@ export const Badge = React.forwardRef<HTMLSpanElement, React.PropsWithChildren<B
     ({ bg = "primary", colour, textColour, muted, outline, pill, icon, className, children, style, ...rest }, ref) => {
         const useCustom = !!colour;
 
-        const inlineStyle: BadgeCssVars | undefined = useCustom
-            ? {
-                ...style,
-                "--badge-bg": colour,
-                ...(textColour ? { "--badge-fg": textColour } : {}),
+        let inlineStyle: BadgeCssVars | undefined = style;
+        if (useCustom) {
+            inlineStyle = { ...style, "--badge-bg": colour };
+            if (textColour) {
+                inlineStyle["--badge-fg"] = textColour;
+                // Muted and outline compute color via color-mix and don't read --badge-fg.
+                // Set color directly so an explicit textColour wins in those variants too.
+                inlineStyle.color = textColour;
             }
-            : style;
+        }
 
         const classes = classNames(
             "badge",
