@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@azure/msal-browser": "^5.10.1",
-    "axios": "^1.16.0",
+    "axios": "^1.16.1",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "react-error-boundary": "^6.1.1",
@@ -80,6 +80,6 @@
     "@tanstack/react-router": "^1.168.10",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "react-hook-form": "^7.75.0"
+    "react-hook-form": "^7.76.0"
   }
 }
