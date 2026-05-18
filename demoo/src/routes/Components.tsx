@@ -61,6 +61,14 @@ export const Components = () => {
                     <Badge bg="warning">Warning</Badge>
                     <Badge bg="info">Info</Badge>
                 </div>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+                    <Badge pill bg="primary">Primary</Badge>
+                    <Badge pill bg="secondary">Secondary</Badge>
+                    <Badge pill bg="success">Success</Badge>
+                    <Badge pill bg="danger">Danger</Badge>
+                    <Badge pill bg="warning">Warning</Badge>
+                    <Badge pill bg="info">Info</Badge>
+                </div>
                 <h5>Hues — solid</h5>
                 <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
                     <Badge bg="blue">Blue</Badge>
@@ -77,6 +85,22 @@ export const Components = () => {
                     <Badge bg="cyan">Cyan</Badge>
                     <Badge bg="slate">Slate</Badge>
                     <Badge bg="neutral">Neutral</Badge>
+                </div>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+                    <Badge pill bg="blue">Blue</Badge>
+                    <Badge pill bg="indigo">Indigo</Badge>
+                    <Badge pill bg="purple">Purple</Badge>
+                    <Badge pill bg="pink">Pink</Badge>
+                    <Badge pill bg="rose">Rose</Badge>
+                    <Badge pill bg="orange">Orange</Badge>
+                    <Badge pill bg="amber">Amber</Badge>
+                    <Badge pill bg="yellow">Yellow</Badge>
+                    <Badge pill bg="green">Green</Badge>
+                    <Badge pill bg="emerald">Emerald</Badge>
+                    <Badge pill bg="teal">Teal</Badge>
+                    <Badge pill bg="cyan">Cyan</Badge>
+                    <Badge pill bg="slate">Slate</Badge>
+                    <Badge pill bg="neutral">Neutral</Badge>
                 </div>
                 <h5>Hues — muted</h5>
                 <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
@@ -95,6 +119,22 @@ export const Components = () => {
                     <Badge bg="slate" muted>Slate</Badge>
                     <Badge bg="neutral" muted>Neutral</Badge>
                 </div>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+                    <Badge pill bg="blue" muted>Blue</Badge>
+                    <Badge pill bg="indigo" muted>Indigo</Badge>
+                    <Badge pill bg="purple" muted>Purple</Badge>
+                    <Badge pill bg="pink" muted>Pink</Badge>
+                    <Badge pill bg="rose" muted>Rose</Badge>
+                    <Badge pill bg="orange" muted>Orange</Badge>
+                    <Badge pill bg="amber" muted>Amber</Badge>
+                    <Badge pill bg="yellow" muted>Yellow</Badge>
+                    <Badge pill bg="green" muted>Green</Badge>
+                    <Badge pill bg="emerald" muted>Emerald</Badge>
+                    <Badge pill bg="teal" muted>Teal</Badge>
+                    <Badge pill bg="cyan" muted>Cyan</Badge>
+                    <Badge pill bg="slate" muted>Slate</Badge>
+                    <Badge pill bg="neutral" muted>Neutral</Badge>
+                </div>
                 <h5>Hues — outline</h5>
                 <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
                     <Badge bg="blue" outline>Blue</Badge>
@@ -111,6 +151,22 @@ export const Components = () => {
                     <Badge bg="cyan" outline>Cyan</Badge>
                     <Badge bg="slate" outline>Slate</Badge>
                     <Badge bg="neutral" outline>Neutral</Badge>
+                </div>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+                    <Badge pill bg="blue" outline>Blue</Badge>
+                    <Badge pill bg="indigo" outline>Indigo</Badge>
+                    <Badge pill bg="purple" outline>Purple</Badge>
+                    <Badge pill bg="pink" outline>Pink</Badge>
+                    <Badge pill bg="rose" outline>Rose</Badge>
+                    <Badge pill bg="orange" outline>Orange</Badge>
+                    <Badge pill bg="amber" outline>Amber</Badge>
+                    <Badge pill bg="yellow" outline>Yellow</Badge>
+                    <Badge pill bg="green" outline>Green</Badge>
+                    <Badge pill bg="emerald" outline>Emerald</Badge>
+                    <Badge pill bg="teal" outline>Teal</Badge>
+                    <Badge pill bg="cyan" outline>Cyan</Badge>
+                    <Badge pill bg="slate" outline>Slate</Badge>
+                    <Badge pill bg="neutral" outline>Neutral</Badge>
                 </div>
                 <h5>Pills</h5>
                 <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>

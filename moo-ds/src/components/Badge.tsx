@@ -54,10 +54,10 @@ export const Badge = React.forwardRef<HTMLSpanElement, React.PropsWithChildren<B
             "badge",
             !useCustom && bg && `bg-${bg}`,
             // outline wins when both supplied
-            outline && "badge-outline",
-            muted && !outline && "badge-muted",
+            outline && "outline",
+            muted && !outline && "muted",
             pill && "rounded-pill",
-            icon && "badge-with-icon",
+            icon && "with-icon",
             className,
         );
 
