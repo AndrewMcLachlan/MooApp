@@ -48,28 +48,28 @@ describe('Badge', () => {
   });
 
   describe('muted', () => {
-    it('applies badge-muted when muted is true', () => {
+    it('applies muted when muted is true', () => {
       render(<Badge muted>Muted</Badge>);
-      expect(screen.getByText('Muted')).toHaveClass('badge-muted');
+      expect(screen.getByText('Muted')).toHaveClass('muted');
     });
 
-    it('does not apply badge-muted by default', () => {
+    it('does not apply muted by default', () => {
       render(<Badge>Plain</Badge>);
-      expect(screen.getByText('Plain')).not.toHaveClass('badge-muted');
+      expect(screen.getByText('Plain')).not.toHaveClass('muted');
     });
   });
 
   describe('outline', () => {
-    it('applies badge-outline when outline is true', () => {
+    it('applies outline when outline is true', () => {
       render(<Badge outline>Outline</Badge>);
-      expect(screen.getByText('Outline')).toHaveClass('badge-outline');
+      expect(screen.getByText('Outline')).toHaveClass('outline');
     });
 
     it('outline wins when both muted and outline are passed', () => {
       render(<Badge muted outline>Both</Badge>);
       const badge = screen.getByText('Both');
-      expect(badge).toHaveClass('badge-outline');
-      expect(badge).not.toHaveClass('badge-muted');
+      expect(badge).toHaveClass('outline');
+      expect(badge).not.toHaveClass('muted');
     });
   });
 
@@ -142,14 +142,14 @@ describe('Badge', () => {
       expect(badge.firstChild).toBe(container.querySelector('[data-testid="ic"]'));
     });
 
-    it('applies badge-with-icon class when icon present', () => {
+    it('applies with-icon class when icon present', () => {
       render(<Badge icon={<svg />}>Label</Badge>);
-      expect(screen.getByText('Label')).toHaveClass('badge-with-icon');
+      expect(screen.getByText('Label')).toHaveClass('with-icon');
     });
 
-    it('omits badge-with-icon class when no icon', () => {
+    it('omits with-icon class when no icon', () => {
       render(<Badge>Label</Badge>);
-      expect(screen.getByText('Label')).not.toHaveClass('badge-with-icon');
+      expect(screen.getByText('Label')).not.toHaveClass('with-icon');
     });
   });
 });
