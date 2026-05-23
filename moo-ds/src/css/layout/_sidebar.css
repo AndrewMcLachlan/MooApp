@@ -91,3 +91,27 @@
         border-top: 1px solid var(--border-colour);
     }
 }
+
+/* Mobile sidebar drawer: drawer wraps a .sidebar and should not add
+   extra padding/width around it. The close button overlays the top-right
+   corner so the sidebar fills the full drawer height. */
+.offcanvas.sidebar-drawer {
+    --offcanvas-width: 200px;
+    --offcanvas-padding-x: 0;
+    --offcanvas-padding-y: 0;
+}
+
+.offcanvas.sidebar-drawer .offcanvas-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.5rem;
+    z-index: 2;
+}
+
+.offcanvas.sidebar-drawer .offcanvas-body.sidebar {
+    width: 100%;
+    min-width: 0;
+    border-right: 0;
+    padding-top: 3rem;
+}

@@ -8,7 +8,7 @@ export const Sidebar: SidebarComponent = ({ navItems = [] }) => {
     const layout = useLayout();
 
     return (
-        <Drawer show={layout.showSidebar} onHide={() => layout.setShowSidebar(false)}>
+        <Drawer show={layout.showSidebar} onHide={() => layout.setShowSidebar(false)} className="sidebar-drawer">
             <Drawer.Header closeButton />
             <Drawer.Body className="d-lg-none sidebar">
                 <Nav column>
