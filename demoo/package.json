@@ -43,7 +43,7 @@
     ]
   },
   "devDependencies": {
-    "@tanstack/router-plugin": "^1.168.11",
+    "@tanstack/router-plugin": "^1.168.13",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.9.1",
     "@types/react": "^19.2.15",
