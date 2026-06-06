@@ -33,6 +33,9 @@
 .table th {
     background-color: var(--section-bg);
     font-weight: 600;
+    color: var(--body-colour-dim);
+    text-transform: uppercase;
+    font-size: 0.8rem;
 }
 
 .table tfoot td {
