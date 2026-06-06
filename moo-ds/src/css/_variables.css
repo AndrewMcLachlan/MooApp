@@ -5,7 +5,6 @@
   --page-header-background: #111;
   --page-header-text: #F6F6F6;
 
-
   --primary-rgb: 139, 0, 0;
   --primary-dark: #6f0000;
 
@@ -38,11 +37,6 @@
   --hue-neutral: light-dark(#64748b, #bac3cf);
 
   --table-bg: var(--body-bg);
-
-  --toastify-color-progress-light: var(--primary);
-  --toastify-color-progress-dark: var(--primary);
-
-  --nav-link-active: var(--primary);
 
   --input-padding-v: 0.75rem;
   --input-padding-h: 0.75rem;
@@ -96,6 +90,13 @@
 
   --code-colour: light-dark(#d63384, rgb(230.4, 132.6, 181.2));
   --link-decoration: underline;
+}
+
+body {
+  --toastify-color-progress-light: var(--primary);
+  --toastify-color-progress-dark: var(--primary);
+
+  --nav-link-active: var(--primary);
 }
 
 /* Force light mode */

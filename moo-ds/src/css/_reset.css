@@ -1,9 +1,13 @@
 html {
     font-size: 14px;
+
+    &.compact {
+        font-size: 13px;
+    }
 }
 
 @media (max-width: 767px), (max-device-width: 767px) {
-    html {
+    html, html.compact {
         font-size: 12px;
     }
 }
