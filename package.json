@@ -18,7 +18,7 @@
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
     "@types/node": "^25.9.2",
-    "@types/react": "^19.2.15",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@types/rollup-plugin-peer-deps-external": "^2.2.6",
     "@typescript/native-preview": "^7.0.0-dev.20260527.2",
@@ -43,7 +43,7 @@
   },
   "optionalDependencies": {
     "@esbuild/linux-arm64": "0.28.0",
-    "@rollup/rollup-linux-arm64-gnu": "4.60.4"
+    "@rollup/rollup-linux-arm64-gnu": "4.61.1"
   },
   "peerDependencies": {
     "react": ">=19.2.0",
