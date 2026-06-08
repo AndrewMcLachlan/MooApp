@@ -14,9 +14,9 @@ export const Components = () => {
     const [showWarning, setShowWarning] = useState(true);
 
     return (
-        <Page title="Components" breadcrumbs={[{ route: "/components", text: "Components" }]} navItems={[{ route: "/components/iconlinkbutton", image: <Tags />, text: "Icon Link Button" }, { route: "/components/iconbutton", image: <Tags />, text: "Icon Button" }, <NavItemDivider />,
+        <Page title="Components" breadcrumbs={[{ route: "/components", text: "Components" }]} navItems={[{ route: "/components/icon-link-button", image: <Tags />, text: "Icon Link Button" }, { route: "/components/icon-button", image: <Tags />, text: "Icon Button" }, <NavItemDivider />,
         { route: "/components/tag-panel", image: <Tags />, text: "Tag Panel" }]} actions={[<IconButton icon={faPlus} key="create">Create</IconButton>]}>
-            <Section title="Buttons">
+            <Section className="buttons" title="Buttons">
                 <Button size="sm" variant="link">Sample</Button>
                 <Button>Sample 2</Button>
                 <Button variant="outline-primary">Sample 3</Button>

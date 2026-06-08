@@ -49,3 +49,12 @@ export const CustomSVG: Story = {
     icon: Tags,
   },
 };
+
+export const Badge: Story = {
+  args: {
+    title: "Badge",
+    children: "Add Account",
+    icon: Budget,
+    badge: true,
+  },
+};
