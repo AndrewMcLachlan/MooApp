@@ -9,6 +9,11 @@ export const IconLinkButtonComponent = () => {
                 <IconLinkButton to="/components" icon="plus" variant="primary">Create</IconLinkButton>
                 <IconLinkButton to="/components" icon={HamburgerMenu} variant="warning">Create</IconLinkButton>
             </Section>
+            <Section className="buttons" title="Badge">
+                <IconLinkButton to="/components" icon="plus" variant="primary" badge>Add Account</IconLinkButton>
+                <IconLinkButton to="/components" icon="plus" variant="danger" badge>Add Account</IconLinkButton>
+                <IconLinkButton to="/components" icon="plus" variant="success" badge>Add Account</IconLinkButton>
+            </Section>
         </Page>
     );
 };

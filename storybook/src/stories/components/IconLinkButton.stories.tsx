@@ -42,6 +42,10 @@ const meta = {
             control: "text",
             description: "External link URL",
         },
+        badge: {
+            control: "boolean",
+            description: "Render the icon in a split panel divided from the label by a convex sweep (solid variants)",
+        },
     },
     args: {
         children: "Button Text",
@@ -141,6 +145,23 @@ export const WithExternalHref: Story = {
         docs: {
             description: {
                 story: "Use `href` prop for external links.",
+            },
+        },
+    },
+};
+
+export const Badge: Story = {
+    args: {
+        icon: "plus",
+        children: "Add Account",
+        to: "/add",
+        variant: "primary",
+        badge: true,
+    },
+    parameters: {
+        docs: {
+            description: {
+                story: "Set `badge` to render the icon in a split panel divided from the label by a convex sweep. Designed for solid variants.",
             },
         },
     },
