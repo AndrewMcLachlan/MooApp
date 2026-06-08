@@ -16,14 +16,8 @@
     width: 18px;
 }
 
-/* Split "badge" icon button: a full-height panel on the left holds the icon,
-   divided from the label by a convex (bulging) curve. The panel is a lighter
-   (not desaturated) shade of the button background; the icon follows the button
-   text colour (currentColor). Designed for solid variants. */
 .btn.btn-icon-badge {
     --badge-bulge: 1.25rem;     /* horizontal radius of the bulge */
-    /* lighter than the button background but NOT desaturated: raise OKLCH
-       lightness only, keeping chroma (c) and hue (h) intact */
     --badge-bg: oklch(from var(--btn-bg) calc(l + 0.15) c h);
     /* dividing line drawn along the sweep */
     --badge-divider: var(--section-bg);
