@@ -16,22 +16,16 @@
     width: 18px;
 }
 
-/* Split "badge" icon button: a full-height light panel on the left holds the
-   icon, divided from the label by a convex (bulging) curve. Colours invert the
-   button — panel takes the foreground colour (white on solid variants), icon
-   takes the button background. Designed for solid variants. */
 .btn.btn-icon-badge {
     --badge-bulge: 1.25rem;     /* horizontal radius of the bulge */
-    /* lighter than the button background but NOT desaturated: raise OKLCH
-       lightness only, keeping chroma (c) and hue (h) intact */
     --badge-bg: oklch(from var(--btn-bg) calc(l + 0.15) c h);
     /* dividing line drawn along the sweep */
     --badge-divider: var(--section-bg);
     position: relative;
     overflow: hidden;
-    padding-left: 0;            /* panel runs flush to the left edge */
-    border-width: 0;            /* no button border ringing the panel */
-    gap: 0;                     /* spacing handled by the panel's margin */
+    padding-left: 0;
+    border-width: 0;
+    gap: 0;
 }
 
 .btn.btn-icon-badge .btn-icon-panel {
@@ -45,8 +39,6 @@
     margin: calc(-1 * var(--btn-padding-y) - 2px) 0.625rem calc(-1 * var(--btn-padding-y) - 2px) -2px;
     padding: 0 0.5rem;
     background: var(--badge-bg);
-    /* icon takes the button's background colour; `color` drives FontAwesome
-       (currentColor), fill/stroke drive inline custom SVGs */
     color: currentColor;
     border: 2px solid var(--badge-divider);
     /* convex right edge: elliptical, vertical radius 50% makes a smooth D-curve */
