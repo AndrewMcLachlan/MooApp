@@ -34,6 +34,24 @@ describe('IconButton', () => {
     });
   });
 
+  describe('badge', () => {
+    it('applies btn-icon-badge class and wraps the icon in a panel when badge is true', () => {
+      const { container } = render(<IconButton icon={faCheck} badge>Add</IconButton>);
+
+      expect(screen.getByRole('button')).toHaveClass('btn-icon-badge');
+      const panel = container.querySelector('.btn-icon-panel');
+      expect(panel).toBeInTheDocument();
+      expect(panel?.querySelector('svg')).toBeInTheDocument();
+    });
+
+    it('omits the badge class and panel wrapper by default', () => {
+      const { container } = render(<IconButton icon={faCheck}>Add</IconButton>);
+
+      expect(screen.getByRole('button')).not.toHaveClass('btn-icon-badge');
+      expect(container.querySelector('.btn-icon-panel')).not.toBeInTheDocument();
+    });
+  });
+
   describe('button variants', () => {
     it('applies primary variant', () => {
       render(<IconButton icon={faCheck} variant="primary">Primary</IconButton>);

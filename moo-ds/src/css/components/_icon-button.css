@@ -1,10 +1,11 @@
 .btn svg {
-    stroke: var(--btn-colour);
-    fill: var(--btn-colour);
+    /* icon takes the current text colour (currentColor === the button's `color`) */
+    stroke: currentColor;
+    fill: currentColor;
 }
 
-.btn.btn-icon div {
-    display: flex;
+.btn.btn-icon {
+    display: inline-flex;
     align-items: center;
     gap: 5px;
 }
@@ -13,4 +14,33 @@
 .btn img.custom-icon {
     height: 18px;
     width: 18px;
+}
+
+.btn.btn-icon-badge {
+    --badge-bulge: 1.25rem;     /* horizontal radius of the bulge */
+    --badge-bg: oklch(from var(--btn-bg) calc(l + 0.15) c h);
+    /* dividing line drawn along the sweep */
+    --badge-divider: var(--section-bg);
+    position: relative;
+    overflow: hidden;
+    padding-left: 0;
+    border-width: 0;
+    gap: 0;
+}
+
+.btn.btn-icon-badge .btn-icon-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    /* bleed past the button's padding AND outer edge so the left/top/bottom
+       borders are clipped by overflow:hidden — only the curved right border
+       (the divider line) stays visible */
+    margin: calc(-1 * var(--btn-padding-y) - 2px) 0.625rem calc(-1 * var(--btn-padding-y) - 2px) -2px;
+    padding: 0 0.5rem;
+    background: var(--badge-bg);
+    color: currentColor;
+    border: 2px solid var(--badge-divider);
+    /* convex right edge: elliptical, vertical radius 50% makes a smooth D-curve */
+    border-radius: 0 var(--badge-bulge) var(--badge-bulge) 0 / 0 50% 50% 0;
 }

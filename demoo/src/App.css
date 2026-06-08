@@ -64,3 +64,9 @@
   word-break: break-word;
   color: var(--muted-colour, #6c757d);
 }
+
+.section.buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
