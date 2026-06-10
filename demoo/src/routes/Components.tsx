@@ -1,6 +1,6 @@
 import { Page } from "@andrewmclachlan/moo-app";
 import { Section, NavItemDivider, IconButton, SectionTable, EditColumn, ComboBox, Button, Modal, ButtonGroup, Badge, CloseBadge, Alert, Nav, Tabs, Tab, Collapsible } from "@andrewmclachlan/moo-ds";
-import { Tags } from "@andrewmclachlan/moo-icons";
+import { Sparkle, Tags } from "@andrewmclachlan/moo-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
@@ -192,11 +192,18 @@ export const Components = () => {
                     <Badge bg="danger" icon={<FontAwesomeIcon icon="circle-xmark" />}>Failed</Badge>
                     <Badge bg="warning" icon={<FontAwesomeIcon icon="triangle-exclamation" />}>Warning</Badge>
                 </div>
-                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
                     <Badge bg="indigo" muted icon={<FontAwesomeIcon icon="bolt" />}>Muted</Badge>
                     <Badge bg="teal" outline icon={<FontAwesomeIcon icon="leaf" />}>Outline</Badge>
                     <Badge bg="rose" pill icon={<FontAwesomeIcon icon="heart" />}>Pill</Badge>
                     <Badge colour="#7c6cff" muted icon={<FontAwesomeIcon icon="bolt" />}>Custom + muted</Badge>
+                </div>
+                <h5>With Moo icon</h5>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                    <Badge bg="purple" icon={<Sparkle />}>Sparkle</Badge>
+                    <Badge bg="indigo" muted icon={<Sparkle />}>AI</Badge>
+                    <Badge bg="amber" outline pill icon={<Sparkle />}>New</Badge>
+                    <Badge colour="#7c6cff" icon={<Sparkle />}>Featured</Badge>
                 </div>
             </Section>
 

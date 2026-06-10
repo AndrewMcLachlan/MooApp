@@ -22,7 +22,7 @@ const App = () => {
     {
       text: "Components",
       route: "/components",
-      image: <Icon icon="https://avatars.githubusercontent.com/u/3093264?v=4" />
+      image: <Icon src="https://avatars.githubusercontent.com/u/3093264?v=4" />
     },
     {
       text: "Overlays",

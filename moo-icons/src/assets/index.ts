@@ -16,6 +16,8 @@ export { default as PullRequest } from "./pull-request.svg";
 export { default as Reports } from "./reports.svg";
 export { default as Rules } from "./rules.svg";
 export { default as Sliders } from "./sliders.svg";
+export { default as Sparkle } from "./sparkle.svg";
+export { default as SparkleOutline } from "./sparkle-outline.svg";
 export { default as Stack } from "./stack.svg";
 export { default as Tag } from "./tag.svg";
 export { default as Tags } from "./tags.svg";

@@ -12,7 +12,7 @@ export const Icon: React.FC<IconProps> = ({ icon, src, onClick, title, className
 
     switch (typeof icon) {
         case "undefined":
-            return src ? <img src={icon} alt={title} className={classNames("custom-icon", clickableClassName, className)} onClick={onClick} title={title} /> : null;
+            return src ? <img src={src} alt={title ?? ""} className={classNames("custom-icon", clickableClassName, className)} onClick={onClick} title={title} /> : null;
         case "function":
             return <CustomIconElement className={classNames("custom-icon", clickableClassName, className)} onClick={onClick} title={title} />
         default:
