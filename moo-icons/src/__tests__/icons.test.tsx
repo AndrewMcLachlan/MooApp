@@ -23,6 +23,7 @@ const iconNames = [
   'Rules',
   'Sliders',
   'Sparkle',
+  'SparkleOutline',
   'Stack',
   'Tag',
   'Tags',
