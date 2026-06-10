@@ -4,7 +4,7 @@ import {
     Application, BarChart, Budget, Cog, Dashboard, Database,
     HamburgerMenu, Hierarchy, Import, LeftRightArrow, List, NestedList,
     PieChart,
-    PiggyBank, PullRequest, Reports, Rules, Sliders, Stack, Tag,
+    PiggyBank, PullRequest, Reports, Rules, Sliders, Sparkle, Stack, Tag,
     Tags, Trendline, TwoCoins, Transaction, UpDownArrow, User,
     UserShield, Users,
 } from "@andrewmclachlan/moo-icons";
@@ -28,6 +28,7 @@ const icons = [
     { name: "Reports", component: Reports },
     { name: "Rules", component: Rules },
     { name: "Sliders", component: Sliders },
+    { name: "Sparkle", component: Sparkle },
     { name: "Stack", component: Stack },
     { name: "Tag", component: Tag },
     { name: "Tags", component: Tags },

@@ -22,6 +22,7 @@ const iconNames = [
   'Reports',
   'Rules',
   'Sliders',
+  'Sparkle',
   'Stack',
   'Tag',
   'Tags',
@@ -44,9 +45,9 @@ describe('moo-icons', () => {
       });
     });
 
-    it('exports exactly 28 icons', () => {
+    it('exports exactly 29 icons', () => {
       const exportedKeys = Object.keys(Icons);
-      expect(exportedKeys).toHaveLength(28);
+      expect(exportedKeys).toHaveLength(29);
     });
   });
 

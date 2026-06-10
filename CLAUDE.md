@@ -13,16 +13,16 @@ npm run lint-fix        # Lint and fix all packages
 npm run start           # Run demoo dev server (alias: npm run demoo)
 ```
 
-To run commands for a specific workspace:
+To run commands for a specific workspace, use the `-w` flag with the package name:
 ```bash
-npm run build --workspaces=moo-app
-npm run build --workspaces=moo-ds
-npm run build --workspaces=moo-icons
+npm run build -w @andrewmclachlan/moo-app
+npm run build -w @andrewmclachlan/moo-ds
+npm run build -w @andrewmclachlan/moo-icons
 ```
 
 Storybook (documentation site):
 ```bash
-npm run storybook --workspaces=storybook  # Runs on port 6006
+npm run storybook -w @andrewmclachlan/storybook  # Runs on port 6006
 ```
 
 ## Architecture
