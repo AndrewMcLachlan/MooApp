@@ -46,9 +46,9 @@ describe('moo-icons', () => {
       });
     });
 
-    it('exports exactly 29 icons', () => {
+    it('exports exactly 30 icons', () => {
       const exportedKeys = Object.keys(Icons);
-      expect(exportedKeys).toHaveLength(29);
+      expect(exportedKeys).toHaveLength(30);
     });
   });
 
