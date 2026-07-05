@@ -27,7 +27,7 @@
     "@andrewmclachlan:registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
-    "@azure/msal-browser": "^5.15.0",
+    "@azure/msal-browser": "^5.16.0",
     "axios": "^1.18.1",
     "classnames": "^2.5.1",
     "date-fns": "^4.4.0",
@@ -71,7 +71,7 @@
   },
   "peerDependencies": {
     "@andrewmclachlan/moo-ds": ">=4.0.0",
-    "@azure/msal-react": "^5.5.0",
+    "@azure/msal-react": "^5.5.1",
     "@fortawesome/fontawesome-svg-core": "^7.3.0",
     "@fortawesome/free-regular-svg-icons": "^7.3.0",
     "@fortawesome/free-solid-svg-icons": "^7.3.0",
@@ -80,6 +80,6 @@
     "@tanstack/react-router": "^1.170.16",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-hook-form": "^7.80.0"
+    "react-hook-form": "^7.81.0"
   }
 }
