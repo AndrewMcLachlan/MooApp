@@ -1,5 +1,6 @@
 import React, { type PropsWithChildren, type ReactNode, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PersistQueryClientProvider, type PersistQueryClientOptions } from "@tanstack/react-query-persist-client";
 import { type AnyRouter, RouterProvider } from "@tanstack/react-router";
 
 import { Link, NavLink } from "./components";
@@ -18,7 +19,7 @@ import { type AxiosInstance } from "axios";
 
 library.add(faArrowRightFromBracket, faMoon, faSun, faTimesCircle);
 
-export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, scopes = [], baseUrl = "/", client, name, version, copyrightYear, authFallback }) => {
+export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, scopes = [], baseUrl = "/", client, name, version, copyrightYear, authFallback, queryPersistOptions }) => {
 
   const [msalInstance, setMsalInstance] = React.useState<any>(null);
 
@@ -59,19 +60,28 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clien
 
   if (!msalInstance) return null;
 
+  const app = (
+    <LinkProvider LinkComponent={Link} NavLinkComponent={NavLink}>
+      <MessageProvider>
+        <Login authFallback={authFallback}>
+          <RouterProvider router={router} />
+        </Login>
+      </MessageProvider>
+    </LinkProvider>
+  );
+
   return (
     <AppProvider name={name} version={version} copyrightYear={copyrightYear}>
       <MsalProvider instance={msalInstance}>
         <HttpClientProvider client={client} baseUrl={baseUrl} scopes={scopes}>
-          <QueryClientProvider client={queryClient}>
-            <LinkProvider LinkComponent={Link} NavLinkComponent={NavLink}>
-              <MessageProvider>
-                <Login authFallback={authFallback}>
-                  <RouterProvider router={router} />
-                </Login>
-              </MessageProvider>
-            </LinkProvider>
-          </QueryClientProvider>
+          {queryPersistOptions ?
+            <PersistQueryClientProvider client={queryClient} persistOptions={queryPersistOptions}>
+              {app}
+            </PersistQueryClientProvider> :
+            <QueryClientProvider client={queryClient}>
+              {app}
+            </QueryClientProvider>
+          }
         </HttpClientProvider>
       </MsalProvider>
     </AppProvider>
@@ -88,4 +98,5 @@ export interface MooAppProps {
   copyrightYear?: number;
   router: AnyRouter;
   authFallback?: ReactNode;
+  queryPersistOptions?: Omit<PersistQueryClientOptions, "queryClient">;
 }
