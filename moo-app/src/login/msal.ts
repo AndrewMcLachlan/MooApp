@@ -52,12 +52,45 @@ export const apiRequest: msal.SilentRequest = {
 };
 
 
+/**
+ * Options for overriding parts of the MSAL {@link msal.Configuration} at
+ * instance-creation time. All properties are optional and default to the
+ * historical behaviour, so existing consuming apps are unaffected.
+ */
+export interface MsalOptions {
+    /**
+     * The URI that Azure AD redirects to after authentication. This is also the
+     * page MSAL loads inside the hidden iframe used for silent token renewal.
+     *
+     * Defaults to `window.location.origin` (the app's home page).
+     *
+     * When the default is used, every silent token renewal re-boots the entire
+     * SPA inside the hidden iframe, which MSAL detects and aborts with
+     * `BrowserAuthError: block_iframe_reload` (see issue #607). To avoid this,
+     * point this at a lightweight page that does not boot the SPA — e.g. a
+     * `blank.html` served from your app's `public/` folder:
+     *
+     * ```ts
+     * <MooApp redirectUri={`${window.location.origin}/blank.html`} ... />
+     * ```
+     *
+     * NOTE: the URI must also be registered as a redirect (reply) URI on the
+     * app's Azure AD registration, otherwise authentication will fail. Interactive
+     * login still returns the user to the originally requested route — MSAL v5
+     * navigates back to the login-request URL by default.
+     */
+    redirectUri?: string;
+}
+
 let msalInstance: msal.IPublicClientApplication;
 
-const getMsalInstance = async (clientId: string): Promise<msal.IPublicClientApplication> => {
+const getMsalInstance = async (clientId: string, options?: MsalOptions): Promise<msal.IPublicClientApplication> => {
     if (msalInstance) return msalInstance;
 
     msalConfig.auth.clientId = clientId;
+    if (options?.redirectUri) {
+        msalConfig.auth.redirectUri = options.redirectUri;
+    }
     msalConfig.system.loggerOptions = {
         logLevel: msal.LogLevel.Warning
     }

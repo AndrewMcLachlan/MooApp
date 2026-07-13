@@ -19,12 +19,12 @@ import { type AxiosInstance } from "axios";
 
 library.add(faArrowRightFromBracket, faMoon, faSun, faTimesCircle);
 
-export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, scopes = [], baseUrl = "/", client, name, version, copyrightYear, authFallback, queryPersistOptions }) => {
+export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, scopes = [], baseUrl = "/", client, name, version, copyrightYear, authFallback, queryPersistOptions, redirectUri }) => {
 
   const [msalInstance, setMsalInstance] = React.useState<any>(null);
 
   useEffect(() => {
-    getMsalInstance(clientId).then((instance) => setMsalInstance(instance));
+    getMsalInstance(clientId, { redirectUri }).then((instance) => setMsalInstance(instance));
   }, []);
 
   const [queryClient] = React.useState(() => new QueryClient({
@@ -99,4 +99,13 @@ export interface MooAppProps {
   router: AnyRouter;
   authFallback?: ReactNode;
   queryPersistOptions?: Omit<PersistQueryClientOptions, "queryClient">;
+  /**
+   * Overrides the MSAL redirect URI. Point this at a lightweight page that does
+   * not boot the SPA (e.g. `${window.location.origin}/blank.html`) to stop
+   * silent token renewals re-booting the app inside MSAL's hidden iframe and
+   * emitting `BrowserAuthError: block_iframe_reload` (issue #607). The URI must
+   * also be registered as a redirect URI on the Azure AD app registration.
+   * Defaults to `window.location.origin`.
+   */
+  redirectUri?: string;
 }
