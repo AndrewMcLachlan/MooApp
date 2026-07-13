@@ -21,7 +21,6 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@types/rollup-plugin-peer-deps-external": "^2.2.6",
-    "@typescript/native-preview": "^7.0.0-dev.20260707.2",
     "@typescript/typescript6": "^6.0.2",
     "@vitejs/plugin-react": "^6.0.3",
     "@vitest/coverage-v8": "^4.1.10",
@@ -57,7 +56,7 @@
     "build": "npm run build --workspaces",
     "lint": "npm run lint --workspaces",
     "lint-fix": "npm run lint-fix --workspaces",
-    "type-check": "tsgo -p moo-ds/tsconfig.json && tsgo -p moo-app/tsconfig.json && tsgo -p moo-icons/tsconfig.json",
+    "type-check": "node node_modules/typescript/bin/tsc -p moo-ds/tsconfig.json && node node_modules/typescript/bin/tsc -p moo-app/tsconfig.json && node node_modules/typescript/bin/tsc -p moo-icons/tsconfig.json",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage"
