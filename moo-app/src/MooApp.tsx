@@ -19,12 +19,12 @@ import { type AxiosInstance } from "axios";
 
 library.add(faArrowRightFromBracket, faMoon, faSun, faTimesCircle);
 
-export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, scopes = [], baseUrl = "/", client, name, version, copyrightYear, authFallback, queryPersistOptions, redirectUri }) => {
+export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, scopes = [], baseUrl = "/", client, name, version, copyrightYear, authFallback, queryPersistOptions, silentRedirectUri }) => {
 
   const [msalInstance, setMsalInstance] = React.useState<any>(null);
 
   useEffect(() => {
-    getMsalInstance(clientId, { redirectUri }).then((instance) => setMsalInstance(instance));
+    getMsalInstance(clientId, { silentRedirectUri }).then((instance) => setMsalInstance(instance));
   }, []);
 
   const [queryClient] = React.useState(() => new QueryClient({
@@ -100,12 +100,16 @@ export interface MooAppProps {
   authFallback?: ReactNode;
   queryPersistOptions?: Omit<PersistQueryClientOptions, "queryClient">;
   /**
-   * Overrides the MSAL redirect URI. Point this at a lightweight page that does
-   * not boot the SPA (e.g. `${window.location.origin}/blank.html`) to stop
-   * silent token renewals re-booting the app inside MSAL's hidden iframe and
-   * emitting `BrowserAuthError: block_iframe_reload` (issue #607). The URI must
-   * also be registered as a redirect URI on the Azure AD app registration.
-   * Defaults to `window.location.origin`.
+   * Redirect URI used **only** for silent token renewal (MSAL's hidden iframe).
+   * Point this at a lightweight blank page that does not boot the SPA (e.g.
+   * `${window.location.origin}/blank.html`) to stop silent renewals re-booting
+   * the app inside the iframe and emitting `BrowserAuthError: block_iframe_reload`
+   * (issue #607). It does not affect interactive login, which still returns the
+   * user to the route they started from. The URI must also be registered as a
+   * redirect URI on the Azure AD app registration. Defaults to unset (MSAL's
+   * default redirect URI is used).
+   *
+   * @see https://learn.microsoft.com/en-us/entra/msal/javascript/browser/errors#block_iframe_reload
    */
-  redirectUri?: string;
+  silentRedirectUri?: string;
 }
