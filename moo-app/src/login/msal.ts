@@ -52,12 +52,60 @@ export const apiRequest: msal.SilentRequest = {
 };
 
 
+/**
+ * Options for overriding parts of the MSAL configuration at instance-creation
+ * time. All properties are optional and default to the historical behaviour, so
+ * existing consuming apps are unaffected.
+ */
+export interface MsalOptions {
+    /**
+     * The redirect URI used **only** for silent token renewal (the hidden iframe
+     * that MSAL opens for `acquireTokenSilent`). It is NOT used for interactive
+     * login, so it does not affect where the user lands after signing in.
+     *
+     * By default silent renewals use the app's own `redirectUri`
+     * (`window.location.origin`), which causes the whole SPA to re-boot inside
+     * the hidden iframe; MSAL detects this and aborts with
+     * `BrowserAuthError: block_iframe_reload` (see issue #607). Per MSAL's
+     * guidance, point this at a lightweight blank page that does **not** load
+     * MSAL — e.g. a `blank.html` served from your app's `public/` folder:
+     *
+     * ```tsx
+     * <MooApp
+     *     clientId="<client-id>"
+     *     router={router}
+     *     silentRedirectUri={`${window.location.origin}/blank.html`}
+     * />
+     * ```
+     *
+     * The blank page needs no scripts: the silent iframe returns the response in
+     * its URL hash, which MSAL reads directly. Interactive login is unaffected
+     * and still returns the user to the route they started from
+     * (`navigateToLoginRequestUrl` defaults to `true`).
+     *
+     * NOTE: the URI must also be registered as a redirect (reply) URI on the
+     * app's Azure AD registration, otherwise silent renewal will fail.
+     *
+     * @see https://learn.microsoft.com/en-us/entra/msal/javascript/browser/errors#block_iframe_reload
+     */
+    silentRedirectUri?: string;
+}
+
 let msalInstance: msal.IPublicClientApplication;
 
-const getMsalInstance = async (clientId: string): Promise<msal.IPublicClientApplication> => {
+let silentRedirectUri: string | undefined;
+
+/**
+ * The redirect URI to apply to silent token requests, or `undefined` to use the
+ * MSAL default. Configured via {@link MsalOptions.silentRedirectUri}.
+ */
+export const getSilentRedirectUri = (): string | undefined => silentRedirectUri;
+
+const getMsalInstance = async (clientId: string, options?: MsalOptions): Promise<msal.IPublicClientApplication> => {
     if (msalInstance) return msalInstance;
 
     msalConfig.auth.clientId = clientId;
+    silentRedirectUri = options?.silentRedirectUri;
     msalConfig.system.loggerOptions = {
         logLevel: msal.LogLevel.Warning
     }
