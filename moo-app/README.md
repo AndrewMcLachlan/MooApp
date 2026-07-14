@@ -1,10 +1,66 @@
-# MooApp
-An opinionated React library for scaffolding web applications.
+# @andrewmclachlan/moo-app
+
+An opinionated, complete authenticated SPA framework built on [`@andrewmclachlan/moo-ds`](../moo-ds/README.md).
 
 ![Build](https://github.com/andrewmclachlan/mooapp/actions/workflows/build.yml/badge.svg)
 
-- Uses the MSAL library to handle authentication to Azure.
-- Uses React Query and Axios for API calls
-- Uses React Router for creating a SPA
-- Provides an optional layout for a functional app
-- Provides components to allow faster assembly of applications
+## What it provides
+
+- **`MooApp`** — a root component that wires the whole provider stack: MSAL auth, React Query (optionally persisted), the HTTP client, link/message/theme providers, the login flow, and the router.
+- **Authentication** — MSAL (`@azure/msal-browser` / `@azure/msal-react`) with automatic silent-token acquisition and interactive-redirect fallback. Configurable via the `auth` prop (see below).
+- **Data** — `HttpClientProvider` (an Axios client that injects MSAL tokens automatically) and React Query hooks: `useApiGet`, `useApiPagedGet`, `useApiPost`, `useApiPut`, `useApiPatch`, `useApiDelete` (plus `Empty`/`File` variants).
+- **Layout** — `MooAppLayout`, a standard app shell (header, sidebar, footer, error boundaries) with desktop and mobile variants.
+- **Routing** — uses [`@tanstack/react-router`](https://tanstack.com/router). You build the route tree and pass the router to `MooApp` (recipe below).
+
+## Peer dependencies
+
+React >= 19, and `@andrewmclachlan/moo-ds`.
+
+## Configuring authentication
+
+MSAL defaults to the framework's built-in configuration, but you can override it with the `auth` prop:
+
+```tsx
+<MooApp
+  clientId="<your-app-registration-client-id>"
+  auth={{
+    authority: "https://login.microsoftonline.com/<your-tenant-id>",
+    redirectUri: window.location.origin,
+    postLogoutRedirectUri: window.location.origin,
+    cacheLocation: "localStorage",
+    loginScopes: ["openid", "profile"],
+  }}
+  baseUrl="/api"
+  router={router}
+/>
+```
+
+Every field is optional and falls back to the default, so single-tenant apps can omit `auth` entirely.
+
+## Routing recipe
+
+There is **no `createMooAppBrowserRouter` helper** — build a standard TanStack router and hand it to `MooApp`:
+
+```tsx
+import { MooApp } from "@andrewmclachlan/moo-app";
+import { createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { Home } from "./routes/Home";
+
+const rootRoute = createRootRoute({ component: App });
+const indexRoute = createRoute({ getParentRoute: () => rootRoute, path: "/", component: Home });
+
+const routeTree = rootRoute.addChildren([indexRoute]);
+const router = createRouter({ routeTree });
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <MooApp clientId="<client-id>" baseUrl="/api" router={router} name="My App" />
+);
+```
+
+See [`demoo/src/index.tsx`](../demoo/src/index.tsx) for a complete, multi-route example.
+
+## Avoiding `block_iframe_reload`
+
+MSAL renews tokens in a hidden iframe. If the app re-bootstraps inside that iframe you can hit `block_iframe_reload`. Point silent token requests at a minimal `blank.html` so the iframe doesn't reload the full app — see the app-registration redirect-URI notes in the MSAL docs.
