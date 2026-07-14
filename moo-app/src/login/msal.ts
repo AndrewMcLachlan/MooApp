@@ -72,10 +72,23 @@ export interface MsalOptions {
 }
 
 let msalInstance: msal.IPublicClientApplication;
+let initializedClientId: string | undefined;
 
 const getMsalInstance = async (clientId: string, options?: MsalOptions): Promise<msal.IPublicClientApplication> => {
-    if (msalInstance) return msalInstance;
+    if (msalInstance) {
+        // The instance is a module-level singleton; a second call with a
+        // different clientId/authority can't reconfigure it. Warn rather than
+        // silently returning a mismatched instance.
+        if (initializedClientId !== clientId) {
+            console.warn(
+                `getMsalInstance was already initialized with clientId "${initializedClientId}"; ` +
+                `ignoring the new clientId "${clientId}". MSAL configuration cannot be changed after initialization.`
+            );
+        }
+        return msalInstance;
+    }
 
+    initializedClientId = clientId;
     msalConfig.auth.clientId = clientId;
     if (options?.authority) msalConfig.auth.authority = options.authority;
     if (options?.redirectUri) msalConfig.auth.redirectUri = options.redirectUri;
