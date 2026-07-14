@@ -1,4 +1,4 @@
-import "../../../node_modules/react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 import { Slide, ToastContainer } from "react-toastify";
 import { useTheme } from "../providers";
 
@@ -17,7 +17,7 @@ export const Notifications: React.FC = () => {
             pauseOnFocusLoss
             draggable
             pauseOnHover
-            theme={(!theme && !defaultTheme) ? "dark" : theme.theme === "" ? defaultTheme.theme : theme.theme.startsWith("dark") ? "dark" : "light"}
+            theme={(!theme && !defaultTheme) ? "dark" : theme?.theme === "" ? defaultTheme.theme : theme?.theme.startsWith("dark") ? "dark" : "light"}
             transition={Slide}
         />
     );
