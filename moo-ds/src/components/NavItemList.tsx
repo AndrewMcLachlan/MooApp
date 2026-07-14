@@ -18,7 +18,7 @@ export const NavItemList: React.FC<NavItemListProps> = ({ navItems, as = React.F
             onClick(e, navItem);
         }
 
-        navItem?.onClick?.(e);
+        navItem.onClick?.(e);
     }
 
     const items: React.ReactNode[] = navItems.map((item, index) => {
