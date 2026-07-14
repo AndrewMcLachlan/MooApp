@@ -3,13 +3,20 @@ import { useContext } from "react";
 import { type Theme, type ThemeOptions, theme, Themes as BuiltInThemes } from "../models";
 import { useLocalStorage } from "../hooks/localStorage";
 
-const getDefaultTheme = () => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? theme("dark") : theme("light");
+// SSR-safe: window/matchMedia are only touched when available. Resolves the
+// preferred default within the supplied theme list, falling back to the first
+// entry (then a built-in) so a custom list without "dark"/"light" ids still
+// yields a valid theme.
+const getDefaultTheme = (list: Theme[] = BuiltInThemes): Theme => {
+    const prefersDark = typeof window !== "undefined" && !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return (prefersDark ? theme("dark", list) : theme("light", list)) ?? list[0] ?? theme("light")!;
+};
 
 export const ThemeContext = createContext<ThemeOptions>({ defaultTheme: getDefaultTheme(), themes: BuiltInThemes });
 
 export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>> = ({ children, themes = BuiltInThemes, ...props }) => {
 
-    const defaultTheme = props.defaultTheme ?? getDefaultTheme();
+    const defaultTheme = props.defaultTheme ?? getDefaultTheme(themes);
 
     const [currentTheme, setTheme] = useLocalStorage<Theme>("theme", defaultTheme);
 
@@ -17,7 +24,13 @@ export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>
         const colour = document.getElementsByName("theme-color")[0];
         if (!colour) console.warn("No theme colour meta tag found. Theme colour will not be applied.");
 
-        if (currentTheme.colour) colour?.setAttribute("content", currentTheme.colour);
+        if (currentTheme.colour) {
+            colour?.setAttribute("content", currentTheme.colour);
+        } else {
+            // A theme without a colour (e.g. "System") must not keep the previous
+            // theme's colour on the browser UI.
+            colour?.removeAttribute("content");
+        }
         document.body.setAttribute("class", currentTheme.theme);
         if (currentTheme.theme === "") {
             document.body.removeAttribute("data-theme");
