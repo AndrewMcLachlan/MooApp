@@ -100,7 +100,7 @@ describe('ComboBoxItem', () => {
       renderWithProvider({ item: items[0], onSelected });
 
       const option = screen.getByRole('option');
-      expect(option).toHaveAttribute('tabindex', '-1');
+      expect(option).toHaveAttribute('tabindex', '0');
     });
 
     it('selects on Enter key', () => {

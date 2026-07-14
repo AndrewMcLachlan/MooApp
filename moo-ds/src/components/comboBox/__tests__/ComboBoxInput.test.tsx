@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBoxInput } from '../ComboBoxInput';
 import { ComboBoxProvider } from '../ComboBoxProvider';
@@ -111,7 +111,11 @@ describe('ComboBoxInput', () => {
 
         expect(search).not.toHaveBeenCalled();
 
-        vi.advanceTimersByTime(300);
+        // Wrap in act() so React flushes the state updates the debounced
+        // callback schedules before we assert.
+        act(() => {
+          vi.advanceTimersByTime(300);
+        });
 
         expect(search).toHaveBeenCalledTimes(1);
         expect(search).toHaveBeenCalledWith('app');
@@ -127,7 +131,9 @@ describe('ComboBoxInput', () => {
 
       const input = screen.getByRole('combobox');
       expect(input).toHaveAttribute('aria-expanded');
-      expect(input).toHaveAttribute('aria-controls', 'cb-listbox');
+      // aria-controls is a per-instance generated id (React useId), not a
+      // shared hard-coded value.
+      expect(input.getAttribute('aria-controls')).toBeTruthy();
     });
   });
 

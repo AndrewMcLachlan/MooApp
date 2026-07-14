@@ -4,7 +4,7 @@ import { useInnerRef } from "../../hooks";
 
 export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => {
 
-    const { createLabel, creatable, allItems, labelField, search, setItems, selectedItems, newItem, setNewItem, show, showInput, text, setText, setShow, ref } = useComboBox();
+    const { createLabel, creatable, allItems, labelField, search, setItems, selectedItems, newItem, setNewItem, show, showInput, text, setText, setShow, ref, listId } = useComboBox();
 
     // Debounce the actual search execution. Previously `useDebounce(search, 300)`
     // debounced the function *value* (a stable reference), so the search ran
@@ -42,6 +42,9 @@ export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => 
 
     const keyUp: React.KeyboardEventHandler<any> = (e) => {
         if (e.key === "Escape") {
+            // Cancel any pending debounced search so it can't reopen/repopulate
+            // the list after the user dismisses it.
+            runSearch.cancel();
             setShow(false);
             setText("");
             setItems(allItems);
@@ -53,7 +56,7 @@ export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => 
     const innerRef = useInnerRef<HTMLInputElement>(ref);
 
     return (
-        <input type="text" ref={innerRef} hidden={!inputVisible} placeholder={selectedItems?.length == 0 && !props.readonly ? placeholder : ""} onChange={onChange} onKeyUp={keyUp} value={text} tabIndex={props.tabIndex} autoCapitalize="off" autoComplete="off" autoCorrect="off" spellCheck={false} role="combobox" aria-expanded={!!show} aria-controls="cb-listbox" />
+        <input type="text" ref={innerRef} hidden={!inputVisible} placeholder={selectedItems?.length == 0 && !props.readonly ? placeholder : ""} onChange={onChange} onKeyUp={keyUp} value={text} tabIndex={props.tabIndex} autoCapitalize="off" autoComplete="off" autoCorrect="off" spellCheck={false} role="combobox" aria-expanded={!!show} aria-controls={listId} />
     );
 }
 

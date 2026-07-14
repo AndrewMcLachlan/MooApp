@@ -25,7 +25,9 @@ export const ComobBoxItem = <T,>(props: ComboBoxItemProps<T>) => {
 
     if (props.item === undefined) return null;
 
-    return (<li role="option" onClick={click} onKeyDown={keyDown} tabIndex={-1}>{props.label ?? labelField(props.item)}</li>);
+    // tabIndex 0 keeps options reachable by keyboard (Tab from the input) so the
+    // Enter/Space handler is usable, without the positive-tabIndex anti-pattern.
+    return (<li role="option" onClick={click} onKeyDown={keyDown} tabIndex={0}>{props.label ?? labelField(props.item)}</li>);
 }
 
 ComobBoxItem.displayName = "ComboBoxItem";

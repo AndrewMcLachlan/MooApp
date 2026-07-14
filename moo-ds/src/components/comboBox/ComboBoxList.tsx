@@ -3,7 +3,7 @@ import { useComboBox } from "./ComboBoxProvider";
 
 export const ComboBoxList = () => {
 
-    const { creatable, items, multiSelect, onAdd, onChange, onCreate, show, setShow, newItem, selectedItems, setSelectedItems, setText, text, valueField } = useComboBox();
+    const { creatable, items, multiSelect, onAdd, onChange, onCreate, show, setShow, newItem, selectedItems, setSelectedItems, setText, text, valueField, listId } = useComboBox();
 
     if (!show) return null;
 
@@ -33,7 +33,7 @@ export const ComboBoxList = () => {
     }
 
     return (
-        <ol className="cb-list" id="cb-listbox" role="listbox">
+        <ol className="cb-list" id={listId} role="listbox">
             {items.map((i) =>
                 <ComobBoxItem key={valueField(i)} onSelected={onItemSelected} item={i} />
             )}
@@ -41,7 +41,7 @@ export const ComboBoxList = () => {
                 <ComobBoxItem onSelected={onItemCreated} item={newItem} label={newItem.label} />
             }
             {!creatable && items.length === 0 &&
-                <li className="no-results">No results found</li>
+                <li className="no-results" role="presentation">No results found</li>
             }
         </ol>
     );
