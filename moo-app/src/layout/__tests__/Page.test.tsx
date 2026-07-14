@@ -118,6 +118,25 @@ describe('Page', () => {
       expect(mockSetBreadcrumbs).toHaveBeenCalledWith([]);
     });
 
+    it('does not call setBreadcrumbs again when re-rendered with the same content', () => {
+      const { rerender } = render(
+        <Page title="Test" breadcrumbs={[{ text: 'Home', route: '/' }]}>
+          Content
+        </Page>
+      );
+
+      expect(mockSetBreadcrumbs).toHaveBeenCalledTimes(1);
+
+      // New array literal, identical content: the content guard should skip the setter.
+      rerender(
+        <Page title="Test" breadcrumbs={[{ text: 'Home', route: '/' }]}>
+          Content
+        </Page>
+      );
+
+      expect(mockSetBreadcrumbs).toHaveBeenCalledTimes(1);
+    });
+
     it('updates breadcrumbs on change', () => {
       const { rerender } = render(
         <Page title="Test" breadcrumbs={[{ text: 'Home', route: '/' }]}>
