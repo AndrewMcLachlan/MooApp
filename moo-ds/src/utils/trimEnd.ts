@@ -1,6 +1,6 @@
 export const trimEnd = (charsToRemove: string, string: string) => {
 
-    if (!string || !charsToRemove || charsToRemove === "") return string;
+    if (!string || !charsToRemove) return string;
 
     const length = charsToRemove.length;
 

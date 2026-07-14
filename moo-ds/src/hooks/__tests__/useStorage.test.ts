@@ -184,5 +184,96 @@ describe('useStorage', () => {
       expect(mockStorage.setItem).toHaveBeenCalledWith('key1', JSON.stringify('updated1'));
       expect(result2.current[0]).toBe('value2');
     });
+
+    it('re-reads from storage when the key changes', () => {
+      vi.mocked(mockStorage.getItem).mockImplementation((k: string) =>
+        k === 'key2' ? JSON.stringify('value2') : null
+      );
+
+      const { result, rerender } = renderHook(
+        ({ key }) => useStorage(mockStorage, key, 'fallback'),
+        { initialProps: { key: 'key1' } }
+      );
+
+      expect(result.current[0]).toBe('fallback');
+
+      rerender({ key: 'key2' });
+
+      expect(result.current[0]).toBe('value2');
+    });
+  });
+
+  describe('corrupt values', () => {
+    it('falls back to the initial value when the stored value is not valid JSON', () => {
+      vi.mocked(mockStorage.getItem).mockReturnValue('this-is-not-json');
+
+      const { result } = renderHook(() =>
+        useStorage(mockStorage, 'testKey', 'fallback')
+      );
+
+      // A corrupt/legacy value must not crash the tree.
+      expect(result.current[0]).toBe('fallback');
+    });
+  });
+
+  describe('cross-tab sync', () => {
+    it('updates state when a storage event for the same key fires', () => {
+      vi.mocked(mockStorage.getItem).mockReturnValue(JSON.stringify('initial'));
+
+      const { result } = renderHook(() =>
+        useStorage(mockStorage, 'testKey', 'initial')
+      );
+
+      expect(result.current[0]).toBe('initial');
+
+      act(() => {
+        window.dispatchEvent(
+          new StorageEvent('storage', {
+            key: 'testKey',
+            newValue: JSON.stringify('fromOtherTab'),
+          })
+        );
+      });
+
+      expect(result.current[0]).toBe('fromOtherTab');
+    });
+
+    it('ignores storage events for a different key', () => {
+      vi.mocked(mockStorage.getItem).mockReturnValue(JSON.stringify('initial'));
+
+      const { result } = renderHook(() =>
+        useStorage(mockStorage, 'testKey', 'initial')
+      );
+
+      act(() => {
+        window.dispatchEvent(
+          new StorageEvent('storage', {
+            key: 'otherKey',
+            newValue: JSON.stringify('nope'),
+          })
+        );
+      });
+
+      expect(result.current[0]).toBe('initial');
+    });
+
+    it('falls back to the initial value when a storage event carries corrupt JSON', () => {
+      vi.mocked(mockStorage.getItem).mockReturnValue(JSON.stringify('initial'));
+
+      const { result } = renderHook(() =>
+        useStorage(mockStorage, 'testKey', 'fallback')
+      );
+
+      act(() => {
+        window.dispatchEvent(
+          new StorageEvent('storage', {
+            key: 'testKey',
+            newValue: 'not-json',
+          })
+        );
+      });
+
+      expect(result.current[0]).toBe('fallback');
+    });
   });
 });
