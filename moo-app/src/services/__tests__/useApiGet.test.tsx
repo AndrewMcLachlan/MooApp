@@ -186,7 +186,7 @@ describe('useApiPagedGet', () => {
     });
 
     expect(result.current.data?.results).toEqual([{ id: 1 }, { id: 2 }]);
-    expect(result.current.data?.total).toBe('100');
+    expect(result.current.data?.total).toBe(100);
   });
 
   it('fetches paged data', async () => {

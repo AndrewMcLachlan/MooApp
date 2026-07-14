@@ -53,6 +53,23 @@ describe('processAxiosError', () => {
       expect(result.message).toBe('Not Found');
     });
 
+    it('returns error from statusText when data is null and does not throw', () => {
+      const error = {
+        response: {
+          data: null,
+          statusText: 'Internal Server Error',
+        },
+      } as AxiosError<any>;
+
+      let result: Error;
+      expect(() => {
+        result = processAxiosError(error);
+      }).not.toThrow();
+
+      expect(result!).toBeInstanceOf(Error);
+      expect(result!.message).toBe('Internal Server Error');
+    });
+
     it('logs the error to console', () => {
       const error = {
         response: {
