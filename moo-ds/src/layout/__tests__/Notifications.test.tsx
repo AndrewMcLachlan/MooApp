@@ -1,41 +1,63 @@
-import { describe, it, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
 import { Notifications } from '../Notifications';
-import { ThemeProvider, ThemeContext } from '../../providers/ThemeProvider';
+import { ThemeContext } from '../../providers/ThemeProvider';
 import { theme } from '../../models';
 
-const renderWithProvider = () => {
-  return render(
-    <ThemeProvider>
+// Capture the resolved `theme` prop passed to ToastContainer so we can assert
+// how the component derives it from the theme context.
+vi.mock('react-toastify', () => ({
+  Slide: {},
+  ToastContainer: (props: { theme?: string }) => (
+    <div className="Toastify" data-testid="toast-container" data-theme={props.theme} />
+  ),
+}));
+
+const renderWithContext = (value: any) =>
+  render(
+    <ThemeContext.Provider value={value}>
       <Notifications />
-    </ThemeProvider>
+    </ThemeContext.Provider>
   );
-};
 
 describe('Notifications', () => {
   describe('rendering', () => {
     it('renders toast container', () => {
-      const { container } = renderWithProvider();
+      renderWithContext({ defaultTheme: theme('light'), theme: theme('light') });
 
-      expect(container.querySelector('.Toastify')).toBeInTheDocument();
+      expect(screen.getByTestId('toast-container')).toBeInTheDocument();
+    });
+  });
+
+  describe('toast theme resolution', () => {
+    it('uses the active theme when set', () => {
+      renderWithContext({ defaultTheme: theme('light'), theme: theme('dark') });
+
+      expect(screen.getByTestId('toast-container')).toHaveAttribute('data-theme', 'dark');
     });
 
-    it('configures bottom-center position', () => {
-      // Notifications component configures ToastContainer with position="bottom-center"
-      // The actual position class is applied when toasts are shown
-      expect(Notifications).toBeDefined();
+    it('falls back to a dark defaultTheme when there is no active theme', () => {
+      // Regression: previously the fallback always resolved to "light" when
+      // theme was undefined, ignoring a dark defaultTheme.
+      renderWithContext({ defaultTheme: theme('dark'), theme: undefined });
+
+      expect(screen.getByTestId('toast-container')).toHaveAttribute('data-theme', 'dark');
     });
 
-    it('renders without throwing when a defaultTheme is set but no active theme', () => {
-      // Regression: the theme ternary previously dereferenced theme.theme even
-      // when theme was undefined, throwing whenever a defaultTheme existed.
-      expect(() =>
-        render(
-          <ThemeContext.Provider value={{ defaultTheme: theme('light')!, theme: undefined }}>
-            <Notifications />
-          </ThemeContext.Provider>
-        )
-      ).not.toThrow();
+    it('falls back to a light defaultTheme when there is no active theme', () => {
+      renderWithContext({ defaultTheme: theme('light'), theme: undefined });
+
+      expect(screen.getByTestId('toast-container')).toHaveAttribute('data-theme', 'light');
+    });
+
+    it('follows the defaultTheme for the "System" ("") theme', () => {
+      renderWithContext({ defaultTheme: theme('dark'), theme: theme('') });
+
+      expect(screen.getByTestId('toast-container')).toHaveAttribute('data-theme', 'dark');
+    });
+
+    it('does not throw when both theme and defaultTheme are undefined', () => {
+      expect(() => renderWithContext({ defaultTheme: undefined, theme: undefined })).not.toThrow();
     });
   });
 });
