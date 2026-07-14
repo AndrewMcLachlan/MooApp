@@ -17,7 +17,6 @@ export const FormComboBox = <T,>({ id, ref, ...rest }: Omit<ComboBoxProps<T>, "s
                     rest.items?.filter(i => field.value === rest.valueField(i));
 
                 const onChange = (items: T[]) => {
-                    console.log("onChange", items);
                     if (rest.multiSelect) {
                         field.onChange(items?.map(i => rest.valueField(i)))
                     } else {

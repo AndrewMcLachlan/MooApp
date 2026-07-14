@@ -1,28 +1,36 @@
 import { useComboBox } from "./ComboBoxProvider";
-import { useDebounce } from "use-debounce";
+import { useDebouncedCallback } from "use-debounce";
 import { useInnerRef } from "../../hooks";
 
 export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => {
 
-    const { createLabel, creatable, allItems, items, labelField, search, setItems, selectedItems, newItem, setNewItem, showInput, text, setText, setShow, ref } = useComboBox();
+    const { createLabel, creatable, allItems, labelField, search, setItems, selectedItems, newItem, setNewItem, show, showInput, text, setText, setShow, ref } = useComboBox();
 
-    const [debouncedSearch] = useDebounce(search, 300);
+    // Debounce the actual search execution. Previously `useDebounce(search, 300)`
+    // debounced the function *value* (a stable reference), so the search ran
+    // synchronously on every keystroke with no debounce at all.
+    const runSearch = useDebouncedCallback((value: string) => {
+        if (!search) return;
+        setItems(search(value));
+        setShow(true);
+    }, 300);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-        setText(e.currentTarget.value);
+        const value = e.currentTarget.value;
+        setText(value);
 
         if (search) {
-            setItems(debouncedSearch(e.currentTarget.value));
+            runSearch(value);
         }
         else {
-            const tempItems = allItems.filter((i) => labelField(i).toString().toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) > -1);
+            const tempItems = allItems.filter((i) => labelField(i).toString().toLowerCase().indexOf(value.toLowerCase()) > -1);
 
-            if (creatable && !allItems.some((i) => labelField(i).toString() === e.currentTarget.value.toLowerCase())) {
+            if (creatable && !allItems.some((i) => labelField(i).toString().toLowerCase() === value.toLowerCase())) {
 
                 const addItem = newItem ? newItem : {};
 
-                addItem.label = createLabel(e.currentTarget.value);
+                addItem.label = createLabel(value);
 
                 setNewItem(addItem);
             }
@@ -40,19 +48,12 @@ export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => 
         }
     }
 
-    const show = selectedItems?.length === 0 || !!showInput;
+    const inputVisible = selectedItems?.length === 0 || !!showInput;
 
     const innerRef = useInnerRef<HTMLInputElement>(ref);
 
-    /*useLayoutEffect(() => {
-        if (!props.readonly) {
-            innerRef.current.focus();
-        }
-    }, [props.readonly, innerRef]);*/
-
-
     return (
-        <input type="text" ref={innerRef} hidden={!show} placeholder={selectedItems?.length == 0 && !props.readonly ? placeholder : ""} onChange={onChange} onKeyUp={keyUp} value={text} tabIndex={props.tabIndex} autoCapitalize="off" autoComplete="off" autoCorrect="off" spellCheck={false} role="combobox" aria-expanded={items?.length > 0} />
+        <input type="text" ref={innerRef} hidden={!inputVisible} placeholder={selectedItems?.length == 0 && !props.readonly ? placeholder : ""} onChange={onChange} onKeyUp={keyUp} value={text} tabIndex={props.tabIndex} autoCapitalize="off" autoComplete="off" autoCorrect="off" spellCheck={false} role="combobox" aria-expanded={!!show} aria-controls="cb-listbox" />
     );
 }
 

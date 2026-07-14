@@ -38,7 +38,7 @@ describe('ComboBoxItem', () => {
       const onSelected = vi.fn();
       renderWithProvider({ item: items[0], onSelected });
 
-      expect(screen.getByRole('listitem')).toBeInTheDocument();
+      expect(screen.getByRole('option')).toBeInTheDocument();
     });
 
     it('renders item label from labelField', () => {
@@ -95,11 +95,21 @@ describe('ComboBoxItem', () => {
   });
 
   describe('accessibility', () => {
-    it('has tabIndex', () => {
+    it('has the option role and is removed from the positive tab order', () => {
       const onSelected = vi.fn();
       renderWithProvider({ item: items[0], onSelected });
 
-      expect(screen.getByRole('listitem')).toHaveAttribute('tabindex', '2');
+      const option = screen.getByRole('option');
+      expect(option).toHaveAttribute('tabindex', '-1');
+    });
+
+    it('selects on Enter key', () => {
+      const onSelected = vi.fn();
+      renderWithProvider({ item: items[0], onSelected });
+
+      fireEvent.keyDown(screen.getByRole('option'), { key: 'Enter' });
+
+      expect(onSelected).toHaveBeenCalledWith(items[0]);
     });
   });
 

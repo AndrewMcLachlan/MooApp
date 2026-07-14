@@ -33,7 +33,7 @@ export const ComboBoxList = () => {
     }
 
     return (
-        <ol className="cb-list">
+        <ol className="cb-list" id="cb-listbox" role="listbox">
             {items.map((i) =>
                 <ComobBoxItem key={valueField(i)} onSelected={onItemSelected} item={i} />
             )}
