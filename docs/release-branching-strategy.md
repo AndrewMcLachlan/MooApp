@@ -51,7 +51,8 @@ isolated — no shared tags, no cross-talk.
 - **`main` is the trunk.** PRs and Dependabot land here; every merge publishes `X.Y.<count>` (stable).
 - **`feature/*` / PRs** build and test but never publish.
 - **A preview line is a `release/**` branch whose stated version carries a suffix** — e.g. branch
-  `release/6.0-beta`, set `"version": "6.0.0-beta"` → publishes `6.0.0-beta.N` while `main` stays on
+  `release/6.0-beta`, set `"version": "6.0.0-beta"` → publishes `6.0.0-beta.N` when the build workflow
+  is run (via `workflow_dispatch`, or by expanding the workflow `on.push.branches` to include `release/**`), while `main` stays on
   `5.x`.
 
 **Publishing is gated in CI to `main` (the stable trunk) and prerelease builds** — i.e. `main`, or

@@ -39,7 +39,7 @@ jobs:
     # Publish only from main (the stable trunk) or a prerelease line (a branch whose stated
     # version carries a suffix). Suffix-less non-main branches (incl. PRs) publish nothing.
     - name: Publish
-      if: github.ref == 'refs/heads/main' || steps.version.outputs.is-prerelease == 'true'
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || steps.version.outputs.is-prerelease == 'true')
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npm publish --workspace=moo-ds --workspace=moo-app --workspace=moo-icons
