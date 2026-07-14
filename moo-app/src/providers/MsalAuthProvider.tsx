@@ -1,17 +1,21 @@
-import React, { useContext, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import axios, { type AxiosInstance, type InternalAxiosRequestConfig } from "axios";
 
 import { type IMsalContext, useMsal } from "@azure/msal-react";
 import { AuthError, EventType, InteractionStatus, InteractionType, type IPublicClientApplication, type SilentRequest } from "@azure/msal-browser";
 import { loginRequest } from "../login/msal";
 
-export interface HttpClientProviderProps {
-    client?: AxiosInstance;
-    baseUrl?: string;
+export interface MsalAuthProviderProps {
+    /**
+     * The axios instance to authenticate — typically your hey-api generated
+     * client's underlying instance (`client.instance`). An MSAL access-token
+     * request interceptor is attached to it.
+     */
+    client: AxiosInstance;
+    /** API scopes requested for the access token. */
     scopes?: string[];
 }
 
-export const HttpClientContext = React.createContext<AxiosInstance | undefined>(undefined);
 type RedirectState = {
     redirectInFlight: boolean;
 };
@@ -26,23 +30,23 @@ const getRedirectState = (client: IPublicClientApplication): RedirectState => {
     return state;
 };
 
-export const HttpClientProvider: React.FC<React.PropsWithChildren<HttpClientProviderProps>> = ({ client, baseUrl, scopes = [], children }) => {
+/**
+ * Attaches an MSAL access-token request interceptor to the supplied axios
+ * instance. Tokens are acquired silently; on a recoverable MSAL auth error the
+ * request falls back to an interactive redirect. Renders its children unchanged
+ * — it exposes no context, it only wires up the client.
+ */
+export const MsalAuthProvider: React.FC<React.PropsWithChildren<MsalAuthProviderProps>> = ({ client, scopes = [], children }) => {
 
     const msal = useMsal();
-
-    if (!client && !baseUrl) throw new Error("You must provide either a client or a baseUrl to HttpClientProvider");
-
-    const resolvedClient = useMemo(() => client ?? createHttpClient(baseUrl!), [client, baseUrl]);
-    const scopeKey = scopes.join(" ");
-    const effectiveScopes = useMemo(() => scopes, [scopeKey]);
 
     // Use refs so the interceptor always reads the latest MSAL context and scopes
     // without needing to be torn down and recreated on every context change.
     const msalRef = useRef(msal);
     msalRef.current = msal;
 
-    const scopesRef = useRef(effectiveScopes);
-    scopesRef.current = effectiveScopes;
+    const scopesRef = useRef(scopes);
+    scopesRef.current = scopes;
 
     useEffect(() => {
         const redirectState = getRedirectState(msal.instance);
@@ -75,39 +79,19 @@ export const HttpClientProvider: React.FC<React.PropsWithChildren<HttpClientProv
     // its first request. Using refs avoids recreating the interceptor when the MSAL
     // context or scopes change — the interceptor reads the latest values at call time.
     useLayoutEffect(() => {
-        const interceptorId = resolvedClient.interceptors.request.use(
+        const interceptorId = client.interceptors.request.use(
             (request) => acquireTokenForRequest(request, msalRef, scopesRef)
         );
         return () => {
-            resolvedClient.interceptors.request.eject(interceptorId);
+            client.interceptors.request.eject(interceptorId);
         };
-    }, [resolvedClient]);
+    }, [client]);
 
     return (
-        <HttpClientContext.Provider value={resolvedClient}>
+        <>
             {children}
-        </HttpClientContext.Provider>
+        </>
     );
-}
-
-export const useHttpClient = () => {
-    const context = useContext(HttpClientContext);
-    if (!context) {
-        throw new Error("useHttpClient must be used within a HttpClientProvider");
-    }
-    return context;
-};
-
-export const createHttpClient = (baseUrl: string): AxiosInstance => {
-
-    const httpClient = axios.create({
-        baseURL: baseUrl,
-        headers: {
-            "Accept": "application/json",
-        }
-    });
-
-    return httpClient;
 }
 
 const acquireTokenForRequest = async (
@@ -172,6 +156,11 @@ const acquireTokenForRequest = async (
     return request;
 };
 
+/**
+ * Attaches the MSAL access-token interceptor to an arbitrary axios instance
+ * imperatively (used internally for the MS Graph client). Returns the
+ * interceptor id so it can be ejected.
+ */
 export const addMsalInterceptor = (httpClient: AxiosInstance, msal: IMsalContext, scopes: string[]) => {
     const msalRef = { current: msal } as React.RefObject<IMsalContext>;
     const scopesRef = { current: scopes } as React.RefObject<string[]>;

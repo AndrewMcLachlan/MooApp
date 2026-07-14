@@ -1,18 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, renderHook } from '@testing-library/react';
-import React from 'react';
+import { render, screen } from '@testing-library/react';
 import axios from 'axios';
 import { AuthError } from '@azure/msal-browser';
-import {
-  HttpClientProvider,
-  useHttpClient,
-  createHttpClient,
-  addMsalInterceptor,
-} from '../HttpClientProvider';
+import { MsalAuthProvider, addMsalInterceptor } from '../MsalAuthProvider';
 
-// Mock MSAL
+// Mock MSAL react context for the component test
 const mockAcquireTokenSilent = vi.fn();
-const mockLoginRedirect = vi.fn();
 const mockAddEventCallback = vi.fn().mockReturnValue('callback-id');
 const mockRemoveEventCallback = vi.fn();
 
@@ -20,127 +13,65 @@ vi.mock('@azure/msal-react', () => ({
   useMsal: () => ({
     instance: {
       acquireTokenSilent: mockAcquireTokenSilent,
-      loginRedirect: mockLoginRedirect,
+      acquireTokenRedirect: vi.fn(),
       addEventCallback: mockAddEventCallback,
       removeEventCallback: mockRemoveEventCallback,
       getActiveAccount: vi.fn().mockReturnValue(null),
+      getAllAccounts: vi.fn().mockReturnValue([]),
     },
     accounts: [] as any[],
     inProgress: 'none',
   }),
 }));
 
-vi.mock('../login/msal', () => ({
+vi.mock('../../login/msal', () => ({
   loginRequest: { scopes: ['openid', 'profile'] },
 }));
 
-describe('HttpClientProvider', () => {
+describe('MsalAuthProvider', () => {
   beforeEach(() => {
     mockAcquireTokenSilent.mockClear();
-    mockLoginRedirect.mockClear();
     mockAddEventCallback.mockClear();
     mockRemoveEventCallback.mockClear();
   });
 
-  describe('rendering', () => {
-    it('renders children', () => {
-      render(
-        <HttpClientProvider baseUrl="https://api.example.com">
-          <div data-testid="child">Content</div>
-        </HttpClientProvider>
-      );
-
-      expect(screen.getByTestId('child')).toBeInTheDocument();
-    });
-
-    it('throws error when neither client nor baseUrl provided', () => {
-      expect(() => {
-        render(
-          <HttpClientProvider>
-            <div>Content</div>
-          </HttpClientProvider>
-        );
-      }).toThrow('You must provide either a client or a baseUrl to HttpClientProvider');
-    });
-  });
-
-  describe('with baseUrl', () => {
-    it('creates http client from baseUrl', () => {
-      render(
-        <HttpClientProvider baseUrl="https://api.example.com">
-          <div>Content</div>
-        </HttpClientProvider>
-      );
-
-      // Component should render without error
-      expect(screen.getByText('Content')).toBeInTheDocument();
-    });
-
-    it('accepts scopes prop', () => {
-      render(
-        <HttpClientProvider baseUrl="https://api.example.com" scopes={['api://test']}>
-          <div>Content</div>
-        </HttpClientProvider>
-      );
-
-      expect(screen.getByText('Content')).toBeInTheDocument();
-    });
-  });
-
-  describe('with custom client', () => {
-    it('uses provided client', () => {
-      const customClient = axios.create({ baseURL: 'https://custom.api.com' });
-
-      render(
-        <HttpClientProvider client={customClient}>
-          <div>Content</div>
-        </HttpClientProvider>
-      );
-
-      expect(screen.getByText('Content')).toBeInTheDocument();
-    });
-  });
-});
-
-describe('useHttpClient', () => {
-  it('throws error outside provider', () => {
-    expect(() => renderHook(() => useHttpClient())).toThrow("useHttpClient must be used within a HttpClientProvider");
-  });
-
-  it('returns http client inside provider', () => {
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <HttpClientProvider baseUrl="https://api.example.com">
-        {children}
-      </HttpClientProvider>
+  it('renders its children', () => {
+    const client = axios.create();
+    render(
+      <MsalAuthProvider client={client}>
+        <div data-testid="child">Content</div>
+      </MsalAuthProvider>
     );
 
-    const { result } = renderHook(() => useHttpClient(), { wrapper });
-
-    expect(result.current).toBeDefined();
-    expect(result.current.defaults.baseURL).toBe('https://api.example.com');
-  });
-});
-
-describe('createHttpClient', () => {
-  it('creates axios instance with baseURL', () => {
-    const client = createHttpClient('https://api.example.com');
-
-    expect(client.defaults.baseURL).toBe('https://api.example.com');
+    expect(screen.getByTestId('child')).toBeInTheDocument();
   });
 
-  it('sets Accept header to application/json', () => {
-    const client = createHttpClient('https://api.example.com');
+  it('attaches a request interceptor to the provided client', () => {
+    const client = axios.create();
+    const before = client.interceptors.request.handlers.length;
 
-    expect(client.defaults.headers['Accept']).toBe('application/json');
+    render(
+      <MsalAuthProvider client={client} scopes={['api://test']}>
+        <div>Content</div>
+      </MsalAuthProvider>
+    );
+
+    expect(client.interceptors.request.handlers.length).toBe(before + 1);
   });
 
-  it('returns AxiosInstance', () => {
-    const client = createHttpClient('https://api.example.com');
+  it('registers an MSAL event callback while mounted and removes it on unmount', () => {
+    const client = axios.create();
+    const { unmount } = render(
+      <MsalAuthProvider client={client}>
+        <div>Content</div>
+      </MsalAuthProvider>
+    );
 
-    expect(typeof client.get).toBe('function');
-    expect(typeof client.post).toBe('function');
-    expect(typeof client.put).toBe('function');
-    expect(typeof client.delete).toBe('function');
+    expect(mockAddEventCallback).toHaveBeenCalled();
+
+    unmount();
+
+    expect(mockRemoveEventCallback).toHaveBeenCalledWith('callback-id');
   });
 });
 
@@ -164,17 +95,16 @@ describe('addMsalInterceptor', () => {
     return client;
   };
 
-  it('adds request interceptor to client', () => {
+  it('adds a request interceptor to the client', () => {
     const client = axios.create();
     const originalCount = client.interceptors.request.handlers.length;
 
-    const msal = createMockMsal();
-    addMsalInterceptor(client, msal, ['api://test']);
+    addMsalInterceptor(client, createMockMsal(), ['api://test']);
 
     expect(client.interceptors.request.handlers.length).toBe(originalCount + 1);
   });
 
-  it('sets Authorization header on successful silent token acquisition', async () => {
+  it('sets the Authorization header on successful silent token acquisition', async () => {
     const msal = createMockMsal({
       acquireTokenSilent: vi.fn().mockResolvedValue({ accessToken: 'test-token-123' }),
     });
@@ -185,7 +115,7 @@ describe('addMsalInterceptor', () => {
     expect(response.config.headers.getAuthorization()).toBe('Bearer test-token-123');
   });
 
-  it('does not set Authorization header when acquireTokenSilent returns no accessToken', async () => {
+  it('does not set the Authorization header when acquireTokenSilent returns no accessToken', async () => {
     const msal = createMockMsal({
       acquireTokenSilent: vi.fn().mockResolvedValue({ accessToken: null }),
     });
@@ -197,7 +127,7 @@ describe('addMsalInterceptor', () => {
   });
 
   describe('no_account_error handling', () => {
-    it('cancels request when acquireTokenSilent throws no_account_error', async () => {
+    it('cancels the request when acquireTokenSilent throws no_account_error', async () => {
       const error = new AuthError('no_account_error', 'No account');
       const msal = createMockMsal({
         acquireTokenSilent: vi.fn().mockRejectedValue(error),
@@ -239,13 +169,13 @@ describe('addMsalInterceptor', () => {
     });
   });
 
-  describe('other shouldRedirect errors', () => {
+  describe('other recoverable auth errors', () => {
     it.each([
       'invalid_grant',
       'interaction_required',
       'login_required',
       'consent_required',
-    ])('cancels request for %s error', async (errorCode) => {
+    ])('cancels the request for %s error', async (errorCode) => {
       const error = new AuthError(errorCode, errorCode);
       const msal = createMockMsal({
         acquireTokenSilent: vi.fn().mockRejectedValue(error),
@@ -257,8 +187,8 @@ describe('addMsalInterceptor', () => {
     });
   });
 
-  describe('non-redirect errors', () => {
-    it('cancels request for unknown errors instead of sending without auth', async () => {
+  describe('non-recoverable errors', () => {
+    it('cancels the request for unknown errors instead of sending without auth', async () => {
       const error = Object.assign(new Error('Unknown'), { errorCode: 'some_other_error' });
       const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       const msal = createMockMsal({

@@ -1,3 +1,3 @@
 export * from "./AppProvider";
-export * from "./HttpClientProvider";
+export * from "./MsalAuthProvider";
 export * from "./LayoutProvider";

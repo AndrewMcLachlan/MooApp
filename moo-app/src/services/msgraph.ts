@@ -1,5 +1,6 @@
 import { useMsal } from "@azure/msal-react";
-import { addMsalInterceptor, createHttpClient } from "../providers/HttpClientProvider";
+import axios from "axios";
+import { addMsalInterceptor } from "../providers/MsalAuthProvider";
 import { useEffect, useMemo, useState } from "react";
 
 export const usePhoto = () => {
@@ -7,7 +8,7 @@ export const usePhoto = () => {
     const [photo, setPhoto] = useState<string>();
 
     const msal = useMsal();
-    const httpClient = useMemo(() => createHttpClient("https://graph.microsoft.com/v1.0"), []);
+    const httpClient = useMemo(() => axios.create({ baseURL: "https://graph.microsoft.com/v1.0", headers: { "Accept": "application/json" } }), []);
 
     useEffect(() => {
         const interceptorId = addMsalInterceptor(httpClient, msal, ["User.Read"]);
