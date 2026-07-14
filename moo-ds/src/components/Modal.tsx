@@ -64,7 +64,19 @@ const ModalTitle: React.FC<React.PropsWithChildren<ModalTitleProps>> = ({ as: Co
 
 ModalTitle.displayName = "Modal.Title";
 
-const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({ show, onHide, size, className, children, style, ...rest }) => {
+const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({
+    show,
+    onHide,
+    size,
+    className,
+    children,
+    style,
+    onKeyDown: consumerOnKeyDown,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledby,
+    "aria-describedby": ariaDescribedby,
+    ...rest
+}) => {
 
     const contentRef = useRef<HTMLDivElement>(null);
     const previouslyFocused = useRef<HTMLElement | null>(null);
@@ -93,6 +105,11 @@ const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({ show, o
     }, [show]);
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        // Run the consumer's handler first; if it handles the event
+        // (preventDefault), don't also apply the a11y key handling.
+        consumerOnKeyDown?.(e);
+        if (e.defaultPrevented) return;
+
         if (!show) return;
 
         if (e.key === "Escape") {
@@ -139,7 +156,7 @@ const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({ show, o
                     onKeyDown={onKeyDown}
                     {...rest}
                 >
-                    <div className="modal-dialog" role="dialog" aria-modal="true">
+                    <div className="modal-dialog" role="dialog" aria-modal="true" aria-label={ariaLabel} aria-labelledby={ariaLabelledby} aria-describedby={ariaDescribedby}>
                         <div className="modal-content" ref={contentRef} tabIndex={-1}>
                             {enhancedChildren}
                         </div>

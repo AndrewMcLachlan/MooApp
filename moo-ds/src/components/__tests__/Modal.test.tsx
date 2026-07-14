@@ -55,6 +55,106 @@ describe('Modal', () => {
 
       expect(screen.getByText('Inside')).toHaveFocus();
     });
+
+    it('traps Tab from the last focusable back to the first', () => {
+      render(
+        <Modal show onHide={vi.fn()}>
+          <Modal.Body>
+            <button type="button">First</button>
+            <button type="button">Last</button>
+          </Modal.Body>
+        </Modal>
+      );
+
+      const first = screen.getByText('First');
+      const last = screen.getByText('Last');
+      last.focus();
+
+      fireEvent.keyDown(last, { key: 'Tab' });
+
+      expect(first).toHaveFocus();
+    });
+
+    it('traps Shift+Tab from the first focusable back to the last', () => {
+      render(
+        <Modal show onHide={vi.fn()}>
+          <Modal.Body>
+            <button type="button">First</button>
+            <button type="button">Last</button>
+          </Modal.Body>
+        </Modal>
+      );
+
+      const first = screen.getByText('First');
+      const last = screen.getByText('Last');
+      first.focus();
+
+      fireEvent.keyDown(first, { key: 'Tab', shiftKey: true });
+
+      expect(last).toHaveFocus();
+    });
+
+    it('restores focus to the previously focused element on close', () => {
+      const { rerender } = render(
+        <>
+          <button type="button" data-testid="opener">Open</button>
+          <Modal show={false} onHide={vi.fn()}>
+            <Modal.Body><button type="button">Inside</button></Modal.Body>
+          </Modal>
+        </>
+      );
+
+      const opener = screen.getByTestId('opener');
+      opener.focus();
+      expect(opener).toHaveFocus();
+
+      rerender(
+        <>
+          <button type="button" data-testid="opener">Open</button>
+          <Modal show onHide={vi.fn()}>
+            <Modal.Body><button type="button">Inside</button></Modal.Body>
+          </Modal>
+        </>
+      );
+      expect(screen.getByText('Inside')).toHaveFocus();
+
+      rerender(
+        <>
+          <button type="button" data-testid="opener">Open</button>
+          <Modal show={false} onHide={vi.fn()}>
+            <Modal.Body><button type="button">Inside</button></Modal.Body>
+          </Modal>
+        </>
+      );
+
+      expect(opener).toHaveFocus();
+    });
+
+    it('forwards an accessible name to the dialog element', () => {
+      const { baseElement } = render(
+        <Modal show onHide={vi.fn()} aria-label="Settings">
+          <Modal.Body>Content</Modal.Body>
+        </Modal>
+      );
+
+      expect(baseElement.querySelector('.modal-dialog')).toHaveAttribute('aria-label', 'Settings');
+    });
+
+    it('runs a consumer onKeyDown and lets it suppress the a11y handling', () => {
+      const onHide = vi.fn();
+      const consumerKeyDown = vi.fn((e: { preventDefault: () => void }) => e.preventDefault());
+      const { baseElement } = render(
+        <Modal show onHide={onHide} onKeyDown={consumerKeyDown}>
+          <Modal.Body>Content</Modal.Body>
+        </Modal>
+      );
+
+      fireEvent.keyDown(baseElement.querySelector('.modal')!, { key: 'Escape' });
+
+      expect(consumerKeyDown).toHaveBeenCalledTimes(1);
+      // Consumer called preventDefault, so Escape-to-close is suppressed.
+      expect(onHide).not.toHaveBeenCalled();
+    });
   });
 
   describe('structure', () => {
