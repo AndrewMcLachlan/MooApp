@@ -79,6 +79,22 @@ describe('useApiDelete', () => {
       expect(mockDelete).toHaveBeenCalledWith('/api/items/42');
     });
 
+    it('resolves to undefined (not the AxiosResponse)', async () => {
+      mockDelete.mockResolvedValue({ data: null });
+
+      const { result } = renderHook(
+        () => useApiDelete<{ id: number }>((vars) => `/api/items/${vars.id}`),
+        { wrapper: createWrapper() }
+      );
+
+      let resolved: unknown = 'sentinel';
+      await act(async () => {
+        resolved = await result.current.mutateAsync({ id: 42 });
+      });
+
+      expect(resolved).toBeUndefined();
+    });
+
     it('handles complex path variables', async () => {
       mockDelete.mockResolvedValue({ data: null });
 

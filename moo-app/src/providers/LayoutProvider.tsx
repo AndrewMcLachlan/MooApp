@@ -1,4 +1,4 @@
-import React, { type ReactNode, createContext, useState } from "react";
+import React, { type ReactNode, createContext, useMemo, useState } from "react";
 import { useContext } from "react";
 import * as Models from "../models";
 import { type NavItem } from "@andrewmclachlan/moo-ds";
@@ -17,8 +17,12 @@ export const LayoutProvider: React.FC<React.PropsWithChildren<LayoutProviderProp
 
     const photo = usePhoto();
 
+    const value = useMemo<Models.LayoutContext>(() => ({
+        size, photo, breadcrumbs, setBreadcrumbs, secondaryNav, setSecondaryNav, actions, setActions, showSidebar, setShowSidebar, sidebarCollapsed, setSidebarCollapsed,
+    }), [size, photo, breadcrumbs, secondaryNav, actions, showSidebar, sidebarCollapsed]);
+
     return (
-        <LayoutContext.Provider value={{ size, photo, breadcrumbs, setBreadcrumbs, secondaryNav, setSecondaryNav, actions, setActions, showSidebar, setShowSidebar, sidebarCollapsed, setSidebarCollapsed }}>
+        <LayoutContext.Provider value={value}>
             {children}
         </LayoutContext.Provider>
     );

@@ -1,6 +1,6 @@
 {
   "name": "@andrewmclachlan/moo-ds",
-  "version": "4.0.0",
+  "version": "5.2.0",
   "type": "module",
   "main": "dist/index.es.js",
   "types": "dist/index.d.ts",

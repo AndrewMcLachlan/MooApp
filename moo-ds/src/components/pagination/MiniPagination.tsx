@@ -8,8 +8,8 @@ export const MiniPagination : React.FC<PaginationProps> = ({pageNumber, numberOf
 
     return (
         <PaginationBase className="mini-pagination">
-            <PaginationBase.Prev title="Previous page" disabled={!showPrev} onClick={() => onChange(pageNumber, Math.max(1, pageNumber-1))} />
-            <PaginationBase.Next title="Next page" disabled={!showNext} onClick={() => onChange(pageNumber, Math.min(pageNumber + 1, numberOfPages))} />
+            <PaginationBase.Prev title="Previous page" disabled={!showPrev} onClick={(e) => { e.stopPropagation(); onChange(pageNumber, Math.max(1, pageNumber-1)); }} />
+            <PaginationBase.Next title="Next page" disabled={!showNext} onClick={(e) => { e.stopPropagation(); onChange(pageNumber, Math.min(pageNumber + 1, numberOfPages)); }} />
         </PaginationBase>
     );
 }

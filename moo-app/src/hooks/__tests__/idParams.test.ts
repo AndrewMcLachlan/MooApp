@@ -31,7 +31,7 @@ describe('useIdParams', () => {
 
     expect(() => {
       renderHook(() => useIdParams());
-    }).toThrow('bad params');
+    }).toThrow("useIdParams: expected an 'id' route parameter but none was present.");
   });
 
   it('throws error when id is undefined', () => {
@@ -39,7 +39,7 @@ describe('useIdParams', () => {
 
     expect(() => {
       renderHook(() => useIdParams());
-    }).toThrow('bad params');
+    }).toThrow("useIdParams: expected an 'id' route parameter but none was present.");
   });
 
   it('throws error when id is empty string', () => {
@@ -47,7 +47,7 @@ describe('useIdParams', () => {
 
     expect(() => {
       renderHook(() => useIdParams());
-    }).toThrow('bad params');
+    }).toThrow("useIdParams: expected an 'id' route parameter but none was present.");
   });
 
   it('handles numeric string ids', () => {

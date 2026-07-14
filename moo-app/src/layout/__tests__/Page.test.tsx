@@ -118,6 +118,25 @@ describe('Page', () => {
       expect(mockSetBreadcrumbs).toHaveBeenCalledWith([]);
     });
 
+    it('does not call setBreadcrumbs again when re-rendered with the same content', () => {
+      const { rerender } = render(
+        <Page title="Test" breadcrumbs={[{ text: 'Home', route: '/' }]}>
+          Content
+        </Page>
+      );
+
+      expect(mockSetBreadcrumbs).toHaveBeenCalledTimes(1);
+
+      // New array literal, identical content: the content guard should skip the setter.
+      rerender(
+        <Page title="Test" breadcrumbs={[{ text: 'Home', route: '/' }]}>
+          Content
+        </Page>
+      );
+
+      expect(mockSetBreadcrumbs).toHaveBeenCalledTimes(1);
+    });
+
     it('updates breadcrumbs on change', () => {
       const { rerender } = render(
         <Page title="Test" breadcrumbs={[{ text: 'Home', route: '/' }]}>
@@ -157,6 +176,29 @@ describe('Page', () => {
 
       expect(mockSetSecondaryNav).toHaveBeenCalledWith(navItems);
     });
+
+    it('does not call setSecondaryNav again when re-rendered with the same reference', () => {
+      const navItems = [{ text: 'Overview', to: '/overview' }];
+      const { rerender } = render(<Page title="Test" navItems={navItems}>Content</Page>);
+
+      expect(mockSetSecondaryNav).toHaveBeenCalledTimes(1);
+
+      rerender(<Page title="Test" navItems={navItems}>Content</Page>);
+
+      expect(mockSetSecondaryNav).toHaveBeenCalledTimes(1);
+    });
+
+    it('updates setSecondaryNav when a new ReactNode array reference is passed', () => {
+      const { rerender } = render(
+        <Page title="Test" navItems={[<button key="1">A</button>]}>Content</Page>
+      );
+
+      expect(mockSetSecondaryNav).toHaveBeenCalledTimes(1);
+
+      rerender(<Page title="Test" navItems={[<button key="2">B</button>]}>Content</Page>);
+
+      expect(mockSetSecondaryNav).toHaveBeenCalledTimes(2);
+    });
   });
 
   describe('actions', () => {
@@ -172,6 +214,29 @@ describe('Page', () => {
       render(<Page title="Test">Content</Page>);
 
       expect(mockSetActions).toHaveBeenCalledWith([]);
+    });
+
+    it('does not call setActions again when re-rendered with the same reference', () => {
+      const actions = [<button key="1">Save</button>];
+      const { rerender } = render(<Page title="Test" actions={actions}>Content</Page>);
+
+      expect(mockSetActions).toHaveBeenCalledTimes(1);
+
+      rerender(<Page title="Test" actions={actions}>Content</Page>);
+
+      expect(mockSetActions).toHaveBeenCalledTimes(1);
+    });
+
+    it('updates setActions when a new array reference is passed', () => {
+      const { rerender } = render(
+        <Page title="Test" actions={[<button key="1">Save</button>]}>Content</Page>
+      );
+
+      expect(mockSetActions).toHaveBeenCalledTimes(1);
+
+      rerender(<Page title="Test" actions={[<button key="2">Delete</button>]}>Content</Page>);
+
+      expect(mockSetActions).toHaveBeenCalledTimes(2);
     });
   });
 

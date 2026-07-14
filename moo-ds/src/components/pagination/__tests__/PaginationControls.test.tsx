@@ -71,7 +71,7 @@ describe('PaginationControls', () => {
       );
 
       expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('PaginationControls can only accept PageSize, Pagination, or MiniPagination')
+        expect.stringContaining('PaginationControls can only accept PageSize, Pagination, MiniPagination, or PageIndicator')
       );
 
       consoleSpy.mockRestore();
