@@ -7,21 +7,24 @@ import { type ReactNode, useEffect, useRef } from "react";
 // Stable empty-array reference so the no-props case never changes identity.
 const EMPTY: never[] = [];
 
-// Calls `setter` only when the serialized content of `value` differs from the
-// last-applied value stored in `ref`. If the value can't be serialized (it may
-// contain non-serializable ReactNodes), fall back to calling the setter every
-// time for that field, preserving the original behaviour rather than risking
-// staleness.
-const applyIfChanged = <T,>(ref: React.MutableRefObject<string | undefined>, value: T, setter: (value: T) => void) => {
-    let key: string | undefined;
-    try {
-        key = JSON.stringify(value);
-    } catch {
-        key = undefined;
-    }
-
-    if (key === undefined || key !== ref.current) {
+// breadcrumbs are plain, serializable NavItem data, so a content hash safely
+// suppresses redundant updates even when callers pass a fresh array literal.
+const applyByContent = <T,>(ref: React.MutableRefObject<string | undefined>, value: T, setter: (value: T) => void) => {
+    const key = JSON.stringify(value);
+    if (key !== ref.current) {
         ref.current = key;
+        setter(value);
+    }
+};
+
+// navItems/actions may contain ReactNodes, which JSON.stringify serializes
+// lossily (functions/components drop out) — a content hash could wrongly treat
+// two different elements as equal. Guard by reference instead: stable/undefined
+// references are suppressed; inline literals fall through to the setter as
+// before, with no risk of a stale skip.
+const applyByReference = <T,>(ref: React.MutableRefObject<unknown>, value: T, setter: (value: T) => void) => {
+    if (ref.current !== value) {
+        ref.current = value;
         setter(value);
     }
 };
@@ -34,17 +37,17 @@ export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, t
     usePageTitle(title);
 
     const lastBreadcrumbs = useRef<string | undefined>(undefined);
-    const lastNavItems = useRef<string | undefined>(undefined);
-    const lastActions = useRef<string | undefined>(undefined);
+    const lastNavItems = useRef<unknown>(undefined);
+    const lastActions = useRef<unknown>(undefined);
 
     useEffect(() => {
         const resolvedBreadcrumbs = breadcrumbs ?? EMPTY;
         const resolvedNavItems = navItems ?? EMPTY;
         const resolvedActions = actions ?? EMPTY;
 
-        applyIfChanged(lastBreadcrumbs, resolvedBreadcrumbs, layout.setBreadcrumbs);
-        applyIfChanged(lastNavItems, resolvedNavItems, layout.setSecondaryNav);
-        applyIfChanged(lastActions, resolvedActions, layout.setActions);
+        applyByContent(lastBreadcrumbs, resolvedBreadcrumbs, layout.setBreadcrumbs);
+        applyByReference(lastNavItems, resolvedNavItems, layout.setSecondaryNav);
+        applyByReference(lastActions, resolvedActions, layout.setActions);
     }, [breadcrumbs, navItems, actions]);
 
     return (
