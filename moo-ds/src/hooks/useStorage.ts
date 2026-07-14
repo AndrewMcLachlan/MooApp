@@ -35,6 +35,9 @@ export const useStorage = <T = undefined>(storage: Storage, key: string, initial
         if (typeof window === "undefined") return undefined;
 
         const handleStorage = (event: StorageEvent) => {
+            // Ignore events from a different storage area (e.g. localStorage
+            // when this hook is backed by sessionStorage).
+            if (event.storageArea && event.storageArea !== storage) return;
             if (event.key !== key) return;
 
             if (event.newValue === null) {

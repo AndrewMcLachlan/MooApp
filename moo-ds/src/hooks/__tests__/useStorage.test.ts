@@ -257,6 +257,27 @@ describe('useStorage', () => {
       expect(result.current[0]).toBe('initial');
     });
 
+    it('ignores storage events from a different storage area', () => {
+      vi.mocked(mockStorage.getItem).mockReturnValue(JSON.stringify('initial'));
+
+      const { result } = renderHook(() =>
+        useStorage(mockStorage, 'testKey', 'initial')
+      );
+
+      act(() => {
+        const event = new StorageEvent('storage', {
+          key: 'testKey',
+          newValue: JSON.stringify('fromOtherArea'),
+        });
+        // jsdom rejects a foreign storageArea in the constructor, so attach it
+        // afterwards. Any object !== the hook's storage should be ignored.
+        Object.defineProperty(event, 'storageArea', { value: window.sessionStorage });
+        window.dispatchEvent(event);
+      });
+
+      expect(result.current[0]).toBe('initial');
+    });
+
     it('falls back to the initial value when a storage event carries corrupt JSON', () => {
       vi.mocked(mockStorage.getItem).mockReturnValue(JSON.stringify('initial'));
 
