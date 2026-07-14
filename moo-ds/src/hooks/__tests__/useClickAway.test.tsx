@@ -137,6 +137,44 @@ describe('useClickAway', () => {
     });
   });
 
+  describe('effect stability', () => {
+    it('does not re-subscribe listeners on re-render', () => {
+      const setShow = vi.fn();
+      const addEventListenerSpy = vi.spyOn(document, 'addEventListener');
+
+      const { rerender } = render(<TestComponent setShow={setShow} />);
+
+      const initialCalls = addEventListenerSpy.mock.calls.filter(
+        (call) => call[0] === 'mousedown'
+      ).length;
+
+      rerender(<TestComponent setShow={setShow} />);
+
+      const afterRerenderCalls = addEventListenerSpy.mock.calls.filter(
+        (call) => call[0] === 'mousedown'
+      ).length;
+
+      // The ref is stable across renders, so the effect must not re-run.
+      expect(afterRerenderCalls).toBe(initialCalls);
+
+      addEventListenerSpy.mockRestore();
+    });
+
+    it('still calls the latest setShow after a re-render', () => {
+      const firstSetShow = vi.fn();
+      const secondSetShow = vi.fn();
+
+      const { rerender } = render(<TestComponent setShow={firstSetShow} />);
+
+      rerender(<TestComponent setShow={secondSetShow} />);
+
+      fireEvent.mouseDown(screen.getByTestId('outside'));
+
+      expect(secondSetShow).toHaveBeenCalledWith(false);
+      expect(firstSetShow).not.toHaveBeenCalled();
+    });
+  });
+
   describe('document clicks', () => {
     it('triggers on document body click', () => {
       const setShow = vi.fn();
