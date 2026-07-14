@@ -20,11 +20,9 @@ jobs:
         fetch-depth: 0          # required: full history for the commit count
     # Version is stated in package.json (Major.Minor + optional -suffix); the patch is the
     # number of commits since the version line last changed. See docs/release-branching-strategy.md.
-    # Pinned to the get-node-version PR commit for pre-merge testing; switch to
-    # AndrewMcLachlan/Actions/get-node-version@v4 once that PR is merged and released.
     - name: Get version
       id: version
-      uses: AndrewMcLachlan/Actions/get-node-version@9371a2640b3d6667e23199c38f82cd812dc4a0cc
+      uses: AndrewMcLachlan/Actions/get-node-version@v4
     - run: echo "::notice::Version ${{ steps.version.outputs.version }}"
     - uses: actions/setup-node@v6
       with:
