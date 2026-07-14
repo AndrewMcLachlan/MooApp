@@ -18,7 +18,7 @@ export const NavItemList: React.FC<NavItemListProps> = ({ navItems, as = React.F
             onClick(e, navItem);
         }
 
-        navItem?.onClick(e);
+        navItem?.onClick?.(e);
     }
 
     const items: React.ReactNode[] = navItems.map((item, index) => {
@@ -32,13 +32,13 @@ export const NavItemList: React.FC<NavItemListProps> = ({ navItems, as = React.F
         const image = typeof navItem.image === "string" ? <img src={navItem.image} alt="" /> : navItem.image ?? <></>;
 
         if (navItem.route) {
-            return <As key={`route${index}`}><NavLink className={({ isActive }) => `nav-link ${(!selected?.id || selected?.id === navItem.id) && isActive ? "active" : ""}`} to={navItem.route} onClick={onNavItemClick} title={navItem.text} role={role}>{image}<span>{navItem.text}</span></NavLink></As >;
+            return <As key={`route${index}`}><NavLink className={({ isActive }) => `nav-link ${(!selected?.id || selected?.id === navItem.id) && isActive ? "active" : ""}`} to={navItem.route} onClick={(e: React.MouseEvent<HTMLElement>) => onNavItemClick(e, navItem)} title={navItem.text} role={role}>{image}<span>{navItem.text}</span></NavLink></As >;
         }
         else if (navItem.onClick) {
             return <As key={navItem.id ?? `click${index}`}><Nav.Link as={Button} className={selected?.id && selected?.id === navItem.id ? "active" : ""} variant="link" onClick={(e) => onNavItemClick(e, navItem)} title={navItem.text} role={role}>{image}<span>{navItem.text}</span></Nav.Link></As>;
         }
         else {
-            throw "Invalid nav item, specify a route and/or an onClick handler.";
+            throw new Error("Invalid nav item, specify a route and/or an onClick handler.");
         }
     });
 

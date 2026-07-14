@@ -1,18 +1,16 @@
-import { useMemo } from "react";
+import React from "react";
 
 const AvatarComponent: React.FC<AvatarProps> = ({ photo, name }) => (
-
-    useMemo(() => (
-        <div className="avatar clickable">
-            {photo && <img src={photo} alt="Me" />}
-            {!photo && <div className="initials">{name?.split(" ").map(n => n[0]).join("")}</div>}
-        </div>
-    ), [photo, name])
+    <div className="avatar clickable">
+        {photo && <img src={photo} alt={name ?? "Avatar"} />}
+        {!photo && <div className="initials">{name?.split(" ").map(n => n[0]).join("")}</div>}
+    </div>
 );
 
 AvatarComponent.displayName = "Avatar";
 
-export const Avatar = AvatarComponent;
+export const Avatar = React.memo(AvatarComponent);
+Avatar.displayName = "Avatar";
 
 export interface AvatarProps {
     /**

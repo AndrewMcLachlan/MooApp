@@ -130,6 +130,17 @@ describe('Upload', () => {
         newFiles: [file1],
       });
     });
+
+    it('does not throw or call onFilesAdded when the dialog is dismissed with no files', () => {
+      const onFilesAdded = vi.fn();
+      const { container } = render(<Upload onFilesAdded={onFilesAdded} />);
+      const input = container.querySelector('input[type="file"]')!;
+
+      Object.defineProperty(input, 'files', { value: [], configurable: true });
+
+      expect(() => fireEvent.change(input)).not.toThrow();
+      expect(onFilesAdded).not.toHaveBeenCalled();
+    });
   });
 
   describe('drag and drop', () => {
@@ -141,6 +152,17 @@ describe('Upload', () => {
       fireEvent.dragEnter(dropZone, { dataTransfer });
 
       // Should not throw
+    });
+
+    it('toggles the dragging class on dragEnter / dragLeave', () => {
+      const { container } = render(<Upload />);
+      const dropZone = container.querySelector('.upload-box')!;
+
+      fireEvent.dragEnter(dropZone, { dataTransfer: { items: [{ kind: 'file' }] } });
+      expect(dropZone).toHaveClass('dragging');
+
+      fireEvent.dragLeave(dropZone, { dataTransfer: {} });
+      expect(dropZone).not.toHaveClass('dragging');
     });
 
     it('handles dragLeave event', () => {
