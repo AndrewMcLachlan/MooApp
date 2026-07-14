@@ -70,8 +70,12 @@ export interface MsalOptions {
      * guidance, point this at a lightweight blank page that does **not** load
      * MSAL — e.g. a `blank.html` served from your app's `public/` folder:
      *
-     * ```ts
-     * <MooApp silentRedirectUri={`${window.location.origin}/blank.html`} ... />
+     * ```tsx
+     * <MooApp
+     *     clientId="<client-id>"
+     *     router={router}
+     *     silentRedirectUri={`${window.location.origin}/blank.html`}
+     * />
      * ```
      *
      * The blank page needs no scripts: the silent iframe returns the response in

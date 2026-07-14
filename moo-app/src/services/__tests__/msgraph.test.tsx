@@ -54,15 +54,16 @@ describe('usePhoto photo-fetch error handling', () => {
 
     renderHook(() => usePhoto());
 
-    await waitFor(() => expect(debugSpy).toHaveBeenCalled());
+    await waitFor(() => expect(debugSpy).toHaveBeenCalledWith('No photo found for user'));
     expect(warnSpy).not.toHaveBeenCalled();
   });
 
   it('warns on a genuine, unexpected error', async () => {
-    mockGet.mockRejectedValue({ response: { status: 500 } });
+    const error = { response: { status: 500 } };
+    mockGet.mockRejectedValue(error);
 
     renderHook(() => usePhoto());
 
-    await waitFor(() => expect(warnSpy).toHaveBeenCalled());
+    await waitFor(() => expect(warnSpy).toHaveBeenCalledWith('Error fetching user photo', error));
   });
 });
