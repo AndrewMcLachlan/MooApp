@@ -1,6 +1,8 @@
 import classNames from "classnames";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+
+const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     show: boolean;
@@ -64,6 +66,9 @@ ModalTitle.displayName = "Modal.Title";
 
 const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({ show, onHide, size, className, children, style, ...rest }) => {
 
+    const contentRef = useRef<HTMLDivElement>(null);
+    const previouslyFocused = useRef<HTMLElement | null>(null);
+
     useEffect(() => {
         if (show) {
             document.body.style.overflow = "hidden";
@@ -72,6 +77,47 @@ const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({ show, o
         }
         return () => { document.body.style.overflow = ""; };
     }, [show]);
+
+    // Move focus into the dialog on open and restore it to the previously
+    // focused element on close.
+    useEffect(() => {
+        if (!show) return undefined;
+
+        previouslyFocused.current = document.activeElement as HTMLElement | null;
+        const focusables = contentRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+        (focusables && focusables.length ? focusables[0] : contentRef.current)?.focus();
+
+        return () => {
+            previouslyFocused.current?.focus?.();
+        };
+    }, [show]);
+
+    const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (!show) return;
+
+        if (e.key === "Escape") {
+            e.stopPropagation();
+            onHide?.();
+            return;
+        }
+
+        if (e.key === "Tab") {
+            const focusables = contentRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+            if (!focusables || focusables.length === 0) {
+                e.preventDefault();
+                return;
+            }
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+    };
 
     // Inject onHide into Header children
     const enhancedChildren = React.Children.map(children, (child) => {
@@ -90,10 +136,11 @@ const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({ show, o
                     className={classNames("modal", show && "show", className)}
                     tabIndex={-1}
                     style={modalStyle}
+                    onKeyDown={onKeyDown}
                     {...rest}
                 >
-                    <div className="modal-dialog">
-                        <div className="modal-content">
+                    <div className="modal-dialog" role="dialog" aria-modal="true">
+                        <div className="modal-content" ref={contentRef} tabIndex={-1}>
                             {enhancedChildren}
                         </div>
                     </div>

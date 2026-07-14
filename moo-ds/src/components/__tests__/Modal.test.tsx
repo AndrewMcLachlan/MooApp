@@ -20,6 +20,43 @@ describe('Modal', () => {
     });
   });
 
+  describe('accessibility', () => {
+    it('exposes the dialog role and aria-modal', () => {
+      const { baseElement } = render(<Modal show onHide={vi.fn()}><Modal.Body>Content</Modal.Body></Modal>);
+      const dialog = baseElement.querySelector('.modal-dialog');
+      expect(dialog).toHaveAttribute('role', 'dialog');
+      expect(dialog).toHaveAttribute('aria-modal', 'true');
+    });
+
+    it('closes on Escape', () => {
+      const onHide = vi.fn();
+      const { baseElement } = render(<Modal show onHide={onHide}><Modal.Body>Content</Modal.Body></Modal>);
+
+      fireEvent.keyDown(baseElement.querySelector('.modal')!, { key: 'Escape' });
+
+      expect(onHide).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not close on Escape when hidden', () => {
+      const onHide = vi.fn();
+      const { baseElement } = render(<Modal show={false} onHide={onHide}><Modal.Body>Content</Modal.Body></Modal>);
+
+      fireEvent.keyDown(baseElement.querySelector('.modal')!, { key: 'Escape' });
+
+      expect(onHide).not.toHaveBeenCalled();
+    });
+
+    it('moves focus to the first focusable element on open', () => {
+      render(
+        <Modal show onHide={vi.fn()}>
+          <Modal.Body><button type="button">Inside</button></Modal.Body>
+        </Modal>
+      );
+
+      expect(screen.getByText('Inside')).toHaveFocus();
+    });
+  });
+
   describe('structure', () => {
     it('renders with modal class in portal', () => {
       const { baseElement } = render(<Modal show onHide={vi.fn()}><Modal.Body>Content</Modal.Body></Modal>);
