@@ -35,7 +35,13 @@ describe('SortIcon', () => {
 
       const svg = container.querySelector('svg');
       expect(svg).toBeInTheDocument();
-      expect(svg).toHaveStyle({ visibility: 'hidden' });
+      expect(svg).toHaveClass('sort-icon-hidden');
+    });
+
+    it('does not apply the hidden class when hidden is false', () => {
+      const { container } = render(<SortIcon direction="Ascending" hidden={false} />);
+
+      expect(container.querySelector('svg')).not.toHaveClass('sort-icon-hidden');
     });
 
     it('defaults hidden to false', () => {

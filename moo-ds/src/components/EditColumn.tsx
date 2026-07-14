@@ -20,7 +20,7 @@ export const EditColumn: React.FC<PropsWithChildren<EditColumnProps>> = ({childr
     }
 
     useEffect(() => {
-        setValue(value);
+        setValue(props.value);
     }, [props.value]);
 
     const onBlur: FocusEventHandler<HTMLInputElement> = (e) => {
