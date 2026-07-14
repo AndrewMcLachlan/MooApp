@@ -17,7 +17,9 @@ An opinionated React design system — the foundation UI layer for MooApp, with 
 
 ## Peer dependencies
 
-React >= 19, and FontAwesome (`@fortawesome/*`) for the icon layer.
+- `react` and `react-dom` (>= 19.2.7)
+- `react-hook-form` (>= 7.81) — the form components are built on it
+- FontAwesome (`@fortawesome/fontawesome-svg-core`, `@fortawesome/react-fontawesome`, `@fortawesome/free-solid-svg-icons`, `@fortawesome/free-regular-svg-icons`) for the icon layer
 
 ## Usage
 

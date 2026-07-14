@@ -14,7 +14,13 @@ An opinionated, complete authenticated SPA framework built on [`@andrewmclachlan
 
 ## Peer dependencies
 
-React >= 19, and `@andrewmclachlan/moo-ds`.
+- `react` and `react-dom` (>= 19.2.7)
+- `@andrewmclachlan/moo-ds` (>= 4.0.0)
+- `@azure/msal-react` — authentication
+- `@tanstack/react-query`, `@tanstack/react-query-persist-client` — data / caching
+- `@tanstack/react-router` — routing
+- `react-hook-form` — forms (via moo-ds)
+- FontAwesome (`@fortawesome/*`) for the icon layer
 
 ## Configuring authentication
 
@@ -43,7 +49,7 @@ There is **no `createMooAppBrowserRouter` helper** — build a standard TanStack
 
 ```tsx
 import { MooApp } from "@andrewmclachlan/moo-app";
-import { createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
+import { createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { Home } from "./routes/Home";
