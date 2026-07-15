@@ -173,6 +173,7 @@ const routeTree = rootRoute.addChildren([
   iconsRoute,
 ]);
 
+// @ts-expect-error strictNullChecks is false (to match the moo-ds/moo-app source) — TanStack Router requires it for full type safety
 const router = createRouter({ routeTree });
 
 root.render(
