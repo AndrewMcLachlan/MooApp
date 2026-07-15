@@ -53,11 +53,23 @@ export const apiRequest: msal.SilentRequest = {
 
 
 /**
- * Options for overriding parts of the MSAL configuration at instance-creation
- * time. All properties are optional and default to the historical behaviour, so
- * existing consuming apps are unaffected.
+ * Optional overrides for the MSAL configuration, applied at instance-creation
+ * time. Any value left unset falls back to the framework default, so existing
+ * single-tenant consumers are unaffected while multi-tenant / differently-hosted
+ * apps can configure the authority, redirect URIs, cache location, login scopes
+ * and silent-renewal redirect URI without forking.
  */
 export interface MsalOptions {
+    /** The Azure AD authority (e.g. `https://login.microsoftonline.com/<tenant>`). */
+    authority?: string;
+    /** Redirect URI to return to after interactive login. Defaults to the current origin. */
+    redirectUri?: string;
+    /** Redirect URI to return to after logout. Defaults to the current origin. */
+    postLogoutRedirectUri?: string;
+    /** Where MSAL caches tokens. Defaults to `localStorage`. */
+    cacheLocation?: msal.BrowserCacheLocation;
+    /** Scopes requested at interactive login. Defaults to `["openid", "profile"]`. */
+    loginScopes?: string[];
     /**
      * The redirect URI used **only** for silent token renewal (the hidden iframe
      * that MSAL opens for `acquireTokenSilent`). It is NOT used for interactive
@@ -92,7 +104,7 @@ export interface MsalOptions {
 }
 
 let msalInstance: msal.IPublicClientApplication;
-
+let initializedClientId: string | undefined;
 let silentRedirectUri: string | undefined;
 
 /**
@@ -102,10 +114,28 @@ let silentRedirectUri: string | undefined;
 export const getSilentRedirectUri = (): string | undefined => silentRedirectUri;
 
 const getMsalInstance = async (clientId: string, options?: MsalOptions): Promise<msal.IPublicClientApplication> => {
-    if (msalInstance) return msalInstance;
+    if (msalInstance) {
+        // The instance is a module-level singleton; a second call with a
+        // different clientId/authority can't reconfigure it. Warn rather than
+        // silently returning a mismatched instance.
+        if (initializedClientId !== clientId) {
+            console.warn(
+                `getMsalInstance was already initialized with clientId "${initializedClientId}"; ` +
+                `ignoring the new clientId "${clientId}". MSAL configuration cannot be changed after initialization.`
+            );
+        }
+        return msalInstance;
+    }
 
+    initializedClientId = clientId;
     msalConfig.auth.clientId = clientId;
+    if (options?.authority) msalConfig.auth.authority = options.authority;
+    if (options?.redirectUri) msalConfig.auth.redirectUri = options.redirectUri;
+    if (options?.postLogoutRedirectUri) msalConfig.auth.postLogoutRedirectUri = options.postLogoutRedirectUri;
+    if (options?.cacheLocation) msalConfig.cache = { ...msalConfig.cache, cacheLocation: options.cacheLocation };
+    if (options?.loginScopes) loginRequest.scopes = options.loginScopes;
     silentRedirectUri = options?.silentRedirectUri;
+
     msalConfig.system.loggerOptions = {
         logLevel: msal.LogLevel.Warning
     }
@@ -135,4 +165,4 @@ const getMsalInstance = async (clientId: string, options?: MsalOptions): Promise
     return msalInstance;
 }
 
-export default getMsalInstance; 
+export default getMsalInstance;

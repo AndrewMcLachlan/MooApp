@@ -245,6 +245,22 @@ describe('ThemeProvider', () => {
       expect(result.current.theme?.name).toBe('Dark cool');
     });
 
+    it('clears the theme-color meta content when switching to a theme without a colour', () => {
+      const meta = document.getElementsByName('theme-color')[0] as unknown as { removeAttribute: ReturnType<typeof vi.fn> };
+      const wrapper = ({ children }: { children: React.ReactNode }) => (
+        <ThemeProvider>{children}</ThemeProvider>
+      );
+
+      const { result } = renderHook(() => useTheme(), { wrapper });
+
+      // Switch to a coloured theme, then to the System ("") theme which has no colour.
+      act(() => result.current.setTheme?.(Themes.find(t => !!t.colour)));
+      meta.removeAttribute.mockClear();
+      act(() => result.current.setTheme?.(Themes.find(t => t.theme === '')));
+
+      expect(meta.removeAttribute).toHaveBeenCalledWith('content');
+    });
+
     it('can cycle through all themes', () => {
       const wrapper = ({ children }: { children: React.ReactNode }) => (
         <ThemeProvider>{children}</ThemeProvider>
