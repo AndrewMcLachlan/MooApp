@@ -4,16 +4,30 @@ export const ComobBoxItem = <T,>(props: ComboBoxItemProps<T>) => {
 
     const { labelField } = useComboBox();
 
+    const select = () => {
+        props.onSelected(props.item);
+    }
+
     const click = (e: React.MouseEvent<HTMLLIElement>) => {
         e.preventDefault();
         e.stopPropagation();
 
-        props.onSelected(props.item);
+        select();
+    }
+
+    const keyDown = (e: React.KeyboardEvent<HTMLLIElement>) => {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            select();
+        }
     }
 
     if (props.item === undefined) return null;
 
-    return (<li onClick={click} tabIndex={2}>{props.label ?? labelField(props.item)}</li>);
+    // tabIndex 0 keeps options reachable by keyboard (Tab from the input) so the
+    // Enter/Space handler is usable, without the positive-tabIndex anti-pattern.
+    return (<li role="option" onClick={click} onKeyDown={keyDown} tabIndex={0}>{props.label ?? labelField(props.item)}</li>);
 }
 
 ComobBoxItem.displayName = "ComboBoxItem";

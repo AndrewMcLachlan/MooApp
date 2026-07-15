@@ -1,5 +1,5 @@
 import { type RefProps } from "../../models";
-import React, { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, type ReactNode, useContext, useEffect, useId, useMemo, useState } from "react";
 
 export const ComboBoxContext = createContext<ComboBoxOptions | undefined>(undefined);
 
@@ -11,6 +11,10 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
     const [newItem, setNewItem] = useState(null as any);
     const [show, setShow] = useState(false);
     const [showInput, setShowInput] = useState(false);
+
+    // Per-instance listbox id so multiple ComboBoxes on a page don't share a
+    // duplicated aria-controls/id relationship.
+    const listId = useId();
 
     const allItems = useMemo(() => {
         if (!props.multiSelect) return props.items ? props.items : []
@@ -48,7 +52,7 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
     const { clearable, creatable, multiSelect, readonly, labelField, valueField, colourField, onAdd, onRemove, onChange, onCreate, createLabel, search, ref } = props;
 
     return (
-        <ComboBoxContext value={{ selectedItems, setSelectedItems, text, setText, items, setItems, newItem, setNewItem, show, setShow, showInput, setShowInput, clear, clearable, creatable, multiSelect, readonly, labelField, valueField, colourField, onAdd, onRemove, onChange, onCreate, createLabel, search, allItems, ref }}>
+        <ComboBoxContext value={{ selectedItems, setSelectedItems, text, setText, items, setItems, newItem, setNewItem, show, setShow, showInput, setShowInput, clear, clearable, creatable, multiSelect, readonly, labelField, valueField, colourField, onAdd, onRemove, onChange, onCreate, createLabel, search, allItems, ref, listId }}>
             {props.children}
         </ComboBoxContext>
     );
@@ -96,6 +100,7 @@ export interface ComboBoxOptions {
     search?: (input: string) => any[];
     allItems?: any[];
     ref: React.Ref<HTMLInputElement>;
+    listId: string;
 }
 
 export interface ComboBoxProps<TItem> extends RefProps<HTMLInputElement> {
