@@ -1,15 +1,20 @@
 import { Page } from "@andrewmclachlan/moo-app";
-import { Section, NavItemDivider, IconButton, SectionTable, EditColumn, ComboBox, Button, Modal, ButtonGroup, Badge, CloseBadge, Alert, Nav, Tabs, Tab, Collapsible } from "@andrewmclachlan/moo-ds";
+import { Section, NavItemDivider, IconButton, SectionTable, EditColumn, ComboBox, Button, Modal, ButtonGroup, Badge, CloseBadge, Alert, Nav, Tabs, Tab, Collapsible, Form } from "@andrewmclachlan/moo-ds";
 import { Sparkle, Tags } from "@andrewmclachlan/moo-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export const Components = () => {
 
     const [tableValue, setTableValue] = useState<string | undefined>("Row 1 Data 1");
     const [tableNumValue, setTableNumValue] = useState<number | undefined>(1);
     const [showModal, setShowModal] = useState(false);
+
+    const modalForm = useForm({
+        defaultValues: { name: "Ada Lovelace", email: "ada@example.com", notes: "A longer, multi-line note to check that the label lines up with the first line of the textarea rather than its centre." },
+    });
 
     const [showWarning, setShowWarning] = useState(true);
 
@@ -27,6 +32,20 @@ export const Components = () => {
                     </Modal.Header>
                     <Modal.Body>
                         <p>This is a test modal launched from the Components page.</p>
+                        <Form form={modalForm} layout="horizontal" onSubmit={(data) => console.log(data)}>
+                            <Form.Group groupId="name">
+                                <Form.Label>Name</Form.Label>
+                                <Form.Input placeholder="Full name" />
+                            </Form.Group>
+                            <Form.Group groupId="email">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Input type="email" placeholder="name@example.com" />
+                            </Form.Group>
+                            <Form.Group groupId="notes">
+                                <Form.Label>Notes</Form.Label>
+                                <Form.TextArea rows={4} placeholder="Multi-line notes" />
+                            </Form.Group>
+                        </Form>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => setShowModal(false)}>Close</Button>

@@ -253,11 +253,28 @@ form.form-container {
     .form-group {
         display: flex;
         flex-direction: row;
+        align-items: center;
         gap: 0.5rem;
+    }
+
+    /* Multi-line controls: align the label to the first line of the control
+       rather than the centre of the full control height. Scoped to the DS
+       textarea (textarea.form-control) so an unrelated nested textarea can't
+       trigger it. */
+    .form-group:has(textarea.form-control) {
+        align-items: flex-start;
+
+        .form-label {
+            padding-top: calc(var(--border-width, 1px) + var(--input-padding-v, 0.375rem));
+            line-height: 1.5;
+        }
     }
 
     .form-label {
         flex: 0 0 100px;
+        /* The base .form-label carries margin-bottom: 0.25rem; drop it here so
+           it doesn't offset the label within the centred flex row. */
+        margin-bottom: 0;
     }
 }
 
