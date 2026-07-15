@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBoxInput } from '../ComboBoxInput';
 import { ComboBoxProvider } from '../ComboBoxProvider';
@@ -92,6 +92,48 @@ describe('ComboBoxInput', () => {
 
       // The filtering happens in the context, we verify the input value
       expect(screen.getByRole('combobox')).toHaveValue('App');
+    });
+
+    it('debounces the search callback (runs once after the delay, not per keystroke)', () => {
+      vi.useFakeTimers();
+      try {
+        const search = vi.fn().mockReturnValue([]);
+        render(
+          <ComboBoxProvider {...defaultProps} search={search}>
+            <ComboBoxInput placeholder="Search..." readonly={false} />
+          </ComboBoxProvider>
+        );
+
+        const input = screen.getByRole('combobox');
+        fireEvent.change(input, { target: { value: 'a' } });
+        fireEvent.change(input, { target: { value: 'ap' } });
+        fireEvent.change(input, { target: { value: 'app' } });
+
+        expect(search).not.toHaveBeenCalled();
+
+        // Wrap in act() so React flushes the state updates the debounced
+        // callback schedules before we assert.
+        act(() => {
+          vi.advanceTimersByTime(300);
+        });
+
+        expect(search).toHaveBeenCalledTimes(1);
+        expect(search).toHaveBeenCalledWith('app');
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+  });
+
+  describe('accessibility', () => {
+    it('exposes aria-expanded and aria-controls on the combobox', () => {
+      renderWithProvider();
+
+      const input = screen.getByRole('combobox');
+      expect(input).toHaveAttribute('aria-expanded');
+      // aria-controls is a per-instance generated id (React useId), not a
+      // shared hard-coded value.
+      expect(input.getAttribute('aria-controls')).toBeTruthy();
     });
   });
 

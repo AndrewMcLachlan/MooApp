@@ -12,7 +12,7 @@ export const useApiPagedGet = <T extends PagedResult<any>>(key: QueryKey, path: 
 
         return {
             results: response.data,
-            total: response.headers["x-total-count"],
+            total: Number(response.headers["x-total-count"]),
         } as T;
     }
 

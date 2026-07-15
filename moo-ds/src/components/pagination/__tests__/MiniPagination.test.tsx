@@ -81,6 +81,21 @@ describe('MiniPagination', () => {
 
       expect(onChange).toHaveBeenCalledWith(5, 5);
     });
+
+    it('does not bubble the click to a parent handler (e.g. a sortable header)', () => {
+      const onChange = vi.fn();
+      const parentClick = vi.fn();
+      render(
+        <div onClick={parentClick}>
+          <MiniPagination pageNumber={3} numberOfPages={5} onChange={onChange} />
+        </div>
+      );
+
+      fireEvent.click(screen.getByTitle('Next page'));
+
+      expect(onChange).toHaveBeenCalledWith(3, 4);
+      expect(parentClick).not.toHaveBeenCalled();
+    });
   });
 
   describe('displayName', () => {

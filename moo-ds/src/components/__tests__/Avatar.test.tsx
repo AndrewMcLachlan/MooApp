@@ -10,7 +10,7 @@ describe('Avatar', () => {
       const img = screen.getByRole('img');
       expect(img).toBeInTheDocument();
       expect(img).toHaveAttribute('src', 'https://example.com/photo.jpg');
-      expect(img).toHaveAttribute('alt', 'Me');
+      expect(img).toHaveAttribute('alt', 'John Doe');
     });
 
     it('renders initials when no photo provided', () => {

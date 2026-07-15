@@ -41,5 +41,5 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Mock document.getElementsByName for ThemeProvider
-const mockThemeColorElement = { setAttribute: vi.fn() };
+const mockThemeColorElement = { setAttribute: vi.fn(), removeAttribute: vi.fn() };
 document.getElementsByName = vi.fn().mockReturnValue([mockThemeColorElement]);

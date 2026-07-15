@@ -17,20 +17,12 @@ jobs:
     steps:
     - uses: actions/checkout@v7
       with:
-        fetch-depth: 0
-    - uses: gittools/actions/gitversion/setup@v4.7.0
-      with:
-        versionSpec: '6.x'
-    - id: gitversion
-      uses: gittools/actions/gitversion/execute@v4.7.0
-    - name: Set version
+        fetch-depth: 0          # required: full history for the commit count
+    # Version is stated in package.json (Major.Minor + optional -suffix); the patch is the
+    # number of commits since the version line last changed. See docs/release-branching-strategy.md.
+    - name: Get version
       id: version
-      run: |
-        if [ "${{ github.ref }}" = "refs/heads/main" ]; then
-          echo "version=${{ steps.gitversion.outputs.major }}.${{ steps.gitversion.outputs.minor }}.${{ steps.gitversion.outputs.commitsSinceVersionSource }}" >> "$GITHUB_OUTPUT"
-        else
-          echo "version=${{ steps.gitversion.outputs.semVer }}" >> "$GITHUB_OUTPUT"
-        fi
+      uses: AndrewMcLachlan/Actions/get-node-version@v4
     - run: echo "::notice::Version ${{ steps.version.outputs.version }}"
     - uses: actions/setup-node@v6
       with:
@@ -42,7 +34,10 @@ jobs:
     - run: npm pkg set version=${{ steps.version.outputs.version }} --workspace=moo-ds --workspace=moo-app --workspace=moo-icons
     - run: npm run test:run
     - run: npm run build --workspace=moo-ds --workspace=moo-app --workspace=moo-icons
-    - if: github.ref == 'refs/heads/main'
+    # Publish only from main (the stable trunk) or a prerelease line (a branch whose stated
+    # version carries a suffix). Suffix-less non-main branches (incl. PRs) publish nothing.
+    - name: Publish
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || steps.version.outputs.is-prerelease == 'true')
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npm publish --workspace=moo-ds --workspace=moo-app --workspace=moo-icons

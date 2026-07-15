@@ -1,5 +1,4 @@
 import { type PropsWithChildren } from "react";
-import { ThemeProvider } from "@andrewmclachlan/moo-ds";
 
 import { Footer } from "./Desktop/Footer";
 import { LayoutProvider } from "../providers";
@@ -24,13 +23,11 @@ export type LayoutComponent = React.FC<PropsWithChildren<LayoutProps>> & {
 const Layout: LayoutComponent = ({ size = "default", children }) => {
 
   return (
-    <ThemeProvider>
-      <LayoutProvider size={size}>
-        <div className={classNames("app-container", `moo-${size}`)}>
-          {children}
-        </div>
-      </LayoutProvider>
-    </ThemeProvider>
+    <LayoutProvider size={size}>
+      <div className={classNames("app-container", `moo-${size}`)}>
+        {children}
+      </div>
+    </LayoutProvider>
   );
 };
 

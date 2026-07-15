@@ -1,6 +1,6 @@
 {
   "name": "@andrewmclachlan/moo-app",
-  "version": "4.0.0",
+  "version": "5.2.0",
   "type": "module",
   "main": "dist/index.es.js",
   "types": "dist/index.d.ts",
@@ -18,7 +18,7 @@
     "url": "https://andrewmclachlan.com"
   },
   "license": "MIT",
-  "description": "Base library for Moo-branded apps",
+  "description": "Opinionated authenticated React SPA framework (MSAL, React Query, TanStack Router) built on @andrewmclachlan/moo-ds.",
   "repository": {
     "type": "git",
     "url": "https://github.com/AndrewMcLachlan/MooApp.git"

@@ -30,8 +30,13 @@ vi.mock('@azure/msal-react', () => ({
   }),
 }));
 
-vi.mock('../login/msal', () => ({
+const { mockGetSilentRedirectUri } = vi.hoisted(() => ({
+  mockGetSilentRedirectUri: vi.fn<() => string | undefined>(() => undefined),
+}));
+
+vi.mock('../../login/msal', () => ({
   loginRequest: { scopes: ['openid', 'profile'] },
+  getSilentRedirectUri: mockGetSilentRedirectUri,
 }));
 
 describe('HttpClientProvider', () => {
@@ -164,6 +169,10 @@ describe('addMsalInterceptor', () => {
     return client;
   };
 
+  beforeEach(() => {
+    mockGetSilentRedirectUri.mockReturnValue(undefined);
+  });
+
   it('adds request interceptor to client', () => {
     const client = axios.create();
     const originalCount = client.interceptors.request.handlers.length;
@@ -183,6 +192,30 @@ describe('addMsalInterceptor', () => {
     const response = await client.get('/api/data');
 
     expect(response.config.headers.getAuthorization()).toBe('Bearer test-token-123');
+  });
+
+  it('passes the configured silent redirect URI to acquireTokenSilent', async () => {
+    const acquireTokenSilent = vi.fn().mockResolvedValue({ accessToken: 'test-token-123' });
+    const msal = createMockMsal({ acquireTokenSilent });
+    mockGetSilentRedirectUri.mockReturnValue('https://app.example.com/blank.html');
+    const client = createClientWithInterceptor(msal);
+
+    await client.get('/api/data');
+
+    expect(acquireTokenSilent).toHaveBeenCalledWith(
+      expect.objectContaining({ redirectUri: 'https://app.example.com/blank.html' })
+    );
+  });
+
+  it('omits redirectUri from the silent request when none is configured', async () => {
+    const acquireTokenSilent = vi.fn().mockResolvedValue({ accessToken: 'test-token-123' });
+    const msal = createMockMsal({ acquireTokenSilent });
+    mockGetSilentRedirectUri.mockReturnValue(undefined);
+    const client = createClientWithInterceptor(msal);
+
+    await client.get('/api/data');
+
+    expect(acquireTokenSilent.mock.calls[0][0]).not.toHaveProperty('redirectUri');
   });
 
   it('does not set Authorization header when acquireTokenSilent returns no accessToken', async () => {

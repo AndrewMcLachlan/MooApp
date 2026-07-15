@@ -97,7 +97,7 @@ describe('SortablePaginationTh', () => {
 
       const svg = container.querySelector('svg[data-icon="arrow-up-long"], svg[data-icon="arrow-down-long"]');
       expect(svg).toBeInTheDocument();
-      expect(svg).toHaveStyle({ visibility: 'hidden' });
+      expect(svg).toHaveClass('sort-icon-hidden');
     });
 
     it('shows up arrow for ascending', () => {
