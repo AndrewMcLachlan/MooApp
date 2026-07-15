@@ -16,10 +16,24 @@
 
     /* Linting */
     "strict": true,
+    // Match the workspace libraries (moo-ds/moo-app) so their source — now
+    // resolved via the paths below — type-checks under the same rules it was
+    // written for, rather than demoo's default strict-null behaviour.
+    "strictNullChecks": false,
+    "moduleDetection": "force",
     //"noUnusedLocals": true,
     //"noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
+
+    /* Resolve the workspace packages to their source, mirroring the vite
+       aliases in vite.config.ts, so type-checking matches what actually runs
+       (instead of the stale published packages in node_modules). */
+    "paths": {
+      "@andrewmclachlan/moo-ds": ["../moo-ds/src"],
+      "@andrewmclachlan/moo-app": ["../moo-app/src"],
+      "@andrewmclachlan/moo-icons": ["../moo-icons/src"],
+    },
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
