@@ -2,9 +2,19 @@ export interface ThemeOptions {
     theme?: Theme;
     setTheme?: (theme?: Theme) => void;
     defaultTheme: Theme;
+    /** The registered themes (built-ins by default, or a custom list supplied to ThemeProvider). */
+    themes: Theme[];
 }
 
-export type Themes = "" | "dark" | "light" | "light red" | "dark blue";
+/** The theme identifiers shipped with the design system. */
+export type BuiltInThemes = "" | "dark" | "light" | "light red" | "dark blue";
+
+/**
+ * A theme identifier. Consumers may register additional themes with any string
+ * identifier (they are responsible for shipping the matching CSS); the built-in
+ * names are kept for editor autocomplete via the `string & {}` intersection.
+ */
+export type Themes = BuiltInThemes | (string & {});
 
 export interface Theme {
     name: string,
@@ -12,7 +22,8 @@ export interface Theme {
     colour?: string,
 };
 
-export const theme = (theme: Themes) =>  Themes.find(t => t.theme === theme);
+/** Look up a theme by identifier within a list (defaults to the built-ins). */
+export const theme = (theme: Themes, themes: Theme[] = Themes) => themes.find(t => t.theme === theme);
 
 export const Themes: Theme[] = [
     {

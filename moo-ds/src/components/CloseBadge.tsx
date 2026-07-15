@@ -6,7 +6,7 @@ import classNames from "classnames";
 export const CloseBadge: React.FC<PropsWithChildren<CloseBadgeProps>> = (props) => {
 
     const click = (e: React.MouseEvent<any, any>) => {
-        e.defaultPrevented = true;
+        e.preventDefault();
         e.stopPropagation();
 
         props.onClose?.();

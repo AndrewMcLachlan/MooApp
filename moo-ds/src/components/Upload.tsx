@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import classNames from "classnames";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -8,7 +9,7 @@ export const Upload: React.FC<UploadProps> = ({allowMultiple = false, ...props})
 
     return (
         <section className="upload">
-            <div className="upload-box" onDragEnter={dragEvents.dragEnter} onDragLeave={dragEvents.dragLeave} onDragOver={dragEvents.dragOver} onDrop={dragEvents.drop} >
+            <div className={classNames("upload-box", { "dragging": dragEvents.isDragging })} onDragEnter={dragEvents.dragEnter} onDragLeave={dragEvents.dragLeave} onDragOver={dragEvents.dragOver} onDrop={dragEvents.drop} >
                 <FontAwesomeIcon icon={faUpload} />
                 <label>
                     <div>
@@ -43,21 +44,26 @@ const useDragEvents = (props: UploadProps) => {
     };
 
     const filesChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFiles = e.currentTarget.files;
+        if (!selectedFiles || selectedFiles.length === 0) {
+            return;
+        }
+
         const currentFiles = files.concat();
         const newFiles = [];
 
         if (props.allowMultiple) {
 
-            for (let i = 0; i < e.currentTarget.files.length; i++) {
-                newFiles.push(e.currentTarget.files[i]);
+            for (let i = 0; i < selectedFiles.length; i++) {
+                newFiles.push(selectedFiles[i]);
             }
 
             onFilesAdded(currentFiles, newFiles);
             setFiles(files.concat(newFiles));
         }
         else {
-            onFilesAdded(currentFiles, [e.currentTarget.files[0]]);
-            setFiles([e.currentTarget.files[0]]);
+            onFilesAdded(currentFiles, [selectedFiles[0]]);
+            setFiles([selectedFiles[0]]);
         }
     };
 

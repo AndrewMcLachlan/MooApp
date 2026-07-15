@@ -53,10 +53,11 @@ export const apiRequest: msal.SilentRequest = {
 
 
 /**
- * Optional overrides for the MSAL configuration. Any value left unset falls
- * back to the framework default, so existing single-tenant consumers are
- * unaffected while multi-tenant / differently-hosted apps can configure the
- * authority, redirect URIs, cache location and login scopes without forking.
+ * Optional overrides for the MSAL configuration, applied at instance-creation
+ * time. Any value left unset falls back to the framework default, so existing
+ * single-tenant consumers are unaffected while multi-tenant / differently-hosted
+ * apps can configure the authority, redirect URIs, cache location, login scopes
+ * and silent-renewal redirect URI without forking.
  */
 export interface MsalOptions {
     /** The Azure AD authority (e.g. `https://login.microsoftonline.com/<tenant>`). */
@@ -69,10 +70,48 @@ export interface MsalOptions {
     cacheLocation?: msal.BrowserCacheLocation;
     /** Scopes requested at interactive login. Defaults to `["openid", "profile"]`. */
     loginScopes?: string[];
+    /**
+     * The redirect URI used **only** for silent token renewal (the hidden iframe
+     * that MSAL opens for `acquireTokenSilent`). It is NOT used for interactive
+     * login, so it does not affect where the user lands after signing in.
+     *
+     * By default silent renewals use the app's own `redirectUri`
+     * (`window.location.origin`), which causes the whole SPA to re-boot inside
+     * the hidden iframe; MSAL detects this and aborts with
+     * `BrowserAuthError: block_iframe_reload` (see issue #607). Per MSAL's
+     * guidance, point this at a lightweight blank page that does **not** load
+     * MSAL — e.g. a `blank.html` served from your app's `public/` folder:
+     *
+     * ```tsx
+     * <MooApp
+     *     clientId="<client-id>"
+     *     router={router}
+     *     silentRedirectUri={`${window.location.origin}/blank.html`}
+     * />
+     * ```
+     *
+     * The blank page needs no scripts: the silent iframe returns the response in
+     * its URL hash, which MSAL reads directly. Interactive login is unaffected
+     * and still returns the user to the route they started from
+     * (`navigateToLoginRequestUrl` defaults to `true`).
+     *
+     * NOTE: the URI must also be registered as a redirect (reply) URI on the
+     * app's Azure AD registration, otherwise silent renewal will fail.
+     *
+     * @see https://learn.microsoft.com/en-us/entra/msal/javascript/browser/errors#block_iframe_reload
+     */
+    silentRedirectUri?: string;
 }
 
 let msalInstance: msal.IPublicClientApplication;
 let initializedClientId: string | undefined;
+let silentRedirectUri: string | undefined;
+
+/**
+ * The redirect URI to apply to silent token requests, or `undefined` to use the
+ * MSAL default. Configured via {@link MsalOptions.silentRedirectUri}.
+ */
+export const getSilentRedirectUri = (): string | undefined => silentRedirectUri;
 
 const getMsalInstance = async (clientId: string, options?: MsalOptions): Promise<msal.IPublicClientApplication> => {
     if (msalInstance) {
@@ -95,6 +134,7 @@ const getMsalInstance = async (clientId: string, options?: MsalOptions): Promise
     if (options?.postLogoutRedirectUri) msalConfig.auth.postLogoutRedirectUri = options.postLogoutRedirectUri;
     if (options?.cacheLocation) msalConfig.cache = { ...msalConfig.cache, cacheLocation: options.cacheLocation };
     if (options?.loginScopes) loginRequest.scopes = options.loginScopes;
+    silentRedirectUri = options?.silentRedirectUri;
 
     msalConfig.system.loggerOptions = {
         logLevel: msal.LogLevel.Warning
@@ -125,4 +165,4 @@ const getMsalInstance = async (clientId: string, options?: MsalOptions): Promise
     return msalInstance;
 }
 
-export default getMsalInstance; 
+export default getMsalInstance;

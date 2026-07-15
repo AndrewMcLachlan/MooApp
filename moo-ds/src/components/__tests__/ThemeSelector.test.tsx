@@ -39,6 +39,23 @@ describe('ThemeSelector', () => {
       expect(container.querySelector('.theme-selector')).toBeInTheDocument();
     });
 
+    it('renders a custom set of themes registered on the provider', () => {
+      const customThemes = [
+        { name: 'Brand Light', theme: 'brand-light', colour: '#ffffff' },
+        { name: 'Brand Dark', theme: 'brand-dark', colour: '#000000' },
+      ];
+
+      const { container } = render(
+        <ThemeProvider themes={customThemes} defaultTheme={customThemes[0]}>
+          <ThemeSelector />
+        </ThemeProvider>
+      );
+
+      expect(screen.getByText('Brand Light')).toBeInTheDocument();
+      expect(screen.getByText('Brand Dark')).toBeInTheDocument();
+      expect(container.querySelectorAll('.theme-sample').length).toBe(customThemes.length);
+    });
+
     it('renders each theme as a theme-sample', () => {
       const { container } = renderWithProvider(<ThemeSelector />);
 

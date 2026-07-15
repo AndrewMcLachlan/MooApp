@@ -130,6 +130,45 @@ describe('useUpdatingState', () => {
       expect(result.current[0]).toBe('newProp');
     });
 
+    it('does not invoke a function value as a state updater with previous state', () => {
+      // A function value is a lazy initialiser: it must be called with no
+      // arguments, never as a React updater that receives the previous state.
+      const makeValue = (label: string) =>
+        ((...args: unknown[]) => `${label}:${args.length}`) as unknown as () => string;
+
+      const { result, rerender } = renderHook(
+        ({ value }) => useUpdatingState(value),
+        { initialProps: { value: makeValue('a') } }
+      );
+
+      expect(result.current[0]).toBe('a:0');
+
+      rerender({ value: makeValue('b') });
+
+      // Still resolved with zero args - not called with (prevState).
+      expect(result.current[0]).toBe('b:0');
+    });
+
+    it('preserves local state when the same function value reference is passed', () => {
+      const fn = () => 'computed';
+
+      const { result, rerender } = renderHook(
+        ({ value }) => useUpdatingState(value),
+        { initialProps: { value: fn } }
+      );
+
+      act(() => {
+        result.current[1]('local');
+      });
+
+      expect(result.current[0]).toBe('local');
+
+      // Same reference - no reset should occur.
+      rerender({ value: fn });
+
+      expect(result.current[0]).toBe('local');
+    });
+
     it('preserves local state when prop reference is same', () => {
       // The useEffect has [value] as dependency, so it only runs when
       // the reference changes. Same reference = effect doesn't run.

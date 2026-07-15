@@ -1,6 +1,6 @@
 {
   "name": "@andrewmclachlan/moo-ds",
-  "version": "4.0.0",
+  "version": "5.2.0",
   "type": "module",
   "main": "dist/index.es.js",
   "types": "dist/index.d.ts",
@@ -23,7 +23,7 @@
     "url": "https://andrewmclachlan.com"
   },
   "license": "MIT",
-  "description": "Base library for Moo-branded apps",
+  "description": "Opinionated React design system (components, layout, theming) — the UI foundation for MooApp, with no authentication dependencies.",
   "repository": {
     "type": "git",
     "url": "https://github.com/AndrewMcLachlan/MooApp.git"
