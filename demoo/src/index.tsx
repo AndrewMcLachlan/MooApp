@@ -2,6 +2,7 @@ import { MooApp, NotFound } from "@andrewmclachlan/moo-app";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowLeft, faArrowsRotate, faBolt, faCheck, faCheckCircle, faChevronDown, faChevronRight, faChevronUp, faCircleChevronLeft, faCircleInfo, faCircleXmark, faFilterCircleXmark, faHeart, faInfoCircle, faLeaf, faLongArrowDown, faLongArrowUp, faPenToSquare, faPlus, faStar, faTimesCircle, faTrashAlt, faTriangleExclamation, faUpload, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
+import axios from "axios";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { Components } from "./routes/Components";
@@ -176,6 +177,11 @@ const routeTree = rootRoute.addChildren([
 // @ts-expect-error strictNullChecks is false (to match the moo-ds/moo-app source) — TanStack Router requires it for full type safety
 const router = createRouter({ routeTree });
 
+// A real app passes its hey-api generated client's instance
+// (`client={client.instance}`); demoo makes no API calls, so a bare axios
+// instance is enough to satisfy MooApp.
+const client = axios.create({ baseURL: "/" });
+
 root.render(
-  <MooApp clientId="69f9579b-ea94-4317-a257-5dd921e137dc" scopes={["api://demoo.mclachlan.family/api.read"]} name="DeMoo" version={(import.meta as any).env.VITE_REACT_APP_VERSION} copyrightYear={2022} router={router} />
+  <MooApp client={client} clientId="69f9579b-ea94-4317-a257-5dd921e137dc" scopes={["api://demoo.mclachlan.family/api.read"]} name="DeMoo" version={(import.meta as any).env.VITE_REACT_APP_VERSION} copyrightYear={2022} router={router} />
 );

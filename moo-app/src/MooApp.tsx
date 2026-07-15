@@ -4,7 +4,7 @@ import { PersistQueryClientProvider, type PersistQueryClientOptions } from "@tan
 import { type AnyRouter, RouterProvider } from "@tanstack/react-router";
 
 import { Link, NavLink } from "./components";
-import { AppProvider, HttpClientProvider } from "./providers";
+import { AppProvider, MsalAuthProvider } from "./providers";
 import { LinkProvider, MessageProvider, ThemeProvider } from "@andrewmclachlan/moo-ds";
 
 import getMsalInstance, { AUTH_RECOVERED_EVENT, type MsalOptions } from "./login/msal";
@@ -20,7 +20,7 @@ import { type AxiosInstance } from "axios";
 
 library.add(faArrowRightFromBracket, faMoon, faSun, faTimesCircle);
 
-export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, auth, scopes = [], baseUrl = "/", client, name, version, copyrightYear, authFallback, queryPersistOptions, silentRedirectUri }) => {
+export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, auth, scopes = [], client, name, version, copyrightYear, authFallback, queryPersistOptions, silentRedirectUri }) => {
 
   const [msalInstance, setMsalInstance] = React.useState<IPublicClientApplication | null>(null);
 
@@ -85,7 +85,7 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clien
     <AppProvider name={name} version={version} copyrightYear={copyrightYear}>
       <ThemeProvider>
         <MsalProvider instance={msalInstance}>
-          <HttpClientProvider client={client} baseUrl={baseUrl} scopes={scopes}>
+          <MsalAuthProvider client={client} scopes={scopes}>
             {queryPersistOptions ?
               <PersistQueryClientProvider client={queryClient} persistOptions={queryPersistOptions}>
                 {app}
@@ -94,7 +94,7 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clien
                 {app}
               </QueryClientProvider>
             }
-          </HttpClientProvider>
+          </MsalAuthProvider>
         </MsalProvider>
       </ThemeProvider>
     </AppProvider>
@@ -106,8 +106,12 @@ export interface MooAppProps {
   /** Optional MSAL configuration overrides (authority/tenant, redirect URIs, cache, login scopes). */
   auth?: MsalOptions,
   scopes?: string[],
-  baseUrl?: string,
-  client?: AxiosInstance;
+  /**
+   * The axios instance to authenticate — typically your hey-api generated
+   * client's underlying instance (`client.instance`). An MSAL access-token
+   * interceptor is attached to it.
+   */
+  client: AxiosInstance;
   name?: string,
   version?: string;
   copyrightYear?: number;

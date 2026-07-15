@@ -4,9 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MsalProvider } from '@azure/msal-react';
 import { type IPublicClientApplication } from '@azure/msal-browser';
 import { AppProvider } from '../providers/AppProvider';
-import { HttpClientContext } from '../providers/HttpClientProvider';
 import { ThemeProvider, MessageProvider, LinkProvider, type LinkComponent, type NavLinkComponent } from '@andrewmclachlan/moo-ds';
-import { createAxiosMock, mockAppConfig, mockMsalAccount } from './mocks';
+import { mockAppConfig, mockMsalAccount } from './mocks';
 
 /**
  * Mock Link component for testing
@@ -121,10 +120,6 @@ interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
    * Custom QueryClient instance
    */
   queryClient?: QueryClient;
-  /**
-   * Custom Axios mock instance
-   */
-  httpClient?: ReturnType<typeof createAxiosMock>;
 }
 
 /**
@@ -133,7 +128,6 @@ interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
 const createWrapper = (options: CustomRenderOptions = {}) => {
   const {
     queryClient = createTestQueryClient(),
-    httpClient = createAxiosMock(),
   } = options;
 
   const msalInstance = createMockMsalInstance();
@@ -141,17 +135,15 @@ const createWrapper = (options: CustomRenderOptions = {}) => {
   const Wrapper = ({ children }: WrapperProps) => (
     <MsalProvider instance={msalInstance}>
       <AppProvider {...mockAppConfig}>
-        <HttpClientContext.Provider value={httpClient}>
-          <QueryClientProvider client={queryClient}>
-            <ThemeProvider>
-              <MessageProvider>
-                <LinkProvider LinkComponent={MockLink} NavLinkComponent={MockNavLink}>
-                  {children}
-                </LinkProvider>
-              </MessageProvider>
-            </ThemeProvider>
-          </QueryClientProvider>
-        </HttpClientContext.Provider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider>
+            <MessageProvider>
+              <LinkProvider LinkComponent={MockLink} NavLinkComponent={MockNavLink}>
+                {children}
+              </LinkProvider>
+            </MessageProvider>
+          </ThemeProvider>
+        </QueryClientProvider>
       </AppProvider>
     </MsalProvider>
   );
@@ -175,20 +167,17 @@ const createWrapper = (options: CustomRenderOptions = {}) => {
  *
  * @example
  * ```tsx
- * // With custom options
- * const httpClient = createAxiosMock();
- * httpClient.get.mockResolvedValue(createAxiosResponse({ data: 'test' }));
- *
- * render(<MyComponent />, { httpClient });
+ * // With a custom QueryClient
+ * render(<MyComponent />, { queryClient: createTestQueryClient() });
  * ```
  */
 const customRender = (
   ui: ReactElement,
   options: CustomRenderOptions = {}
 ) => {
-  const { queryClient, httpClient, ...renderOptions } = options;
+  const { queryClient, ...renderOptions } = options;
   return render(ui, {
-    wrapper: createWrapper({ queryClient, httpClient }),
+    wrapper: createWrapper({ queryClient }),
     ...renderOptions,
   });
 };
@@ -213,25 +202,6 @@ export const renderWithQuery = (
   };
 };
 
-/**
- * Renders a component with HttpClientProvider
- * Useful for testing components that use useHttpClient
- */
-export const renderWithHttpClient = (
-  ui: ReactElement,
-  httpClient = createAxiosMock(),
-  options?: Omit<RenderOptions, 'wrapper'>
-) => {
-  const Wrapper = ({ children }: WrapperProps) => (
-    <HttpClientContext.Provider value={httpClient}>
-      {children}
-    </HttpClientContext.Provider>
-  );
-  return {
-    ...render(ui, { wrapper: Wrapper, ...options }),
-    httpClient,
-  };
-};
 
 // Re-export everything from testing-library
 export * from '@testing-library/react';

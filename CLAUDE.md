@@ -42,10 +42,10 @@ Foundation UI component library with no authentication dependencies:
 
 ### @andrewmclachlan/moo-app (Application Framework)
 Builds on moo-ds to provide a complete authenticated SPA framework:
-- **MooApp**: Root component that wires up MSAL authentication, React Query, and providers. MSAL is configurable via the `auth` prop (authority/tenant, redirect URIs, cache, login scopes); it defaults to the framework's built-in config.
+- **MooApp**: Root component that wires up MSAL authentication, React Query, and providers. Takes the app's axios `client` (typically a [hey-api](https://heyapi.dev) generated client's `.instance`) and attaches MSAL auth to it. MSAL is configurable via the `auth` prop (authority/tenant, redirect URIs, cache, login scopes) and defaults to the framework's built-in config.
 - **MooAppLayout**: Standard app shell with header, sidebar, and error boundaries
-- **HttpClientProvider**: Axios client with automatic MSAL token injection
-- **API hooks**: useApiGet, useApiPost, useApiPut, useApiPatch, useApiDelete wrapping React Query
+- **MsalAuthProvider**: Attaches an MSAL access-token request interceptor to the supplied axios instance (silent acquisition with an interactive-redirect fallback). Also exports `addMsalInterceptor` for imperative use (e.g. the internal MS Graph client).
+- **Data fetching**: apps generate their API client and React Query hooks with hey-api (`@hey-api/openapi-ts` + `@hey-api/client-axios` + the `@tanstack/react-query` plugin). moo-app no longer ships its own `useApiGet/Post/...` hooks or an axios client factory — hey-api owns the client and the query/mutation hooks.
 - **Routing**: uses `@tanstack/react-router`. The consumer builds the route tree with TanStack's `createRoute`/`createRouter` and passes the router to `MooApp` via the `router` prop (see `moo-app/README.md` for a recipe, and `demoo/src/index.tsx` for a full example). There is no `createMooAppBrowserRouter` helper.
 
 ### @andrewmclachlan/moo-icons
@@ -56,11 +56,11 @@ Demo application showcasing the libraries.
 
 ## Key Patterns
 
-**Provider hierarchy in MooApp**: AppProvider → ThemeProvider → MsalProvider → HttpClientProvider → QueryClientProvider (or PersistQueryClientProvider) → LinkProvider → MessageProvider → Login → RouterProvider
+**Provider hierarchy in MooApp**: AppProvider → ThemeProvider → MsalProvider → MsalAuthProvider → QueryClientProvider (or PersistQueryClientProvider) → LinkProvider → MessageProvider → Login → RouterProvider
 
 (ThemeProvider sits at the root — above the auth boundary — so the unauthenticated Login/fallback screen is themed too.)
 
-**API hooks**: All API hooks use React Query and automatically acquire MSAL tokens via HttpClientProvider interceptors.
+**Auth token injection**: `MsalAuthProvider` attaches a request interceptor to the app's axios client that acquires an MSAL access token silently per request (falling back to an interactive redirect on a recoverable auth error). The hey-api generated client uses that same instance, so all generated SDK/React Query calls are authenticated automatically.
 
 **Build tooling**: Libraries use Vite library mode to output ESM with TypeScript declarations (via vite-plugin-dts). Peer dependencies are externalized via rollup-plugin-peer-deps-external.
 

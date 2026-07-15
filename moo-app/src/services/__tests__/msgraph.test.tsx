@@ -11,11 +11,18 @@ vi.mock('@azure/msal-react', () => ({
   }),
 }));
 
-vi.mock('../../providers/HttpClientProvider', () => ({
-  createHttpClient: () => ({
-    interceptors: { request: { eject: mockEject } },
-    get: mockGet,
-  }),
+// usePhoto builds its Graph client with axios.create and attaches auth via
+// addMsalInterceptor from MsalAuthProvider — mock both.
+vi.mock('axios', () => ({
+  default: {
+    create: () => ({
+      interceptors: { request: { eject: mockEject } },
+      get: mockGet,
+    }),
+  },
+}));
+
+vi.mock('../../providers/MsalAuthProvider', () => ({
   addMsalInterceptor: () => 1,
 }));
 
