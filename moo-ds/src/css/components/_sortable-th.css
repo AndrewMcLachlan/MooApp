@@ -5,3 +5,7 @@ th.sortable {
         margin-left: 5px;
     }
 }
+
+.sort-icon-hidden {
+    visibility: hidden;
+}

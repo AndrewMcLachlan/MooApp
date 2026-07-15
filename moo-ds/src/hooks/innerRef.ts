@@ -5,13 +5,16 @@ export const useInnerRef = <T extends HTMLElement>(ref: React.Ref<T>) => {
     const innerRef = useRef<T>(null);
 
     useEffect(() => {
-        if (!ref) return;
+        if (!ref) return undefined;
         if (typeof ref === "function") {
             ref(innerRef.current);
-        } else {
-            ref.current = innerRef.current;
+            // Clear the consumer's callback ref on unmount so it doesn't retain
+            // a stale, detached node.
+            return () => { ref(null); };
         }
-    }, [ref, innerRef]);
+        ref.current = innerRef.current;
+        return undefined;
+    }, [ref]);
 
     return innerRef;
 };

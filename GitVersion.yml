@@ -1,7 +1,0 @@
-workflow: GitHubFlow/v1
-branches:
-  main:
-    is-main-branch: true
-    mode: ContinuousDeployment
-  feature:
-    label: beta

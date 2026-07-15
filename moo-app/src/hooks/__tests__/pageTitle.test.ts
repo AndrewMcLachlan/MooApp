@@ -56,6 +56,19 @@ describe('usePageTitle', () => {
     expect(document.title).toBe('Page 2 : Test App');
   });
 
+  it('updates title on rerender when app name changes', () => {
+    mockUseApp.mockReturnValue({ name: 'App One' });
+
+    const { rerender } = renderHook(() => usePageTitle('Home'));
+
+    expect(document.title).toBe('Home : App One');
+
+    mockUseApp.mockReturnValue({ name: 'App Two' });
+    rerender();
+
+    expect(document.title).toBe('Home : App Two');
+  });
+
   it('handles special characters in title', () => {
     renderHook(() => usePageTitle('User & Settings'));
 

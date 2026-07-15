@@ -61,6 +61,22 @@ describe('EditColumn', () => {
       expect(screen.getByRole('textbox')).toHaveValue('test value');
     });
 
+    it('syncs input value when props.value changes externally', async () => {
+      const user = userEvent.setup();
+      const { container, rerender } = render(
+        <table><tbody><tr><EditColumn value="original" /></tr></tbody></table>
+      );
+
+      await user.click(container.querySelector('td')!);
+      expect(screen.getByRole('textbox')).toHaveValue('original');
+
+      rerender(
+        <table><tbody><tr><EditColumn value="updated" /></tr></tbody></table>
+      );
+
+      expect(screen.getByRole('textbox')).toHaveValue('updated');
+    });
+
     it('input has autofocus', async () => {
       const user = userEvent.setup();
       const { container } = render(

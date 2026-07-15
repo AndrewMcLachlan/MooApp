@@ -5,7 +5,7 @@ import { type PropsWithChildren } from "react";
 export const SectionForm = <TFormValues,>({ header, headerSize = 2, children, ...rest }: PropsWithChildren<SectionFormProps<TFormValues>>) => {
 
     const H: any = `h${headerSize}`;
-    const headerNode = typeof header === "string" ? (header = <H>{header}</H>) : header;
+    const headerNode = typeof header === "string" ? <H>{header}</H> : header;
 
     return (
         <Form className="section" {...rest}>

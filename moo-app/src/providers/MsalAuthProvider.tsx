@@ -3,7 +3,7 @@ import axios, { type AxiosInstance, type InternalAxiosRequestConfig } from "axio
 
 import { type IMsalContext, useMsal } from "@azure/msal-react";
 import { AuthError, EventType, InteractionStatus, InteractionType, type IPublicClientApplication, type SilentRequest } from "@azure/msal-browser";
-import { loginRequest } from "../login/msal";
+import { getSilentRedirectUri, loginRequest } from "../login/msal";
 
 export interface MsalAuthProviderProps {
     /**
@@ -106,9 +106,16 @@ const acquireTokenForRequest = async (
     const account = msal.instance.getActiveAccount() ?? msal.instance.getAllAccounts()[0];
     const redirectState = getRedirectState(msal.instance);
 
+    // Point silent renewals at a blank page (if configured) so the hidden iframe
+    // doesn't re-boot the SPA and trigger block_iframe_reload. Interactive
+    // redirects below intentionally keep the default redirectUri so the user is
+    // returned to the page that initiated login.
+    const silentRedirectUri = getSilentRedirectUri();
+
     const tokenRequest: SilentRequest = {
         scopes: scopes ?? [],
-        ...(account ? { account } : {})
+        ...(account ? { account } : {}),
+        ...(silentRedirectUri ? { redirectUri: silentRedirectUri } : {})
     };
 
     try {

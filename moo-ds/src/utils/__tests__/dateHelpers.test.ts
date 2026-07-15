@@ -3,19 +3,21 @@ import { dateOnly, nextSunday, toUrl } from '../dateHelpers';
 
 describe('dateHelpers', () => {
   describe('dateOnly', () => {
+    // Note: dateOnly now zero-pads month and day (e.g. 2024-01-05). The earlier
+    // expectations (2024-1-5) encoded the pre-fix, non-padded behaviour.
     it('formats date with default separator', () => {
       const date = new Date(2024, 0, 15); // January 15, 2024
-      expect(dateOnly(date)).toBe('2024-1-15');
+      expect(dateOnly(date)).toBe('2024-01-15');
     });
 
     it('formats date with custom separator', () => {
       const date = new Date(2024, 0, 15);
-      expect(dateOnly(date, '/')).toBe('2024/1/15');
+      expect(dateOnly(date, '/')).toBe('2024/01/15');
     });
 
-    it('handles single-digit month', () => {
+    it('zero-pads single-digit month and day', () => {
       const march = new Date(2024, 2, 5); // March 5, 2024
-      expect(dateOnly(march)).toBe('2024-3-5');
+      expect(dateOnly(march)).toBe('2024-03-05');
     });
 
     it('handles double-digit month', () => {
@@ -25,7 +27,7 @@ describe('dateHelpers', () => {
 
     it('handles first day of year', () => {
       const newYear = new Date(2024, 0, 1);
-      expect(dateOnly(newYear)).toBe('2024-1-1');
+      expect(dateOnly(newYear)).toBe('2024-01-01');
     });
 
     it('handles last day of year', () => {
@@ -90,11 +92,24 @@ describe('dateHelpers', () => {
     });
 
     it('resets time to midnight', () => {
-      const date = new Date(2024, 0, 8, 14, 30, 45);
+      const date = new Date(2024, 0, 8, 14, 30, 45, 500);
       const result = nextSunday(date);
       expect(result.getHours()).toBe(0);
       expect(result.getMinutes()).toBe(0);
       expect(result.getSeconds()).toBe(0);
+      expect(result.getMilliseconds()).toBe(0);
+    });
+
+    it('does not mutate the input date', () => {
+      const input = new Date(2024, 0, 8, 14, 30, 45, 500); // Monday
+      const inputTime = input.getTime();
+      const result = nextSunday(input);
+      // Input is untouched...
+      expect(input.getTime()).toBe(inputTime);
+      expect(input.getDate()).toBe(8);
+      expect(input.getHours()).toBe(14);
+      // ...and a distinct instance was returned.
+      expect(result).not.toBe(input);
     });
 
     it('handles month boundary', () => {
@@ -119,19 +134,19 @@ describe('dateHelpers', () => {
     it('formats date for URL with / separator', () => {
       const monday = new Date(2024, 0, 8);
       const result = toUrl(monday);
-      expect(result).toBe('2024/1/14'); // Next Sunday
+      expect(result).toBe('2024/01/14'); // Next Sunday
     });
 
     it('works with Sunday input', () => {
       const sunday = new Date(2024, 0, 7);
       const result = toUrl(sunday);
-      expect(result).toBe('2024/1/7');
+      expect(result).toBe('2024/01/07');
     });
 
     it('handles month boundary in URL', () => {
       const monday = new Date(2024, 0, 29);
       const result = toUrl(monday);
-      expect(result).toBe('2024/2/4'); // February 4
+      expect(result).toBe('2024/02/04'); // February 4
     });
   });
 });

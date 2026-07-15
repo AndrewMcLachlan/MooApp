@@ -160,6 +160,32 @@ describe('MessageProvider', () => {
       expect(result.current.messages).toHaveLength(2);
     });
 
+    it('persists both messages when two are sent in the same tick', () => {
+      const wrapper = ({ children }: { children: React.ReactNode }) => (
+        <MessageProvider>{children}</MessageProvider>
+      );
+
+      const { result } = renderHook(() => useMessages(), { wrapper });
+
+      // Both calls happen within a single act (same tick) - functional
+      // updates must ensure neither clobbers the other.
+      act(() => {
+        result.current.sendMessage({
+          key: 'first',
+          message: 'First message',
+          variant: 'info',
+        });
+        result.current.sendMessage({
+          key: 'second',
+          message: 'Second message',
+          variant: 'warning',
+        });
+      });
+
+      expect(result.current.messages).toHaveLength(2);
+      expect(result.current.messages.map(m => m.key)).toEqual(['first', 'second']);
+    });
+
     it('supports all message variants', () => {
       const wrapper = ({ children }: { children: React.ReactNode }) => (
         <MessageProvider>{children}</MessageProvider>

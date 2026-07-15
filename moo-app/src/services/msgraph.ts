@@ -36,9 +36,19 @@ export const usePhoto = () => {
                 URL.revokeObjectURL(objectUrl);
             }
         }).catch((error) => {
-            if (error?.code !== "ERR_CANCELED") {
-                console.warn("No photo found for user", error);
+            // The request was aborted, or the interceptor could not acquire a
+            // token silently (e.g. block_iframe_reload / InteractionRequired) and
+            // handed off to an interactive redirect. Not an error — just skip.
+            if (error?.code === "ERR_CANCELED") {
+                return;
             }
+            // 404 is the expected response when the account has no profile photo.
+            if (error?.response?.status === 404) {
+                console.debug("No photo found for user");
+                return;
+            }
+            // Anything else is a genuine, unexpected failure worth surfacing.
+            console.warn("Error fetching user photo", error);
         });
 
         return () => {

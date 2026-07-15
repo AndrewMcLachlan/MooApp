@@ -32,6 +32,24 @@ describe('useInnerRef', () => {
       expect(callbackRef).toHaveBeenCalledTimes(1);
       expect(callbackRef).toHaveBeenCalledWith(screen.getByTestId('element'));
     });
+
+    it('calls the callback ref with null on unmount', () => {
+      const callbackRef = vi.fn();
+
+      const TestComponent = () => {
+        const innerRef = useInnerRef<HTMLDivElement>(callbackRef);
+        return <div ref={innerRef} data-testid="element">Test</div>;
+      };
+
+      const { unmount } = render(<TestComponent />);
+
+      callbackRef.mockClear();
+
+      unmount();
+
+      // The consumer's ref must be cleared so it doesn't retain a stale node.
+      expect(callbackRef).toHaveBeenCalledWith(null);
+    });
   });
 
   describe('with ref object', () => {
