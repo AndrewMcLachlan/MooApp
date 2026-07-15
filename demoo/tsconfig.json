@@ -28,7 +28,9 @@
 
     /* Resolve the workspace packages to their source, mirroring the vite
        aliases in vite.config.ts, so type-checking matches what actually runs
-       (instead of the stale published packages in node_modules). */
+       (instead of the stale published packages in node_modules). No baseUrl:
+       it was removed in TypeScript 7 (error TS5102) — paths resolve relative to
+       this tsconfig. */
     "paths": {
       "@andrewmclachlan/moo-ds": ["../moo-ds/src"],
       "@andrewmclachlan/moo-app": ["../moo-app/src"],
