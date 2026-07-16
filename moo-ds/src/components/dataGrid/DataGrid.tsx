@@ -218,7 +218,7 @@ function DataGridInner<TData>(
                         </tr>
                     ))}
                 </thead>
-                <tbody>
+                <tbody aria-busy={loading || undefined}>
                     {loading ? (
                         <LoadingTableRows rows={loadingRows} cols={colCount} />
                     ) : !hasRows ? (

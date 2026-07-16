@@ -88,6 +88,42 @@ describe('Button', () => {
       render(<Button disabled>Disabled</Button>);
       expect(screen.getByRole('button')).toBeDisabled();
     });
+
+    it('does not call onClick while loading', () => {
+      const onClick = vi.fn();
+      render(<Button loading onClick={onClick}>Save</Button>);
+      fireEvent.click(screen.getByRole('button'));
+      expect(onClick).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('loading', () => {
+    it('renders a spinner', () => {
+      const { container } = render(<Button loading>Save</Button>);
+      expect(container.querySelector('.btn-spinner')).toBeInTheDocument();
+    });
+
+    it('keeps the label alongside the spinner', () => {
+      render(<Button loading>Save</Button>);
+      expect(screen.getByText('Save')).toBeInTheDocument();
+    });
+
+    it('disables the button and marks it busy', () => {
+      render(<Button loading>Save</Button>);
+      const button = screen.getByRole('button');
+      expect(button).toBeDisabled();
+      expect(button).toHaveAttribute('aria-busy', 'true');
+    });
+
+    it('adds the btn-loading class', () => {
+      render(<Button loading>Save</Button>);
+      expect(screen.getByRole('button')).toHaveClass('btn-loading');
+    });
+
+    it('does not render a spinner when not loading', () => {
+      const { container } = render(<Button>Save</Button>);
+      expect(container.querySelector('.btn-spinner')).not.toBeInTheDocument();
+    });
   });
 
   it('applies custom className', () => {

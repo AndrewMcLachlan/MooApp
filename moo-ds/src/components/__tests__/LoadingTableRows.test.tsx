@@ -43,16 +43,15 @@ describe('LoadingTableRows', () => {
   });
 
   describe('cell content', () => {
-    it('renders cells with non-breaking space content', () => {
+    it('renders a skeleton placeholder in each cell', () => {
       const { container } = render(
         <table><tbody><LoadingTableRows rows={1} cols={3} /></tbody></table>
       );
 
       const cells = container.querySelectorAll('td');
       expect(cells).toHaveLength(3);
-      // Each cell contains &nbsp; (non-breaking space)
       cells.forEach(cell => {
-        expect(cell.innerHTML).toBe('&nbsp;');
+        expect(cell.querySelector('.skeleton')).toBeInTheDocument();
       });
     });
   });

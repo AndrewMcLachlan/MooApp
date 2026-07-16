@@ -372,3 +372,11 @@ button {
         color: inherit;
     }
 }
+
+/* Busy state: inline spinner sits before the label with a small gap. */
+.btn-loading {
+    .btn-spinner {
+        margin-right: 0.4rem;
+        vertical-align: -0.125em;
+    }
+}
