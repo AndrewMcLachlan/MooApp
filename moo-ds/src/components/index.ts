@@ -37,6 +37,7 @@ export * from "./SaveIcon";
 export * from "./SortableTh";
 export * from "./SortIcon";
 export * from "./SearchBox";
+export * from "./Skeleton";
 export * from "./Spinner";
 export * from "./SpinnerContainer";
 export * from "./Tab";

@@ -55,3 +55,13 @@ export const Sizes: Story = {
 export const Disabled: Story = {
     render: () => <Button disabled>Disabled</Button>,
 };
+
+export const Loading: Story = {
+    render: () => (
+        <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+            <Button loading>Saving</Button>
+            <Button variant="outline-primary" loading>Saving</Button>
+            <Button variant="secondary" size="sm" loading>Saving</Button>
+        </div>
+    ),
+};

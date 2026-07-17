@@ -1,4 +1,4 @@
-import { Section, NavItemDivider, IconButton, SectionTable, Pagination, PageSize, PaginationControls, SortablePaginationTh, changeSortDirection, SortDirection, Button, LoadingTableRows, MiniPagination } from "@andrewmclachlan/moo-ds";
+import { Section, NavItemDivider, IconButton, SectionTable, Pagination, PageSize, PaginationControls, SortablePaginationTh, changeSortDirection, SortDirection, Button, MiniPagination } from "@andrewmclachlan/moo-ds";
 import { Page } from "@andrewmclachlan/moo-app";
 import { Tags } from "@andrewmclachlan/moo-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -80,12 +80,12 @@ export const Table = () => {
             </SectionTable>
 
             <Section title="Loading Table Rows" header="Loading Table Rows" headerSize={4}>
-                <Button onClick={simulateLoading} disabled={isTableLoading}>
-                    {isTableLoading ? "Loading..." : "Simulate Loading"}
+                <Button onClick={simulateLoading} loading={isTableLoading}>
+                    {isTableLoading ? "Loading" : "Simulate Loading"}
                 </Button>
             </Section>
 
-            <SectionTable header="Data Table" striped hover headerSize={2}>
+            <SectionTable header="Data Table" striped hover headerSize={2} loading={isTableLoading} loadingRows={5}>
                 <thead>
                     <tr>
                         <th>Column A</th>
@@ -94,17 +94,13 @@ export const Table = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {isTableLoading ? (
-                        <LoadingTableRows rows={5} cols={3} />
-                    ) : (
-                        tableData.slice(0, 5).map((row) => (
-                            <tr key={row.a}>
-                                <td>{row.a}</td>
-                                <td>{row.b}</td>
-                                <td>{row.c}</td>
-                            </tr>
-                        ))
-                    )}
+                    {tableData.slice(0, 5).map((row) => (
+                        <tr key={row.a}>
+                            <td>{row.a}</td>
+                            <td>{row.b}</td>
+                            <td>{row.c}</td>
+                        </tr>
+                    ))}
                 </tbody>
             </SectionTable>
 

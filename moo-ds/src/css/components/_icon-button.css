@@ -10,6 +10,13 @@
     gap: 5px;
 }
 
+/* The loading spinner stands in for the icon, so match the icon's box. */
+.btn.btn-icon .spinner-border {
+    --spinner-width: 18px;
+    --spinner-height: 18px;
+    --spinner-border-width: 2px;
+}
+
 .btn svg.custom-icon,
 .btn img.custom-icon {
     height: 18px;

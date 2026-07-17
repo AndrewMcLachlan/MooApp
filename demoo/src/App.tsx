@@ -55,6 +55,11 @@ const App = () => {
       image: <Icon icon={Tags} />
     },
     {
+      text: "Skeleton",
+      route: "/skeleton",
+      image: <Icon icon={Stack} />
+    },
+    {
       text: "Data Grid",
       route: "/data-grid",
       image: <Icon icon={Tags} />

@@ -110,4 +110,19 @@ describe('SectionTable', () => {
       expect(container.querySelector('table')).toHaveClass('table-hover');
     });
   });
+
+  describe('loading', () => {
+    it('forwards loading to the underlying Table', () => {
+      const { container } = render(
+        <SectionTable loading>
+          <thead><tr><th>Name</th><th>Role</th></tr></thead>
+          <tbody><tr><td>Alice</td><td>Admin</td></tr></tbody>
+        </SectionTable>
+      );
+
+      expect(screen.queryByText('Alice')).not.toBeInTheDocument();
+      expect(container.querySelector('.skeleton')).toBeInTheDocument();
+      expect(container.querySelector('tbody[aria-busy="true"]')).toBeInTheDocument();
+    });
+  });
 });

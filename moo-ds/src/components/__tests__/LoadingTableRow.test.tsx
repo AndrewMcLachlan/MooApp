@@ -45,13 +45,12 @@ describe('LoadingTableRow', () => {
   });
 
   describe('cell content', () => {
-    it('renders non-breaking space in each cell', () => {
+    it('renders a skeleton placeholder in each cell', () => {
       renderInTable(<LoadingTableRow cols={3} />);
 
       const cells = screen.getAllByRole('cell');
       cells.forEach(cell => {
-        // Non-breaking space is \u00A0
-        expect(cell.innerHTML).toBe('&nbsp;');
+        expect(cell.querySelector('.skeleton')).toBeInTheDocument();
       });
     });
   });

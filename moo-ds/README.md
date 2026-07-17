@@ -15,6 +15,15 @@ An opinionated React design system — the foundation UI layer for MooApp, with 
   - `MessageProvider` — toast/notification messages.
 - **Utility hooks** — `useLocalStorage`, `useSessionStorage`, `useClickAway`, `useUpdatingState`, and more.
 
+## Loading states — spinner vs skeleton
+
+The design system offers two loading affordances; pick by whether the placeholder can honestly mirror the final content:
+
+- **`Skeleton`** (and the `loading` prop on `Table`, `SectionTable`, `DataGrid`, and `Button`) — use when the content has a **known, repeating shape**: table rows, lines of text, avatars, list items. The shimmering placeholder tells the eye where the real content will land. `Skeleton.Text`, `Skeleton.Circle`, and `Skeleton.Rect` compose the common shapes.
+- **`Spinner` / `SpinnerContainer`** — use when the shape is **unknown or irregular**: charts, reports, arbitrary `Widget` bodies. A skeleton there would misrepresent the layout, so a spinner is the honest choice.
+
+The skeleton shimmer is a single moving gradient that resolves its colours from the active theme and collapses to a static placeholder under `prefers-reduced-motion`. Skeleton shapes are decorative (`aria-hidden`); the loading *region* that contains them carries `aria-busy`.
+
 ## Peer dependencies
 
 - `react` and `react-dom` (>= 19.2.7)
