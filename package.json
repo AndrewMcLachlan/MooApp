@@ -50,12 +50,15 @@
     "react-dom": ">=19.2.0"
   },
   "scripts": {
+    "postinstall": "node scripts/link-eslint-typescript.mjs",
     "demoo": "npm run dev --workspace=demoo",
     "start": "npm run dev --workspace=demoo",
     "storybook": "npm run storybook --workspace=storybook",
     "build": "npm run build --workspaces",
-    "lint": "npm run lint --workspaces",
-    "lint-fix": "npm run lint-fix --workspaces",
+    "prelint": "node scripts/link-eslint-typescript.mjs",
+    "lint": "npm run lint --workspaces --if-present",
+    "prelint-fix": "node scripts/link-eslint-typescript.mjs",
+    "lint-fix": "npm run lint-fix --workspaces --if-present",
     "type-check": "node node_modules/typescript/bin/tsc -p moo-ds/tsconfig.json && node node_modules/typescript/bin/tsc -p moo-app/tsconfig.json && node node_modules/typescript/bin/tsc -p moo-icons/tsconfig.json",
     "test": "vitest",
     "test:run": "vitest run",

@@ -79,7 +79,7 @@ describe('ThemeSelector', () => {
         });
 
         // Theme change is reflected in body class (handled by ThemeProvider)
-        expect(document.body.classList.contains('dark') || document.body.className === 'dark').toBeTruthy;
+        expect(document.body.classList.contains('dark') || document.body.className === 'dark').toBeTruthy();
       }
     });
   });

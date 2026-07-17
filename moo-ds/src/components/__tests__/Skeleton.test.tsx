@@ -49,7 +49,7 @@ describe('Skeleton', () => {
     });
 
     it('is decorative (aria-hidden)', () => {
-      const { container } = render(<Skeleton.Text data-testid="t" />);
+      render(<Skeleton.Text data-testid="t" />);
       expect(screen.getByTestId('t')).toHaveAttribute('aria-hidden', 'true');
     });
   });

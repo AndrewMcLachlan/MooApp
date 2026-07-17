@@ -1,59 +1,35 @@
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import react from "eslint-plugin-react";
-import globals from "globals";
-import tsParser from "@typescript-eslint/parser";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import globals from "globals";
+import reactHooks from "eslint-plugin-react-hooks";
+import tseslint from "typescript-eslint";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
-});
-
-export default [{
-    ignores: ["**/react-app-env.d.ts"],
-}, ...compat.extends(
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-), {
-    plugins: {
-        "@typescript-eslint": typescriptEslint,
-        react,
-    },
-
-    languageOptions: {
-        globals: {
-            ...globals.browser,
+export default tseslint.config(
+    { ignores: ["dist", "**/react-app-env.d.ts"] },
+    {
+        extends: [js.configs.recommended, ...tseslint.configs.recommended],
+        files: ["**/*.{ts,tsx}"],
+        languageOptions: {
+            ecmaVersion: "latest",
+            sourceType: "module",
+            globals: globals.browser,
         },
-
-        parser: tsParser,
-        ecmaVersion: "latest",
-        sourceType: "module",
+        plugins: {
+            "react-hooks": reactHooks,
+        },
+        rules: {
+            // Keep the two classic, high-value hooks rules. The rest of
+            // react-hooks v7 "recommended" (refs/immutability/static-components/
+            // set-state-in-effect) is deliberately not adopted here yet — it
+            // flags a lot of existing library code and is a separate cleanup.
+            "react-hooks/rules-of-hooks": "error",
+            "react-hooks/exhaustive-deps": "warn",
+            "@typescript-eslint/no-explicit-any": "off",
+            "@typescript-eslint/no-empty-object-type": "off",
+            "@typescript-eslint/no-unused-vars": ["warn", {
+                argsIgnorePattern: "^_",
+                varsIgnorePattern: "^_",
+                caughtErrorsIgnorePattern: "^_",
+            }],
+        },
     },
-
-    rules: {
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-empty-object-type": "off",
-
-        "@typescript-eslint/no-unused-vars": ["warn", {
-            argsIgnorePattern: "^_",
-            varsIgnorePattern: "^_",
-            caughtErrorsIgnorePattern: "^_",
-        }],
-
-        "react/prop-types": "off",
-        "react/react-in-jsx-scope": "off",
-    },
-
-    "settings": {
-        "react": {
-            "version": "detect",
-        }
-    }
-}];
+);
