@@ -48,10 +48,17 @@
         flex-wrap: wrap;
         flex: 1 1 100px;
         min-width: 100px;
-        /* Cap the pill area to a few rows; excess scrolls internally so a large
-           selection can't grow the control unbounded. */
+        position: relative;
+        /* Cap the pill area to a few rows while the dropdown is open (all pills
+           shown); excess scrolls internally so it can't grow unbounded. */
         max-height: 7.5rem;
         overflow-y: auto;
+    }
+
+    /* The pills wrapper participates directly in the body's flex layout so pill
+       rows can be measured, without adding a box of its own. */
+    .cb-pills {
+        display: contents;
     }
 
     .cb-more {

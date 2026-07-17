@@ -230,7 +230,10 @@ describe('ComboBox', () => {
     });
   });
 
-  describe('collapse (multi-select)', () => {
+  describe('multi-select collapse', () => {
+    // The pixel-level "how many fit one row" measurement needs real layout, so
+    // it is verified in the browser. jsdom has no layout, so these assert the
+    // collapse *structure* and state transitions instead.
     const manyItems: TestItem[] = Array.from({ length: 8 }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}` }));
     const manyProps = {
       items: manyItems,
@@ -239,42 +242,40 @@ describe('ComboBox', () => {
       multiSelect: true,
     };
 
-    it('collapses to the first N pills + a "+X more" chip when inactive', () => {
+    it('wraps the pills for measurement while the dropdown is closed', () => {
       const { container } = render(<ComboBox {...manyProps} selectedItems={manyItems} />);
 
-      // Default collapseAfter is 5 -> 5 pills, +3 more.
-      expect(container.querySelectorAll('.body .item')).toHaveLength(5);
-      expect(screen.getByText('+3 more')).toBeInTheDocument();
-      expect(screen.queryByText('Item 8')).not.toBeInTheDocument();
+      expect(container.querySelector('.cb-pills')).toBeInTheDocument();
+    });
+
+    it('hides the input while collapsed (pills stand in for it)', () => {
+      const { container } = render(<ComboBox {...manyProps} selectedItems={manyItems} />);
+
+      expect(container.querySelector('.body input')).toHaveAttribute('hidden');
+    });
+
+    it('renders each selected pill exactly once (no measurement clone)', () => {
+      render(<ComboBox {...manyProps} selectedItems={manyItems} />);
+
+      // Would throw if a hidden clone duplicated the label.
       expect(screen.getByText('Item 1')).toBeInTheDocument();
+      expect(screen.getByText('Item 8')).toBeInTheDocument();
     });
 
-    it('respects the collapseAfter prop', () => {
-      const { container } = render(<ComboBox {...manyProps} collapseAfter={3} selectedItems={manyItems} />);
-
-      expect(container.querySelectorAll('.body .item')).toHaveLength(3);
-      expect(screen.getByText('+5 more')).toBeInTheDocument();
-    });
-
-    it('does not collapse when at or below the threshold', () => {
-      render(<ComboBox {...manyProps} selectedItems={manyItems.slice(0, 4)} />);
-
-      expect(screen.queryByText(/more$/)).not.toBeInTheDocument();
-    });
-
-    it('expands to all pills when activated', () => {
+    it('expands (all pills, no wrapper) and shows the input when opened', () => {
       const { container } = render(<ComboBox {...manyProps} selectedItems={manyItems} />);
 
       fireEvent.click(container.querySelector('.combo-box')!);
 
-      expect(container.querySelectorAll('.body .item')).toHaveLength(8);
-      expect(screen.queryByText('+3 more')).not.toBeInTheDocument();
-      expect(screen.getByText('Item 8')).toBeInTheDocument();
+      expect(container.querySelector('.cb-pills')).not.toBeInTheDocument();
+      expect(container.querySelector('.body input')).not.toHaveAttribute('hidden');
+      expect(container.querySelectorAll('.body > .item')).toHaveLength(8);
     });
 
-    it('does not collapse a single-select combo box', () => {
-      render(<ComboBox {...defaultProps} selectedItems={[testItems[0]]} />);
-      expect(screen.queryByText(/more$/)).not.toBeInTheDocument();
+    it('does not wrap pills for a single-select combo box', () => {
+      const { container } = render(<ComboBox {...defaultProps} selectedItems={[testItems[0]]} />);
+
+      expect(container.querySelector('.cb-pills')).not.toBeInTheDocument();
     });
   });
 

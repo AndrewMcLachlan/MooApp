@@ -14,7 +14,6 @@ export const ComboBoxPage = () => {
 
     const items = useMemo<Tag[]>(() => NAMES.map((text, id) => ({ id, text, colour: "#8b0000" })), []);
 
-    // Pre-select many so the collapsed "+N more" and expand-on-focus are visible.
     const [many, setMany] = useState<Tag[]>(() => items.slice(0, 8));
     const [few, setFew] = useState<Tag[]>(() => items.slice(4, 6));
     const [inCell, setInCell] = useState<Tag[]>(() => items.slice(0, 7));
@@ -32,21 +31,18 @@ export const ComboBoxPage = () => {
     return (
         <Page title="ComboBox" breadcrumbs={[{ route: "/combo-box", text: "ComboBox" }]}>
 
-            <Section title="Many selections" header="Many selections (collapses to +N more)" headerSize={4}>
+            <Section title="Many selections" header="Many selections (collapse to one row)" headerSize={4}>
                 <p>
-                    Inactive, the pills collapse to the first few plus a &ldquo;+N more&rdquo; chip.
-                    Click anywhere (except a remove &times;) to expand and focus the input.
-                    <code>collapseAfter</code> defaults to 5.
+                    While the dropdown is closed, the pills collapse to however many fit on a single
+                    row plus a &ldquo;+N more&rdquo; chip. Click anywhere (except a remove &times;) to
+                    open it &mdash; that expands to every pill and focuses the input. Resize the window
+                    to see the fit re-measure.
                 </p>
                 <ComboBox {...common} selectedItems={many} onChange={setMany} />
             </Section>
 
-            <Section title="Few selections" header="Few selections (no collapse)" headerSize={4}>
+            <Section title="Few selections" header="Few selections (all fit, no chip)" headerSize={4}>
                 <ComboBox {...common} selectedItems={few} onChange={setFew} />
-            </Section>
-
-            <Section title="Lower threshold" header="collapseAfter = 3" headerSize={4}>
-                <ComboBox {...common} collapseAfter={3} selectedItems={many} onChange={setMany} />
             </Section>
 
             <SectionTable header="In a table" headerSize={4} striped hover>
@@ -59,11 +55,11 @@ export const ComboBoxPage = () => {
                 <tbody>
                     <tr>
                         <td>Everyday</td>
-                        <td><ComboBox {...common} collapseAfter={3} selectedItems={inCell} onChange={setInCell} /></td>
+                        <td><ComboBox {...common} selectedItems={inCell} onChange={setInCell} /></td>
                     </tr>
                     <tr>
                         <td>Savings</td>
-                        <td><ComboBox {...common} collapseAfter={3} selectedItems={few} onChange={setFew} /></td>
+                        <td><ComboBox {...common} selectedItems={few} onChange={setFew} /></td>
                     </tr>
                 </tbody>
             </SectionTable>
