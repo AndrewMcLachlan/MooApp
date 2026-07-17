@@ -60,6 +60,11 @@ const App = () => {
       image: <Icon icon={Stack} />
     },
     {
+      text: "ComboBox",
+      route: "/combo-box",
+      image: <Icon icon={Sliders} />
+    },
+    {
       text: "Data Grid",
       route: "/data-grid",
       image: <Icon icon={Tags} />

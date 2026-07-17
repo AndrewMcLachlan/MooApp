@@ -49,10 +49,10 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
         setShow(false);
     }, [props.readonly]);
 
-    const { clearable, creatable, multiSelect, readonly, labelField, valueField, colourField, onAdd, onRemove, onChange, onCreate, createLabel, search, ref } = props;
+    const { clearable, creatable, multiSelect, readonly, labelField, valueField, colourField, onAdd, onRemove, onChange, onCreate, createLabel, search, ref, collapseAfter = 5 } = props;
 
     return (
-        <ComboBoxContext value={{ selectedItems, setSelectedItems, text, setText, items, setItems, newItem, setNewItem, show, setShow, showInput, setShowInput, clear, clearable, creatable, multiSelect, readonly, labelField, valueField, colourField, onAdd, onRemove, onChange, onCreate, createLabel, search, allItems, ref, listId }}>
+        <ComboBoxContext value={{ selectedItems, setSelectedItems, text, setText, items, setItems, newItem, setNewItem, show, setShow, showInput, setShowInput, clear, clearable, creatable, multiSelect, readonly, labelField, valueField, colourField, onAdd, onRemove, onChange, onCreate, createLabel, search, allItems, ref, listId, collapseAfter }}>
             {props.children}
         </ComboBoxContext>
     );
@@ -101,6 +101,7 @@ export interface ComboBoxOptions {
     allItems?: any[];
     ref: React.Ref<HTMLInputElement>;
     listId: string;
+    collapseAfter: number;
 }
 
 export interface ComboBoxProps<TItem> extends RefProps<HTMLInputElement> {
@@ -124,5 +125,11 @@ export interface ComboBoxProps<TItem> extends RefProps<HTMLInputElement> {
     readonly?: boolean;
     tabIndex?: number;
     createLabel?: (input: string) => string;
+    /**
+     * For multi-select: collapse the selected pills to the first N plus a
+     * "+X more" chip while the control is inactive, so many selections don't
+     * grow the box. Clicking anywhere expands to all pills. Defaults to 5.
+     */
+    collapseAfter?: number;
 }
 

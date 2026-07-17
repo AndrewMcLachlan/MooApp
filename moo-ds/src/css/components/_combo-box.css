@@ -34,7 +34,9 @@
 
     >div {
         display: flex;
-        align-items: center;
+        /* Pin the controls to the top so they don't float to the vertical
+           middle when the pill area wraps to several rows. */
+        align-items: flex-start;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-end;
@@ -48,6 +50,29 @@
         flex-wrap: wrap;
         flex: 1 1 100px;
         min-width: 100px;
+        /* Cap the pill area to a few rows; excess scrolls internally so a large
+           selection can't grow the control unbounded. */
+        max-height: 7.5rem;
+        overflow-y: auto;
+    }
+
+    .cb-more {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.35em 0.7em;
+        font-size: 0.8rem;
+        font-weight: 500;
+        line-height: 1;
+        border-radius: 50rem;
+        background: color-mix(in srgb, var(--body-colour) 12%, transparent);
+        color: var(--body-colour-dim);
+        cursor: pointer;
+        white-space: nowrap;
+        user-select: none;
+
+        &:hover {
+            color: var(--body-colour);
+        }
     }
 
     input {

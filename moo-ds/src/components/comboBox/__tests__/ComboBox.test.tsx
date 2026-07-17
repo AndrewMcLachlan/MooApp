@@ -229,4 +229,63 @@ describe('ComboBox', () => {
       expect(container.querySelector('.combo-box')).toBeInTheDocument();
     });
   });
+
+  describe('collapse (multi-select)', () => {
+    const manyItems: TestItem[] = Array.from({ length: 8 }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}` }));
+    const manyProps = {
+      items: manyItems,
+      labelField: (item: TestItem) => item.name,
+      valueField: (item: TestItem) => item.id,
+      multiSelect: true,
+    };
+
+    it('collapses to the first N pills + a "+X more" chip when inactive', () => {
+      const { container } = render(<ComboBox {...manyProps} selectedItems={manyItems} />);
+
+      // Default collapseAfter is 5 -> 5 pills, +3 more.
+      expect(container.querySelectorAll('.body .item')).toHaveLength(5);
+      expect(screen.getByText('+3 more')).toBeInTheDocument();
+      expect(screen.queryByText('Item 8')).not.toBeInTheDocument();
+      expect(screen.getByText('Item 1')).toBeInTheDocument();
+    });
+
+    it('respects the collapseAfter prop', () => {
+      const { container } = render(<ComboBox {...manyProps} collapseAfter={3} selectedItems={manyItems} />);
+
+      expect(container.querySelectorAll('.body .item')).toHaveLength(3);
+      expect(screen.getByText('+5 more')).toBeInTheDocument();
+    });
+
+    it('does not collapse when at or below the threshold', () => {
+      render(<ComboBox {...manyProps} selectedItems={manyItems.slice(0, 4)} />);
+
+      expect(screen.queryByText(/more$/)).not.toBeInTheDocument();
+    });
+
+    it('expands to all pills when activated', () => {
+      const { container } = render(<ComboBox {...manyProps} selectedItems={manyItems} />);
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+
+      expect(container.querySelectorAll('.body .item')).toHaveLength(8);
+      expect(screen.queryByText('+3 more')).not.toBeInTheDocument();
+      expect(screen.getByText('Item 8')).toBeInTheDocument();
+    });
+
+    it('does not collapse a single-select combo box', () => {
+      render(<ComboBox {...defaultProps} selectedItems={[testItems[0]]} />);
+      expect(screen.queryByText(/more$/)).not.toBeInTheDocument();
+    });
+  });
+
+  describe('focus on click', () => {
+    it('focuses the input when the control is clicked', () => {
+      const { container } = render(<ComboBox {...defaultProps} multiSelect selectedItems={[testItems[0]]} />);
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+
+      const input = container.querySelector('input');
+      expect(document.activeElement).toBe(input);
+    });
+  });
 });
