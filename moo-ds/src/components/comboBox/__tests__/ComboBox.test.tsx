@@ -242,16 +242,24 @@ describe('ComboBox', () => {
       multiSelect: true,
     };
 
-    it('wraps the pills for measurement while the dropdown is closed', () => {
+    it('wraps the pills in the measurement container', () => {
       const { container } = render(<ComboBox {...manyProps} selectedItems={manyItems} />);
 
       expect(container.querySelector('.cb-pills')).toBeInTheDocument();
     });
 
-    it('hides the input while collapsed (pills stand in for it)', () => {
+    it('hides the input while the dropdown is closed (pills stand in for it)', () => {
       const { container } = render(<ComboBox {...manyProps} selectedItems={manyItems} />);
 
       expect(container.querySelector('.body input')).toHaveAttribute('hidden');
+    });
+
+    it('shows the input when the dropdown is opened', () => {
+      const { container } = render(<ComboBox {...manyProps} selectedItems={manyItems} />);
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+
+      expect(container.querySelector('.body input')).not.toHaveAttribute('hidden');
     });
 
     it('renders each selected pill exactly once (no measurement clone)', () => {
@@ -262,17 +270,13 @@ describe('ComboBox', () => {
       expect(screen.getByText('Item 8')).toBeInTheDocument();
     });
 
-    it('expands (all pills, no wrapper) and shows the input when opened', () => {
+    it('shows every pill when layout cannot be measured (fallback)', () => {
       const { container } = render(<ComboBox {...manyProps} selectedItems={manyItems} />);
 
-      fireEvent.click(container.querySelector('.combo-box')!);
-
-      expect(container.querySelector('.cb-pills')).not.toBeInTheDocument();
-      expect(container.querySelector('.body input')).not.toHaveAttribute('hidden');
-      expect(container.querySelectorAll('.body > .item')).toHaveLength(8);
+      expect(container.querySelectorAll('.cb-pills .item')).toHaveLength(8);
     });
 
-    it('does not wrap pills for a single-select combo box', () => {
+    it('does not render the pills container for a single-select combo box', () => {
       const { container } = render(<ComboBox {...defaultProps} selectedItems={[testItems[0]]} />);
 
       expect(container.querySelector('.cb-pills')).not.toBeInTheDocument();

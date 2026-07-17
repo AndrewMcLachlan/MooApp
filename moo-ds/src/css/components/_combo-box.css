@@ -45,14 +45,14 @@
         display: flex;
         gap: 0.75rem;
         align-items: center;
-        flex-wrap: wrap;
+        /* The pill area is always a single row: the pills are measured down to
+           what fits and the overflow becomes a "+N more" chip, so the control
+           never grows past one line. nowrap + overflow guard against any
+           measurement lag. */
+        flex-wrap: nowrap;
+        overflow: hidden;
         flex: 1 1 100px;
         min-width: 100px;
-        position: relative;
-        /* Cap the pill area to a few rows while the dropdown is open (all pills
-           shown); excess scrolls internally so it can't grow unbounded. */
-        max-height: 7.5rem;
-        overflow-y: auto;
     }
 
     /* The pills wrapper participates directly in the body's flex layout so pill
