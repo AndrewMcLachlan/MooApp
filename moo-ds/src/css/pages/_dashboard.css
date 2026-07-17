@@ -32,6 +32,13 @@ main.dashboard {
         flex-direction: column;
         overflow: hidden;
 
+        /* Pin the widget title to the top. While a widget loads, its chart's spinner is absolutely
+           positioned, so the header can be the only in-flow item — and the section's alignment would
+           otherwise drift it downward. align-self keeps it top-anchored in both states. */
+        > .section-header {
+            align-self: start;
+        }
+
         > *:not(.section-header) {
             flex: none;
             min-height: 0;
