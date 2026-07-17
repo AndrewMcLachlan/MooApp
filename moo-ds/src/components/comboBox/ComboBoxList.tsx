@@ -9,14 +9,10 @@ export const ComboBoxList = () => {
 
     const onItemSelected = (item: any) => {
 
-        let newSelectedItems = [];
+        const newSelectedItems = multiSelect ? [...selectedItems, item] : [item];
 
         if (multiSelect) {
-            newSelectedItems = [...selectedItems, item];
             onAdd?.(item);
-        }
-        else {
-            newSelectedItems = [item];
         }
 
         setSelectedItems(newSelectedItems);

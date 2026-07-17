@@ -1,4 +1,4 @@
-import type { NavItem, Theme, Themes } from "@andrewmclachlan/moo-ds";
+import type { NavItem } from "@andrewmclachlan/moo-ds";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 /**

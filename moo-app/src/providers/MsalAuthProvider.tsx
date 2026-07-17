@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef } from "react";
 import axios, { type AxiosInstance, type InternalAxiosRequestConfig } from "axios";
 
 import { type IMsalContext, useMsal } from "@azure/msal-react";
-import { AuthError, EventType, InteractionStatus, InteractionType, type IPublicClientApplication, type SilentRequest } from "@azure/msal-browser";
+import { AuthError, type AuthenticationResult, EventType, InteractionStatus, InteractionType, type IPublicClientApplication, type SilentRequest } from "@azure/msal-browser";
 import { getSilentRedirectUri, loginRequest } from "../login/msal";
 
 export interface MsalAuthProviderProps {
@@ -102,7 +102,7 @@ const acquireTokenForRequest = async (
     const msal = msalRef.current;
     const scopes = scopesRef.current;
 
-    let token = null;
+    let token: AuthenticationResult;
     const account = msal.instance.getActiveAccount() ?? msal.instance.getAllAccounts()[0];
     const redirectState = getRedirectState(msal.instance);
 
@@ -156,7 +156,7 @@ const acquireTokenForRequest = async (
         throw new axios.CanceledError("Request canceled: interactive authentication redirect required.");
     }
 
-    if (token?.accessToken) {
+    if (token.accessToken) {
         request.headers.setAuthorization(`Bearer ${token.accessToken}`);
     }
 
