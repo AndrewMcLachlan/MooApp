@@ -66,6 +66,11 @@ export const Components = () => {
                     <Button variant="secondary" size="sm" loading={buttonLoading}>Save</Button>
                     <Button as="a" href="https://example.com" loading={buttonLoading}>Anchor (inert)</Button>
                 </div>
+                <p style={{ marginTop: "1rem" }}>On an <code>IconButton</code> the icon itself becomes the spinner:</p>
+                <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+                    <IconButton icon={faPlus} loading={buttonLoading}>Create</IconButton>
+                    <IconButton icon={faPlus} badge loading={buttonLoading}>Create</IconButton>
+                </div>
             </Section>
 
             <Section title="Button Groups" header="Button Groups" headerSize={4}>

@@ -10,10 +10,15 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
     href?: string;
     /** Show an inline spinner and mark the button busy (also disables it). */
     loading?: boolean;
+    /**
+     * Whether `loading` renders the built-in leading spinner. Set false when a
+     * wrapper (e.g. IconButton) places the spinner itself. Defaults to true.
+     */
+    loadingSpinner?: boolean;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, React.PropsWithChildren<ButtonProps>>(
-    ({ variant = "primary", size, as, active, loading = false, disabled, className, children, type = "button", onClick, ...rest }, ref) => {
+    ({ variant = "primary", size, as, active, loading = false, loadingSpinner = true, disabled, className, children, type = "button", onClick, ...rest }, ref) => {
         const Tag = as || "button";
         const isDisabled = loading || disabled;
         const classes = classNames(
@@ -47,7 +52,7 @@ export const Button = React.forwardRef<HTMLButtonElement, React.PropsWithChildre
                 onClick={handleClick}
                 {...rest}
             >
-                {loading && <Spinner animation="border" size="sm" className="btn-spinner" aria-hidden="true" />}
+                {loading && loadingSpinner && <Spinner animation="border" size="sm" className="btn-spinner" aria-hidden="true" />}
                 {children}
             </Tag>
         );
