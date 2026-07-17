@@ -95,6 +95,20 @@ describe('Button', () => {
       fireEvent.click(screen.getByRole('button'));
       expect(onClick).not.toHaveBeenCalled();
     });
+
+    it('does not call onClick while loading for non-button elements', () => {
+      const onClick = vi.fn();
+      render(<Button as="a" href="#" loading onClick={onClick}>Save</Button>);
+      fireEvent.click(screen.getByText('Save'));
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it('does not call onClick when disabled for non-button elements', () => {
+      const onClick = vi.fn();
+      render(<Button as="a" href="#" disabled onClick={onClick}>Go</Button>);
+      fireEvent.click(screen.getByText('Go'));
+      expect(onClick).not.toHaveBeenCalled();
+    });
   });
 
   describe('loading', () => {

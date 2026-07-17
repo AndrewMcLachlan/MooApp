@@ -88,5 +88,32 @@ describe('Table', () => {
       const firstRow = container.querySelector('tbody tr');
       expect(firstRow?.querySelectorAll('td')).toHaveLength(4);
     });
+
+    it('respects colSpan when inferring column count', () => {
+      const { container } = render(
+        <Table loading>
+          <thead>
+            <tr><th colSpan={2}>Wide</th><th>Narrow</th></tr>
+          </thead>
+          <tbody><tr><td>a</td><td>b</td><td>c</td></tr></tbody>
+        </Table>
+      );
+      const firstRow = container.querySelector('tbody tr');
+      expect(firstRow?.querySelectorAll('td')).toHaveLength(3);
+    });
+
+    it('preserves caption and colgroup while loading', () => {
+      const { container } = render(
+        <Table loading>
+          <caption>My table</caption>
+          <colgroup><col /><col /></colgroup>
+          <thead><tr><th>A</th><th>B</th></tr></thead>
+          <tbody><tr><td>1</td><td>2</td></tr></tbody>
+        </Table>
+      );
+      expect(container.querySelector('caption')).toBeInTheDocument();
+      expect(container.querySelector('colgroup')).toBeInTheDocument();
+      expect(screen.getByText('My table')).toBeInTheDocument();
+    });
   });
 });

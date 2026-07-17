@@ -19,24 +19,32 @@ export interface TableProps extends React.TableHTMLAttributes<HTMLTableElement> 
     loadingCols?: number;
 }
 
-// Count the cells in the first header row so skeleton rows match the real
-// column layout without the consumer having to state it.
+// Count the columns in the first header row so skeleton rows match the real
+// layout without the consumer having to state it. Only real header cells count,
+// and each contributes its colSpan (default 1).
 const inferColumnCount = (children: React.ReactNode): number => {
     let count = 0;
     React.Children.forEach(children, (child) => {
         if (count || !React.isValidElement(child) || child.type !== "thead") return;
         React.Children.forEach((child.props as { children?: React.ReactNode }).children, (row) => {
             if (count || !React.isValidElement(row) || row.type !== "tr") return;
-            count = React.Children.toArray((row.props as { children?: React.ReactNode }).children).length;
+            React.Children.forEach((row.props as { children?: React.ReactNode }).children, (cell) => {
+                if (!React.isValidElement(cell)) return;
+                const span = (cell.props as { colSpan?: number }).colSpan;
+                count += typeof span === "number" && span > 0 ? span : 1;
+            });
         });
     });
     return count;
 };
 
-// Keep only the header while loading, so skeleton rows sit under the real column
-// headings and any footer (e.g. pagination) is hidden until data arrives.
-const headerOnly = (children: React.ReactNode): React.ReactNode =>
-    React.Children.toArray(children).filter((child) => React.isValidElement(child) && child.type === "thead");
+// While loading, keep the table's structural children (caption, colgroup, thead)
+// and drop only the data-bearing tbody/tfoot, so skeleton rows stand in for the
+// data while the real headings, caption and column layout remain.
+const structuralChildren = (children: React.ReactNode): React.ReactNode =>
+    React.Children.toArray(children).filter(
+        (child) => !React.isValidElement(child) || (child.type !== "tbody" && child.type !== "tfoot"),
+    );
 
 export const Table = React.forwardRef<HTMLTableElement, React.PropsWithChildren<TableProps>>(
     ({ striped, hover, bordered, borderless, responsive, loading = false, loadingRows = 5, loadingCols, className, children, ...rest }, ref) => {
@@ -53,7 +61,7 @@ export const Table = React.forwardRef<HTMLTableElement, React.PropsWithChildren<
 
         const body = loading ? (
             <>
-                {headerOnly(children)}
+                {structuralChildren(children)}
                 <tbody aria-busy="true">
                     <LoadingTableRows rows={loadingRows} cols={cols || 1} />
                 </tbody>
