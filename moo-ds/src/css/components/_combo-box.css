@@ -34,9 +34,7 @@
 
     >div {
         display: flex;
-        /* Pin the controls to the top so they don't float to the vertical
-           middle when the pill area wraps to several rows. */
-        align-items: flex-start;
+        align-items: center;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-end;
@@ -116,6 +114,10 @@
         display: flex;
         align-items: center;
         justify-self: flex-end;
+        /* Pin to the top so the controls don't float to the vertical middle when
+           the pill area wraps to several rows. The body stays centred, which the
+           absolutely-positioned single-select value depends on. */
+        align-self: flex-start;
 
         div {
             margin: var(--input-padding-v) 0;
