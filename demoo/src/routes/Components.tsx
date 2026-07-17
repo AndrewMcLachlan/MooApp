@@ -17,6 +17,7 @@ export const Components = () => {
     });
 
     const [showWarning, setShowWarning] = useState(true);
+    const [buttonLoading, setButtonLoading] = useState(false);
 
     return (
         <Page title="Components" breadcrumbs={[{ route: "/components", text: "Components" }]} navItems={[{ route: "/components/icon-link-button", image: <Tags />, text: "Icon Link Button" }, { route: "/components/icon-button", image: <Tags />, text: "Icon Button" }, <NavItemDivider />,
@@ -52,6 +53,19 @@ export const Components = () => {
                         <Button onClick={() => setShowModal(false)}>Save Changes</Button>
                     </Modal.Footer>
                 </Modal>
+            </Section>
+
+            <Section title="Button loading state" header="Button loading state" headerSize={4}>
+                <p>The <code>loading</code> prop shows an inline spinner and disables the button (and is inert across <code>as</code> variants). Use the toggle to hold a button in its busy state.</p>
+                <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+                    <Button variant="outline-secondary" onClick={() => setButtonLoading((l) => !l)}>
+                        {buttonLoading ? "Stop loading" : "Start loading"}
+                    </Button>
+                    <Button loading={buttonLoading} onClick={() => setButtonLoading(false)}>Save</Button>
+                    <Button variant="outline-primary" loading={buttonLoading}>Save</Button>
+                    <Button variant="secondary" size="sm" loading={buttonLoading}>Save</Button>
+                    <Button as="a" href="https://example.com" loading={buttonLoading}>Anchor (inert)</Button>
+                </div>
             </Section>
 
             <Section title="Button Groups" header="Button Groups" headerSize={4}>
