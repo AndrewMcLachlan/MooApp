@@ -3,30 +3,33 @@
    the theme tokens so light/dark and theme variants are handled automatically. */
 
 @keyframes skeleton-shimmer {
+    /* A fixed-width highlight band that starts fully off the left edge and ends
+       fully off the right edge. Because the band is off-screen at both ends, the
+       element shows pure base at 0% and 100%, so the loop restarts seamlessly
+       (no flicker), and it sweeps left-to-right. */
     from {
-        background-position: -100% 0;
+        background-position: calc(-1 * var(--skeleton-band)) 0;
     }
     to {
-        background-position: 100% 0;
+        background-position: calc(var(--skeleton-band) + 100%) 0;
     }
 }
 
 .skeleton {
     --skeleton-base: var(--border-colour);
     --skeleton-highlight: light-dark(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.13));
+    --skeleton-band: 220px;
 
     display: block;
     border-radius: var(--border-radius);
     background-color: var(--skeleton-base);
-    /* Opaque base stops on both ends keep a highlight band on-screen for the
-       whole cycle; the -100%..100% sweep (linear) reads as a continuous shimmer. */
     background-image: linear-gradient(
         90deg,
-        var(--skeleton-base) 0%,
-        var(--skeleton-highlight) 50%,
-        var(--skeleton-base) 100%
+        var(--skeleton-base),
+        var(--skeleton-highlight),
+        var(--skeleton-base)
     );
-    background-size: 200% 100%;
+    background-size: var(--skeleton-band) 100%;
     background-repeat: no-repeat;
     animation: skeleton-shimmer 1.5s linear infinite;
 }
