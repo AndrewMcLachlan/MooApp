@@ -229,4 +229,68 @@ describe('ComboBox', () => {
       expect(container.querySelector('.combo-box')).toBeInTheDocument();
     });
   });
+
+  describe('multi-select collapse', () => {
+    // The pixel-level "how many fit one row" measurement needs real layout, so
+    // it is verified in the browser. jsdom has no layout, so these assert the
+    // collapse *structure* and state transitions instead.
+    const manyItems: TestItem[] = Array.from({ length: 8 }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}` }));
+    const manyProps = {
+      items: manyItems,
+      labelField: (item: TestItem) => item.name,
+      valueField: (item: TestItem) => item.id,
+      multiSelect: true,
+    };
+
+    it('wraps the pills in the measurement container', () => {
+      const { container } = render(<ComboBox {...manyProps} selectedItems={manyItems} />);
+
+      expect(container.querySelector('.cb-pills')).toBeInTheDocument();
+    });
+
+    it('hides the input while the dropdown is closed (pills stand in for it)', () => {
+      const { container } = render(<ComboBox {...manyProps} selectedItems={manyItems} />);
+
+      expect(container.querySelector('.body input')).toHaveAttribute('hidden');
+    });
+
+    it('shows the input when the dropdown is opened', () => {
+      const { container } = render(<ComboBox {...manyProps} selectedItems={manyItems} />);
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+
+      expect(container.querySelector('.body input')).not.toHaveAttribute('hidden');
+    });
+
+    it('renders each selected pill exactly once (no measurement clone)', () => {
+      render(<ComboBox {...manyProps} selectedItems={manyItems} />);
+
+      // Would throw if a hidden clone duplicated the label.
+      expect(screen.getByText('Item 1')).toBeInTheDocument();
+      expect(screen.getByText('Item 8')).toBeInTheDocument();
+    });
+
+    it('shows every pill when layout cannot be measured (fallback)', () => {
+      const { container } = render(<ComboBox {...manyProps} selectedItems={manyItems} />);
+
+      expect(container.querySelectorAll('.cb-pills .item')).toHaveLength(8);
+    });
+
+    it('does not render the pills container for a single-select combo box', () => {
+      const { container } = render(<ComboBox {...defaultProps} selectedItems={[testItems[0]]} />);
+
+      expect(container.querySelector('.cb-pills')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('focus on click', () => {
+    it('focuses the input when the control is clicked', () => {
+      const { container } = render(<ComboBox {...defaultProps} multiSelect selectedItems={[testItems[0]]} />);
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+
+      const input = container.querySelector('input');
+      expect(document.activeElement).toBe(input);
+    });
+  });
 });

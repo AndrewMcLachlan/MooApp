@@ -4,7 +4,7 @@ import { useInnerRef } from "../../hooks";
 
 export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => {
 
-    const { createLabel, creatable, allItems, labelField, search, setItems, selectedItems, newItem, setNewItem, show, showInput, text, setText, setShow, ref, listId } = useComboBox();
+    const { createLabel, creatable, allItems, labelField, search, setItems, selectedItems, newItem, setNewItem, show, text, setText, setShow, ref, listId } = useComboBox();
 
     // Debounce the actual search execution. Previously `useDebounce(search, 300)`
     // debounced the function *value* (a stable reference), so the search ran
@@ -51,7 +51,9 @@ export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => 
         }
     }
 
-    const inputVisible = selectedItems?.length === 0 || !!showInput;
+    // While the dropdown is closed the selected pills stand in for the input;
+    // opening it reveals the input for typing/searching.
+    const inputVisible = selectedItems?.length === 0 || !!show;
 
     const innerRef = useInnerRef<HTMLInputElement>(ref);
 

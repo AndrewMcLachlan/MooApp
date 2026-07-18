@@ -45,9 +45,39 @@
         display: flex;
         gap: 0.75rem;
         align-items: center;
-        flex-wrap: wrap;
+        /* The pill area is always a single row: the pills are measured down to
+           what fits and the overflow becomes a "+N more" chip, so the control
+           never grows past one line. nowrap + overflow guard against any
+           measurement lag. */
+        flex-wrap: nowrap;
+        overflow: hidden;
         flex: 1 1 100px;
         min-width: 100px;
+    }
+
+    /* The pills wrapper participates directly in the body's flex layout so pill
+       rows can be measured, without adding a box of its own. */
+    .cb-pills {
+        display: contents;
+    }
+
+    .cb-more {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.35em 0.7em;
+        font-size: 0.8rem;
+        font-weight: 500;
+        line-height: 1;
+        border-radius: 50rem;
+        background: color-mix(in srgb, var(--body-colour) 12%, transparent);
+        color: var(--body-colour-dim);
+        cursor: pointer;
+        white-space: nowrap;
+        user-select: none;
+
+        &:hover {
+            color: var(--body-colour);
+        }
     }
 
     input {
@@ -91,6 +121,10 @@
         display: flex;
         align-items: center;
         justify-self: flex-end;
+        /* Pin to the top so the controls don't float to the vertical middle when
+           the pill area wraps to several rows. The body stays centred, which the
+           absolutely-positioned single-select value depends on. */
+        align-self: flex-start;
 
         div {
             margin: var(--input-padding-v) 0;

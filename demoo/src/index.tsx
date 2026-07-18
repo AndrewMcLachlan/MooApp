@@ -23,6 +23,7 @@ import { Overlays } from "./routes/Overlays";
 import { DataGridPage } from "./routes/DataGrid";
 import { Icons } from "./routes/Icons";
 import { SkeletonPage } from "./routes/Skeleton";
+import { ComboBoxPage } from "./routes/ComboBox";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -157,6 +158,12 @@ const skeletonRoute = createRoute({
   component: SkeletonPage,
 });
 
+const comboBoxRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "combo-box",
+  component: ComboBoxPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   componentsRoute.addChildren([
@@ -180,6 +187,7 @@ const routeTree = rootRoute.addChildren([
   dataGridRoute,
   iconsRoute,
   skeletonRoute,
+  comboBoxRoute,
 ]);
 
 // @ts-expect-error strictNullChecks is false (to match the moo-ds/moo-app source) — TanStack Router requires it for full type safety
