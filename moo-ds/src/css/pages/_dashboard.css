@@ -32,6 +32,15 @@ main.dashboard {
         flex-direction: column;
         overflow: hidden;
 
+        /* Pin the widget header to the top. While a widget loads, its chart's spinner is absolutely
+           positioned, so the header can be the only in-flow item — and the section's alignment would
+           otherwise drift it downward. Target the first child rather than .section-header: Section
+           renders a string header as <h*.section-header> but a ReactNode header directly (no class),
+           so this keeps both kinds top-anchored. */
+        > :first-child {
+            align-self: start;
+        }
+
         > *:not(.section-header) {
             flex: none;
             min-height: 0;
