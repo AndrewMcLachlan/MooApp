@@ -24,7 +24,7 @@ jobs:
       id: version
       uses: AndrewMcLachlan/Actions/get-node-version@v4
     - run: echo "::notice::Version ${{ steps.version.outputs.version }}"
-    - uses: actions/setup-node@v6
+    - uses: actions/setup-node@v7
       with:
         node-version: 22
         cache: npm
