@@ -150,8 +150,15 @@ const getMsalInstance = async (clientId: string, options?: MsalOptions): Promise
         }
         else if (
             event.eventType === msal.EventType.ACQUIRE_TOKEN_SUCCESS &&
-            (event.interactionType === msal.InteractionType.Redirect || event.interactionType === msal.InteractionType.Popup)
+            (event.interactionType === msal.InteractionType.Redirect ||
+                event.interactionType === msal.InteractionType.Popup ||
+                event.interactionType === msal.InteractionType.Silent)
         ) {
+            // Include Silent: when auth is brought back up to date by a background
+            // silent token renewal (not an interactive redirect/popup), any query
+            // that errored during the auth window must still be recovered. The
+            // listener (MooApp) only refetches errored queries, so firing this on
+            // every silent success is a no-op when nothing is stuck.
             window.dispatchEvent(new Event(AUTH_RECOVERED_EVENT));
         }
     });
