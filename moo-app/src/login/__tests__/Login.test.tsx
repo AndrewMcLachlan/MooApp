@@ -5,6 +5,7 @@ import { Login } from '../Login';
 // Mock MSAL authentication hook
 const mockUseMsalAuthentication = vi.fn();
 const mockUseIsAuthenticated = vi.fn();
+const mockUseMsal = vi.fn();
 
 vi.mock('@azure/msal-react', () => ({
   useMsalAuthentication: (interactionType: any, request: any) => {
@@ -16,6 +17,7 @@ vi.mock('@azure/msal-react', () => ({
     };
   },
   useIsAuthenticated: () => mockUseIsAuthenticated(),
+  useMsal: () => mockUseMsal(),
 }));
 
 vi.mock('@azure/msal-browser', () => ({
@@ -23,6 +25,15 @@ vi.mock('@azure/msal-browser', () => ({
     Redirect: 'redirect',
     Popup: 'popup',
     Silent: 'silent',
+  },
+  InteractionStatus: {
+    None: 'none',
+    Startup: 'startup',
+    Login: 'login',
+    Logout: 'logout',
+    AcquireToken: 'acquireToken',
+    SsoSilent: 'ssoSilent',
+    HandleRedirect: 'handleRedirect',
   },
 }));
 
@@ -35,6 +46,9 @@ describe('Login', () => {
     mockUseMsalAuthentication.mockClear();
     mockUseIsAuthenticated.mockClear();
     mockUseIsAuthenticated.mockReturnValue(true);
+    // Default to MSAL idle so existing "authenticated" cases render children.
+    mockUseMsal.mockReset();
+    mockUseMsal.mockReturnValue({ inProgress: 'none' });
   });
 
   describe('rendering', () => {
@@ -60,6 +74,37 @@ describe('Login', () => {
 
       expect(screen.queryByTestId('child')).not.toBeInTheDocument();
       expect(container.innerHTML).toBe('');
+    });
+
+    it('does not render children while an MSAL interaction is in progress, even when authenticated', () => {
+      // A cached account makes isAuthenticated true immediately on a re-auth
+      // reload, but MSAL is still mid-flight. Rendering data-fetching children
+      // now races the token interceptor (acquireTokenSilent -> interaction_in_progress
+      // -> cancelled request -> permanently errored query with retry:false).
+      mockUseIsAuthenticated.mockReturnValue(true);
+      mockUseMsal.mockReturnValue({ inProgress: 'handleRedirect' });
+
+      render(
+        <Login authFallback={<div data-testid="loading">Loading...</div>}>
+          <div data-testid="child">Protected Content</div>
+        </Login>
+      );
+
+      expect(screen.queryByTestId('child')).not.toBeInTheDocument();
+      expect(screen.getByTestId('loading')).toBeInTheDocument();
+    });
+
+    it('renders children once the interaction completes (inProgress None)', () => {
+      mockUseIsAuthenticated.mockReturnValue(true);
+      mockUseMsal.mockReturnValue({ inProgress: 'none' });
+
+      render(
+        <Login>
+          <div data-testid="child">Protected Content</div>
+        </Login>
+      );
+
+      expect(screen.getByTestId('child')).toBeInTheDocument();
     });
 
     it('renders multiple children', () => {
