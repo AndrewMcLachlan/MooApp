@@ -165,6 +165,95 @@ describe('EditColumn', () => {
     });
   });
 
+  describe('forwarded input attributes', () => {
+    it('forwards step to the input', async () => {
+      const user = userEvent.setup();
+      const { container } = render(
+        <table><tbody><tr><EditColumn value="1.5" type="number" step={0.0001} /></tr></tbody></table>
+      );
+
+      await user.click(container.querySelector('td')!);
+
+      expect(screen.getByRole('spinbutton')).toHaveAttribute('step', '0.0001');
+    });
+
+    it('forwards other input attributes', async () => {
+      const user = userEvent.setup();
+      const { container } = render(
+        <table><tbody><tr><EditColumn value="5" type="number" min={0} max={10} placeholder="Amount" /></tr></tbody></table>
+      );
+
+      await user.click(container.querySelector('td')!);
+
+      const input = screen.getByRole('spinbutton');
+      expect(input).toHaveAttribute('min', '0');
+      expect(input).toHaveAttribute('max', '10');
+      expect(input).toHaveAttribute('placeholder', 'Amount');
+    });
+
+    it('does not forward value as a raw attribute, so editing still tracks input', async () => {
+      const user = userEvent.setup();
+      const { container } = render(
+        <table><tbody><tr><EditColumn value="abc" /></tr></tbody></table>
+      );
+
+      await user.click(container.querySelector('td')!);
+      await user.type(screen.getByRole('textbox'), 'def');
+
+      expect(screen.getByRole('textbox')).toHaveValue('abcdef');
+    });
+
+    it('keeps its own change tracking when a caller passes onBlur', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      const { container } = render(
+        <table><tbody><tr><EditColumn value="test" onChange={onChange} onBlur={vi.fn()} /></tr></tbody></table>
+      );
+
+      await user.click(container.querySelector('td')!);
+      await user.tab();
+
+      expect(onChange).toHaveBeenCalled();
+    });
+
+    it('composes a caller onBlur alongside its own tracking', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      const onBlur = vi.fn();
+      const { container } = render(
+        <table><tbody><tr><EditColumn value="test" onChange={onChange} onBlur={onBlur} /></tr></tbody></table>
+      );
+
+      await user.click(container.querySelector('td')!);
+      await user.tab();
+
+      // Both fire: internal edit tracking is not overridable, but the caller
+      // still observes the blur.
+      expect(onChange).toHaveBeenCalled();
+      expect(onBlur).toHaveBeenCalled();
+    });
+
+    it('composes a caller onKeyUp alongside its own tracking', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      const onKeyUp = vi.fn();
+      const { container } = render(
+        <table><tbody><tr><EditColumn value="test" onChange={onChange} onKeyUp={onKeyUp} /></tr></tbody></table>
+      );
+
+      await user.click(container.querySelector('td')!);
+      // A non-committing key reaches the caller without triggering edit tracking...
+      await user.keyboard('a');
+      expect(onKeyUp).toHaveBeenCalled();
+      expect(onChange).not.toHaveBeenCalled();
+
+      // ...and a committing key triggers both.
+      await user.keyboard('{Enter}');
+      expect(onChange).toHaveBeenCalled();
+      expect(onKeyUp).toHaveBeenCalledTimes(2);
+    });
+  });
+
   describe('displayName', () => {
     it('has correct displayName', () => {
       expect(EditColumn.displayName).toBe('EditColumn');
