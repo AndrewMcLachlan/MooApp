@@ -117,6 +117,53 @@ describe('ComboBoxList', () => {
 
       expect(onAdd).toHaveBeenCalledWith(items[0]);
     });
+
+    it('keeps the dropdown open after selecting in multi-select mode', () => {
+      const { container } = renderWithContainer({ multiSelect: true });
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+      fireEvent.click(screen.getByText('Item 1'));
+
+      // Multi-select is a checklist: the list stays open so more can be picked.
+      expect(container.querySelector('.cb-list')).toBeInTheDocument();
+    });
+
+    it('keeps selected items in the list, marked selected', () => {
+      const { container } = renderWithContainer({ multiSelect: true, selectedItems: [items[0]] });
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+
+      // All three options are still present; the selected one is a checked row.
+      expect(container.querySelectorAll('.cb-list li.cb-option').length).toBe(3);
+      expect(container.querySelector('.cb-list li.cb-option.selected')).toHaveTextContent('Item 1');
+      // The tick must actually draw: fill is none, so without a stroke the
+      // check mark is invisible even when the row is selected.
+      expect(container.querySelector('.cb-list li.cb-option.selected .cb-check path'))
+        .toHaveAttribute('stroke', 'currentColor');
+    });
+
+    it('toggles a selected item off when clicked again in multi-select mode', () => {
+      const onRemove = vi.fn();
+      const onChange = vi.fn();
+      const { container } = renderWithContainer({ multiSelect: true, selectedItems: [items[0]], onRemove, onChange });
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+      // Click the list row (not the pill, which shares the same label text).
+      fireEvent.click(container.querySelector('.cb-list li.cb-option.selected')!);
+
+      expect(onRemove).toHaveBeenCalledWith(items[0]);
+      expect(onChange).toHaveBeenCalledWith([]);
+    });
+
+    it('pins selected items to the top of the list', () => {
+      const { container } = renderWithContainer({ multiSelect: true, selectedItems: [items[2]] });
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+
+      const rows = Array.from(container.querySelectorAll('.cb-list li.cb-option'));
+      // Item 3 is selected, so it sorts above the unselected Item 1 / Item 2.
+      expect(rows[0]).toHaveTextContent('Item 3');
+    });
   });
 
   describe('creatable', () => {

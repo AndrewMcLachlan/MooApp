@@ -16,12 +16,13 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
     // duplicated aria-controls/id relationship.
     const listId = useId();
 
+    // Multi-select keeps the selected items *in* the list (rendered checked),
+    // so the list is the single source of truth for what's selected. They are
+    // no longer stripped out — the dropdown, not just the pills, lets the user
+    // see and toggle every selection.
     const allItems = useMemo(() => {
-        if (!props.multiSelect) return props.items ? props.items : []
-
-        return props.items ? props.items.filter(i => !selectedItems.some(si => props.valueField(si) === props.valueField(i))) : []
-
-    }, [JSON.stringify(props.items), selectedItems]);
+        return props.items ? props.items : []
+    }, [JSON.stringify(props.items)]);
 
     const clear = (e: React.MouseEvent<any>) => {
         e.preventDefault();

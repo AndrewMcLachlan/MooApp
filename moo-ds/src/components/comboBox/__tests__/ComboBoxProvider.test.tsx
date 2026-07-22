@@ -193,7 +193,7 @@ describe('ComboBoxProvider', () => {
   });
 
   describe('multi-select item filtering', () => {
-    it('filters out selected items from available items in multi-select', () => {
+    it('keeps selected items in the list in multi-select (rendered checked, not stripped)', () => {
       const ItemsCheck = () => {
         const { items } = useComboBox();
         return <span data-testid="available">{items.length}</span>;
@@ -205,8 +205,9 @@ describe('ComboBoxProvider', () => {
         </ComboBoxProvider>
       );
 
-      // Should have 2 available items (3 total - 1 selected)
-      expect(screen.getByTestId('available')).toHaveTextContent('2');
+      // The list is the source of truth for selection: all 3 items remain,
+      // the selected one shown checked rather than removed.
+      expect(screen.getByTestId('available')).toHaveTextContent('3');
     });
   });
 
