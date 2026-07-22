@@ -215,6 +215,43 @@ describe('EditColumn', () => {
 
       expect(onChange).toHaveBeenCalled();
     });
+
+    it('composes a caller onBlur alongside its own tracking', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      const onBlur = vi.fn();
+      const { container } = render(
+        <table><tbody><tr><EditColumn value="test" onChange={onChange} onBlur={onBlur} /></tr></tbody></table>
+      );
+
+      await user.click(container.querySelector('td')!);
+      await user.tab();
+
+      // Both fire: internal edit tracking is not overridable, but the caller
+      // still observes the blur.
+      expect(onChange).toHaveBeenCalled();
+      expect(onBlur).toHaveBeenCalled();
+    });
+
+    it('composes a caller onKeyUp alongside its own tracking', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      const onKeyUp = vi.fn();
+      const { container } = render(
+        <table><tbody><tr><EditColumn value="test" onChange={onChange} onKeyUp={onKeyUp} /></tr></tbody></table>
+      );
+
+      await user.click(container.querySelector('td')!);
+      // A non-committing key reaches the caller without triggering edit tracking...
+      await user.keyboard('a');
+      expect(onKeyUp).toHaveBeenCalled();
+      expect(onChange).not.toHaveBeenCalled();
+
+      // ...and a committing key triggers both.
+      await user.keyboard('{Enter}');
+      expect(onChange).toHaveBeenCalled();
+      expect(onKeyUp).toHaveBeenCalledTimes(2);
+    });
   });
 
   describe('displayName', () => {
