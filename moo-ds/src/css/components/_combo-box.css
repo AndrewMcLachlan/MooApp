@@ -61,13 +61,28 @@
         display: contents;
     }
 
+    /* Expanded: the wrapper becomes its own full-width flex box and wraps the
+       pills over as many rows as needed. Only reachable while the dropdown is
+       closed (the input is hidden then), so it can safely take the whole row. */
+    .cb-pills.expanded {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+        flex: 1 1 100%;
+        min-width: 0;
+        padding: var(--input-padding-v) 0;
+    }
+
     .cb-more {
         display: inline-flex;
         align-items: center;
         padding: 0.35em 0.7em;
+        font-family: inherit;
         font-size: 0.8rem;
         font-weight: 500;
         line-height: 1;
+        border: none;
         border-radius: 50rem;
         background: color-mix(in srgb, var(--body-colour) 12%, transparent);
         color: var(--body-colour-dim);
@@ -114,6 +129,29 @@
             &:hover {
                 background-color: var(--hover);
             }
+        }
+
+        /* Multi-select rows read as checkboxes: a tick gutter on the left that
+           only inks in when the row is selected. Single-select rows have no
+           `.cb-option` class from a checkbox and render as before. */
+        li.cb-option {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        li.cb-option.selected {
+            background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+        }
+
+        .cb-check {
+            flex: 0 0 auto;
+            color: var(--primary);
+            opacity: 0;
+        }
+
+        li.cb-option.selected .cb-check {
+            opacity: 1;
         }
     }
 

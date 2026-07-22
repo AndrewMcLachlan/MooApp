@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { type MouseEvent, useLayoutEffect, useRef, useState } from "react";
 import { useComboBox } from "./ComboBoxProvider";
 import { ComboBoxSelectedItem as SelectedItem } from "./ComboBoxSelectedItem";
 
@@ -22,8 +22,19 @@ export const ComboBoxPills = () => {
     const wrapRef = useRef<HTMLDivElement>(null);
     const [fit, setFit] = useState(selectedItems.length);
     const [measuring, setMeasuring] = useState(true);
+    const [expanded, setExpanded] = useState(false);
 
     const count = selectedItems.length;
+
+    // Expansion only applies while the dropdown is closed: once it opens, the
+    // list is the place to review selections, so the pills stay on one line.
+    const expandedActive = expanded && !show;
+
+    // Collapse the expanded pills whenever the dropdown opens, so reopening the
+    // closed control doesn't spring back to the multi-line view.
+    useLayoutEffect(() => {
+        if (show) setExpanded(false);
+    }, [show]);
 
     // Re-measure when the pills or the open state (which reserves input room) change.
     useLayoutEffect(() => {
@@ -87,13 +98,30 @@ export const ComboBoxPills = () => {
         <SelectedItem key={valueField(item)?.toString() ?? index} item={item} />
     );
 
+    // The chip stops propagation so toggling the pill view doesn't also open the
+    // dropdown (a click anywhere else in the control does).
+    const toggleExpanded = (e: MouseEvent) => {
+        e.stopPropagation();
+        setExpanded(v => !v);
+    };
+
+    // Expanded: every pill, wrapped over as many rows as needed, plus "show less".
+    if (expandedActive) {
+        return (
+            <div className="cb-pills expanded" ref={wrapRef}>
+                {selectedItems.map(pill)}
+                <button type="button" className="cb-more" onClick={toggleExpanded}>show less</button>
+            </div>
+        );
+    }
+
     const visible = measuring ? selectedItems : selectedItems.slice(0, fit);
     const hidden = count - visible.length;
 
     return (
         <div className="cb-pills" ref={wrapRef}>
             {visible.map(pill)}
-            {!measuring && hidden > 0 && <span className="cb-more">+{hidden} more</span>}
+            {!measuring && hidden > 0 && <button type="button" className="cb-more" onClick={toggleExpanded}>+{hidden} more</button>}
         </div>
     );
 };
