@@ -3,7 +3,7 @@ import { useComboBox } from "./ComboBoxProvider";
 
 export const ComboBoxList = () => {
 
-    const { creatable, items, multiSelect, onAdd, onRemove, onChange, onCreate, show, setShow, newItem, selectedItems, setSelectedItems, setText, text, valueField, listId } = useComboBox();
+    const { creatable, items, multiSelect, onAdd, onRemove, onChange, onCreate, show, setShow, newItem, setNewItem, selectedItems, setSelectedItems, setText, text, valueField, listId } = useComboBox();
 
     if (!show) return null;
 
@@ -39,6 +39,7 @@ export const ComboBoxList = () => {
         onCreate?.(text);
         setText("");
         setShow(false);
+        setNewItem(null);
     }
 
     // Multi-select pins the checked items to the top so "see everything I've
