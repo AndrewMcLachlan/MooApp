@@ -11,9 +11,9 @@ export const usePhoto = () => {
     const httpClient = useMemo(() => axios.create({ baseURL: "https://graph.microsoft.com/v1.0", headers: { "Accept": "application/json" } }), []);
 
     useEffect(() => {
-        const interceptorId = addMsalInterceptor(httpClient, msal, ["User.Read"]);
+        const ejectInterceptors = addMsalInterceptor(httpClient, msal, ["User.Read"]);
         return () => {
-            httpClient.interceptors.request.eject(interceptorId);
+            ejectInterceptors();
         };
     }, [httpClient, msal]);
 

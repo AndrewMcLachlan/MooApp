@@ -23,7 +23,7 @@ vi.mock('axios', () => ({
 }));
 
 vi.mock('../../providers/MsalAuthProvider', () => ({
-  addMsalInterceptor: () => 1,
+  addMsalInterceptor: () => () => {},
 }));
 
 import { usePhoto } from '../msgraph';

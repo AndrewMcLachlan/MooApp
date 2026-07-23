@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import axios from 'axios';
 import { AuthError } from '@azure/msal-browser';
-import { MsalAuthProvider, addMsalInterceptor } from '../MsalAuthProvider';
+import { MsalAuthProvider, addMsalInterceptor, isAuthCancellation } from '../MsalAuthProvider';
 
 // Mock MSAL react context for the component test
 const mockAcquireTokenSilent = vi.fn();
@@ -233,5 +233,174 @@ describe('addMsalInterceptor', () => {
       expect(consoleSpy).toHaveBeenCalled();
       consoleSpy.mockRestore();
     });
+  });
+
+  describe('auth cancellation marker', () => {
+    it('marks interceptor cancellations so callers can identify them', async () => {
+      const error = new AuthError('interaction_required', 'interaction_required');
+      const msal = createMockMsal({
+        acquireTokenSilent: vi.fn().mockRejectedValue(error),
+        acquireTokenRedirect: vi.fn().mockResolvedValue(null),
+      });
+      const client = createClientWithInterceptor(msal);
+
+      const rejection = await client.get('/api/data').then(
+        () => { throw new Error('expected rejection'); },
+        (e) => e,
+      );
+
+      expect(isAuthCancellation(rejection)).toBe(true);
+    });
+
+    it('does not identify ordinary errors as auth cancellations', () => {
+      expect(isAuthCancellation(new Error('boom'))).toBe(false);
+      expect(isAuthCancellation(new axios.CanceledError('user canceled'))).toBe(false);
+      expect(isAuthCancellation(undefined)).toBe(false);
+    });
+  });
+});
+
+describe('401 response recovery', () => {
+  const createMockMsal = (overrides: Record<string, any> = {}) => ({
+    instance: {
+      acquireTokenSilent: vi.fn(),
+      acquireTokenRedirect: vi.fn(),
+      getActiveAccount: vi.fn().mockReturnValue({ homeAccountId: 'acct' }),
+      getAllAccounts: vi.fn().mockReturnValue([{ homeAccountId: 'acct' }]),
+      ...overrides,
+    },
+    accounts: [],
+    inProgress: 'none',
+  } as any);
+
+  /**
+   * Adapter that answers each request with the next status in the queue
+   * (repeating the last one), so a 401-then-200 sequence can be scripted.
+   */
+  const createClientWithStatusQueue = (msal: any, statuses: number[], scopes: string[] = ['api://test']) => {
+    const client = axios.create();
+    const calls: { auth: string | undefined }[] = [];
+    client.defaults.adapter = async (config) => {
+      const status = statuses.length > 1 ? statuses.shift()! : statuses[0];
+      calls.push({ auth: config.headers.getAuthorization() as string | undefined });
+      const response = { data: {}, status, statusText: String(status), headers: {}, config } as any;
+      if (status >= 400) {
+        throw new axios.AxiosError(`Request failed with status code ${status}`, String(status), config as any, {}, response);
+      }
+      return response;
+    };
+    addMsalInterceptor(client, msal, scopes);
+    return { client, calls };
+  };
+
+  beforeEach(() => {
+    mockGetSilentRedirectUri.mockReturnValue(undefined);
+  });
+
+  it('force-refreshes the token and retries once on 401', async () => {
+    const acquireTokenSilent = vi.fn()
+      .mockResolvedValueOnce({ accessToken: 'stale-token' })   // request interceptor (initial)
+      .mockResolvedValueOnce({ accessToken: 'fresh-token' })   // force refresh
+      .mockResolvedValue({ accessToken: 'fresh-token' });      // request interceptor (retry)
+    const msal = createMockMsal({ acquireTokenSilent });
+    const { client, calls } = createClientWithStatusQueue(msal, [401, 200]);
+
+    const response = await client.get('/api/data');
+
+    expect(response.status).toBe(200);
+    expect(acquireTokenSilent).toHaveBeenCalledWith(expect.objectContaining({ forceRefresh: true }));
+    expect(calls).toHaveLength(2);
+    expect(calls[1].auth).toBe('Bearer fresh-token');
+  });
+
+  it('does not retry a second time when the retried request also 401s', async () => {
+    const acquireTokenSilent = vi.fn().mockResolvedValue({ accessToken: 'token' });
+    const msal = createMockMsal({ acquireTokenSilent });
+    const { client, calls } = createClientWithStatusQueue(msal, [401]);
+
+    const rejection = await client.get('/api/data').then(
+      () => { throw new Error('expected rejection'); },
+      (e) => e,
+    );
+
+    expect(rejection.response?.status).toBe(401);
+    expect(calls).toHaveLength(2); // original + exactly one retry
+    const forceRefreshCalls = acquireTokenSilent.mock.calls.filter(([req]) => req?.forceRefresh);
+    expect(forceRefreshCalls).toHaveLength(1);
+  });
+
+  it('shares a single force-refresh across concurrent 401s', async () => {
+    let resolveRefresh: (v: any) => void;
+    const refreshPromise = new Promise((resolve) => { resolveRefresh = resolve; });
+    const acquireTokenSilent = vi.fn().mockImplementation((req) =>
+      req?.forceRefresh ? refreshPromise : Promise.resolve({ accessToken: 'stale-token' }));
+    const msal = createMockMsal({ acquireTokenSilent });
+    const { client } = createClientWithStatusQueue(msal, [401, 401, 200]);
+
+    // Settle rejections inline so neither can surface as unhandled while the
+    // refresh is deliberately held open.
+    const first = client.get('/api/one').catch((e) => e);
+    const second = client.get('/api/two').catch((e) => e);
+    // Let both requests 401 and enter the refresh path before resolving it.
+    await new Promise((r) => setTimeout(r, 10));
+    resolveRefresh!({ accessToken: 'fresh-token' });
+    await Promise.all([first, second]);
+
+    const forceRefreshCalls = acquireTokenSilent.mock.calls.filter(([req]) => req?.forceRefresh);
+    expect(forceRefreshCalls).toHaveLength(1);
+  });
+
+  it('falls back to the guarded redirect when the force refresh needs interaction', async () => {
+    const acquireTokenRedirect = vi.fn().mockResolvedValue(null);
+    const acquireTokenSilent = vi.fn().mockImplementation((req) =>
+      req?.forceRefresh
+        ? Promise.reject(new AuthError('interaction_required', 'interaction_required'))
+        : Promise.resolve({ accessToken: 'stale-token' }));
+    const msal = createMockMsal({ acquireTokenSilent, acquireTokenRedirect });
+    const { client } = createClientWithStatusQueue(msal, [401]);
+
+    const rejection = await client.get('/api/data').then(
+      () => { throw new Error('expected rejection'); },
+      (e) => e,
+    );
+
+    expect(acquireTokenRedirect).toHaveBeenCalledTimes(1);
+    expect(isAuthCancellation(rejection)).toBe(true);
+  });
+
+  it('does not redirect when the force refresh fails with a network error', async () => {
+    const acquireTokenRedirect = vi.fn();
+    const acquireTokenSilent = vi.fn().mockImplementation((req) =>
+      req?.forceRefresh
+        ? Promise.reject(new AuthError('network_error', 'network_error'))
+        : Promise.resolve({ accessToken: 'stale-token' }));
+    const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const msal = createMockMsal({ acquireTokenSilent, acquireTokenRedirect });
+    const { client } = createClientWithStatusQueue(msal, [401]);
+
+    const rejection = await client.get('/api/data').then(
+      () => { throw new Error('expected rejection'); },
+      (e) => e,
+    );
+
+    expect(acquireTokenRedirect).not.toHaveBeenCalled();
+    expect(isAuthCancellation(rejection)).toBe(true);
+    consoleSpy.mockRestore();
+  });
+
+  it('passes non-401 response errors through untouched', async () => {
+    const acquireTokenSilent = vi.fn().mockResolvedValue({ accessToken: 'token' });
+    const msal = createMockMsal({ acquireTokenSilent });
+    const { client, calls } = createClientWithStatusQueue(msal, [500]);
+
+    const rejection = await client.get('/api/data').then(
+      () => { throw new Error('expected rejection'); },
+      (e) => e,
+    );
+
+    expect(rejection.response?.status).toBe(500);
+    expect(calls).toHaveLength(1); // no retry
+    const forceRefreshCalls = acquireTokenSilent.mock.calls.filter(([req]) => req?.forceRefresh);
+    expect(forceRefreshCalls).toHaveLength(0);
   });
 });
