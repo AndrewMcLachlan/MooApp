@@ -4,7 +4,7 @@ import { PersistQueryClientProvider, type PersistQueryClientOptions } from "@tan
 import { type AnyRouter, RouterProvider } from "@tanstack/react-router";
 
 import { Link, NavLink } from "./components";
-import { AppProvider, MsalAuthProvider } from "./providers";
+import { AppProvider, MsalAuthProvider, isAuthCancellation } from "./providers";
 import { LinkProvider, MessageProvider, ThemeProvider } from "@andrewmclachlan/moo-ds";
 
 import getMsalInstance, { AUTH_RECOVERED_EVENT, type MsalOptions } from "./login/msal";
@@ -36,7 +36,13 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clien
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
-        retry: false,
+        // Requests cancelled by the auth interceptor (token being refreshed /
+        // interactive redirect imminent) are retried a bounded number of times
+        // so queries stay pending across the auth window instead of flashing
+        // errors; anything else fails fast. If no redirect materialises the
+        // retries exhaust in ~2.5s and the error surfaces normally.
+        retry: (failureCount, error) => isAuthCancellation(error) && failureCount < 5,
+        retryDelay: 500,
         networkMode: "offlineFirst",
       },
       mutations: {
