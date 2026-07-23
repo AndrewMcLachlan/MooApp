@@ -84,7 +84,7 @@ export const ComboBoxPills = () => {
         const avail = body.getBoundingClientRect().width - parseFloat(style.paddingLeft || "0") - parseFloat(style.paddingRight || "0");
 
         // No layout available (e.g. jsdom): show every pill.
-        if (pills.length === 0 || !avail) {
+        if (pills.length === 0 || !Number.isFinite(avail) || avail <= 0) {
             setFit(pills.length);
             setMeasuring(false);
             return;
