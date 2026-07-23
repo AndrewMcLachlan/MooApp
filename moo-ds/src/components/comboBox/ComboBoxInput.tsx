@@ -43,13 +43,16 @@ export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => 
         else {
             const tempItems = allItems.filter((i) => labelField(i).toString().toLowerCase().indexOf(value.toLowerCase()) > -1);
 
-            if (creatable && !allItems.some((i) => labelField(i).toString().toLowerCase() === value.toLowerCase())) {
+            if (creatable && value !== "" && !allItems.some((i) => labelField(i).toString().toLowerCase() === value.toLowerCase())) {
 
                 const addItem = newItem ? newItem : {};
 
                 addItem.label = createLabel(value);
 
                 setNewItem(addItem);
+            }
+            else if (creatable) {
+                setNewItem(null);
             }
 
             setItems(tempItems);

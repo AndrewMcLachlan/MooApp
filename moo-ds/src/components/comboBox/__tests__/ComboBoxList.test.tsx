@@ -202,5 +202,46 @@ describe('ComboBoxList', () => {
 
       expect(onCreate).toHaveBeenCalledWith('New Item');
     });
+
+    it('creating an item clears the add option', () => {
+      const onCreate = vi.fn();
+      const { container } = renderWithContainer({
+        creatable: true,
+        onCreate,
+        createLabel: (text: string) => `Add "${text}"`,
+      });
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+
+      const input = screen.getByRole('combobox');
+      fireEvent.change(input, { target: { value: 'x' } });
+      expect(screen.getByText('Add "x"')).toBeInTheDocument();
+
+      fireEvent.click(screen.getByText('Add "x"'));
+      expect(onCreate).toHaveBeenCalledWith('x');
+
+      // Re-open the dropdown after creating: the stale add row for the
+      // now-cleared text must not still be there.
+      fireEvent.click(container.querySelector('.combo-box')!);
+      expect(screen.queryByText('Add "x"')).not.toBeInTheDocument();
+    });
+
+    it('empty input clears the add option (non-search)', () => {
+      const onCreate = vi.fn();
+      const { container } = renderWithContainer({
+        creatable: true,
+        onCreate,
+        createLabel: (text: string) => `Add "${text}"`,
+      });
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+
+      const input = screen.getByRole('combobox');
+      fireEvent.change(input, { target: { value: 'x' } });
+      expect(screen.getByText('Add "x"')).toBeInTheDocument();
+
+      fireEvent.change(input, { target: { value: '' } });
+      expect(screen.queryByText(/^Add "/)).not.toBeInTheDocument();
+    });
   });
 });
