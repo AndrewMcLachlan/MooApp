@@ -16,7 +16,7 @@ main.dashboard {
             }
         }
 
-        @media (max-width: 1399.98px) {
+        @media (max-width: 1499.98px) {
             grid-template-columns: repeat(2, 1fr);
         }
 

@@ -39,6 +39,17 @@ describe('Col', () => {
     expect(col).toHaveClass('col-12', 'col-md-6', 'col-lg-4');
   });
 
+  it('applies extended breakpoint classes (fhd/qhd/uhd)', () => {
+    render(<Col fhd={3} qhd={2} uhd={1} data-testid="col">Content</Col>);
+    const col = screen.getByTestId('col');
+    expect(col).toHaveClass('col-fhd-3', 'col-qhd-2', 'col-uhd-1');
+  });
+
+  it('does not add the default col class when only an extended breakpoint is set', () => {
+    render(<Col fhd={3} data-testid="col">Content</Col>);
+    expect(screen.getByTestId('col')).not.toHaveClass('col');
+  });
+
   it('supports boolean breakpoint for auto-width', () => {
     render(<Col sm={true} data-testid="col">Content</Col>);
     expect(screen.getByTestId('col')).toHaveClass('col-sm');

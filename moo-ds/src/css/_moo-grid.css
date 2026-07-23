@@ -31,8 +31,20 @@
     .container { max-width: 1140px; }
 }
 
-@media (min-width: 1400px) {
-    .container { max-width: 1320px; }
+@media (min-width: 1500px) {
+    .container { max-width: 1420px; }
+}
+
+@media (min-width: 1880px) {
+    .container { max-width: 1800px; }
+}
+
+@media (min-width: 2520px) {
+    .container { max-width: 2440px; }
+}
+
+@media (min-width: 3200px) {
+    .container { max-width: 3120px; }
 }
 
 .row {
@@ -137,7 +149,7 @@
     .col-xl-12 { flex: 0 0 auto; width: 100%; }
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
     .col-xxl { flex: 1 0 0%; }
     .col-xxl-auto { flex: 0 0 auto; width: auto; }
     .col-xxl-1 { flex: 0 0 auto; width: 8.33333333%; }
@@ -152,4 +164,58 @@
     .col-xxl-10 { flex: 0 0 auto; width: 83.33333333%; }
     .col-xxl-11 { flex: 0 0 auto; width: 91.66666667%; }
     .col-xxl-12 { flex: 0 0 auto; width: 100%; }
+}
+
+/* Extended breakpoints beyond the Bootstrap-derived scale, named for the
+   display classes they target (allowing for scrollbars/borders):
+   fhd 1880 (1920 Full HD), qhd 2520 (2560 Quad HD), uhd 3200 (3440+/4K). */
+@media (min-width: 1880px) {
+    .col-fhd { flex: 1 0 0%; }
+    .col-fhd-auto { flex: 0 0 auto; width: auto; }
+    .col-fhd-1 { flex: 0 0 auto; width: 8.33333333%; }
+    .col-fhd-2 { flex: 0 0 auto; width: 16.66666667%; }
+    .col-fhd-3 { flex: 0 0 auto; width: 25%; }
+    .col-fhd-4 { flex: 0 0 auto; width: 33.33333333%; }
+    .col-fhd-5 { flex: 0 0 auto; width: 41.66666667%; }
+    .col-fhd-6 { flex: 0 0 auto; width: 50%; }
+    .col-fhd-7 { flex: 0 0 auto; width: 58.33333333%; }
+    .col-fhd-8 { flex: 0 0 auto; width: 66.66666667%; }
+    .col-fhd-9 { flex: 0 0 auto; width: 75%; }
+    .col-fhd-10 { flex: 0 0 auto; width: 83.33333333%; }
+    .col-fhd-11 { flex: 0 0 auto; width: 91.66666667%; }
+    .col-fhd-12 { flex: 0 0 auto; width: 100%; }
+}
+
+@media (min-width: 2520px) {
+    .col-qhd { flex: 1 0 0%; }
+    .col-qhd-auto { flex: 0 0 auto; width: auto; }
+    .col-qhd-1 { flex: 0 0 auto; width: 8.33333333%; }
+    .col-qhd-2 { flex: 0 0 auto; width: 16.66666667%; }
+    .col-qhd-3 { flex: 0 0 auto; width: 25%; }
+    .col-qhd-4 { flex: 0 0 auto; width: 33.33333333%; }
+    .col-qhd-5 { flex: 0 0 auto; width: 41.66666667%; }
+    .col-qhd-6 { flex: 0 0 auto; width: 50%; }
+    .col-qhd-7 { flex: 0 0 auto; width: 58.33333333%; }
+    .col-qhd-8 { flex: 0 0 auto; width: 66.66666667%; }
+    .col-qhd-9 { flex: 0 0 auto; width: 75%; }
+    .col-qhd-10 { flex: 0 0 auto; width: 83.33333333%; }
+    .col-qhd-11 { flex: 0 0 auto; width: 91.66666667%; }
+    .col-qhd-12 { flex: 0 0 auto; width: 100%; }
+}
+
+@media (min-width: 3200px) {
+    .col-uhd { flex: 1 0 0%; }
+    .col-uhd-auto { flex: 0 0 auto; width: auto; }
+    .col-uhd-1 { flex: 0 0 auto; width: 8.33333333%; }
+    .col-uhd-2 { flex: 0 0 auto; width: 16.66666667%; }
+    .col-uhd-3 { flex: 0 0 auto; width: 25%; }
+    .col-uhd-4 { flex: 0 0 auto; width: 33.33333333%; }
+    .col-uhd-5 { flex: 0 0 auto; width: 41.66666667%; }
+    .col-uhd-6 { flex: 0 0 auto; width: 50%; }
+    .col-uhd-7 { flex: 0 0 auto; width: 58.33333333%; }
+    .col-uhd-8 { flex: 0 0 auto; width: 66.66666667%; }
+    .col-uhd-9 { flex: 0 0 auto; width: 75%; }
+    .col-uhd-10 { flex: 0 0 auto; width: 83.33333333%; }
+    .col-uhd-11 { flex: 0 0 auto; width: 91.66666667%; }
+    .col-uhd-12 { flex: 0 0 auto; width: 100%; }
 }
