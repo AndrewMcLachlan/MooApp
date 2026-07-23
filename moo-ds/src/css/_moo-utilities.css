@@ -64,7 +64,7 @@
     .d-xl-table-cell { display: table-cell !important; }
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
     .d-xxl-none { display: none !important; }
     .d-xxl-block { display: block !important; }
     .d-xxl-flex { display: flex !important; }
@@ -75,6 +75,46 @@
     .d-xxl-table { display: table !important; }
     .d-xxl-table-row { display: table-row !important; }
     .d-xxl-table-cell { display: table-cell !important; }
+}
+
+/* Extended breakpoints: fhd 1880, qhd 2520, uhd 3200 (see _moo-grid.css). */
+@media (min-width: 1880px) {
+    .d-fhd-none { display: none !important; }
+    .d-fhd-block { display: block !important; }
+    .d-fhd-flex { display: flex !important; }
+    .d-fhd-inline { display: inline !important; }
+    .d-fhd-inline-flex { display: inline-flex !important; }
+    .d-fhd-inline-block { display: inline-block !important; }
+    .d-fhd-grid { display: grid !important; }
+    .d-fhd-table { display: table !important; }
+    .d-fhd-table-row { display: table-row !important; }
+    .d-fhd-table-cell { display: table-cell !important; }
+}
+
+@media (min-width: 2520px) {
+    .d-qhd-none { display: none !important; }
+    .d-qhd-block { display: block !important; }
+    .d-qhd-flex { display: flex !important; }
+    .d-qhd-inline { display: inline !important; }
+    .d-qhd-inline-flex { display: inline-flex !important; }
+    .d-qhd-inline-block { display: inline-block !important; }
+    .d-qhd-grid { display: grid !important; }
+    .d-qhd-table { display: table !important; }
+    .d-qhd-table-row { display: table-row !important; }
+    .d-qhd-table-cell { display: table-cell !important; }
+}
+
+@media (min-width: 3200px) {
+    .d-uhd-none { display: none !important; }
+    .d-uhd-block { display: block !important; }
+    .d-uhd-flex { display: flex !important; }
+    .d-uhd-inline { display: inline !important; }
+    .d-uhd-inline-flex { display: inline-flex !important; }
+    .d-uhd-inline-block { display: inline-block !important; }
+    .d-uhd-grid { display: grid !important; }
+    .d-uhd-table { display: table !important; }
+    .d-uhd-table-row { display: table-row !important; }
+    .d-uhd-table-cell { display: table-cell !important; }
 }
 
 .visually-hidden,
