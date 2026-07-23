@@ -23,7 +23,7 @@
             background-color: transparent;
         }
 
-        >div .controls {
+        >div .cb-controls {
             display: none;
         }
     }
@@ -155,7 +155,7 @@
         }
     }
 
-    .controls {
+    .cb-controls {
         display: flex;
         align-items: center;
         justify-self: flex-end;
