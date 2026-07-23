@@ -33,7 +33,7 @@ describe('ComboBoxControls', () => {
     it('renders controls container', () => {
       const { container } = renderWithProvider();
 
-      expect(container.querySelector('.controls')).toBeInTheDocument();
+      expect(container.querySelector('.cb-controls')).toBeInTheDocument();
     });
 
     it('renders dropdown chevron', () => {
@@ -77,7 +77,7 @@ describe('ComboBoxControls', () => {
         selectedItems: [items[0]],
       });
 
-      expect(container.querySelector('.controls')).toHaveClass('clearable');
+      expect(container.querySelector('.cb-controls')).toHaveClass('clearable');
     });
 
     it('clears selection when clear button is clicked', () => {
