@@ -3,6 +3,7 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBoxInput } from '../ComboBoxInput';
 import { ComboBoxProvider } from '../ComboBoxProvider';
+import { ComboBoxList } from '../ComboBoxList';
 
 interface Item {
   id: number;
@@ -184,6 +185,78 @@ describe('ComboBoxInput', () => {
 
       // Input visibility is controlled by showInput state
       expect(container.querySelector('input')).toBeInTheDocument();
+    });
+  });
+
+  describe('creatable with search', () => {
+    const renderCreatableSearch = (search: (input: string) => Item[], onCreate = vi.fn()) => {
+      render(
+        <ComboBoxProvider
+          {...defaultProps}
+          search={search}
+          creatable
+          createLabel={(input: string) => `Add "${input}"`}
+          onCreate={onCreate}
+        >
+          <ComboBoxInput placeholder="Search..." readonly={false} />
+          <ComboBoxList />
+        </ComboBoxProvider>
+      );
+      return onCreate;
+    };
+
+    it('offers the add option when no search result matches the typed text', () => {
+      vi.useFakeTimers();
+      try {
+        const onCreate = renderCreatableSearch(vi.fn().mockReturnValue([items[0]]));
+
+        fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Pear' } });
+        act(() => {
+          vi.advanceTimersByTime(300);
+        });
+
+        const addOption = screen.getByText('Add "Pear"');
+        expect(addOption).toBeInTheDocument();
+
+        fireEvent.click(addOption);
+        expect(onCreate).toHaveBeenCalledWith('Pear');
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+
+    it('does not offer the add option when a search result matches case-insensitively', () => {
+      vi.useFakeTimers();
+      try {
+        renderCreatableSearch(vi.fn().mockReturnValue([items[0]])); // Apple
+
+        fireEvent.change(screen.getByRole('combobox'), { target: { value: 'apple' } });
+        act(() => {
+          vi.advanceTimersByTime(300);
+        });
+
+        expect(screen.queryByText('Add "apple"')).not.toBeInTheDocument();
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+
+    it('does not offer the add option for empty input', () => {
+      vi.useFakeTimers();
+      try {
+        renderCreatableSearch(vi.fn().mockReturnValue([]));
+
+        const input = screen.getByRole('combobox');
+        fireEvent.change(input, { target: { value: 'x' } });
+        fireEvent.change(input, { target: { value: '' } });
+        act(() => {
+          vi.advanceTimersByTime(300);
+        });
+
+        expect(screen.queryByText(/^Add "/)).not.toBeInTheDocument();
+      } finally {
+        vi.useRealTimers();
+      }
     });
   });
 });

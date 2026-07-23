@@ -11,7 +11,24 @@ export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => 
     // synchronously on every keystroke with no debounce at all.
     const runSearch = useDebouncedCallback((value: string) => {
         if (!search) return;
-        setItems(search(value));
+        const results = search(value);
+        setItems(results);
+
+        // Mirror the non-search branch's creatable flow: offer "Add '…'" when
+        // the typed text matches none of the results. Empty input never
+        // offers an add option.
+        if (creatable && value !== "" && !results.some((i) => labelField(i).toString().toLowerCase() === value.toLowerCase())) {
+
+            const addItem = newItem ? newItem : {};
+
+            addItem.label = createLabel(value);
+
+            setNewItem(addItem);
+        }
+        else if (creatable) {
+            setNewItem(null);
+        }
+
         setShow(true);
     }, 300);
 
