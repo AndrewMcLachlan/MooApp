@@ -4,7 +4,7 @@ import { useInnerRef } from "../../hooks";
 
 export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => {
 
-    const { createLabel, creatable, allItems, labelField, search, setItems, selectedItems, newItem, setNewItem, show, text, setText, setShow, ref, listId } = useComboBox();
+    const { createLabel, creatable, allItems, labelField, search, setItems, selectedItems, newItem, setNewItem, show, showInput, text, setText, setShow, ref, listId } = useComboBox();
 
     // Debounce the actual search execution. Previously `useDebounce(search, 300)`
     // debounced the function *value* (a stable reference), so the search ran
@@ -71,9 +71,12 @@ export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => 
         }
     }
 
-    // While the dropdown is closed the selected pills stand in for the input;
-    // opening it reveals the input for typing/searching.
-    const inputVisible = selectedItems?.length === 0 || !!show;
+    // While the dropdown is closed the selected pills stand in for the input.
+    // The input is only revealed when the user opens the control to type/search
+    // (body click sets showInput) -- not when merely peeking via the chevron,
+    // which would add the input to the row and resize the control. With nothing
+    // selected there are no pills, so the input is always shown.
+    const inputVisible = selectedItems?.length === 0 || (!!show && !!showInput);
 
     const innerRef = useInnerRef<HTMLInputElement>(ref);
 
