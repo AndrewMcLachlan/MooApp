@@ -155,6 +155,39 @@ describe('ComboBoxList', () => {
       expect(onChange).toHaveBeenCalledWith([]);
     });
 
+    it('clears the search text after selecting in multi-select mode', () => {
+      const { container } = renderWithContainer({ multiSelect: true });
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+
+      // Type to filter down to a single option, then pick it.
+      const input = container.querySelector('input')!;
+      fireEvent.change(input, { target: { value: 'Item 1' } });
+      expect(input).toHaveValue('Item 1');
+
+      fireEvent.click(screen.getByText('Item 1'));
+
+      // The input must clear so the user can search for the next item.
+      expect(input).toHaveValue('');
+    });
+
+    it('resets the filtered list after selecting in multi-select mode', () => {
+      const { container } = renderWithContainer({ multiSelect: true });
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+
+      const input = container.querySelector('input')!;
+      fireEvent.change(input, { target: { value: 'Item 1' } });
+      // Filtered down to just Item 1.
+      expect(container.querySelectorAll('.cb-list li.cb-option').length).toBe(1);
+
+      fireEvent.click(screen.getByText('Item 1'));
+
+      // With the text cleared the full list must be shown again, not the stale
+      // single-item filter.
+      expect(container.querySelectorAll('.cb-list li.cb-option').length).toBe(3);
+    });
+
     it('pins selected items to the top of the list', () => {
       const { container } = renderWithContainer({ multiSelect: true, selectedItems: [items[2]] });
 
