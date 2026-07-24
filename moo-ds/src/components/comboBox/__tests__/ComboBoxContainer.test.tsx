@@ -117,6 +117,31 @@ describe('ComboBoxContainer', () => {
 
       expect(screen.getByText('Item 1')).toBeInTheDocument();
     });
+
+    it('opens the dropdown without revealing the input when the chevron is clicked', () => {
+      const { container } = renderWithProvider({}, { selectedItems: [items[0]], multiSelect: true });
+
+      // Pills stand in for the input while it is collapsed.
+      expect(container.querySelector('input')).toHaveAttribute('hidden');
+
+      // Clicking the chevron opens the list to peek at the options...
+      fireEvent.click(container.querySelector('.drop-down-chevron')!);
+      expect(container.querySelector('.cb-list')).toBeInTheDocument();
+
+      // ...but must NOT un-hide the text input, which would grow the control.
+      expect(container.querySelector('input')).toHaveAttribute('hidden');
+    });
+
+    it('reveals the input when the body is clicked', () => {
+      const { container } = renderWithProvider({}, { selectedItems: [items[0]], multiSelect: true });
+
+      expect(container.querySelector('input')).toHaveAttribute('hidden');
+
+      // Clicking the body (to type/search) opens the list and reveals the input.
+      fireEvent.click(container.querySelector('.body')!);
+      expect(container.querySelector('.cb-list')).toBeInTheDocument();
+      expect(container.querySelector('input')).not.toHaveAttribute('hidden');
+    });
   });
 
   describe('single-select mode', () => {
