@@ -3,7 +3,7 @@ import { useComboBox } from "./ComboBoxProvider";
 
 export const ComboBoxList = () => {
 
-    const { creatable, items, multiSelect, onAdd, onRemove, onChange, onCreate, show, setShow, newItem, setNewItem, selectedItems, setSelectedItems, setText, text, valueField, listId } = useComboBox();
+    const { creatable, items, setItems, allItems, multiSelect, onAdd, onRemove, onChange, onCreate, show, setShow, newItem, setNewItem, selectedItems, setSelectedItems, setText, text, valueField, listId } = useComboBox();
 
     if (!show) return null;
 
@@ -22,7 +22,7 @@ export const ComboBoxList = () => {
         }
 
         // Multi-select: the row is a checkbox. Toggle it and keep the dropdown
-        // open so the user can pick several. The text filter is left intact.
+        // open so the user can pick several.
         const selected = isSelected(item);
         const newSelectedItems = selected
             ? selectedItems.filter(i => valueField(i) !== valueField(item))
@@ -33,6 +33,12 @@ export const ComboBoxList = () => {
 
         setSelectedItems(newSelectedItems);
         onChange?.(newSelectedItems);
+
+        // Clear the search after a pick so the input is empty and ready for the
+        // next one; reset the filter to the full list too, otherwise an empty
+        // input would still show the stale narrowed results.
+        setText("");
+        setItems(allItems);
     }
 
     const onItemCreated = () => {
