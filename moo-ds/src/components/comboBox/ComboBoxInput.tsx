@@ -81,7 +81,7 @@ export const ComboBoxInput = ({ placeholder, ...props }: ComboBoxInputProps) => 
     const innerRef = useInnerRef<HTMLInputElement>(ref);
 
     return (
-        <input type="text" ref={innerRef} hidden={!inputVisible} placeholder={selectedItems?.length == 0 && !props.readonly ? placeholder : ""} onChange={onChange} onKeyUp={keyUp} value={text} tabIndex={props.tabIndex} autoCapitalize="off" autoComplete="off" autoCorrect="off" spellCheck={false} role="combobox" aria-expanded={showList} aria-controls={listId} />
+        <input type="text" ref={innerRef} hidden={!inputVisible} placeholder={selectedItems?.length == 0 && !props.readonly ? placeholder : ""} onChange={onChange} onKeyUp={keyUp} value={text} tabIndex={props.tabIndex} autoCapitalize="off" autoComplete="off" autoCorrect="off" spellCheck={false} role="combobox" aria-expanded={showList} aria-controls={showList ? listId : undefined} />
     );
 }
 

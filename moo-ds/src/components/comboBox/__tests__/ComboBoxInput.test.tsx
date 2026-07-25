@@ -127,14 +127,14 @@ describe('ComboBoxInput', () => {
   });
 
   describe('accessibility', () => {
-    it('exposes aria-expanded and aria-controls on the combobox', () => {
+    it('exposes aria-expanded, collapsed, with no dangling aria-controls', () => {
       renderWithProvider();
 
       const input = screen.getByRole('combobox');
-      expect(input).toHaveAttribute('aria-expanded');
-      // aria-controls is a per-instance generated id (React useId), not a
-      // shared hard-coded value.
-      expect(input.getAttribute('aria-controls')).toBeTruthy();
+      expect(input).toHaveAttribute('aria-expanded', 'false');
+      // While collapsed the listbox isn't mounted, so aria-controls must not
+      // point at a non-existent element (invalid ARIA).
+      expect(input).not.toHaveAttribute('aria-controls');
     });
   });
 

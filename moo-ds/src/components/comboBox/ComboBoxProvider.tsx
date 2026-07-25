@@ -7,7 +7,10 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
 
     const [selectedItems, setSelectedItems] = useState(props.selectedItems ? props.selectedItems : []);
     const [text, setText] = useState("");
-    const [items, setItems] = useState<T[]>(props.items);
+    // `items` is optional on the props; default to an empty array so consumers
+    // that omit it (e.g. a purely search-driven combo) never leave `items`
+    // undefined -- showList and the list rendering both read `items.length`.
+    const [items, setItems] = useState<T[]>(props.items ?? []);
     const [newItem, setNewItem] = useState(null as any);
     const [show, setShow] = useState(false);
     const [showInput, setShowInput] = useState(false);
