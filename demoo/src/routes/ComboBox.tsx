@@ -1,6 +1,6 @@
 import { Page } from "@andrewmclachlan/moo-app";
 import { ComboBox, Section, SectionTable, TagPanel } from "@andrewmclachlan/moo-ds";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 type Tag = { id: number; text: string; colour: string };
 
@@ -18,6 +18,19 @@ export const ComboBoxPage = () => {
     const [few, setFew] = useState<Tag[]>(() => items.slice(4, 6));
     const [inCell, setInCell] = useState<Tag[]>(() => items.slice(0, 7));
     const [chromeless, setChromeless] = useState<Tag[]>(() => items.slice(2, 5));
+
+    // "Include tags" pattern: the dropdown only suggests tags that already exist
+    // (knownTags), and you type to include one that doesn't yet. Both start empty
+    // -- there is nothing to select until a tag is created.
+    const [knownTags, setKnownTags] = useState<Tag[]>([]);
+    const [included, setIncluded] = useState<Tag[]>([]);
+    const nextTagId = useRef(1000);
+
+    const createTag = (name: string) => {
+        const tag: Tag = { id: nextTagId.current++, text: name, colour: "#8b0000" };
+        setKnownTags((prev) => [...prev, tag]); // now a suggestion for next time
+        setIncluded((prev) => [...prev, tag]);  // and included straight away
+    };
 
     const common = {
         items,
@@ -47,6 +60,31 @@ export const ComboBoxPage = () => {
 
             <Section title="Few selections" header="Few selections (all fit, no chip)" headerSize={4}>
                 <ComboBox {...common} selectedItems={few} onChange={setFew} />
+            </Section>
+
+            <Section title="Creatable" header="Type to include, suggest from what exists (&ldquo;Include tags&hellip;&rdquo;)" headerSize={4}>
+                <p>
+                    The dropdown only suggests tags that already exist; you <em>type</em> to include
+                    one that doesn&rsquo;t. Starting empty (no tags yet), clicking the control shows
+                    <strong> no dropdown at all</strong> &mdash; there is nothing to select, and never
+                    will be until a tag exists, so there is no empty bar. Start typing and an
+                    &ldquo;Add &hellip;&rdquo; option appears; once added, the tag becomes a
+                    suggestion the next time you open it.
+                </p>
+                <ComboBox
+                    items={knownTags}
+                    labelField={(i: Tag) => i.text}
+                    valueField={(i: Tag) => i.id}
+                    multiSelect
+                    creatable
+                    clearable
+                    createLabel={(t: string) => `Add “${t}”`}
+                    onCreate={createTag}
+                    placeholder="Include tags..."
+                    className="cb-demo"
+                    selectedItems={included}
+                    onChange={setIncluded}
+                />
             </Section>
 
             <Section title="Chromeless" header="Chromeless until clicked (TagPanel)" headerSize={4}>
