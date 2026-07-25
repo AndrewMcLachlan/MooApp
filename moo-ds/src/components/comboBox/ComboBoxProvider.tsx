@@ -7,7 +7,10 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
 
     const [selectedItems, setSelectedItems] = useState(props.selectedItems ? props.selectedItems : []);
     const [text, setText] = useState("");
-    const [items, setItems] = useState<T[]>(props.items);
+    // `items` is optional on the props; default to an empty array so consumers
+    // that omit it (e.g. a purely search-driven combo) never leave `items`
+    // undefined -- showList and the list rendering both read `items.length`.
+    const [items, setItems] = useState<T[]>(props.items ?? []);
     const [newItem, setNewItem] = useState(null as any);
     const [show, setShow] = useState(false);
     const [showInput, setShowInput] = useState(false);
@@ -52,8 +55,17 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
 
     const { clearable, creatable, multiSelect, readonly, labelField, valueField, colourField, onAdd, onRemove, onChange, onCreate, createLabel, search, ref } = props;
 
+    // Whether the dropdown panel actually has something worth showing. Opening
+    // the control is not enough: an empty, un-queried list (e.g. a search combo
+    // on first click, or a list whose items haven't loaded yet) shows no panel
+    // at all rather than an empty "No results" bar. The panel appears once there
+    // are items, a creatable "add" row, or a query has been typed (so an empty
+    // result is meaningful). This is the single source of truth for both the
+    // list's rendering and the input's aria-expanded state.
+    const showList = show && (items.length > 0 || (!!creatable && !!newItem) || text.length > 0);
+
     return (
-        <ComboBoxContext value={{ selectedItems, setSelectedItems, text, setText, items, setItems, newItem, setNewItem, show, setShow, showInput, setShowInput, clear, clearable, creatable, multiSelect, readonly, labelField, valueField, colourField, onAdd, onRemove, onChange, onCreate, createLabel, search, allItems, ref, listId }}>
+        <ComboBoxContext value={{ selectedItems, setSelectedItems, text, setText, items, setItems, newItem, setNewItem, show, setShow, showInput, setShowInput, showList, clear, clearable, creatable, multiSelect, readonly, labelField, valueField, colourField, onAdd, onRemove, onChange, onCreate, createLabel, search, allItems, ref, listId }}>
             {props.children}
         </ComboBoxContext>
     );
@@ -85,6 +97,8 @@ export interface ComboBoxOptions {
     setShow: (show: boolean) => void
     showInput: boolean;
     setShowInput: (show: boolean) => void;
+    /** True when the dropdown panel has content worth showing (see provider). */
+    showList: boolean;
     clear: (e: React.MouseEvent<any>) => void;
     clearable?: boolean;
     creatable?: boolean;

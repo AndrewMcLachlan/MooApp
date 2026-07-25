@@ -152,6 +152,34 @@ describe('ComboBoxContainer', () => {
     });
   });
 
+  describe('accessibility', () => {
+    it('does not crash when opened without an items prop', () => {
+      const { container } = render(
+        <ComboBoxProvider selectedItems={[]} labelField={defaultProps.labelField} valueField={defaultProps.valueField}>
+          <ComboBoxContainer placeholder="Select..." />
+        </ComboBoxProvider>
+      );
+
+      // `items` is optional; opening must not throw even though it was omitted.
+      expect(() => fireEvent.click(container.querySelector('.combo-box')!)).not.toThrow();
+    });
+
+    it('sets aria-controls to the listbox id only when the list is shown', () => {
+      const { container } = renderWithProvider();
+
+      const input = container.querySelector('input')!;
+      // Collapsed: no listbox mounted, so no dangling aria-controls.
+      expect(input).not.toHaveAttribute('aria-controls');
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+
+      const listbox = container.querySelector('[role="listbox"]')!;
+      expect(listbox).toBeInTheDocument();
+      expect(input).toHaveAttribute('aria-expanded', 'true');
+      expect(input).toHaveAttribute('aria-controls', listbox.id);
+    });
+  });
+
   describe('tabIndex', () => {
     it('passes tabIndex to input', () => {
       renderWithProvider({ tabIndex: 5 });
