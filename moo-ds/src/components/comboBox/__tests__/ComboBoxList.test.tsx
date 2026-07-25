@@ -69,20 +69,75 @@ describe('ComboBoxList', () => {
     });
   });
 
-  describe('no results', () => {
-    it('shows no results message when items empty and not creatable', () => {
+  describe('empty dropdown', () => {
+    it('does not open a panel when empty and nothing has been typed', () => {
       const { container } = renderWithContainer({ items: [] });
 
       fireEvent.click(container.querySelector('.combo-box')!);
 
-      expect(screen.getByText('No results found')).toBeInTheDocument();
+      // Nothing to show yet: no empty bar. The click just focuses the input so
+      // the user can start typing (e.g. a search-driven combo on first click).
+      expect(container.querySelector('.cb-list')).not.toBeInTheDocument();
     });
 
-    it('has no-results class on empty message', () => {
-      const { container } = renderWithContainer({ items: [] });
+    it('does not open a panel for a list that is empty until items arrive', () => {
+      const { container, rerender } = render(
+        <ComboBoxProvider {...defaultProps} items={[]}>
+          <ComboBoxContainer placeholder="Select..." />
+        </ComboBoxProvider>
+      );
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+      expect(container.querySelector('.cb-list')).not.toBeInTheDocument();
+
+      // Items become available (e.g. loaded asynchronously): the panel appears.
+      rerender(
+        <ComboBoxProvider {...defaultProps} items={items}>
+          <ComboBoxContainer placeholder="Select..." />
+        </ComboBoxProvider>
+      );
+      fireEvent.click(container.querySelector('.combo-box')!);
+      expect(container.querySelector('.cb-list')).toBeInTheDocument();
+    });
+
+    it('does not open an empty bar for a creatable combo with no items (the "Include tags…" case)', () => {
+      const { container } = renderWithContainer({
+        items: [],
+        creatable: true,
+        onCreate: vi.fn(),
+        createLabel: (t: string) => `Add "${t}"`,
+      });
 
       fireEvent.click(container.querySelector('.combo-box')!);
 
+      // No existing tags to suggest and nothing typed: the dropdown must not
+      // render a stray empty <ol> bar.
+      expect(container.querySelector('.cb-list')).not.toBeInTheDocument();
+    });
+
+    it('shows the "Add" option once the user types in an empty creatable combo', () => {
+      const { container } = renderWithContainer({
+        items: [],
+        creatable: true,
+        onCreate: vi.fn(),
+        createLabel: (t: string) => `Add "${t}"`,
+      });
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+      fireEvent.change(container.querySelector('input')!, { target: { value: 'release' } });
+
+      // Typing a free-text value is the point: the create affordance appears.
+      expect(screen.getByText('Add "release"')).toBeInTheDocument();
+    });
+
+    it('shows "No results found" once a query matches nothing', () => {
+      const { container } = renderWithContainer();
+
+      fireEvent.click(container.querySelector('.combo-box')!);
+      fireEvent.change(container.querySelector('input')!, { target: { value: 'zzz' } });
+
+      // A query has been entered, so the empty result is now meaningful.
+      expect(screen.getByText('No results found')).toBeInTheDocument();
       expect(container.querySelector('.no-results')).toBeInTheDocument();
     });
   });

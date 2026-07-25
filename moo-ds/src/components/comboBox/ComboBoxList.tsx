@@ -3,9 +3,11 @@ import { useComboBox } from "./ComboBoxProvider";
 
 export const ComboBoxList = () => {
 
-    const { creatable, items, setItems, allItems, multiSelect, onAdd, onRemove, onChange, onCreate, show, setShow, newItem, setNewItem, selectedItems, setSelectedItems, setText, text, valueField, listId } = useComboBox();
+    const { creatable, items, setItems, allItems, multiSelect, onAdd, onRemove, onChange, onCreate, showList, setShow, newItem, setNewItem, selectedItems, setSelectedItems, setText, text, valueField, listId } = useComboBox();
 
-    if (!show) return null;
+    // Only render when there is content to show -- an empty, un-queried list
+    // stays closed rather than flashing an empty bar (see showList in provider).
+    if (!showList) return null;
 
     const isSelected = (item: any) => selectedItems.some(i => valueField(i) === valueField(item));
 
