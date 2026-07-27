@@ -8,37 +8,40 @@ export const Home = () => {
     const [widgetLoading, setWidgetLoading] = useState(false);
 
     const addAlert = () => {
-        messages.sendMessage({ key:"m1", message: "This is a test alert", variant: "danger" });
+        messages.sendMessage({ key: "m1", message: "This is a test alert", variant: "danger" });
     }
 
     return (
         <Page title="Home">
             <Section title="Dashboard" header="Dashboard" headerSize={3}>
-                <Button onClick={addAlert}>Show Alert</Button>
-                <Button variant="outline-primary" onClick={() => setWidgetLoading(!widgetLoading)}>Toggle Widget Loading</Button>
+                <p>The landing page a real app shell would show: a row of stat widgets, a few live controls and some collapsible panels &mdash; the components you reach for first, shown together in context.</p>
+                <div className="demo-row">
+                    <Button onClick={addAlert}>Show Alert</Button>
+                    <Button variant="outline-primary" onClick={() => setWidgetLoading(!widgetLoading)}>Toggle Widget Loading</Button>
+                </div>
             </Section>
 
             <Row>
                 <Widget header="Total Users" size="single" headerSize={5}>
-                    <p style={{ fontSize: "2rem", margin: 0 }}>1,234</p>
+                    <p className="stat">1,234</p>
                     <Badge bg="success">+12%</Badge>
                 </Widget>
                 <Widget header="Revenue" size="single" headerSize={5}>
-                    <p style={{ fontSize: "2rem", margin: 0 }}>$45,678</p>
+                    <p className="stat">$45,678</p>
                     <Badge bg="danger">-3%</Badge>
                 </Widget>
                 <Widget header="Active Sessions" size="single" headerSize={5} loading={widgetLoading}>
-                    <p style={{ fontSize: "2rem", margin: 0 }}>342</p>
+                    <p className="stat">342</p>
                     <Badge bg="info">Live</Badge>
                 </Widget>
-                <Widget header="View Reports" size="single" headerSize={5} to="/table">
-                    <p style={{ fontSize: "2rem", margin: 0 }}>28</p>
+                <Widget header="View Reports" size="single" headerSize={5} to="/data/table">
+                    <p className="stat">28</p>
                     <Badge bg="warning">Pending</Badge>
                 </Widget>
             </Row>
 
             <Section title="Spinners" header="Spinner Variants" headerSize={4}>
-                <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", flexWrap: "wrap" }}>
+                <div className="demo-row loose">
                     <div>
                         <Spinner animation="border" />
                         <p>Border</p>

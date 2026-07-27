@@ -1,6 +1,7 @@
 import { Page } from "@andrewmclachlan/moo-app";
 import { ComboBox, Section, SectionTable, TagPanel } from "@andrewmclachlan/moo-ds";
 import { useMemo, useRef, useState } from "react";
+import { formsNav } from "../../nav";
 
 type Tag = { id: number; text: string; colour: string };
 
@@ -44,7 +45,7 @@ export const ComboBoxPage = () => {
     } as const;
 
     return (
-        <Page title="ComboBox" breadcrumbs={[{ route: "/combo-box", text: "ComboBox" }]}>
+        <Page title="ComboBox" breadcrumbs={[{ route: "/forms/form", text: "Forms" }, { route: "/forms/combo-box", text: "ComboBox" }]} navItems={formsNav}>
 
             <Section title="Many selections" header="Many selections (collapse to one row)" headerSize={4}>
                 <p>

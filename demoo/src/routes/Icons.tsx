@@ -42,8 +42,15 @@ const icons = [
 ];
 
 export const Icons = () => (
-    <Page title="Icons">
-        <Section title="Moo Icons">
+    <Page title="Icons" breadcrumbs={[{ route: "/icons", text: "Icons" }]}>
+        <Section title="Icon" header="Icon" headerSize={4}>
+            <p>
+                <code>Icon</code> renders a moo-icons SVG at a consistent size and colour. Pass an icon
+                component via <code>icon</code>, or an image URL via <code>src</code>. The
+                {" "}<code>@andrewmclachlan/moo-icons</code> package below is the full set.
+            </p>
+        </Section>
+        <Section title="Gallery" header="Moo Icons" headerSize={4}>
             <div className="icon-gallery">
                 {icons.map(({ name, component }) => (
                     <div key={name} className="icon-gallery-item">
