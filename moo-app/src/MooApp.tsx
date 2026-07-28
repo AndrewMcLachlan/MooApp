@@ -8,6 +8,7 @@ import { AppProvider, MsalAuthProvider, isAuthCancellation } from "./providers";
 import { LinkProvider, MessageProvider, ThemeProvider } from "@andrewmclachlan/moo-ds";
 
 import getMsalInstance, { AUTH_RECOVERED_EVENT, type MsalOptions } from "./login/msal";
+import { brokenByAuthWindow } from "./login/authRecovery";
 
 import { MsalProvider } from "@azure/msal-react";
 import { type IPublicClientApplication } from "@azure/msal-browser";
@@ -19,20 +20,6 @@ import { type AxiosInstance } from "axios";
 
 
 library.add(faArrowRightFromBracket, faMoon, faSun, faTimesCircle);
-
-/**
- * Whether auth recovery should re-run a query: it failed, and it failed because the
- * auth window cancelled it rather than for a reason of its own.
- *
- * Matching on "failed" alone is not enough. Recovery fires on routine silent token
- * renewals, and every refetch acquires a token, so a query left failing for an
- * unrelated reason — a 5xx while the API is down — would be invalidated, refetch,
- * trigger another silent success, and be invalidated again, looping for as long as
- * the API stayed down. Testing the error keeps recovery doing its job while leaving
- * unrelated failures to surface as errors.
- */
-export const brokenByAuthWindow = (query: { state: { status: string; error: unknown } }): boolean =>
-  query.state.status === "error" && isAuthCancellation(query.state.error);
 
 export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, auth, scopes = [], client, name, version, copyrightYear, authFallback, queryPersistOptions, silentRedirectUri }) => {
 

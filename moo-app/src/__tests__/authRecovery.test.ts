@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import axios from 'axios';
-import { brokenByAuthWindow } from '../MooApp';
+import { brokenByAuthWindow } from "../login/authRecovery";
 
 /** The marker the auth interceptors stamp on cancellations they raise. */
 const authCancellationMarker = Symbol.for("mooapp.authCancellation");
