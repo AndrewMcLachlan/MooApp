@@ -1,29 +1,33 @@
 import { MooApp, NotFound } from "@andrewmclachlan/moo-app";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowLeft, faArrowsRotate, faBolt, faCheck, faCheckCircle, faChevronDown, faChevronRight, faChevronUp, faCircleChevronLeft, faCircleInfo, faCircleXmark, faFilterCircleXmark, faHeart, faInfoCircle, faLeaf, faLongArrowDown, faLongArrowUp, faPenToSquare, faPlus, faStar, faTimesCircle, faTrashAlt, faTriangleExclamation, faUpload, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
+import { createRootRoute, createRoute, createRouter, redirect } from "@tanstack/react-router";
 import axios from "axios";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { Components } from "./routes/Components";
-import { IconButtonComponent } from "./routes/components/IconButtonComponent";
-import { IconLinkButtonComponent } from "./routes/components/IconLinkButtonComponent";
-import { LinkBoxComponent } from "./routes/components/LinkBoxComponent";
-import { PasswordComponent } from "./routes/form/PasswordComponent";
-import { FormComponent } from "./routes/components/Form";
+import { CategoryOutlet } from "./routes/CategoryOutlet";
 import { Home } from "./routes/Home";
-import { Profile } from "./routes/Profile";
-import { Providers } from "./routes/Providers";
-import { TagPanel } from "./routes/components/TagPanel";
-import { ErrorPage } from "./routes/ErrorPage";
-import { Notifications } from "./routes/Notifications";
-import { FormSample } from "./routes/form/FormSample";
-import { Table } from "./routes/Table";
-import { Overlays } from "./routes/Overlays";
-import { DataGridPage } from "./routes/DataGrid";
+import { PageSections } from "./routes/layout/PageSections";
+import { Navigation } from "./routes/layout/Navigation";
+import { DrawerPage } from "./routes/layout/Drawer";
+import { FormPage } from "./routes/forms/Form";
+import { Inputs } from "./routes/forms/Inputs";
+import { Buttons } from "./routes/forms/Buttons";
+import { ComboBoxPage } from "./routes/forms/ComboBox";
+import { TagPanelPage } from "./routes/forms/TagPanel";
+import { UploadPage } from "./routes/forms/Upload";
+import { TablePage } from "./routes/data/Table";
+import { DataGridPage } from "./routes/data/DataGrid";
+import { PaginationPage } from "./routes/data/Pagination";
+import { Alerts } from "./routes/feedback/Alerts";
+import { Notifications } from "./routes/feedback/Notifications";
+import { Loading } from "./routes/feedback/Loading";
+import { Badges } from "./routes/feedback/Badges";
+import { Overlays } from "./routes/overlays/Overlays";
 import { Icons } from "./routes/Icons";
-import { SkeletonPage } from "./routes/Skeleton";
-import { ComboBoxPage } from "./routes/ComboBox";
+import { Providers } from "./routes/app/Providers";
+import { ErrorHandling } from "./routes/app/ErrorHandling";
+import { Profile } from "./routes/Profile";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -39,155 +43,93 @@ const rootRoute = createRootRoute({
   notFoundComponent: NotFound,
 });
 
-const indexRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/",
-  component: Home,
-});
+// Redirect a bare category path to its first page. Categories have no landing
+// page of their own.
+const categoryIndex = (parent: any, to: string) =>
+  createRoute({ getParentRoute: () => parent, path: "/", beforeLoad: () => { throw redirect({ to }); } });
 
-const componentsRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "components",
-});
+const indexRoute = createRoute({ getParentRoute: () => rootRoute, path: "/", component: Home });
 
-const componentsIndexRoute = createRoute({
-  getParentRoute: () => componentsRoute,
-  path: "/",
-  component: Components,
-});
+// --- Layout ---------------------------------------------------------------
+const layoutRoute = createRoute({ getParentRoute: () => rootRoute, path: "layout", component: CategoryOutlet });
+const pageSectionsRoute = createRoute({ getParentRoute: () => layoutRoute, path: "page-sections", component: PageSections });
+const navigationRoute = createRoute({ getParentRoute: () => layoutRoute, path: "navigation", component: Navigation });
+const drawerRoute = createRoute({ getParentRoute: () => layoutRoute, path: "drawer", component: DrawerPage });
 
-const iconLinkButtonRoute = createRoute({
-  getParentRoute: () => componentsRoute,
-  path: "icon-link-button",
-  component: IconLinkButtonComponent,
-});
+// --- Forms ----------------------------------------------------------------
+const formsRoute = createRoute({ getParentRoute: () => rootRoute, path: "forms", component: CategoryOutlet });
+const formRoute = createRoute({ getParentRoute: () => formsRoute, path: "form", component: FormPage });
+const inputsRoute = createRoute({ getParentRoute: () => formsRoute, path: "inputs", component: Inputs });
+const buttonsRoute = createRoute({ getParentRoute: () => formsRoute, path: "buttons", component: Buttons });
+const comboBoxRoute = createRoute({ getParentRoute: () => formsRoute, path: "combo-box", component: ComboBoxPage });
+const tagPanelRoute = createRoute({ getParentRoute: () => formsRoute, path: "tag-panel", component: TagPanelPage });
+const uploadRoute = createRoute({ getParentRoute: () => formsRoute, path: "upload", component: UploadPage });
 
-const iconButtonRoute = createRoute({
-  getParentRoute: () => componentsRoute,
-  path: "icon-button",
-  component: IconButtonComponent,
-});
+// --- Data & Tables --------------------------------------------------------
+const dataRoute = createRoute({ getParentRoute: () => rootRoute, path: "data", component: CategoryOutlet });
+const tableRoute = createRoute({ getParentRoute: () => dataRoute, path: "table", component: TablePage });
+const dataGridRoute = createRoute({ getParentRoute: () => dataRoute, path: "data-grid", component: DataGridPage });
+const paginationRoute = createRoute({ getParentRoute: () => dataRoute, path: "pagination", component: PaginationPage });
 
-const linkBoxRoute = createRoute({
-  getParentRoute: () => componentsRoute,
-  path: "link-box",
-  component: LinkBoxComponent,
-});
+// --- Feedback -------------------------------------------------------------
+const feedbackRoute = createRoute({ getParentRoute: () => rootRoute, path: "feedback", component: CategoryOutlet });
+const alertsRoute = createRoute({ getParentRoute: () => feedbackRoute, path: "alerts", component: Alerts });
+const notificationsRoute = createRoute({ getParentRoute: () => feedbackRoute, path: "notifications", component: Notifications });
+const loadingRoute = createRoute({ getParentRoute: () => feedbackRoute, path: "loading", component: Loading });
+const badgesRoute = createRoute({ getParentRoute: () => feedbackRoute, path: "badges", component: Badges });
 
-const tagPanelRoute = createRoute({
-  getParentRoute: () => componentsRoute,
-  path: "tag-panel",
-  component: TagPanel,
-});
+// --- Single-page categories ----------------------------------------------
+const overlaysRoute = createRoute({ getParentRoute: () => rootRoute, path: "overlays", component: Overlays });
+const iconsRoute = createRoute({ getParentRoute: () => rootRoute, path: "icons", component: Icons });
 
-const providersRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "providers",
-  component: Providers,
-});
+// --- App framework --------------------------------------------------------
+const appRoute = createRoute({ getParentRoute: () => rootRoute, path: "app", component: CategoryOutlet });
+const providersRoute = createRoute({ getParentRoute: () => appRoute, path: "providers", component: Providers });
+const errorHandlingRoute = createRoute({ getParentRoute: () => appRoute, path: "error-handling", component: ErrorHandling });
 
-const errorPageRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "error-page",
-  component: ErrorPage,
-});
-
-const formRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "form",
-  component: FormComponent,
-});
-
-const formIndexRoute = createRoute({
-  getParentRoute: () => formRoute,
-  path: "/",
-  component: FormSample,
-});
-
-const passwordRoute = createRoute({
-  getParentRoute: () => formRoute,
-  path: "password",
-  component: PasswordComponent,
-});
-
-const notificationsRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "notifications",
-  component: Notifications,
-});
-
-const settingsRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "settings",
-  component: Components,
-});
-
-const profileRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "profile",
-  component: Profile,
-});
-
-const tableRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "table",
-  component: Table,
-});
-
-const overlaysRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "overlays",
-  component: Overlays,
-});
-
-const dataGridRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "data-grid",
-  component: DataGridPage,
-});
-
-const iconsRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "icons",
-  component: Icons,
-});
-
-const skeletonRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "skeleton",
-  component: SkeletonPage,
-});
-
-const comboBoxRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "combo-box",
-  component: ComboBoxPage,
-});
+// --- User menu ------------------------------------------------------------
+const profileRoute = createRoute({ getParentRoute: () => rootRoute, path: "profile", component: Profile });
+const settingsRoute = createRoute({ getParentRoute: () => rootRoute, path: "settings", component: Profile });
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
-  componentsRoute.addChildren([
-    componentsIndexRoute,
-    iconLinkButtonRoute,
-    iconButtonRoute,
-    linkBoxRoute,
+  layoutRoute.addChildren([
+    categoryIndex(layoutRoute, "/layout/page-sections"),
+    pageSectionsRoute,
+    navigationRoute,
+    drawerRoute,
+  ]),
+  formsRoute.addChildren([
+    categoryIndex(formsRoute, "/forms/form"),
+    formRoute,
+    inputsRoute,
+    buttonsRoute,
+    comboBoxRoute,
     tagPanelRoute,
+    uploadRoute,
   ]),
-  providersRoute,
-  errorPageRoute,
-  formRoute.addChildren([
-    formIndexRoute,
-    passwordRoute,
+  dataRoute.addChildren([
+    categoryIndex(dataRoute, "/data/table"),
+    tableRoute,
+    dataGridRoute,
+    paginationRoute,
   ]),
-  notificationsRoute,
-  settingsRoute,
-  profileRoute,
-  tableRoute,
+  feedbackRoute.addChildren([
+    categoryIndex(feedbackRoute, "/feedback/alerts"),
+    alertsRoute,
+    notificationsRoute,
+    loadingRoute,
+    badgesRoute,
+  ]),
   overlaysRoute,
-  dataGridRoute,
   iconsRoute,
-  skeletonRoute,
-  comboBoxRoute,
+  appRoute.addChildren([
+    categoryIndex(appRoute, "/app/providers"),
+    providersRoute,
+    errorHandlingRoute,
+  ]),
+  profileRoute,
+  settingsRoute,
 ]);
 
 // @ts-expect-error strictNullChecks is false (to match the moo-ds/moo-app source) — TanStack Router requires it for full type safety

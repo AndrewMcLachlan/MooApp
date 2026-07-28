@@ -1,6 +1,7 @@
 import { Section, SectionDataGrid, DataGrid, Button, type ColumnDef, type DataGridState } from "@andrewmclachlan/moo-ds";
 import { Page } from "@andrewmclachlan/moo-app";
 import { useState, useCallback } from "react";
+import { dataNav } from "../../nav";
 
 interface Person {
     id: number;
@@ -52,21 +53,21 @@ export const DataGridPage = () => {
     }, []);
 
     return (
-        <Page title="Data Grid" breadcrumbs={[{ route: "/data-grid", text: "Data Grid" }]}>
-            <SectionDataGrid header="Client-Side" headerSize={3} data={people} columns={columns} striped hover sortable showPagination pageSize={10} />
+        <Page title="Data Grid" breadcrumbs={[{ route: "/data/table", text: "Data & Tables" }, { route: "/data/data-grid", text: "Data Grid" }]} navItems={dataNav}>
+            <SectionDataGrid header="Client-Side" headerSize={4} data={people} columns={columns} striped hover sortable showPagination pageSize={10} />
 
-            <Section header="Loading State" headerSize={3}>
-                <Button onClick={simulateLoading} disabled={isLoading} style={{ marginBottom: "1rem" }}>
+            <Section header="Loading State" headerSize={4}>
+                <Button className="demo-mb" onClick={simulateLoading} disabled={isLoading}>
                     {isLoading ? "Loading..." : "Simulate Loading"}
                 </Button>
                 <DataGrid data={people.slice(0, 5)} columns={columns} striped hover loading={isLoading} />
             </Section>
 
-            <SectionDataGrid header="Empty State" headerSize={3} data={[]} columns={columns} striped hover emptyMessage="No people found. Try adjusting your filters." />
+            <SectionDataGrid header="Empty State" headerSize={4} data={[]} columns={columns} striped hover emptyMessage="No people found. Try adjusting your filters." />
 
             <SectionDataGrid
                 header="Server-Side Mode"
-                headerSize={3}
+                headerSize={4}
                 data={serverPage}
                 columns={columns}
                 striped
@@ -79,9 +80,9 @@ export const DataGridPage = () => {
                 onChange={handleServerChange}
             />
 
-            <SectionDataGrid header="Header Pagination" headerSize={3} data={people} columns={columns} striped hover sortable showPagination showHeaderPagination pageSize={10} />
+            <SectionDataGrid header="Header Pagination" headerSize={4} data={people} columns={columns} striped hover sortable showPagination showHeaderPagination pageSize={10} />
 
-            <SectionDataGrid header="Bordered" headerSize={3} data={people.slice(0, 5)} columns={columns} bordered />
+            <SectionDataGrid header="Bordered" headerSize={4} data={people.slice(0, 5)} columns={columns} bordered />
         </Page>
     );
 };

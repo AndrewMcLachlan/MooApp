@@ -76,3 +76,57 @@
   gap: 1rem;
   align-items: center;
 }
+
+/* ---------------------------------------------------------------------------
+   demoo sample helpers
+
+   demoo follows the repo's no-inline-styles rule: sample layouts use these
+   classes rather than `style={{…}}`. Keep them generic and composable so new
+   showcase pages can lean on them instead of adding one-off styles.
+   ------------------------------------------------------------------------- */
+
+/* A horizontal band of samples that wraps. Modifiers tune spacing/alignment. */
+.demo-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.demo-row.tight { gap: 0.5rem; }
+.demo-row.loose { gap: 2rem; }
+.demo-row.start { align-items: flex-start; }
+.demo-row.center { justify-content: center; padding: 3rem 0; }
+
+/* A vertical stack of samples. */
+.demo-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+/* Sub-heading spacing inside a Section that groups several sample rows. */
+.demo-subhead { margin-top: 1.5rem; }
+
+/* Space below a control that sits directly above another sample. */
+.demo-mb { margin-bottom: 1rem; }
+
+/* A wrapping row of like badges/pills with a gap below each row. */
+.badge-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+/* Large stat number used on the Home dashboard widgets. */
+.stat { font-size: 2rem; margin: 0; }
+
+/* Skeleton composition samples. */
+.skeleton-cols { display: flex; gap: 3rem; flex-wrap: wrap; max-width: 640px; }
+.skeleton-col { flex: 1; min-width: 220px; }
+.skeleton-rect { width: 280px; height: 140px; }
+.skeleton-media { display: flex; gap: 1rem; align-items: center; max-width: 420px; }
+.skeleton-media .fill { flex: 1; }
+.avatar-lg { width: 64px; height: 64px; border-radius: 50%; }
