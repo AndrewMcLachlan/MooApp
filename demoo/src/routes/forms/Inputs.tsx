@@ -1,5 +1,5 @@
 import { Page } from "@andrewmclachlan/moo-app";
-import { Section, Input, Password, SearchBox } from "@andrewmclachlan/moo-ds";
+import { Section, Input, InputGroup, Password, SearchBox } from "@andrewmclachlan/moo-ds";
 import { useState } from "react";
 import { formsNav } from "../../nav";
 
@@ -16,6 +16,25 @@ export const Inputs = () => {
                     <Input placeholder="Plain input" />
                     <Input placeholder="Clearable input" clearable defaultValue="Clear me" />
                     <Input placeholder="Disabled" disabled />
+                </div>
+            </Section>
+
+            <Section title="Input group" header="InputGroup" headerSize={4}>
+                <p>Wraps an input with leading or trailing addons &mdash; use <code>InputGroup.Text</code> for a static prefix/suffix like a currency symbol, unit or handle.</p>
+                <div className="demo-col">
+                    <InputGroup>
+                        <InputGroup.Text>@</InputGroup.Text>
+                        <Input placeholder="username" />
+                    </InputGroup>
+                    <InputGroup>
+                        <InputGroup.Text>$</InputGroup.Text>
+                        <Input placeholder="0.00" type="number" step="0.01" />
+                        <InputGroup.Text>.00</InputGroup.Text>
+                    </InputGroup>
+                    <InputGroup>
+                        <Input placeholder="Search term" />
+                        <InputGroup.Text>.com</InputGroup.Text>
+                    </InputGroup>
                 </div>
             </Section>
 
