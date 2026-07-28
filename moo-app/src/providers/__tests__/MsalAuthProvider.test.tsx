@@ -282,7 +282,11 @@ describe('401 response recovery', () => {
     const calls: { auth: string | undefined }[] = [];
     client.defaults.adapter = async (config) => {
       const status = statuses.length > 1 ? statuses.shift()! : statuses[0];
-      calls.push({ auth: config.headers.getAuthorization() as string | undefined });
+      // getAuthorization() is typed as a union (string | string[] | RegExpExecArray | …);
+      // at runtime it's the "Bearer …" string when set, so narrow with a typeof guard
+      // rather than an unchecked cast.
+      const authorization = config.headers.getAuthorization();
+      calls.push({ auth: typeof authorization === 'string' ? authorization : undefined });
       const response = { data: {}, status, statusText: String(status), headers: {}, config } as any;
       if (status >= 400) {
         throw new axios.AxiosError(`Request failed with status code ${status}`, String(status), config as any, {}, response);
