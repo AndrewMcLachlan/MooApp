@@ -10,7 +10,7 @@ export const Navigation = () => {
             <Section title="Breadcrumb" header="Breadcrumb" headerSize={4}>
                 <p>
                     A trail back up the hierarchy. The shell renders one automatically from each
-                    <code> Page</code>&rsquo;s <code>breadcrumbs</code> prop (see the header above); it
+                    <code>Page</code>&rsquo;s <code>breadcrumbs</code> prop (see the header above); it
                     can also be used directly.
                 </p>
                 <Breadcrumb breadcrumbs={[{ route: "/layout/page-sections", text: "Layout" }, { route: "/layout/navigation", text: "Navigation" }]} />
