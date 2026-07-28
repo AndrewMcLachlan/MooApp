@@ -9,6 +9,7 @@ interface FormSampleValues {
     group3: string[];
     group4: string;
     group5: string;
+    group6: string;
 }
 
 const selectItems = Array.from({ length: 10 }, (_, i) => ({ id: `${i + 1}`, text: `Option ${i + 1}` }));
@@ -21,6 +22,7 @@ export const FormPage = () => {
         group3: ["1", "2"],
         group4: "2",
         group5: "3",
+        group6: "A longer, multi-line note to check the label lines up with the first line of the textarea.",
     };
 
     const form = useForm<FormSampleValues>({ defaultValues: existing });
@@ -59,6 +61,10 @@ export const FormPage = () => {
                 <Form.Group groupId="group5">
                     <Form.Label>Input 5 (single-select)</Form.Label>
                     <FormComboBox<{ id: string, text: string }> items={selectItems} labelField={i => i.text} valueField={i => i.id} clearable />
+                </Form.Group>
+                <Form.Group groupId="group6">
+                    <Form.Label>Notes (textarea)</Form.Label>
+                    <Form.TextArea rows={4} placeholder="Multi-line notes" />
                 </Form.Group>
                 <Button type="submit" variant="primary">Submit</Button>
             </SectionForm>

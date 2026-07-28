@@ -1,15 +1,38 @@
 import { Page } from "@andrewmclachlan/moo-app";
-import { Section, SectionTable, EditColumn, Button } from "@andrewmclachlan/moo-ds";
+import { Section, SectionTable, EditColumn, SortableTh, changeSortDirection, type SortDirection, Button } from "@andrewmclachlan/moo-ds";
 import { useState } from "react";
 import { dataNav } from "../../nav";
 
 const rows = Array.from({ length: 6 }, (_, i) => ({ a: `Row ${i + 1} Data 1`, b: `Row ${i + 1} Data 2`, c: `Row ${i + 1} Data 3` }));
+
+const people = [
+    { name: "Alice", role: "Admin", logins: 42 },
+    { name: "Bob", role: "Editor", logins: 17 },
+    { name: "Charlie", role: "Viewer", logins: 8 },
+    { name: "Diana", role: "Editor", logins: 31 },
+    { name: "Eve", role: "Admin", logins: 25 },
+];
+type Person = typeof people[number];
 
 export const TablePage = () => {
 
     const [tableValue, setTableValue] = useState<string | undefined>("Row 1 Data 1");
     const [tableNumValue, setTableNumValue] = useState<number | undefined>(1);
     const [isTableLoading, setIsTableLoading] = useState(false);
+
+    const [sortField, setSortField] = useState<keyof Person>("name");
+    const [sortDirection, setSortDirection] = useState<SortDirection>("Ascending");
+
+    const sort = (field: string) => {
+        const nextDir = field === sortField ? changeSortDirection(sortDirection) : "Ascending";
+        setSortField(field as keyof Person);
+        setSortDirection(nextDir);
+    };
+
+    const sortedPeople = [...people].sort((a, b) => {
+        const dir = sortDirection === "Ascending" ? 1 : -1;
+        return a[sortField] < b[sortField] ? -dir : a[sortField] > b[sortField] ? dir : 0;
+    });
 
     const simulateLoading = () => {
         setIsTableLoading(true);
@@ -85,6 +108,25 @@ export const TablePage = () => {
                             <td>{row.a}</td>
                             <td>{row.b}</td>
                             <td>{row.c}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </SectionTable>
+
+            <SectionTable header="Sortable columns (SortableTh)" striped hover headerSize={4}>
+                <thead>
+                    <tr>
+                        <SortableTh field="name" sortField={sortField} sortDirection={sortDirection} onSort={sort}>Name</SortableTh>
+                        <SortableTh field="role" sortField={sortField} sortDirection={sortDirection} onSort={sort}>Role</SortableTh>
+                        <SortableTh field="logins" sortField={sortField} sortDirection={sortDirection} onSort={sort}>Logins</SortableTh>
+                    </tr>
+                </thead>
+                <tbody>
+                    {sortedPeople.map((p) => (
+                        <tr key={p.name}>
+                            <td>{p.name}</td>
+                            <td>{p.role}</td>
+                            <td>{p.logins}</td>
                         </tr>
                     ))}
                 </tbody>
