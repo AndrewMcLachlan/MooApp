@@ -8,6 +8,7 @@ import { AppProvider, MsalAuthProvider, isAuthCancellation } from "./providers";
 import { LinkProvider, MessageProvider, ThemeProvider } from "@andrewmclachlan/moo-ds";
 
 import getMsalInstance, { AUTH_RECOVERED_EVENT, type MsalOptions } from "./login/msal";
+import { brokenByAuthWindow } from "./login/authRecovery";
 
 import { MsalProvider } from "@azure/msal-react";
 import { type IPublicClientApplication } from "@azure/msal-browser";
@@ -66,11 +67,7 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clien
 
   useEffect(() => {
     const onAuthRecovered = () => {
-      // Only refetch queries that actually failed. Recovery fires on silent token
-      // renewals too (which can happen routinely), so invalidating everything would
-      // cause a refetch storm; scoping to errored queries makes it a no-op unless a
-      // request was cancelled during an auth window (see login/msal.ts, Login gate).
-      queryClient.invalidateQueries({ predicate: (query) => query.state.status === "error" });
+      queryClient.invalidateQueries({ predicate: brokenByAuthWindow });
     };
 
     window.addEventListener(AUTH_RECOVERED_EVENT, onAuthRecovered);
