@@ -20,6 +20,20 @@ import { type AxiosInstance } from "axios";
 
 library.add(faArrowRightFromBracket, faMoon, faSun, faTimesCircle);
 
+/**
+ * Whether auth recovery should re-run a query: it failed, and it failed because the
+ * auth window cancelled it rather than for a reason of its own.
+ *
+ * Matching on "failed" alone is not enough. Recovery fires on routine silent token
+ * renewals, and every refetch acquires a token, so a query left failing for an
+ * unrelated reason — a 5xx while the API is down — would be invalidated, refetch,
+ * trigger another silent success, and be invalidated again, looping for as long as
+ * the API stayed down. Testing the error keeps recovery doing its job while leaving
+ * unrelated failures to surface as errors.
+ */
+export const brokenByAuthWindow = (query: { state: { status: string; error: unknown } }): boolean =>
+  query.state.status === "error" && isAuthCancellation(query.state.error);
+
 export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, auth, scopes = [], client, name, version, copyrightYear, authFallback, queryPersistOptions, silentRedirectUri }) => {
 
   const [msalInstance, setMsalInstance] = React.useState<IPublicClientApplication | null>(null);
@@ -66,11 +80,7 @@ export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clien
 
   useEffect(() => {
     const onAuthRecovered = () => {
-      // Only refetch queries that actually failed. Recovery fires on silent token
-      // renewals too (which can happen routinely), so invalidating everything would
-      // cause a refetch storm; scoping to errored queries makes it a no-op unless a
-      // request was cancelled during an auth window (see login/msal.ts, Login gate).
-      queryClient.invalidateQueries({ predicate: (query) => query.state.status === "error" });
+      queryClient.invalidateQueries({ predicate: brokenByAuthWindow });
     };
 
     window.addEventListener(AUTH_RECOVERED_EVENT, onAuthRecovered);
