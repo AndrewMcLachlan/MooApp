@@ -14,6 +14,14 @@ const people = [
 ];
 type Person = typeof people[number];
 
+// Typed column list keeps the sort field constrained to real keys of Person,
+// so there's no unchecked cast when SortableTh hands back a field string.
+const columns: { field: keyof Person; header: string }[] = [
+    { field: "name", header: "Name" },
+    { field: "role", header: "Role" },
+    { field: "logins", header: "Logins" },
+];
+
 export const TablePage = () => {
 
     const [tableValue, setTableValue] = useState<string | undefined>("Row 1 Data 1");
@@ -24,9 +32,10 @@ export const TablePage = () => {
     const [sortDirection, setSortDirection] = useState<SortDirection>("Ascending");
 
     const sort = (field: string) => {
-        const nextDir = field === sortField ? changeSortDirection(sortDirection) : "Ascending";
-        setSortField(field as keyof Person);
-        setSortDirection(nextDir);
+        const column = columns.find((c) => c.field === field);
+        if (!column) return;
+        setSortField(column.field);
+        setSortDirection(column.field === sortField ? changeSortDirection(sortDirection) : "Ascending");
     };
 
     const sortedPeople = [...people].sort((a, b) => {
@@ -116,9 +125,9 @@ export const TablePage = () => {
             <SectionTable header="Sortable columns (SortableTh)" striped hover headerSize={4}>
                 <thead>
                     <tr>
-                        <SortableTh field="name" sortField={sortField} sortDirection={sortDirection} onSort={sort}>Name</SortableTh>
-                        <SortableTh field="role" sortField={sortField} sortDirection={sortDirection} onSort={sort}>Role</SortableTh>
-                        <SortableTh field="logins" sortField={sortField} sortDirection={sortDirection} onSort={sort}>Logins</SortableTh>
+                        {columns.map((c) => (
+                            <SortableTh key={c.field} field={c.field} sortField={sortField} sortDirection={sortDirection} onSort={sort}>{c.header}</SortableTh>
+                        ))}
                     </tr>
                 </thead>
                 <tbody>

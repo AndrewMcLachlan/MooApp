@@ -28,7 +28,7 @@ export const Inputs = () => {
                     </InputGroup>
                     <InputGroup>
                         <InputGroup.Text>$</InputGroup.Text>
-                        <Input placeholder="0.00" type="number" />
+                        <Input placeholder="0.00" type="number" step="0.01" />
                         <InputGroup.Text>.00</InputGroup.Text>
                     </InputGroup>
                     <InputGroup>
