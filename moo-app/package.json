@@ -80,7 +80,7 @@
     "@tanstack/react-query-persist-client": "^5.101.2",
     "@tanstack/react-router": "^1.170.16",
     "react": "^19.2.8",
-    "react-dom": "^19.2.7",
+    "react-dom": "^19.2.8",
     "react-hook-form": "^7.83.0"
   }
 }
