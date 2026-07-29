@@ -21,6 +21,9 @@
     padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
     color: var(--tooltip-colour);
     text-align: center;
+    /* Centred text reads badly with a ragged last line, and a tooltip is
+       short enough that balancing costs nothing. */
+    text-wrap: balance;
     background-color: var(--tooltip-bg);
     border-radius: var(--tooltip-border-radius);
     opacity: var(--tooltip-opacity);

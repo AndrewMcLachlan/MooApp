@@ -27,7 +27,7 @@
 }
 
 .nav-link:hover,
-.nav-link:focus {
+.nav-link:focus-visible {
     color: var(--nav-link-hover-colour);
 }
 
