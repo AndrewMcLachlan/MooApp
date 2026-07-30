@@ -70,7 +70,7 @@
 }
 
 .alert-primary {
-    --alert-colour: light-dark(color-mix(in srgb, var(--primary) 60%, #000), color-mix(in srgb, var(--primary) 40%, #fff));
-    --alert-bg: light-dark(color-mix(in srgb, var(--primary) 20%, #fff), color-mix(in srgb, var(--primary) 20%, #000));
-    --alert-border-colour: light-dark(color-mix(in srgb, var(--primary) 30%, #fff), color-mix(in srgb, var(--primary) 40%, #000));
+    --alert-colour: light-dark(color-mix(in oklab, var(--primary) 60%, #000), color-mix(in oklab, var(--primary) 40%, #fff));
+    --alert-bg: light-dark(color-mix(in oklab, var(--primary) 20%, #fff), color-mix(in oklab, var(--primary) 20%, #000));
+    --alert-border-colour: light-dark(color-mix(in oklab, var(--primary) 30%, #fff), color-mix(in oklab, var(--primary) 40%, #000));
 }

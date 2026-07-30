@@ -51,14 +51,14 @@
 
 /* Muted: tinted background, hue-as-text */
 .badge.muted {
-    background: light-dark(color-mix(in srgb, var(--badge-bg) 16%, #fff), color-mix(in srgb, var(--badge-bg) 25%, #000));
-    color: light-dark(color-mix(in srgb, var(--badge-bg) 78%, #000), color-mix(in srgb, var(--badge-bg) 45%, #fff));
+    background: light-dark(color-mix(in oklab, var(--badge-bg) 16%, #fff), color-mix(in oklab, var(--badge-bg) 25%, #000));
+    color: light-dark(color-mix(in oklab, var(--badge-bg) 78%, #000), color-mix(in oklab, var(--badge-bg) 45%, #fff));
 }
 
 /* Outline: transparent background, hue ring (via inset shadow to avoid layout shift) + hue text */
 .badge.outline {
     background: transparent;
-    color: light-dark(color-mix(in srgb, var(--badge-bg) 78%, #000), color-mix(in srgb, var(--badge-bg) 45%, #fff));
+    color: light-dark(color-mix(in oklab, var(--badge-bg) 78%, #000), color-mix(in oklab, var(--badge-bg) 45%, #fff));
     box-shadow: inset 0 0 0 1px var(--badge-bg);
 }
 
