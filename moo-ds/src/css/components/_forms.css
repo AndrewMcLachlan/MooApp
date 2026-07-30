@@ -73,6 +73,16 @@ textarea.form-control {
     min-height: calc(1.5em + 0.75rem + calc(var(--border-width, 1px) * 2));
 }
 
+/* Auto-grow to fit content, so a textarea does not need a scrollbar or a JS
+   autosize handler. Scoped to textareas with no `rows`: an author who set rows
+   asked for a specific height, and field-sizing: content would override it and
+   collapse the control to one line. The max-block-size stops a long value
+   growing without limit; past that it scrolls as before. */
+textarea.form-control:not([rows]) {
+    field-sizing: content;
+    max-block-size: 40vh;
+}
+
 /* Form select */
 .form-select {
     --form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e");

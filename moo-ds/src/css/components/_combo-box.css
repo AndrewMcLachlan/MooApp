@@ -5,6 +5,16 @@
         position: relative;
         border-radius: var(--border-radius, 0.375rem);
         border: var(--border-width, 1px) solid var(--border-colour);
+        /* Anchor for the dropdown below. Set on the control itself so the list
+           can leave the flow entirely -- see the note on `ol`.
+
+           One shared name is safe even with several combo-boxes on a page: each
+           list is a descendant of its own control, so the nearest preceding
+           element carrying the name is always that control. Verified with two
+           controls on one page -- each list anchored to its own. A unique name
+           per instance (the approach OverlayTrigger has to take, since its
+           overlay is portalled away from the trigger) is not needed here. */
+        anchor-name: --combo-box;
     }
 
     :scope:focus-within {
@@ -108,6 +118,14 @@
         }
     }
 
+    /* Anchor positioned rather than position: absolute inside the control.
+       Absolute positioning kept the list inside the control's containing block,
+       so any ancestor with overflow: hidden clipped it -- dashboard widgets set
+       exactly that. position: fixed takes it out of the flow, position-anchor
+       keeps it pinned to the control, anchor-size() matches the control's width
+       (what width: 100% used to do), and flip-block moves it above the control
+       when there is no room below instead of running off-screen.
+       Follows the pattern already established in _tooltip.css. */
     ol {
         max-height: 20vh;
         overflow-y: auto;
@@ -117,9 +135,12 @@
         padding: 10px 0;
         margin: 3px 0 0;
         background-color: var(--body-bg);
-        position: absolute;
+        position: fixed;
+        position-anchor: --combo-box;
+        position-area: block-end;
+        width: anchor-size(width);
+        position-try-fallbacks: flip-block;
         z-index: 100;
-        width: 100%;
         border-radius: 5px;
 
         li {
