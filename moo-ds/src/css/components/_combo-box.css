@@ -141,7 +141,6 @@
         width: anchor-size(width);
         position-try-fallbacks: flip-block;
         z-index: 100;
-        border-radius: 5px;
 
         /* Fade in on open. Scale rather than a slide because flip-block can put
            the list above the control, where a downward slide would read wrong.

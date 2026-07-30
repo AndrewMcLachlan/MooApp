@@ -118,6 +118,42 @@ describe('OverlayTrigger', () => {
     });
   });
 
+  // The placement drives position-area and position-try-fallbacks through the
+  // overlay-<placement> class in _overlay.css rather than through inline
+  // styles, so the class landing on the portal is the whole contract.
+  describe('placement class', () => {
+    it.each([
+      ['top', 'overlay-top'],
+      ['bottom', 'overlay-bottom'],
+      ['left', 'overlay-left'],
+      ['right', 'overlay-right'],
+    ] as const)('applies %s placement as .%s', (placement, expected) => {
+      render(
+        <OverlayTrigger trigger="click" placement={placement} overlay={overlay}>
+          <button>Toggle</button>
+        </OverlayTrigger>
+      );
+
+      fireEvent.click(screen.getByText('Toggle'));
+
+      const portal = screen.getByText('Overlay content').parentElement;
+      expect(portal).toHaveClass('overlay-portal');
+      expect(portal).toHaveClass(expected);
+    });
+
+    it('defaults to bottom placement', () => {
+      render(
+        <OverlayTrigger trigger="click" overlay={overlay}>
+          <button>Toggle</button>
+        </OverlayTrigger>
+      );
+
+      fireEvent.click(screen.getByText('Toggle'));
+
+      expect(screen.getByText('Overlay content').parentElement).toHaveClass('overlay-bottom');
+    });
+  });
+
   it('has displayName', () => {
     expect(OverlayTrigger.displayName).toBe('OverlayTrigger');
   });
