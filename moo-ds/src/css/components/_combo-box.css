@@ -141,7 +141,6 @@
         width: anchor-size(width);
         position-try-fallbacks: flip-block;
         z-index: 100;
-        border-radius: 5px;
 
         li {
             padding: 10px 10px;
