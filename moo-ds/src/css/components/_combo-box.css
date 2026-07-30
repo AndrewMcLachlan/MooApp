@@ -143,6 +143,19 @@
         z-index: 100;
         border-radius: 5px;
 
+        /* Fade in on open. Scale rather than a slide because flip-block can put
+           the list above the control, where a downward slide would read wrong.
+
+           Entry only: ComboBoxList returns null when closed, so React removes
+           the node and there is nothing left to transition on the way out. */
+        transition: opacity 0.12s ease-out, scale 0.12s ease-out;
+        transform-origin: top center;
+
+        @starting-style {
+            opacity: 0;
+            scale: 0.98;
+        }
+
         li {
             padding: 10px 10px;
             cursor: pointer;
