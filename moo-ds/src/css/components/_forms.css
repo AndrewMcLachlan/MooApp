@@ -16,7 +16,7 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.form-control:focus {
+.form-control:focus-visible {
     color: var(--body-colour);
     background-color: var(--body-bg);
     border-color: var(--primary);
@@ -101,7 +101,7 @@ textarea.form-control {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.form-select:focus {
+.form-select:focus-visible {
     border-color: var(--primary);
     outline: 0;
     box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--primary) 25%, transparent);
@@ -159,49 +159,27 @@ option {
     }
 }
 
+/* Checkboxes and radios render natively and are tinted with accent-color, so
+   the platform draws the tick and dot. That removes the two SVG data URIs and
+   the custom box/border they were painted on, and means the controls follow
+   the OS conventions for pressed state and forced-colors mode for free.
+   The switch is not a native control, so it keeps appearance: none and owns
+   its box styling below. */
 .form-check-input {
-    --form-check-bg: var(--body-bg);
+    accent-color: var(--primary);
     flex-shrink: 0;
     width: 1.5rem;
     height: 1.5rem;
     margin-top: 0;
     padding: 0;
     vertical-align: top;
-    appearance: none;
-    background-color: var(--form-check-bg);
-    background-image: var(--form-check-bg-image);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    border: var(--border-width, 1px) solid var(--border-colour, rgba(0, 0, 0, 0.25));
-    print-color-adjust: exact;
 }
 
-.form-check-input[type="checkbox"] {
-    border-radius: 0.25em;
-}
-
-.form-check-input[type="radio"] {
-    border-radius: 50%;
-}
-
-.form-check-input:focus {
-    border-color: hsl(from var(--primary) h calc(s * .37) 64%);
+/* Keyboard-only ring, matching the .btn convention in _buttons.css. A native
+   checkbox has no border to tint, so this is the ring alone. */
+.form-check-input:focus-visible {
     outline: 0;
     box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--primary) 25%, transparent);
-}
-
-.form-check-input:checked {
-    background-color: var(--primary);
-    border-color: var(--primary);
-}
-
-.form-check-input:checked[type="checkbox"] {
-    --form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
-}
-
-.form-check-input:checked[type="radio"] {
-    --form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
 }
 
 .form-check-input:disabled {
@@ -227,20 +205,31 @@ option {
 .form-switch {
     padding-left: 0;
 
+    /* The switch is drawn by us rather than by the platform, so it opts out of
+       the native rendering the base .form-check-input now relies on and
+       restores the box styling that used to live there. */
     .form-check-input {
         --form-switch-thumb-light: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.55%29'/%3e%3c/svg%3e");
         --form-switch-thumb-dark: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.55%29'/%3e%3c/svg%3e");
         --form-switch-bg: var(--form-switch-thumb-light);
+        appearance: none;
         width: 2.8em;
         height: 1.5em;
+        background-color: var(--body-bg);
         background-image: var(--form-switch-bg);
+        background-repeat: no-repeat;
+        background-size: contain;
         background-position: left center;
+        border: var(--border-width, 1px) solid var(--border-colour, rgba(0, 0, 0, 0.25));
         border-radius: 2em;
+        print-color-adjust: exact;
         transition: background-position 0.15s ease-in-out;
     }
 
     .form-check-input:checked {
         background-position: right center;
+        background-color: var(--primary);
+        border-color: var(--primary);
         --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
     }
 }
