@@ -20,9 +20,11 @@
     }
 }
 
+/* Drop the scale, keep the fade: a cross-fade is not motion, and removing the
+   transition outright would make the overlay snap in. */
 @media (prefers-reduced-motion: reduce) {
     .overlay-portal {
-        transition: none;
+        transition: opacity 0.15s ease-out;
 
         @starting-style {
             opacity: 0;

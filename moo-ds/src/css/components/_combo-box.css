@@ -154,11 +154,29 @@
            Entry only: ComboBoxList returns null when closed, so React removes
            the node and there is nothing left to transition on the way out. */
         transition: opacity 0.12s ease-out, scale 0.12s ease-out;
+        /* Grow away from the control: the edge nearest it stays put. Below the
+           control that is the top edge; flipped above, it is the bottom one,
+           so the origin follows the fallback the same way the tooltip's slide
+           direction does in _tooltip.css. */
         transform-origin: top center;
+
+        @container anchored(fallback: flip-block) {
+            transform-origin: bottom center;
+        }
 
         @starting-style {
             opacity: 0;
             scale: 0.98;
+        }
+
+        /* Drop the scale, keep the fade, as the tooltip and overlay do. */
+        @media (prefers-reduced-motion: reduce) {
+            transition: opacity 0.12s ease-out;
+
+            @starting-style {
+                opacity: 0;
+                scale: none;
+            }
         }
 
         li {

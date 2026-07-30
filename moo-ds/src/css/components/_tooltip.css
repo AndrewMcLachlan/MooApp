@@ -68,9 +68,11 @@
     }
 }
 
+/* Drop the movement, keep the fade: a cross-fade is not motion, and removing
+   the transition outright would make the tooltip snap in. */
 @media (prefers-reduced-motion: reduce) {
     .tooltip-portal {
-        transition: none;
+        transition: opacity 0.15s ease-out;
 
         @starting-style {
             opacity: 0;
