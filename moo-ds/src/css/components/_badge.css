@@ -44,51 +44,22 @@
     height: 1em;
 }
 
+/* Muted and outline both tint --badge-bg, but need more contrast against white
+   surfaces than dark ones. light-dark() resolves against the inherited
+   color-scheme (see _variables.css), so one rule covers OS light, OS dark and
+   both forced themes. First argument = light, second = dark. */
+
 /* Muted: tinted background, hue-as-text */
 .badge.muted {
-    background: color-mix(in srgb, var(--badge-bg) 25%, #000);
-    color: color-mix(in srgb, var(--badge-bg) 45%, #fff);
+    background: light-dark(color-mix(in srgb, var(--badge-bg) 16%, #fff), color-mix(in srgb, var(--badge-bg) 25%, #000));
+    color: light-dark(color-mix(in srgb, var(--badge-bg) 78%, #000), color-mix(in srgb, var(--badge-bg) 45%, #fff));
 }
 
 /* Outline: transparent background, hue ring (via inset shadow to avoid layout shift) + hue text */
 .badge.outline {
     background: transparent;
-    color: color-mix(in srgb, var(--badge-bg) 45%, #fff);
+    color: light-dark(color-mix(in srgb, var(--badge-bg) 78%, #000), color-mix(in srgb, var(--badge-bg) 45%, #fff));
     box-shadow: inset 0 0 0 1px var(--badge-bg);
-}
-
-/* Light-mode muted/outline overrides - more contrast against white surfaces */
-@media (prefers-color-scheme: light) {
-    .badge.muted {
-        background: color-mix(in srgb, var(--badge-bg) 16%, #fff);
-        color: color-mix(in srgb, var(--badge-bg) 78%, #000);
-    }
-
-    .badge.outline {
-        color: color-mix(in srgb, var(--badge-bg) 78%, #000);
-    }
-}
-
-.light .badge.muted,
-[data-theme="light"] .badge.muted {
-    background: color-mix(in srgb, var(--badge-bg) 16%, #fff);
-    color: color-mix(in srgb, var(--badge-bg) 78%, #000);
-}
-
-.light .badge.outline,
-[data-theme="light"] .badge.outline {
-    color: color-mix(in srgb, var(--badge-bg) 78%, #000);
-}
-
-.dark .badge.muted,
-[data-theme="dark"] .badge.muted {
-    background: color-mix(in srgb, var(--badge-bg) 25%, #000);
-    color: color-mix(in srgb, var(--badge-bg) 45%, #fff);
-}
-
-.dark .badge.outline,
-[data-theme="dark"] .badge.outline {
-    color: color-mix(in srgb, var(--badge-bg) 45%, #fff);
 }
 
 /* ---- Semantic background tokens ---- */

@@ -38,136 +38,39 @@
     }
 }
 
+/* Variant tokens. light-dark() resolves against the inherited color-scheme,
+   which _variables.css sets on :root (light dark) and the .light/.dark and
+   [data-theme] theme classes force to a single scheme. That covers all four
+   cases -- OS light, OS dark, forced light, forced dark -- in one rule, so the
+   values no longer need to be repeated per theme.
+   First argument = light, second = dark. */
+
 .alert-danger {
-    --alert-colour: #842029;
-    --alert-bg: #f8d7da;
-    --alert-border-colour: #f5c2c7;
+    --alert-colour: light-dark(#842029, #ea868f);
+    --alert-bg: light-dark(#f8d7da, #2c0b0e);
+    --alert-border-colour: light-dark(#f5c2c7, #842029);
 }
 
 .alert-warning {
-    --alert-colour: #664d03;
-    --alert-bg: #fff3cd;
-    --alert-border-colour: #ffecb5;
+    --alert-colour: light-dark(#664d03, #ffda6a);
+    --alert-bg: light-dark(#fff3cd, #332701);
+    --alert-border-colour: light-dark(#ffecb5, #664d03);
 }
 
 .alert-success {
-    --alert-colour: #0f5132;
-    --alert-bg: #d1e7dd;
-    --alert-border-colour: #badbcc;
+    --alert-colour: light-dark(#0f5132, #75b798);
+    --alert-bg: light-dark(#d1e7dd, #051b11);
+    --alert-border-colour: light-dark(#badbcc, #0f5132);
 }
 
 .alert-info {
-    --alert-colour: #055160;
-    --alert-bg: #cff4fc;
-    --alert-border-colour: #b6effb;
+    --alert-colour: light-dark(#055160, #6edff6);
+    --alert-bg: light-dark(#cff4fc, #032830);
+    --alert-border-colour: light-dark(#b6effb, #055160);
 }
 
 .alert-primary {
-    --alert-colour: color-mix(in srgb, var(--primary) 60%, #000);
-    --alert-bg: color-mix(in srgb, var(--primary) 20%, #fff);
-    --alert-border-colour: color-mix(in srgb, var(--primary) 30%, #fff);
-}
-
-/* Light mode alert variants (explicit override when OS prefers dark) */
-.light .alert-danger,
-[data-theme="light"] .alert-danger {
-    --alert-colour: #842029;
-    --alert-bg: #f8d7da;
-    --alert-border-colour: #f5c2c7;
-}
-
-.light .alert-warning,
-[data-theme="light"] .alert-warning {
-    --alert-colour: #664d03;
-    --alert-bg: #fff3cd;
-    --alert-border-colour: #ffecb5;
-}
-
-.light .alert-success,
-[data-theme="light"] .alert-success {
-    --alert-colour: #0f5132;
-    --alert-bg: #d1e7dd;
-    --alert-border-colour: #badbcc;
-}
-
-.light .alert-info,
-[data-theme="light"] .alert-info {
-    --alert-colour: #055160;
-    --alert-bg: #cff4fc;
-    --alert-border-colour: #b6effb;
-}
-
-.light .alert-primary,
-[data-theme="light"] .alert-primary {
-    --alert-colour: color-mix(in srgb, var(--primary) 60%, #000);
-    --alert-bg: color-mix(in srgb, var(--primary) 20%, #fff);
-    --alert-border-colour: color-mix(in srgb, var(--primary) 30%, #fff);
-}
-
-/* Dark mode alert variants (prefers-color-scheme fallback) */
-@media (prefers-color-scheme: dark) {
-    .alert-danger {
-        --alert-colour: #ea868f;
-        --alert-bg: #2c0b0e;
-        --alert-border-colour: #842029;
-    }
-
-    .alert-warning {
-        --alert-colour: #ffda6a;
-        --alert-bg: #332701;
-        --alert-border-colour: #664d03;
-    }
-
-    .alert-success {
-        --alert-colour: #75b798;
-        --alert-bg: #051b11;
-        --alert-border-colour: #0f5132;
-    }
-
-    .alert-info {
-        --alert-colour: #6edff6;
-        --alert-bg: #032830;
-        --alert-border-colour: #055160;
-    }
-
-    .alert-primary {
-        --alert-colour: color-mix(in srgb, var(--primary) 40%, #fff);
-        --alert-bg: color-mix(in srgb, var(--primary) 20%, #000);
-        --alert-border-colour: color-mix(in srgb, var(--primary) 40%, #000);
-    }
-}
-
-.dark .alert-danger,
-[data-theme="dark"] .alert-danger {
-    --alert-colour: #ea868f;
-    --alert-bg: #2c0b0e;
-    --alert-border-colour: #842029;
-}
-
-.dark .alert-warning,
-[data-theme="dark"] .alert-warning {
-    --alert-colour: #ffda6a;
-    --alert-bg: #332701;
-    --alert-border-colour: #664d03;
-}
-
-.dark .alert-success,
-[data-theme="dark"] .alert-success {
-    --alert-colour: #75b798;
-    --alert-bg: #051b11;
-    --alert-border-colour: #0f5132;
-}
-
-.dark .alert-info,
-[data-theme="dark"] .alert-info {
-    --alert-colour: #6edff6;
-    --alert-bg: #032830;
-    --alert-border-colour: #055160;
-}
-
-.dark .alert-primary,
-[data-theme="dark"] .alert-primary {
-    --alert-colour: color-mix(in srgb, var(--primary) 40%, #fff);
-    --alert-bg: color-mix(in srgb, var(--primary) 20%, #000);
-    --alert-border-colour: color-mix(in srgb, var(--primary) 40%, #000);
+    --alert-colour: light-dark(color-mix(in srgb, var(--primary) 60%, #000), color-mix(in srgb, var(--primary) 40%, #fff));
+    --alert-bg: light-dark(color-mix(in srgb, var(--primary) 20%, #fff), color-mix(in srgb, var(--primary) 20%, #000));
+    --alert-border-colour: light-dark(color-mix(in srgb, var(--primary) 30%, #fff), color-mix(in srgb, var(--primary) 40%, #000));
 }
