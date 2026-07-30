@@ -24,7 +24,9 @@
 
    The real change is between breakpoints: the container now grows continuously
    instead of holding one width across a whole band, so it no longer leaves up
-   to ~190px unused just below a breakpoint. */
+   to ~380px of width unused just below a breakpoint (~190px a side, measured
+   at a 2900px viewport, where the stepped rule held 2440px against 2820px
+   here). */
 .container {
     max-width: min(3120px, max(540px, 100dvw - 80px));
 }
