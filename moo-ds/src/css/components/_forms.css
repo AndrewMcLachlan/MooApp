@@ -125,6 +125,37 @@ option {
     --form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e");
 }
 
+/* Invalid state.
+   :user-invalid, not :invalid. :invalid matches from first render, so a form
+   with `required` fields would load with every empty field already painted red
+   before the user had touched anything. :user-invalid only matches once the
+   user has interacted with the control (or tried to submit).
+
+   These are the native constraints -- required, type, pattern, min/max. A
+   react-hook-form rule that has no native equivalent will not match, since
+   that validation never reaches the element's validity state.
+
+   :focus-visible is used rather than :focus so the rule out-specifies the base
+   focus ring either way: at (0,3,0) it beats both .form-control:focus and
+   .form-control:focus-visible, so the ring turns red instead of staying
+   primary-coloured on an invalid field. */
+.form-control:user-invalid,
+.form-select:user-invalid {
+    border-color: var(--danger);
+}
+
+.form-control:user-invalid:focus-visible,
+.form-select:user-invalid:focus-visible {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--danger) 25%, transparent);
+}
+
+/* The label tracks its group's validity -- this is what :has is for, since
+   there is no selector that reaches a previous sibling's state otherwise. */
+.form-group:has(:user-invalid) > .form-label {
+    color: var(--danger);
+}
+
 /* Form label */
 .form-label {
     margin-bottom: 0.25rem;
