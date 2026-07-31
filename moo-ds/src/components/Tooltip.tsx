@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type PropsWithChildren, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { topLayerProps } from "../utils/topLayer";
 
 export const Tooltip: React.FC<PropsWithChildren<{ id: string }>> = ({ id, children }) => {
     const uniqueId = useId();
@@ -17,6 +18,14 @@ export const Tooltip: React.FC<PropsWithChildren<{ id: string }>> = ({ id, child
 
     useLayoutEffect(() => {
         if (show && portalRef.current && triggerRef.current) {
+            // Promote into the top layer. The tooltip previously relied on
+            // z-index: 1080 to sit above everything, which only works while
+            // nothing else establishes a competing stacking context -- and
+            // would stop working entirely against a top-layer dialog, which
+            // paints above any z-index. Optional call so environments without
+            // the popover API (jsdom) just render it in place as before.
+            portalRef.current.showPopover?.();
+
             portalRef.current.style.setProperty("position-anchor", anchorName);
             const triggerRect = triggerRef.current.getBoundingClientRect();
             const portalRect = portalRef.current.getBoundingClientRect();
@@ -46,6 +55,7 @@ export const Tooltip: React.FC<PropsWithChildren<{ id: string }>> = ({ id, child
                     className="tooltip-content tooltip-portal"
                     id={tooltipId}
                     role="tooltip"
+                    {...topLayerProps()}
                 >
                     {children}
                 </span>,

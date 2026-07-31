@@ -33,11 +33,21 @@
     border: var(--tooltip-arrow-size) solid transparent;
 }
 
-/* Portal-rendered tooltip: CSS anchor positioned */
+/* Portal-rendered tooltip: CSS anchor positioned, and promoted into the top
+   layer with popover="manual" so it cannot be trapped under a stacking context
+   or painted beneath a top-layer dialog.
+
+   The [popover] UA styles have to be undone first: it defaults to inset: 0 with
+   margin: auto, which centres the element and fights position-area, plus a
+   border, padding and overflow: auto that would clip the ::after arrow.
+   z-index is kept as the fallback for anything without the popover API. */
 .tooltip-portal {
     position: fixed;
     position-area: top;
-    margin-bottom: var(--tooltip-arrow-size);
+    inset: auto;
+    margin: 0 0 var(--tooltip-arrow-size);
+    border: 0;
+    overflow: visible;
     position-try-fallbacks: flip-block;
 
     /* Fade in on appear. @starting-style supplies the pre-insertion value, so

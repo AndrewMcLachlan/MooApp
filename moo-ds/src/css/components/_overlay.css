@@ -1,9 +1,21 @@
 /* Overlay portal styles (CSS anchor positioned) */
 
+/* Promoted into the top layer with popover="manual", so the overlay cannot be
+   trapped under a stacking context or painted beneath a top-layer dialog. The
+   [popover] UA styles are undone here -- inset: 0 with margin: auto centres the
+   element and fights position-area, and the default border, padding and
+   Canvas background would paint a box behind the popover's own content.
+   z-index stays as the fallback for anything without the popover API. */
 .overlay-portal {
     position: fixed;
     z-index: 1070;
     margin: var(--overlay-padding, 0);
+    inset: auto;
+    border: 0;
+    padding: 0;
+    overflow: visible;
+    background: none;
+    color: inherit;
 
     /* Fade and settle in on appear, with @starting-style supplying the
        pre-insertion value. Scale rather than a directional slide, because the
