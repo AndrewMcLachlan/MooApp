@@ -50,9 +50,13 @@ export const FormPage = () => {
 
     const form = useForm<FormSampleValues>({ defaultValues: existing });
 
+    // onTouched so a field reports as you leave it. A resolver validates the
+    // whole object and returns every failure at once, so on the default
+    // onSubmit mode the first submit lights up fields you have not reached yet.
     const signupForm = useForm<SignupValues>({
         defaultValues: { email: "", password: "", age: "" },
         resolver: signupResolver,
+        mode: "onTouched",
     });
 
     return (
@@ -113,6 +117,11 @@ export const FormPage = () => {
                     describes is marked <code>aria-invalid</code>, which is what turns the border and
                     label red &mdash; a resolver rule never reaches the browser&rsquo;s own validity
                     state, so the styling cannot rely on that.
+                </p>
+                <p>
+                    Fields here report as you leave them. A resolver checks the whole object and
+                    returns every failure at once, so submitting flags each field still outstanding
+                    rather than only the one you were editing.
                 </p>
                 <Form.Group groupId="email">
                     <Form.Label>Email address</Form.Label>

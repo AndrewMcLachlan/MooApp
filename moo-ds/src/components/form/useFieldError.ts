@@ -14,14 +14,16 @@ const at = (source: unknown, path: string): unknown =>
  */
 export const useFieldError = (id?: string): string | undefined => {
     const group = useFormGroup();
-    const { formState } = useFormContext();
+    // Not destructured: these components are exported on their own and can be
+    // used outside a Form, where there is no context to destructure.
+    const form = useFormContext();
 
     const name = id ?? group.groupId;
-    if (!name) return undefined;
+    if (!form || !name) return undefined;
 
     // Reading formState.errors here is what subscribes this component to
     // re-render when the field's validity changes -- formState is a proxy.
-    const message = (at(formState.errors, name) as { message?: unknown } | undefined)?.message;
+    const message = (at(form.formState.errors, name) as { message?: unknown } | undefined)?.message;
 
     return typeof message === "string" && message.length > 0 ? message : undefined;
 };

@@ -10,26 +10,29 @@ export type InputComponent = React.FC<InputProps>;
 export const Input: InputComponent = ({ className, id, ...rest }) => {
 
     const group = useFormGroup();
-    const { register } = useFormContext();
+    const form = useFormContext();
     id = id ?? group.groupId;
     const innerClass = rest.type === "checkbox" ? "form-check-input" : "form-control";
 
     // Marks the control invalid for CSS and assistive technology when the
-
     // resolver has rejected it; :user-invalid only sees native constraints.
-
     const validity = useFieldValidity(id);
 
-
-    return (
-        <ClearableInput id={id} {...validity} className={classNames(innerClass, className)} {...rest} {...register(id, {
+    // Usable outside a Form: with no form to bind to there is nothing to
+    // register, and the control falls back to an ordinary uncontrolled input.
+    const registration = form && id
+        ? form.register(id, {
             setValueAs(value) {
                 if (rest.type === "number") {
                     return value ? Number(value) : undefined;
                 }
                 return value;
             },
-        })} />
+        })
+        : {};
+
+    return (
+        <ClearableInput id={id} {...validity} className={classNames(innerClass, className)} {...rest} {...registration} />
     );
 };
 
