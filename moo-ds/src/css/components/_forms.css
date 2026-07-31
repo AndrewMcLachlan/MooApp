@@ -131,9 +131,16 @@ option {
    before the user had touched anything. :user-invalid only matches once the
    user has interacted with the control (or tried to submit).
 
-   These are the native constraints -- required, type, pattern, min/max. A
-   react-hook-form rule that has no native equivalent will not match, since
-   that validation never reaches the element's validity state.
+   :user-invalid covers the native constraints -- required, type, pattern,
+   min/max. It cannot see a react-hook-form rule, because that validation never
+   reaches the element's validity state, so [aria-invalid="true"] is matched
+   alongside it: the form controls set that attribute when the resolver has
+   rejected the field. The two together mean a field looks the same whichever
+   kind of rule failed.
+
+   :is() takes the highest specificity among its arguments, and both branches
+   are (0,1,0), so these selectors weigh the same as the plain :user-invalid
+   ones did.
 
    The ring is claimed on both :focus and :focus-visible. Either one alone
    leaves a gap: the base ring is currently on :focus, and a control that takes
@@ -141,22 +148,30 @@ option {
    the mouse -- would keep the primary-coloured ring while showing a red
    border. Matching both covers that, and still out-specifies the base rule at
    (0,3,0) if it later moves to :focus-visible. */
-.form-control:user-invalid,
-.form-select:user-invalid {
+.form-control:is(:user-invalid, [aria-invalid="true"]),
+.form-select:is(:user-invalid, [aria-invalid="true"]) {
     border-color: var(--danger);
 }
 
-.form-control:user-invalid:focus,
-.form-select:user-invalid:focus,
-.form-control:user-invalid:focus-visible,
-.form-select:user-invalid:focus-visible {
+.form-control:is(:user-invalid, [aria-invalid="true"]):focus,
+.form-select:is(:user-invalid, [aria-invalid="true"]):focus,
+.form-control:is(:user-invalid, [aria-invalid="true"]):focus-visible,
+.form-select:is(:user-invalid, [aria-invalid="true"]):focus-visible {
     border-color: var(--danger);
     box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--danger) 25%, transparent);
 }
 
 /* The label tracks its group's validity -- this is what :has is for, since
    there is no selector that reaches a previous sibling's state otherwise. */
-.form-group:has(:user-invalid) > .form-label {
+.form-group:has(:is(:user-invalid, [aria-invalid="true"])) > .form-label {
+    color: var(--danger);
+}
+
+/* The message Form.Feedback renders. It is only in the DOM while the field is
+   in error, so it needs no show/hide of its own. */
+.invalid-feedback {
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
     color: var(--danger);
 }
 

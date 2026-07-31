@@ -1,6 +1,6 @@
 import { Page } from "@andrewmclachlan/moo-app";
-import { Form, SectionForm, FormComboBox, Button } from "@andrewmclachlan/moo-ds";
-import { useForm } from "react-hook-form";
+import { Form, Section, SectionForm, FormComboBox, Button, Input } from "@andrewmclachlan/moo-ds";
+import { useForm, type Resolver } from "react-hook-form";
 import { formsNav } from "../../nav";
 
 interface FormSampleValues {
@@ -12,7 +12,30 @@ interface FormSampleValues {
     group6: string;
 }
 
+interface SignupValues {
+    email: string;
+    password: string;
+    age: string;
+}
+
 const selectItems = Array.from({ length: 10 }, (_, i) => ({ id: `${i + 1}`, text: `Option ${i + 1}` }));
+
+// The form controls own the register call, so rules arrive through a resolver
+// rather than per field. A real app would hand zod or yup to this slot; a
+// plain function keeps the sample dependency-free.
+const signupResolver: Resolver<SignupValues> = async (values) => {
+    const errors: Record<string, { type: string; message: string }> = {};
+
+    if (!values.email) errors.email = { type: "required", message: "Email address is required" };
+    else if (!values.email.includes("@")) errors.email = { type: "pattern", message: "That doesn't look like an email address" };
+
+    if (!values.password) errors.password = { type: "required", message: "Password is required" };
+    else if (values.password.length < 8) errors.password = { type: "minLength", message: `Too short — ${8 - values.password.length} more character${8 - values.password.length === 1 ? "" : "s"} needed` };
+
+    if (values.age && Number(values.age) < 18) errors.age = { type: "min", message: "Must be 18 or over" };
+
+    return Object.keys(errors).length ? { values: {}, errors: errors as never } : { values, errors: {} };
+};
 
 export const FormPage = () => {
 
@@ -26,6 +49,11 @@ export const FormPage = () => {
     };
 
     const form = useForm<FormSampleValues>({ defaultValues: existing });
+
+    const signupForm = useForm<SignupValues>({
+        defaultValues: { email: "", password: "", age: "" },
+        resolver: signupResolver,
+    });
 
     return (
         <Page title="Form" breadcrumbs={[{ route: "/forms/form", text: "Forms" }, { route: "/forms/form", text: "Form" }]} navItems={formsNav} className="form-sample-page">
@@ -68,6 +96,54 @@ export const FormPage = () => {
                 </Form.Group>
                 <Button type="submit" variant="primary">Submit</Button>
             </SectionForm>
+
+            <Section title="Validation" header="Validation" headerSize={4}>
+                <p>
+                    Fields report failures two ways, and they look the same either way. Submit the
+                    form below with it empty to see the resolver&rsquo;s messages, then try the last
+                    field on its own &mdash; that one is checked by the browser, with no rules and no
+                    message component involved.
+                </p>
+            </Section>
+
+            <SectionForm header="Resolver validation" headerSize={5} form={signupForm} onSubmit={(data) => { console.log(data); }}>
+                <p>
+                    <code>Form.Feedback</code> shows the message for its group and nothing at all
+                    while the field is valid, so it can sit in the group permanently. The control it
+                    describes is marked <code>aria-invalid</code>, which is what turns the border and
+                    label red &mdash; a resolver rule never reaches the browser&rsquo;s own validity
+                    state, so the styling cannot rely on that.
+                </p>
+                <Form.Group groupId="email">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Input placeholder="you@example.com" />
+                    <Form.Feedback />
+                </Form.Group>
+                <Form.Group groupId="password">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Input type="password" placeholder="At least 8 characters" />
+                    <Form.Feedback />
+                </Form.Group>
+                <Form.Group groupId="age">
+                    <Form.Label>Age (optional)</Form.Label>
+                    <Form.Input placeholder="18" />
+                    <Form.Feedback>You must be 18 or over to sign up.</Form.Feedback>
+                </Form.Group>
+                <Button type="submit" variant="primary">Create account</Button>
+            </SectionForm>
+
+            <Section title="Native validation" header="Native constraints" headerSize={5}>
+                <p>
+                    A control with its own constraint needs no wiring: the styling matches
+                    <code> :user-invalid</code>, so the field stays neutral until you have actually
+                    interacted with it rather than going red the moment the page loads. Type
+                    something that isn&rsquo;t an email address and tab away.
+                </p>
+                <div className="demo-col">
+                    <Input type="email" placeholder="Native email constraint" />
+                    <Input required placeholder="Native required constraint" />
+                </div>
+            </Section>
 
         </Page>
     );
