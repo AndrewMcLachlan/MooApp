@@ -5,6 +5,7 @@ import { useState } from "react";
 export const Overlays = () => {
 
     const [showModal, setShowModal] = useState(false);
+    const [showRival, setShowRival] = useState(false);
 
     return (
         <Page title="Overlays" breadcrumbs={[{ route: "/overlays", text: "Overlays" }]}>
@@ -151,6 +152,30 @@ export const Overlays = () => {
                         <Button variant="outline-secondary">Body Only</Button>
                     </OverlayTrigger>
                 </div>
+            </Section>
+
+            <Section title="Stacking" header="Above everything else" headerSize={4}>
+                <p>
+                    Tooltips and popovers render in the browser&rsquo;s top layer, so nothing on the
+                    page can cover them. Show the panel below &mdash; it sits at the highest
+                    <code> z-index</code> a page can use &mdash; then hover the tooltip or open the
+                    popover. Both stay on top; a plain <code>z-index</code> of 1080 would lose to it.
+                </p>
+                <div className="demo-row">
+                    <Button variant="outline-primary" onClick={() => setShowRival(!showRival)}>
+                        {showRival ? "Hide panel" : "Show panel"}
+                    </Button>
+                    <span>Hover me <Tooltip id="stacking">This stays above the panel.</Tooltip></span>
+                    <OverlayTrigger
+                        trigger="click"
+                        placement="bottom"
+                        rootClose
+                        overlay={<Popover id="stacking-popover"><Popover.Body>So does this.</Popover.Body></Popover>}
+                    >
+                        <Button variant="outline-secondary">Open popover</Button>
+                    </OverlayTrigger>
+                </div>
+                {showRival && <div className="stacking-rival">z-index: 2147483647</div>}
             </Section>
 
         </Page>

@@ -39,9 +39,10 @@ export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
     useLayoutEffect(() => {
         if (show && overlayRef.current) {
             // Promote into the top layer -- see the note in Tooltip.tsx. The
-            // z-index: 1070 this replaces cannot win against a top-layer
-            // dialog. Optional call so jsdom, which has no popover API, keeps
-            // rendering the overlay in place.
+            // z-index: 1070 this replaces loses to any higher z-index on the
+            // page, and to a top-layer dialog outright. Optional call so
+            // jsdom, which has no popover API, keeps rendering the overlay in
+            // place.
             overlayRef.current.showPopover?.();
 
             overlayRef.current.style.setProperty("position-anchor", anchorName);
