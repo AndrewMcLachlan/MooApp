@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import axios from 'axios';
 import { AuthError } from '@azure/msal-browser';
@@ -102,6 +102,9 @@ describe('addMsalInterceptor', () => {
 
   beforeEach(() => {
     mockGetSilentRedirectUri.mockReturnValue(undefined);
+    // The interactive-recovery bound is deliberately persistent (see #675), so
+    // it survives between cases unless cleared.
+    sessionStorage.clear();
   });
 
   it('adds a request interceptor to the client', () => {
@@ -258,6 +261,117 @@ describe('addMsalInterceptor', () => {
       expect(isAuthCancellation(undefined)).toBe(false);
     });
   });
+
+  // A redirect discards the page, so the in-memory WeakMap guard cannot bound
+  // sequential redirects -- only concurrent ones within a single page load.
+  // sessionStorage survives the navigation, which is what stops the loop.
+  describe('bounding redirects across page loads (#675)', () => {
+    it('redirects once, then surfaces the error rather than redirecting again', async () => {
+      const authError = new AuthError('interaction_required');
+
+      // First page load: silent fails, we redirect.
+      const first = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
+      await expect(createClientWithInterceptor(first).get('/api/data')).rejects.toThrow('Request canceled');
+      expect(first.instance.acquireTokenRedirect).toHaveBeenCalledTimes(1);
+
+      // After the redirect the page is new: module state is gone, so a fresh
+      // mock stands in for it. Only sessionStorage carries over.
+      const second = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
+      const rejection = await createClientWithInterceptor(second).get('/api/data').catch((e) => e);
+
+      expect(second.instance.acquireTokenRedirect).not.toHaveBeenCalled();
+      expect(rejection).toBe(authError);
+      // Surfaced, not cancelled -- a cancellation feeds the retry policy and
+      // the app would hang on a loading state instead of showing the failure.
+      expect(isAuthCancellation(rejection)).toBe(false);
+    });
+
+    it('releases the bound once silent acquisition works again', async () => {
+      const authError = new AuthError('interaction_required');
+
+      const failing = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
+      await expect(createClientWithInterceptor(failing).get('/api/data')).rejects.toThrow('Request canceled');
+
+      // A later success means the bound is spent, not permanent.
+      const working = createMockMsal({ acquireTokenSilent: vi.fn().mockResolvedValue({ accessToken: 'tok' }) });
+      await createClientWithInterceptor(working).get('/api/data');
+
+      // So a genuine expiry hours later can still recover interactively.
+      const later = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
+      await expect(createClientWithInterceptor(later).get('/api/data')).rejects.toThrow('Request canceled');
+      expect(later.instance.acquireTokenRedirect).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not spend the attempt when the redirect never starts', async () => {
+      const authError = new AuthError('interaction_required');
+      const redirectFailure = new Error('redirect could not start');
+
+      const broken = createMockMsal({
+        acquireTokenSilent: vi.fn().mockRejectedValue(authError),
+        acquireTokenRedirect: vi.fn().mockRejectedValue(redirectFailure),
+      });
+      await expect(createClientWithInterceptor(broken).get('/api/data')).rejects.toThrow('redirect could not start');
+
+      // Nothing navigated, so recovery must still be available.
+      const retry = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
+      await expect(createClientWithInterceptor(retry).get('/api/data')).rejects.toThrow('Request canceled');
+      expect(retry.instance.acquireTokenRedirect).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  // MSAL renews tokens in a hidden iframe. Unless silentRedirectUri points at a
+  // scriptless page -- which is opt-in and unset by default -- that iframe boots
+  // the SPA, so this interceptor runs inside it and a redirect started here
+  // navigates the frame rather than the page.
+  describe('not redirecting from inside a frame (#676)', () => {
+    const framed = (topValue: unknown) =>
+      Object.defineProperty(window, 'top', { value: topValue, configurable: true });
+
+    afterEach(() => {
+      Object.defineProperty(window, 'top', { value: window.self, configurable: true });
+    });
+
+    it('cancels instead of redirecting when not the top window', async () => {
+      framed({});   // some other window: we are framed
+      const msal = createMockMsal({
+        acquireTokenSilent: vi.fn().mockRejectedValue(new AuthError('interaction_required')),
+      });
+
+      const rejection = await createClientWithInterceptor(msal).get('/api/data').catch((e) => e);
+
+      expect(msal.instance.acquireTokenRedirect).not.toHaveBeenCalled();
+      expect(rejection.message).toContain('silent renewal cannot start an interactive redirect');
+      // Cancelled rather than surfaced: there is no user in the frame, and the
+      // frame is discarded either way.
+      expect(isAuthCancellation(rejection)).toBe(true);
+    });
+
+    it('does not spend the interactive-recovery attempt while framed', async () => {
+      framed({});
+      const inFrame = createMockMsal({
+        acquireTokenSilent: vi.fn().mockRejectedValue(new AuthError('interaction_required')),
+      });
+      await expect(createClientWithInterceptor(inFrame).get('/api/data')).rejects.toThrow('silent renewal');
+
+      // The top window must still be able to recover.
+      Object.defineProperty(window, 'top', { value: window.self, configurable: true });
+      const topWindow = createMockMsal({
+        acquireTokenSilent: vi.fn().mockRejectedValue(new AuthError('interaction_required')),
+      });
+      await expect(createClientWithInterceptor(topWindow).get('/api/data')).rejects.toThrow('Request canceled');
+      expect(topWindow.instance.acquireTokenRedirect).toHaveBeenCalledTimes(1);
+    });
+
+    it('redirects normally in the top window', async () => {
+      const msal = createMockMsal({
+        acquireTokenSilent: vi.fn().mockRejectedValue(new AuthError('interaction_required')),
+      });
+
+      await expect(createClientWithInterceptor(msal).get('/api/data')).rejects.toThrow('Request canceled');
+
+      expect(msal.instance.acquireTokenRedirect).toHaveBeenCalledTimes(1);
+    });
+  });
 });
 
 describe('401 response recovery', () => {
@@ -299,6 +413,9 @@ describe('401 response recovery', () => {
 
   beforeEach(() => {
     mockGetSilentRedirectUri.mockReturnValue(undefined);
+    // The interactive-recovery bound is deliberately persistent (see #675), so
+    // it survives between cases unless cleared.
+    sessionStorage.clear();
   });
 
   it('force-refreshes the token and retries once on 401', async () => {
