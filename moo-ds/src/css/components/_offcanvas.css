@@ -91,4 +91,12 @@
 .offcanvas-backdrop.show {
     opacity: 1;
     backdrop-filter: blur(1px) grayscale(0.5) brightness(0.5);
+    /* The panel itself already slides in over 0.3s; without this the dimming
+       appeared instantly behind it. Matched to the panel's duration so the two
+       arrive together. */
+    transition: opacity 0.3s ease-in-out;
+
+    @starting-style {
+        opacity: 0;
+    }
 }

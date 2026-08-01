@@ -27,8 +27,42 @@
     outline: 0;
 }
 
+/* Fade in on open, with the dialog rising slightly, matching the overlays.
+   @starting-style supplies the pre-open value, so this needs no extra class or
+   timer -- the .show toggle the component already does is enough.
+
+   Entry only, like the overlays. The modal element stays mounted and could
+   animate out too, but its backdrop is rendered only while the modal is open,
+   so an exit transition would leave the dialog fading against a backdrop that
+   had already vanished. Animating both out means keeping the backdrop mounted
+   and hiding it with display, which changes what the DOM contains while the
+   modal is closed. */
 .modal.show {
     display: block;
+    transition: opacity 0.15s ease-out;
+
+    @starting-style {
+        opacity: 0;
+    }
+}
+
+.modal.show .modal-dialog {
+    transition: translate 0.15s ease-out;
+
+    @starting-style {
+        translate: 0 -0.5rem;
+    }
+}
+
+/* Keep the fade, drop the movement. */
+@media (prefers-reduced-motion: reduce) {
+    .modal.show .modal-dialog {
+        transition: none;
+
+        @starting-style {
+            translate: none;
+        }
+    }
 }
 
 .modal-dialog {
@@ -126,4 +160,11 @@
 .modal-backdrop.show {
     opacity: 1;
     backdrop-filter: blur(1px) grayscale(0.5) brightness(0.5);
+    /* Fades in alongside the modal so the dimming arrives with the dialog
+       rather than snapping in behind it. */
+    transition: opacity 0.15s ease-out;
+
+    @starting-style {
+        opacity: 0;
+    }
 }
