@@ -10,11 +10,34 @@
     --offcanvas-border-width: var(--border-width, 1px);
     --offcanvas-border-colour: var(--border-colour, rgba(0, 0, 0, 0.175));
     --offcanvas-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-    --offcanvas-transition: transform 0.3s ease-in-out;
+    /* visibility is transitioned alongside transform so it stays `visible` for
+       the whole duration and only flips at the end. Without it the panel is
+       hidden the instant .show is removed, and the slide-out plays entirely
+       out of sight -- it looked like the panel simply vanished. */
+    --offcanvas-transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
     --offcanvas-title-line-height: 1.5;
 
     position: fixed;
+    /* Undo the [popover] UA box before the placement rules below set their own
+       sides. It defaults to inset: 0 with margin: auto, which centres the panel
+       rather than pinning it to an edge, plus a border and padding of its own.
+       inset comes first here so the bottom/top/left/right that follow win.
+
+       height and overflow matter as much as the box: the UA rule sets
+       height: fit-content, which collapses a full-height panel to the height of
+       its contents, and overflow: auto, which moves the scrollbar off
+       .offcanvas-body and onto the panel. Measured on the demo page: 1522px
+       tall without the attribute, 236px with it. */
+    inset: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    height: auto;
+    overflow: visible;
     bottom: 0;
+    /* Fallback ordering only: the panel is promoted into the top layer, which
+       no z-index can beat. This is what applies where the Popover API is
+       missing and the attribute is therefore not set. */
     z-index: 1045;
     display: flex;
     flex-direction: column;
@@ -74,14 +97,36 @@
     scrollbar-gutter: stable;
 }
 
+/* The backdrop stays mounted and is hidden with display, rather than being
+   unmounted while closed. It has to outlive the close now that the panel's
+   slide-out is actually visible: a backdrop that vanished the moment .show
+   came off would leave the panel sliding away over an undimmed page. display
+   is transitioned with allow-discrete so it survives the fade.
+
+   Promoted into the top layer just before the panel, so the two stay in the
+   right order there -- the top layer stacks by promotion order. */
 .offcanvas-backdrop {
     position: fixed;
+    /* Undo the [popover] UA box: it brings a border, padding, margin: auto and
+       a max-width/height of the viewport minus twice its own inset. inset comes
+       first so the top/left below win. */
+    inset: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    max-width: none;
+    max-height: none;
     top: 0;
     left: 0;
+    /* Fallback ordering only -- see the note on .offcanvas. */
     z-index: 1040;
     width: 100vw;
     height: 100vh;
     background-color: transparent;
+
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, display 0.3s allow-discrete;
 }
 
 .offcanvas-backdrop.fade {
@@ -89,14 +134,24 @@
 }
 
 .offcanvas-backdrop.show {
+    display: block;
     opacity: 1;
     backdrop-filter: blur(1px) grayscale(0.5) brightness(0.5);
-    /* The panel itself already slides in over 0.3s; without this the dimming
-       appeared instantly behind it. Matched to the panel's duration so the two
-       arrive together. */
-    transition: opacity 0.3s ease-in-out;
 
     @starting-style {
         opacity: 0;
+    }
+}
+
+/* The slide is the entire animation here, so there is no shorter version to
+   fall back to: reduced motion drops it to a plain appear and disappear.
+   visibility and display still flip, just with nothing to sit through. This
+   matters more than it used to -- the slide-out was previously played while the
+   panel was already hidden, so nobody ever saw it. */
+@media (prefers-reduced-motion: reduce) {
+
+    .offcanvas,
+    .offcanvas-backdrop {
+        transition: none;
     }
 }
