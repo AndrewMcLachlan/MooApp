@@ -4,6 +4,33 @@
     position: fixed;
     z-index: 1070;
     margin: var(--overlay-padding, 0);
+
+    /* Fade and settle in on appear, with @starting-style supplying the
+       pre-insertion value. Scale rather than a directional slide, because the
+       overlay can be placed on any of four sides and can flip to the opposite
+       one -- a translate would run the wrong way half the time.
+
+       Entry only: OverlayTrigger renders the portal as `{show && ...}`, so the
+       node is gone before an exit transition could run. */
+    transition: opacity 0.15s ease-out, scale 0.15s ease-out;
+
+    @starting-style {
+        opacity: 0;
+        scale: 0.98;
+    }
+}
+
+/* Drop the scale, keep the fade: a cross-fade is not motion, and removing the
+   transition outright would make the overlay snap in. */
+@media (prefers-reduced-motion: reduce) {
+    .overlay-portal {
+        transition: opacity 0.15s ease-out;
+
+        @starting-style {
+            opacity: 0;
+            scale: none;
+        }
+    }
 }
 
 /* Placement lives here rather than in OverlayTrigger, which previously wrote

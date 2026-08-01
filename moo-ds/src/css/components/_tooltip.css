@@ -42,6 +42,43 @@
     position-area: top;
     margin-bottom: var(--tooltip-arrow-size);
     position-try-fallbacks: flip-block;
+
+    /* Fade in on appear. @starting-style supplies the pre-insertion value, so
+       this needs no mount-time class toggle or timer.
+
+       Entry only, deliberately: Tooltip renders the portal as `{show && ...}`,
+       so on hide React removes the node and there is nothing left to transition.
+       Animating the exit as well would mean keeping the tooltip mounted and
+       driving display from CSS, which is a component change rather than a
+       styling one -- see the same note in _combo-box.css and _overlay.css. */
+    transition: opacity 0.15s ease-out, translate 0.15s ease-out;
+
+    @starting-style {
+        opacity: 0;
+        translate: 0 0.25rem;
+    }
+}
+
+/* Flipped below the trigger, so it should rise from the other direction. */
+@container anchored(fallback: flip-block) {
+    .tooltip-portal {
+        @starting-style {
+            translate: 0 -0.25rem;
+        }
+    }
+}
+
+/* Drop the movement, keep the fade: a cross-fade is not motion, and removing
+   the transition outright would make the tooltip snap in. */
+@media (prefers-reduced-motion: reduce) {
+    .tooltip-portal {
+        transition: opacity 0.15s ease-out;
+
+        @starting-style {
+            opacity: 0;
+            translate: none;
+        }
+    }
 }
 
 /* Arrow pointing down (default: tooltip above trigger) */
