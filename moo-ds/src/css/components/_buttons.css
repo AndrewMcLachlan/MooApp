@@ -14,7 +14,8 @@
     --btn-hover-border-colour: transparent;
     --btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
     --btn-disabled-opacity: 0.65;
-    --btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--btn-focus-shadow-rgb), 0.5);
+    --btn-focus-ring-colour: var(--focus-ring-colour);
+    --btn-focus-box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--btn-focus-ring-colour) 50%, transparent);
 
     display: inline-block;
     padding: var(--btn-padding-y) var(--btn-padding-x);
@@ -73,7 +74,6 @@
     --btn-hover-colour: #fff;
     --btn-hover-bg: var(--primary-dark);
     --btn-hover-border-colour: var(--primary-dark);
-    --btn-focus-shadow-rgb: var(--btn-focus-shadow-rgb, 156, 38, 38);
     --btn-active-colour: #fff;
     --btn-active-bg: var(--primary-dark);
     --btn-active-border-colour: var(--primary-dark);
@@ -90,7 +90,6 @@
     --btn-hover-colour: #fff;
     --btn-hover-bg: var(--primary);
     --btn-hover-border-colour: var(--primary);
-    --btn-focus-shadow-rgb: var(--btn-focus-shadow-rgb, 156, 38, 38);
     --btn-active-colour: #fff;
     --btn-active-bg: var(--primary-dark);
     --btn-active-border-colour: var(--primary-dark);
@@ -116,13 +115,22 @@
     --btn-disabled-bg: transparent;
     --btn-disabled-border-colour: transparent;
     --btn-box-shadow: 0 0 0 #000;
-    --btn-focus-shadow-rgb: 49, 132, 253;
+    --btn-focus-ring-colour: var(--link-colour);
     text-decoration: underline;
 }
 
 .btn-link:hover {
     text-decoration: underline;
 }
+
+/* The hover/active ramps below mix in srgb, and were measured before being
+   left that way. Switching them to oklab makes the two steps perceptually
+   even, but they already differed by only 1-9.5% of a single step, and the two
+   steps are hover and active -- states that are never on screen together. The
+   same change also darkened every shade by 7-17/255, because a percentage
+   means a different thing in each space: 85% of an encoded sRGB channel is a
+   smaller move than 85% of perceptual lightness. That was the only part of it
+   anyone could see, so it is not worth having. */
 
 /* Danger */
 .btn-danger {
@@ -223,37 +231,43 @@
     --btn-disabled-border-colour: var(--green);
 }
 
-/* Secondary */
+/* Secondary
+   The shades were hardcoded (#5c636a, #565e64, #51585e) but are exactly the
+   same 85/80/75 ramp the other variants mix, just pre-computed against
+   #6c757d. Deriving them means the ramp is stated once and follows the base
+   colour, and it picks up the oklab step spacing like everything else. */
 .btn-secondary {
+    --btn-secondary-base: #6c757d;
     --btn-colour: #fff;
-    --btn-bg: #6c757d;
-    --btn-border-colour: #6c757d;
+    --btn-bg: var(--btn-secondary-base);
+    --btn-border-colour: var(--btn-secondary-base);
     --btn-hover-colour: #fff;
-    --btn-hover-bg: #5c636a;
-    --btn-hover-border-colour: #565e64;
+    --btn-hover-bg: color-mix(in srgb, var(--btn-secondary-base) 85%, #000);
+    --btn-hover-border-colour: color-mix(in srgb, var(--btn-secondary-base) 80%, #000);
     --btn-active-colour: #fff;
-    --btn-active-bg: #565e64;
-    --btn-active-border-colour: #51585e;
+    --btn-active-bg: color-mix(in srgb, var(--btn-secondary-base) 80%, #000);
+    --btn-active-border-colour: color-mix(in srgb, var(--btn-secondary-base) 75%, #000);
     --btn-disabled-colour: #fff;
-    --btn-disabled-bg: #6c757d;
-    --btn-disabled-border-colour: #6c757d;
+    --btn-disabled-bg: var(--btn-secondary-base);
+    --btn-disabled-border-colour: var(--btn-secondary-base);
 }
 
 /* Outline Secondary */
 .btn-outline-secondary {
-    --btn-colour: #6c757d;
+    --btn-secondary-base: #6c757d;
+    --btn-colour: var(--btn-secondary-base);
     --btn-bg: transparent;
-    --btn-border-colour: #6c757d;
+    --btn-border-colour: var(--btn-secondary-base);
     --btn-hover-colour: #fff;
-    --btn-hover-bg: #6c757d;
-    --btn-hover-border-colour: #6c757d;
+    --btn-hover-bg: var(--btn-secondary-base);
+    --btn-hover-border-colour: var(--btn-secondary-base);
     --btn-active-colour: #fff;
-    --btn-active-bg: #565e64;
-    --btn-active-border-colour: #51585e;
+    --btn-active-bg: color-mix(in srgb, var(--btn-secondary-base) 80%, #000);
+    --btn-active-border-colour: color-mix(in srgb, var(--btn-secondary-base) 75%, #000);
     --btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --btn-disabled-colour: #6c757d;
+    --btn-disabled-colour: var(--btn-secondary-base);
     --btn-disabled-bg: transparent;
-    --btn-disabled-border-colour: #6c757d;
+    --btn-disabled-border-colour: var(--btn-secondary-base);
 }
 
 /* Sizes */

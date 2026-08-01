@@ -1,3 +1,29 @@
+/* Registered colour tokens. Registering with syntax: '<color>' adds validation
+   and -- the actual reason to bother -- makes the token animatable, because an
+   unregistered custom property cannot be interpolated.
+
+   Only tokens holding a plain colour may be registered. A registered property
+   is computed at the element that declares it; an unregistered one is
+   substituted lazily where it is used. Every light-dark() token below is
+   declared on :root (color-scheme: light dark) but consumed inside
+   .light/.dark/[data-theme] subtrees, which is what makes theme forcing work.
+   Registering one freezes it to whatever the OS preference resolved to at
+   :root, and forced themes silently stop applying -- confirmed in Chromium,
+   where a registered light-dark() token kept its dark value even inside
+   color-scheme: light. So the light-dark() tokens are deliberately left
+   unregistered; do not "finish the job" by adding them here. */
+@property --primary {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #8b0000;
+}
+
+@property --primary-dark {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #6f0000;
+}
+
 :root {
   --font-sans-serif: 'Inter', 'Franklin Gothic', Helvetica, 'Helvetica Neue', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --secondary-fonts: 'Open Sans Condensed', 'Franklin Gothic', Helvetica, 'Helvetica Neue', nsystem-ui, -apple-system, "Segoe UI", Roboto Arial, sans-serif;
@@ -5,7 +31,6 @@
   --page-header-background: #111;
   --page-header-text: #F6F6F6;
 
-  --primary-rgb: 139, 0, 0;
   --primary-dark: #6f0000;
 
   --input-border: #666;
@@ -47,7 +72,10 @@
   --light-section-bg: rgb(251, 248, 244);
   --dark-section-bg: rgb(21, 13, 12);
 
-  --btn-focus-shadow-rgb: 156, 38, 38;
+  /* Focus ring base: --primary lightened. Derived rather than stored as a
+     separate literal so a theme that changes --primary gets a matching ring
+     without having to restate it. Reproduces the previous 156,38,38. */
+  --focus-ring-colour: color-mix(in srgb, var(--primary) 85%, #fff);
 
   --border-width: 1px;
   --border-radius: 0.375rem;
@@ -75,8 +103,12 @@
 
   --hover: light-dark(#e6e6e6, #6e6e6e);
 
-  --link-colour: light-dark(#8b0000, rgb(185.4, 102, 102));
-  --link-hover-colour: light-dark(rgb(111.2, 0, 0), rgb(199.32, 132.6, 132.6));
+  /* Link colours are all --primary derivatives. They were previously baked as
+     fractional rgb() literals (rgb(185.4, 102, 102) and friends) produced by a
+     preprocessor, which meant a theme changing --primary left them stale.
+     These mixes reproduce those literals exactly. */
+  --link-colour: light-dark(var(--primary), color-mix(in srgb, var(--primary) 60%, #fff));
+  --link-hover-colour: light-dark(color-mix(in srgb, var(--primary) 80%, #000), color-mix(in srgb, var(--primary) 48%, #fff));
 
   --disabled-bg: light-dark(#e9ecef, #495057);
   --input-group-text-bg: light-dark(#e9ecef, #495057);
@@ -125,7 +157,6 @@ body {
 .dark.blue {
 
   --primary: #2f5fad;
-  --primary-rgb: 47, 95, 173;
   --primary-dark: #2f4c84;
 
   --body-bg: rgb(8, 9, 12);
@@ -135,8 +166,18 @@ body {
   --body-colour-dim: rgba(204, 208, 211, .65);
   --border-colour: rgb(45, 49, 52);
 
-  --link-colour: rgb(102, 102, 185.4);
-  --link-hover-colour: rgb(132.6, 132.6, 199.32);
+  /* These have to be restated, not inherited. A var() inside a custom property
+     is substituted at the element that *declares* it, so the :root copies of
+     these tokens already resolved var(--primary) to the default red and pass
+     it down as a fixed value -- overriding --primary here cannot reach back
+     into them. Restating them keeps the derivation (rather than the previous
+     baked literals, which were the red values with the channels reordered:
+     rgb(185.4, 102, 102) -> rgb(102, 102, 185.4)) so they now actually track
+     this theme's --primary. */
+  --focus-ring-colour: color-mix(in srgb, var(--primary) 85%, #fff);
+  --link-colour: light-dark(var(--primary), color-mix(in srgb, var(--primary) 60%, #fff));
+  --link-hover-colour: light-dark(color-mix(in srgb, var(--primary) 80%, #000), color-mix(in srgb, var(--primary) 48%, #fff));
+
   --base-bg: rgb(12, 13, 17);
   --header-bg: rgb(12, 13, 17);
   --section-bg: rgb(12, 13, 17);
@@ -144,6 +185,5 @@ body {
   --footer-bg: rgb(12, 13, 17);
   --breadcrumb-bg: rgb(12, 13, 17);
   --table-striped-bg: rgba(12, 13, 17, 0.75);
-  --btn-focus-shadow-rgb: 38, 38, 156;
 
 }

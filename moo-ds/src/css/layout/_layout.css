@@ -14,14 +14,21 @@ html, body, #root, .app-container {
     "sidebar main";
 
 
+  /* --h1-size and --h2-size are consumed by _global.css and _article.css for
+     page headings. They were fixed rem values, so headings stayed the same size
+     on a 1920+ display as on a laptop. The clamp grows them across the
+     big-monitor tiers only: below fhd (1880px) the middle term is negative and
+     the floor wins, so nothing changes at ordinary viewport sizes. */
   &.moo-default {
       --header-height: 80px;
       --footer-height: 80px;
-      --foter-text-size: 1rem;
+      /* Was --foter-text-size, which _footer.css never reads -- so the default
+         layout's footer had no font-size at all and silently inherited. */
+      --footer-text-size: 1rem;
       --user-image: 60px;
       --user-radius: 30px;
-      --h1-size: 2rem;
-      --h2-size: 2rem;
+      --h1-size: clamp(2rem, 2rem + (100dvw - 1880px) * 0.009, 2.75rem);
+      --h2-size: clamp(2rem, 2rem + (100dvw - 1880px) * 0.009, 2.75rem);
   }
 
   &.moo-small {
@@ -30,8 +37,8 @@ html, body, #root, .app-container {
       --footer-text-size: 0.9rem;
       --user-image: 24px;
       --user-radius: 12px;
-      --h1-size: 1.4rem;
-      --h2-size: 1.4rem;
+      --h1-size: clamp(1.4rem, 1.4rem + (100dvw - 1880px) * 0.006, 1.9rem);
+      --h2-size: clamp(1.4rem, 1.4rem + (100dvw - 1880px) * 0.006, 1.9rem);
 
   }
 

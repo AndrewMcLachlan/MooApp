@@ -3,6 +3,7 @@ import React, { type PropsWithChildren } from "react";
 import { FormProvider, type SubmitHandler, type UseFormReturn } from "react-hook-form";
 
 import { Check, type CheckComponent } from "./Check";
+import { Feedback, type FeedbackComponent } from "./Feedback";
 import { Group, type GroupComponent } from "./Group";
 import { Input, type InputComponent } from "./Input";
 import { Label, type LabelComponent } from "./Label";
@@ -12,6 +13,7 @@ import { TextArea, type TextAreaComponent } from "./TextArea";
 
 export type FormComponent<TFormValues> = React.FC<PropsWithChildren<FormProps<TFormValues>>> & {
     Check: CheckComponent;
+    Feedback: FeedbackComponent;
     Input: InputComponent;
     Select: SelectComponent;
     Group: GroupComponent;
@@ -32,6 +34,7 @@ export const Form: FormComponent<any> = <TFormValues,>({ onSubmit, children, cla
 }
 
 Form.Check = Check;
+Form.Feedback = Feedback;
 Form.Group = Group;
 Form.Input = Input;
 Form.Label = Label;
