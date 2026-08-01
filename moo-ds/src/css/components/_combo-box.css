@@ -8,13 +8,16 @@
         /* Anchor for the dropdown below. Set on the control itself so the list
            can leave the flow entirely -- see the note on `ol`.
 
-           One shared name is safe even with several combo-boxes on a page: each
-           list is a descendant of its own control, so the nearest preceding
-           element carrying the name is always that control. Verified with two
-           controls on one page -- each list anchored to its own. A unique name
-           per instance (the approach OverlayTrigger has to take, since its
-           overlay is portalled away from the trigger) is not needed here. */
+           anchor-scope confines the name to this control's own subtree. Without
+           it every combo-box on the page publishes the same name, and a list
+           binds to the last one in tree order rather than the control it sits
+           inside -- so an open dropdown rendered under whichever combo-box came
+           last. anchor-scope is from the same Safari 26 release as the rest of
+           anchor positioning, so it costs no support relative to the feature it
+           is fixing, and it keeps the name shared rather than needing one
+           generated per instance the way OverlayTrigger does. */
         anchor-name: --combo-box;
+        anchor-scope: --combo-box;
     }
 
     :scope:focus-within {
