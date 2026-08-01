@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Modal } from '../Modal';
 
@@ -244,8 +244,9 @@ describe('Modal', () => {
         value: function () { }, configurable: true, writable: true,
       });
 
+      // popover is a valid HTMLAttribute, so this is a legitimate prop a
+      // consumer could pass -- which is exactly why the component has to win.
       const { baseElement } = render(
-        // @ts-expect-error deliberately passing a conflicting popover value
         <Modal show popover="auto"><Modal.Body>Content</Modal.Body></Modal>
       );
 
