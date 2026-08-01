@@ -8,6 +8,7 @@ import App from "./App";
 import { CategoryOutlet } from "./routes/CategoryOutlet";
 import { Home } from "./routes/Home";
 import { PageSections } from "./routes/layout/PageSections";
+import { DashboardPage } from "./routes/layout/Dashboard";
 import { Navigation } from "./routes/layout/Navigation";
 import { DrawerPage } from "./routes/layout/Drawer";
 import { FormPage } from "./routes/forms/Form";
@@ -53,6 +54,7 @@ const indexRoute = createRoute({ getParentRoute: () => rootRoute, path: "/", com
 // --- Layout ---------------------------------------------------------------
 const layoutRoute = createRoute({ getParentRoute: () => rootRoute, path: "layout", component: CategoryOutlet });
 const pageSectionsRoute = createRoute({ getParentRoute: () => layoutRoute, path: "page-sections", component: PageSections });
+const dashboardRoute = createRoute({ getParentRoute: () => layoutRoute, path: "dashboard", component: DashboardPage });
 const navigationRoute = createRoute({ getParentRoute: () => layoutRoute, path: "navigation", component: Navigation });
 const drawerRoute = createRoute({ getParentRoute: () => layoutRoute, path: "drawer", component: DrawerPage });
 
@@ -96,6 +98,7 @@ const routeTree = rootRoute.addChildren([
   layoutRoute.addChildren([
     categoryIndex(layoutRoute, "/layout/page-sections"),
     pageSectionsRoute,
+    dashboardRoute,
     navigationRoute,
     drawerRoute,
   ]),
