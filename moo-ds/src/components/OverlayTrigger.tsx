@@ -10,20 +10,6 @@ export interface OverlayTriggerProps {
     children: React.ReactElement;
 }
 
-const placementToPositionArea: Record<string, string> = {
-    top: "top",
-    bottom: "bottom",
-    left: "left",
-    right: "right",
-};
-
-const placementToFlip: Record<string, string> = {
-    top: "flip-block",
-    bottom: "flip-block",
-    left: "flip-inline",
-    right: "flip-inline",
-};
-
 export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
     trigger = "click",
     placement = "bottom",
@@ -45,16 +31,18 @@ export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
         triggerRef.current?.style.setProperty("anchor-name", anchorName);
     }, [anchorName]);
 
+    // position-anchor has to be set here because the anchor name is generated
+    // per trigger instance. position-area and the flip fallbacks are driven by
+    // the .overlay-<placement> class instead, so the placement mapping lives in
+    // _overlay.css rather than in inline styles.
     useLayoutEffect(() => {
         if (show && overlayRef.current) {
             overlayRef.current.style.setProperty("position-anchor", anchorName);
-            overlayRef.current.style.setProperty("position-area", placementToPositionArea[placement]);
-            overlayRef.current.style.setProperty("position-try-fallbacks", placementToFlip[placement]);
             if (containerPadding > 0) {
                 overlayRef.current.style.setProperty("--overlay-padding", `${containerPadding}px`);
             }
         }
-    }, [show, anchorName, placement, containerPadding]);
+    }, [show, anchorName, containerPadding]);
 
     useEffect(() => {
         if (!show || !rootClose) return () => {};
@@ -102,7 +90,7 @@ export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
             {show && createPortal(
                 <div
                     ref={overlayRef}
-                    className="overlay-portal"
+                    className={`overlay-portal overlay-${placement}`}
                 >
                     {typeof overlay === "function" ? overlay(() => setShow(false)) : overlay}
                 </div>,
