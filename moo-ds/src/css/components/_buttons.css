@@ -123,20 +123,14 @@
     text-decoration: underline;
 }
 
-/* The hover/active ramps below mix in oklab rather than srgb so the 85/80/75
-   steps are perceptually even: measured in oklab lightness, the srgb steps
-   varied by up to 0.0024 between the two gaps, and the oklab ones are exactly
-   equal.
-
-   The percentages are kept as they were, which means every shade also comes out
-   7-17/255 darker than before -- that darkening, not the evenness, is the
-   visible part of this change. If the current lightness matters more than the
-   round numbers, 88/85/81 in oklab reproduces the old shades almost exactly
-   (measured across all five variants: 88.7/84.9/81.2) while keeping the steps
-   even.
-
-   Mixes with `transparent` deliberately stay in srgb -- those set alpha, and
-   interpolating a transparent endpoint in oklab shifts the resulting colour. */
+/* The hover/active ramps below mix in srgb, and were measured before being
+   left that way. Switching them to oklab makes the two steps perceptually
+   even, but they already differed by only 1-9.5% of a single step, and the two
+   steps are hover and active -- states that are never on screen together. The
+   same change also darkened every shade by 7-17/255, because a percentage
+   means a different thing in each space: 85% of an encoded sRGB channel is a
+   smaller move than 85% of perceptual lightness. That was the only part of it
+   anyone could see, so it is not worth having. */
 
 /* Danger */
 .btn-danger {
@@ -144,11 +138,11 @@
     --btn-bg: var(--red);
     --btn-border-colour: var(--red);
     --btn-hover-colour: #fff;
-    --btn-hover-bg: color-mix(in oklab, var(--red) 85%, #000);
-    --btn-hover-border-colour: color-mix(in oklab, var(--red) 80%, #000);
+    --btn-hover-bg: color-mix(in srgb, var(--red) 85%, #000);
+    --btn-hover-border-colour: color-mix(in srgb, var(--red) 80%, #000);
     --btn-active-colour: #fff;
-    --btn-active-bg: color-mix(in oklab, var(--red) 80%, #000);
-    --btn-active-border-colour: color-mix(in oklab, var(--red) 75%, #000);
+    --btn-active-bg: color-mix(in srgb, var(--red) 80%, #000);
+    --btn-active-border-colour: color-mix(in srgb, var(--red) 75%, #000);
     --btn-disabled-colour: #fff;
     --btn-disabled-bg: var(--red);
     --btn-disabled-border-colour: var(--red);
@@ -163,8 +157,8 @@
     --btn-hover-bg: var(--red);
     --btn-hover-border-colour: var(--red);
     --btn-active-colour: #fff;
-    --btn-active-bg: color-mix(in oklab, var(--red) 80%, #000);
-    --btn-active-border-colour: color-mix(in oklab, var(--red) 75%, #000);
+    --btn-active-bg: color-mix(in srgb, var(--red) 80%, #000);
+    --btn-active-border-colour: color-mix(in srgb, var(--red) 75%, #000);
     --btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --btn-disabled-colour: var(--red);
     --btn-disabled-bg: transparent;
@@ -177,11 +171,11 @@
     --btn-bg: var(--amber);
     --btn-border-colour: var(--amber);
     --btn-hover-colour: #000;
-    --btn-hover-bg: color-mix(in oklab, var(--amber) 85%, #000);
-    --btn-hover-border-colour: color-mix(in oklab, var(--amber) 80%, #000);
+    --btn-hover-bg: color-mix(in srgb, var(--amber) 85%, #000);
+    --btn-hover-border-colour: color-mix(in srgb, var(--amber) 80%, #000);
     --btn-active-colour: #000;
-    --btn-active-bg: color-mix(in oklab, var(--amber) 80%, #000);
-    --btn-active-border-colour: color-mix(in oklab, var(--amber) 75%, #000);
+    --btn-active-bg: color-mix(in srgb, var(--amber) 80%, #000);
+    --btn-active-border-colour: color-mix(in srgb, var(--amber) 75%, #000);
     --btn-disabled-colour: #000;
     --btn-disabled-bg: var(--amber);
     --btn-disabled-border-colour: var(--amber);
@@ -196,8 +190,8 @@
     --btn-hover-bg: var(--amber);
     --btn-hover-border-colour: var(--amber);
     --btn-active-colour: #000;
-    --btn-active-bg: color-mix(in oklab, var(--amber) 80%, #000);
-    --btn-active-border-colour: color-mix(in oklab, var(--amber) 75%, #000);
+    --btn-active-bg: color-mix(in srgb, var(--amber) 80%, #000);
+    --btn-active-border-colour: color-mix(in srgb, var(--amber) 75%, #000);
     --btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --btn-disabled-colour: var(--amber);
     --btn-disabled-bg: transparent;
@@ -210,11 +204,11 @@
     --btn-bg: var(--green);
     --btn-border-colour: var(--green);
     --btn-hover-colour: #fff;
-    --btn-hover-bg: color-mix(in oklab, var(--green) 85%, #000);
-    --btn-hover-border-colour: color-mix(in oklab, var(--green) 80%, #000);
+    --btn-hover-bg: color-mix(in srgb, var(--green) 85%, #000);
+    --btn-hover-border-colour: color-mix(in srgb, var(--green) 80%, #000);
     --btn-active-colour: #fff;
-    --btn-active-bg: color-mix(in oklab, var(--green) 80%, #000);
-    --btn-active-border-colour: color-mix(in oklab, var(--green) 75%, #000);
+    --btn-active-bg: color-mix(in srgb, var(--green) 80%, #000);
+    --btn-active-border-colour: color-mix(in srgb, var(--green) 75%, #000);
     --btn-disabled-colour: #fff;
     --btn-disabled-bg: var(--green);
     --btn-disabled-border-colour: var(--green);
@@ -229,8 +223,8 @@
     --btn-hover-bg: var(--green);
     --btn-hover-border-colour: var(--green);
     --btn-active-colour: #fff;
-    --btn-active-bg: color-mix(in oklab, var(--green) 80%, #000);
-    --btn-active-border-colour: color-mix(in oklab, var(--green) 75%, #000);
+    --btn-active-bg: color-mix(in srgb, var(--green) 80%, #000);
+    --btn-active-border-colour: color-mix(in srgb, var(--green) 75%, #000);
     --btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --btn-disabled-colour: var(--green);
     --btn-disabled-bg: transparent;
@@ -248,11 +242,11 @@
     --btn-bg: var(--btn-secondary-base);
     --btn-border-colour: var(--btn-secondary-base);
     --btn-hover-colour: #fff;
-    --btn-hover-bg: color-mix(in oklab, var(--btn-secondary-base) 85%, #000);
-    --btn-hover-border-colour: color-mix(in oklab, var(--btn-secondary-base) 80%, #000);
+    --btn-hover-bg: color-mix(in srgb, var(--btn-secondary-base) 85%, #000);
+    --btn-hover-border-colour: color-mix(in srgb, var(--btn-secondary-base) 80%, #000);
     --btn-active-colour: #fff;
-    --btn-active-bg: color-mix(in oklab, var(--btn-secondary-base) 80%, #000);
-    --btn-active-border-colour: color-mix(in oklab, var(--btn-secondary-base) 75%, #000);
+    --btn-active-bg: color-mix(in srgb, var(--btn-secondary-base) 80%, #000);
+    --btn-active-border-colour: color-mix(in srgb, var(--btn-secondary-base) 75%, #000);
     --btn-disabled-colour: #fff;
     --btn-disabled-bg: var(--btn-secondary-base);
     --btn-disabled-border-colour: var(--btn-secondary-base);
@@ -268,8 +262,8 @@
     --btn-hover-bg: var(--btn-secondary-base);
     --btn-hover-border-colour: var(--btn-secondary-base);
     --btn-active-colour: #fff;
-    --btn-active-bg: color-mix(in oklab, var(--btn-secondary-base) 80%, #000);
-    --btn-active-border-colour: color-mix(in oklab, var(--btn-secondary-base) 75%, #000);
+    --btn-active-bg: color-mix(in srgb, var(--btn-secondary-base) 80%, #000);
+    --btn-active-border-colour: color-mix(in srgb, var(--btn-secondary-base) 75%, #000);
     --btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --btn-disabled-colour: var(--btn-secondary-base);
     --btn-disabled-bg: transparent;
