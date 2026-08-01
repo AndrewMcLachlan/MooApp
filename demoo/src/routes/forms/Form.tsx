@@ -39,6 +39,7 @@ const signupResolver: Resolver<SignupValues> = async (values) => {
     const age = values.age?.trim();
     if (age) {
         if (!/^\d+$/.test(age)) errors.age = { type: "pattern", message: "Age must be a whole number" };
+        else if (age.length > 3) errors.age = { type: "maxLength", message: "Age must be at most three digits" };
         else if (Number(age) < 18) errors.age = { type: "min", message: "Must be 18 or over" };
     }
 
@@ -151,7 +152,7 @@ export const FormPage = () => {
                 </Form.Group>
                 <Form.Group groupId="age">
                     <Form.Label>Age (optional)</Form.Label>
-                    <Form.Input inputMode="numeric" placeholder="18" />
+                    <Form.Input inputMode="numeric" maxLength={3} placeholder="18" />
                     <Form.Feedback />
                 </Form.Group>
                 <Button type="submit" variant="primary">Create account</Button>
