@@ -32,6 +32,10 @@ jobs:
         registry-url: "https://npm.pkg.github.com"
     - run: npm ci --no-scripts
     - run: npm pkg set version=${{ steps.version.outputs.version }} --workspace=moo-ds --workspace=moo-app --workspace=moo-icons
+    # Nothing else here type-checks the tests: vitest runs through esbuild, which
+    # strips types without checking them, and the build below compiles src only.
+    # Without this step a test file can stop compiling and every check stays green.
+    - run: npm run type-check
     - run: npm run test:run
     - run: npm run build --workspace=moo-ds --workspace=moo-app --workspace=moo-icons
     # Publish only from main (the stable trunk) or a prerelease line (a branch whose stated
