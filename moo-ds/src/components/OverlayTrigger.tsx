@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useId, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
-import { topLayerProps } from "../utils/topLayer";
+import { showInTopLayer, topLayerProps } from "../utils/topLayer";
 
 export interface OverlayTriggerProps {
     trigger?: "click" | "hover" | "focus" | ("click" | "hover" | "focus")[];
@@ -40,10 +40,10 @@ export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
         if (show && overlayRef.current) {
             // Promote into the top layer -- see the note in Tooltip.tsx. The
             // z-index: 1070 this replaces loses to any higher z-index on the
-            // page, and to a top-layer dialog outright. Optional call so
-            // jsdom, which has no popover API, keeps rendering the overlay in
+            // page, and to a top-layer dialog outright. Guarded, so jsdom --
+            // which has no popover API -- keeps rendering the overlay in
             // place.
-            overlayRef.current.showPopover?.();
+            showInTopLayer(overlayRef.current);
 
             overlayRef.current.style.setProperty("position-anchor", anchorName);
             if (containerPadding > 0) {

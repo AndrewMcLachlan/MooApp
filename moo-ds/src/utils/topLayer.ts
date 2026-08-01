@@ -23,3 +23,21 @@ export const supportsPopover = (): boolean =>
  */
 export const topLayerProps = (): { popover?: "manual" } =>
     supportsPopover() ? { popover: "manual" } : {};
+
+/**
+ * Move an element into the top layer, where the API allows it.
+ *
+ * Guards on the element's own method rather than on supportsPopover(), so the
+ * check is against the thing actually being called. Both have to agree: the
+ * popover attribute is only applied where showPopover is callable, so calling
+ * it where it is not would mean invoking the API on an element that never got
+ * the attribute.
+ *
+ * Calling this on an already-open popover is a no-op rather than an error, so
+ * an effect that re-runs does not need to track whether it has already shown.
+ */
+export const showInTopLayer = (element: HTMLElement | null | undefined): void => {
+    if (element && typeof element.showPopover === "function") {
+        element.showPopover();
+    }
+};
