@@ -14,14 +14,18 @@ describe('Drawer', () => {
       expect(container.querySelector('.offcanvas.show')).not.toBeInTheDocument();
     });
 
-    it('renders backdrop when show is true', () => {
+    it('shows the backdrop when show is true', () => {
       const { baseElement } = render(<Drawer show onHide={vi.fn()}><Drawer.Body>Content</Drawer.Body></Drawer>);
-      expect(baseElement.querySelector('.offcanvas-backdrop')).toBeInTheDocument();
+      expect(baseElement.querySelector('.offcanvas-backdrop.show')).toBeInTheDocument();
     });
 
-    it('does not render backdrop when show is false', () => {
+    // The backdrop stays mounted so it can fade out alongside the panel's
+    // slide-out; it is hidden with display rather than unmounted, so the
+    // closed state is the absence of .show rather than of the element.
+    it('hides the backdrop when show is false', () => {
       const { baseElement } = render(<Drawer show={false} onHide={vi.fn()}><Drawer.Body>Content</Drawer.Body></Drawer>);
-      expect(baseElement.querySelector('.offcanvas-backdrop')).not.toBeInTheDocument();
+      expect(baseElement.querySelector('.offcanvas-backdrop')).toBeInTheDocument();
+      expect(baseElement.querySelector('.offcanvas-backdrop.show')).not.toBeInTheDocument();
     });
   });
 
