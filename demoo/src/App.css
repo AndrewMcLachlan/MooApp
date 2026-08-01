@@ -123,6 +123,18 @@
 /* Large stat number used on the Home dashboard widgets. */
 .stat { font-size: 2rem; margin: 0; }
 
+/* Activity list inside a dashboard widget. The widget clips its body, so the
+   list scrolls rather than pushing past the cell. */
+.dashboard-feed {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
 /* Skeleton composition samples. */
 .skeleton-cols { display: flex; gap: 3rem; flex-wrap: wrap; max-width: 640px; }
 .skeleton-col { flex: 1; min-width: 220px; }

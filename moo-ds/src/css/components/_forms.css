@@ -16,7 +16,7 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.form-control:focus {
+.form-control:focus-visible {
     color: var(--body-colour);
     background-color: var(--body-bg);
     border-color: var(--primary);
@@ -83,9 +83,16 @@ textarea.form-control:not([rows]) {
     max-block-size: 40vh;
 }
 
-/* Form select */
+/* Form select
+   The chevron is an SVG data URI, so its stroke colour cannot be swapped with
+   light-dark() (that only takes a <color>) and an SVG used as a background
+   image cannot read currentColor. Both variants are therefore declared once
+   here as tokens, and the theme rules below only re-point --form-select-bg-img
+   -- no data URI is repeated. */
 .form-select {
-    --form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e");
+    --form-select-chevron-light: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e");
+    --form-select-chevron-dark: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23ced4da%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e");
+    --form-select-bg-img: var(--form-select-chevron-light);
     display: block;
     width: 100%;
     padding: var(--input-padding-v, 0.375rem) calc(var(--input-padding-h, 0.75rem) + 16px) var(--input-padding-v, 0.375rem) var(--input-padding-h, 0.75rem);
@@ -104,7 +111,7 @@ textarea.form-control:not([rows]) {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.form-select:focus {
+.form-select:focus-visible {
     border-color: var(--primary);
     outline: 0;
     box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--primary) 25%, transparent);
@@ -121,18 +128,70 @@ option {
 
 @media (prefers-color-scheme: dark) {
     .form-select {
-        --form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23ced4da%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e");
+        --form-select-bg-img: var(--form-select-chevron-dark);
     }
 }
 
+/* Forced themes have to out-specify the media query above, so they stay as
+   explicit rules rather than folding into the base declaration. */
 .dark .form-select,
 [data-theme="dark"] .form-select {
-    --form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23ced4da%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e");
+    --form-select-bg-img: var(--form-select-chevron-dark);
 }
 
 .light .form-select,
 [data-theme="light"] .form-select {
-    --form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e");
+    --form-select-bg-img: var(--form-select-chevron-light);
+}
+
+/* Invalid state.
+   :user-invalid, not :invalid. :invalid matches from first render, so a form
+   with `required` fields would load with every empty field already painted red
+   before the user had touched anything. :user-invalid only matches once the
+   user has interacted with the control (or tried to submit).
+
+   :user-invalid covers the native constraints -- required, type, pattern,
+   min/max. It cannot see a react-hook-form rule, because that validation never
+   reaches the element's validity state, so [aria-invalid="true"] is matched
+   alongside it: the form controls set that attribute when the resolver has
+   rejected the field. The two together mean a field looks the same whichever
+   kind of rule failed.
+
+   :is() takes the highest specificity among its arguments, and both branches
+   are (0,1,0), so these selectors weigh the same as the plain :user-invalid
+   ones did.
+
+   The ring is claimed on both :focus and :focus-visible. Either one alone
+   leaves a gap: the base ring is currently on :focus, and a control that takes
+   focus without matching :focus-visible -- a select or checkbox clicked with
+   the mouse -- would keep the primary-coloured ring while showing a red
+   border. Matching both covers that, and still out-specifies the base rule at
+   (0,3,0) if it later moves to :focus-visible. */
+.form-control:is(:user-invalid, [aria-invalid="true"]),
+.form-select:is(:user-invalid, [aria-invalid="true"]) {
+    border-color: var(--danger);
+}
+
+.form-control:is(:user-invalid, [aria-invalid="true"]):focus,
+.form-select:is(:user-invalid, [aria-invalid="true"]):focus,
+.form-control:is(:user-invalid, [aria-invalid="true"]):focus-visible,
+.form-select:is(:user-invalid, [aria-invalid="true"]):focus-visible {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--danger) 25%, transparent);
+}
+
+/* The label tracks its group's validity -- this is what :has is for, since
+   there is no selector that reaches a previous sibling's state otherwise. */
+.form-group:has(:is(:user-invalid, [aria-invalid="true"])) > .form-label {
+    color: var(--danger);
+}
+
+/* The message Form.Feedback renders. It is only in the DOM while the field is
+   in error, so it needs no show/hide of its own. */
+.invalid-feedback {
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    color: var(--danger);
 }
 
 /* Form label */
@@ -160,49 +219,27 @@ option {
     }
 }
 
+/* Checkboxes and radios render natively and are tinted with accent-color, so
+   the platform draws the tick and dot. That removes the two SVG data URIs and
+   the custom box/border they were painted on, and means the controls follow
+   the OS conventions for pressed state and forced-colors mode for free.
+   The switch is not a native control, so it keeps appearance: none and owns
+   its box styling below. */
 .form-check-input {
-    --form-check-bg: var(--body-bg);
+    accent-color: var(--primary);
     flex-shrink: 0;
     width: 1.5rem;
     height: 1.5rem;
     margin-top: 0;
     padding: 0;
     vertical-align: top;
-    appearance: none;
-    background-color: var(--form-check-bg);
-    background-image: var(--form-check-bg-image);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    border: var(--border-width, 1px) solid var(--border-colour, rgba(0, 0, 0, 0.25));
-    print-color-adjust: exact;
 }
 
-.form-check-input[type="checkbox"] {
-    border-radius: 0.25em;
-}
-
-.form-check-input[type="radio"] {
-    border-radius: 50%;
-}
-
-.form-check-input:focus {
-    border-color: hsl(from var(--primary) h calc(s * .37) 64%);
+/* Keyboard-only ring, matching the .btn convention in _buttons.css. A native
+   checkbox has no border to tint, so this is the ring alone. */
+.form-check-input:focus-visible {
     outline: 0;
     box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--primary) 25%, transparent);
-}
-
-.form-check-input:checked {
-    background-color: var(--primary);
-    border-color: var(--primary);
-}
-
-.form-check-input:checked[type="checkbox"] {
-    --form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
-}
-
-.form-check-input:checked[type="radio"] {
-    --form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
 }
 
 .form-check-input:disabled {
@@ -220,35 +257,63 @@ option {
     margin-right: 1rem;
 }
 
-/* Form switch */
+/* Form switch
+   Same data-URI constraint as the select chevron: the unchecked thumb needs a
+   dark circle on light surfaces and a light one on dark surfaces, so each
+   variant is declared once as a token and the theme rules re-point
+   --form-switch-bg. The checked thumb is white in both themes. */
 .form-switch {
     padding-left: 0;
 
+    /* The switch is drawn by us rather than by the platform, so it opts out of
+       the native rendering the base .form-check-input now relies on and
+       restores the box styling that used to live there. */
     .form-check-input {
-        --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.55%29'/%3e%3c/svg%3e");
+        --form-switch-thumb-light: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.55%29'/%3e%3c/svg%3e");
+        --form-switch-thumb-dark: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.55%29'/%3e%3c/svg%3e");
+        --form-switch-bg: var(--form-switch-thumb-light);
+        appearance: none;
         width: 2.8em;
         height: 1.5em;
+        background-color: var(--body-bg);
         background-image: var(--form-switch-bg);
+        background-repeat: no-repeat;
+        background-size: contain;
         background-position: left center;
+        border: var(--border-width, 1px) solid var(--border-colour, rgba(0, 0, 0, 0.25));
         border-radius: 2em;
+        print-color-adjust: exact;
         transition: background-position 0.15s ease-in-out;
     }
 
     .form-check-input:checked {
         background-position: right center;
+        background-color: var(--primary);
+        border-color: var(--primary);
         --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
     }
 }
 
-.dark .form-switch .form-check-input,
-[data-theme="dark"] .form-switch .form-check-input {
-    --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.55%29'/%3e%3c/svg%3e");
+/* Only the unchecked thumb is theme-dependent. Restricting these to
+   :not(:checked) also keeps them from out-ranking the :checked rule above:
+   `.dark .form-switch .form-check-input` and the nested
+   `.form-switch .form-check-input:checked` are both specificity (0,3,0), so
+   whichever comes last would otherwise win and a checked switch in a forced
+   theme would render the translucent thumb instead of the solid white one. */
+@media (prefers-color-scheme: dark) {
+    .form-switch .form-check-input:not(:checked) {
+        --form-switch-bg: var(--form-switch-thumb-dark);
+    }
 }
 
-@media (prefers-color-scheme: dark) {
-    .form-switch .form-check-input {
-        --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.55%29'/%3e%3c/svg%3e");
-    }
+.dark .form-switch .form-check-input:not(:checked),
+[data-theme="dark"] .form-switch .form-check-input:not(:checked) {
+    --form-switch-bg: var(--form-switch-thumb-dark);
+}
+
+.light .form-switch .form-check-input:not(:checked),
+[data-theme="light"] .form-switch .form-check-input:not(:checked) {
+    --form-switch-bg: var(--form-switch-thumb-light);
 }
 
 /* Form container */
