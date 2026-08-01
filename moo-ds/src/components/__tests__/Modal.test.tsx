@@ -195,6 +195,35 @@ describe('Modal', () => {
       fireEvent.click(baseElement.querySelector('.modal-backdrop')!);
       expect(onHide).toHaveBeenCalledTimes(1);
     });
+
+    // .modal covers the viewport and sits above .modal-backdrop, so a real
+    // click on the dimmed area lands here rather than on the backdrop. The
+    // test above dispatches straight at the backdrop and so never exercised
+    // the path an actual user takes.
+    it('calls onHide when the dimmed area around the dialog is clicked', () => {
+      const onHide = vi.fn();
+      const { baseElement } = render(<Modal show onHide={onHide}><Modal.Body>Content</Modal.Body></Modal>);
+      fireEvent.click(baseElement.querySelector('.modal')!);
+      expect(onHide).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not call onHide when the dialog itself is clicked', () => {
+      const onHide = vi.fn();
+      const { baseElement } = render(<Modal show onHide={onHide}><Modal.Body>Content</Modal.Body></Modal>);
+      fireEvent.click(baseElement.querySelector('.modal-content')!);
+      expect(onHide).not.toHaveBeenCalled();
+    });
+
+    it('still runs a consumer onClick handler', () => {
+      const onHide = vi.fn();
+      const onClick = vi.fn();
+      const { baseElement } = render(
+        <Modal show onHide={onHide} onClick={onClick}><Modal.Body>Content</Modal.Body></Modal>
+      );
+      fireEvent.click(baseElement.querySelector('.modal')!);
+      expect(onClick).toHaveBeenCalledTimes(1);
+      expect(onHide).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('Modal.Header', () => {
