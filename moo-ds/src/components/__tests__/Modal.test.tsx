@@ -244,8 +244,9 @@ describe('Modal', () => {
         value: function () { }, configurable: true, writable: true,
       });
 
-      // popover is a valid HTMLAttribute, so this is a legitimate prop a
-      // consumer could pass -- which is exactly why the component has to win.
+      // popover is a real HTML attribute, and ModalProps extends
+      // React.HTMLAttributes, so a consumer can legitimately pass it -- which
+      // is exactly why the component has to win.
       const { baseElement } = render(
         <Modal show popover="auto"><Modal.Body>Content</Modal.Body></Modal>
       );
