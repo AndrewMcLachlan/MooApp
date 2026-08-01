@@ -32,7 +32,15 @@ const signupResolver: Resolver<SignupValues> = async (values) => {
     if (!values.password) errors.password = { type: "required", message: "Password is required" };
     else if (values.password.length < 8) errors.password = { type: "minLength", message: `Too short — ${8 - values.password.length} more character${8 - values.password.length === 1 ? "" : "s"} needed` };
 
-    if (values.age && Number(values.age) < 18) errors.age = { type: "min", message: "Must be 18 or over" };
+    // Age is optional, but if it is filled in it has to be a whole number.
+    // Number("abc") is NaN and every comparison against NaN is false, so a
+    // range check on its own lets text through silently. Trimmed first, so
+    // whitespace counts as leaving an optional field empty.
+    const age = values.age?.trim();
+    if (age) {
+        if (!/^\d+$/.test(age)) errors.age = { type: "pattern", message: "Age must be a whole number" };
+        else if (Number(age) < 18) errors.age = { type: "min", message: "Must be 18 or over" };
+    }
 
     return Object.keys(errors).length ? { values: {}, errors: errors as never } : { values, errors: {} };
 };
@@ -123,6 +131,14 @@ export const FormPage = () => {
                     returns every failure at once, so submitting flags each field still outstanding
                     rather than only the one you were editing.
                 </p>
+                <p>
+                    Age shows why a rule can be worth writing even for something a native
+                    constraint looks capable of: it is optional, so it only complains once you put
+                    something in it, and it tells you whether the problem is the format or the
+                    number. Give <code>Form.Feedback</code> children to replace the wording, which
+                    suits a field with a single rule rather than one like this that has more than
+                    one thing to say.
+                </p>
                 <Form.Group groupId="email">
                     <Form.Label>Email address</Form.Label>
                     <Form.Input placeholder="you@example.com" />
@@ -135,8 +151,8 @@ export const FormPage = () => {
                 </Form.Group>
                 <Form.Group groupId="age">
                     <Form.Label>Age (optional)</Form.Label>
-                    <Form.Input placeholder="18" />
-                    <Form.Feedback>You must be 18 or over to sign up.</Form.Feedback>
+                    <Form.Input inputMode="numeric" placeholder="18" />
+                    <Form.Feedback />
                 </Form.Group>
                 <Button type="submit" variant="primary">Create account</Button>
             </SectionForm>
