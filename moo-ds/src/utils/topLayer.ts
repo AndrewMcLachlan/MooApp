@@ -41,3 +41,16 @@ export const showInTopLayer = (element: HTMLElement | null | undefined): void =>
         element.showPopover();
     }
 };
+
+/**
+ * Take an element back out of the top layer.
+ *
+ * Guarded the same way as showInTopLayer, and additionally on the element
+ * still being open: hidePopover() throws if the popover is not currently
+ * showing, which happens when a component unmounts while closed.
+ */
+export const hideFromTopLayer = (element: HTMLElement | null | undefined): void => {
+    if (element && typeof element.hidePopover === "function" && element.matches(":popover-open")) {
+        element.hidePopover();
+    }
+};

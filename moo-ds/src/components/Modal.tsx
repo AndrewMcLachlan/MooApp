@@ -1,6 +1,7 @@
 import classNames from "classnames";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { hideFromTopLayer, showInTopLayer, topLayerProps } from "../utils/topLayer";
 
 const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -72,6 +73,7 @@ const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({
     children,
     style,
     onKeyDown: consumerOnKeyDown,
+    onClick: consumerOnClick,
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledby,
     "aria-describedby": ariaDescribedby,
@@ -79,6 +81,8 @@ const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({
 }) => {
 
     const contentRef = useRef<HTMLDivElement>(null);
+    const modalRef = useRef<HTMLDivElement>(null);
+    const backdropRef = useRef<HTMLDivElement>(null);
     const previouslyFocused = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
@@ -88,6 +92,30 @@ const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({
             document.body.style.overflow = "";
         }
         return () => { document.body.style.overflow = ""; };
+    }, [show]);
+
+    // Put the modal and its backdrop in the top layer, so neither can be
+    // covered by page content however high its z-index. The backdrop goes
+    // first: the top layer stacks in the order elements are promoted, so
+    // promoting it before the modal keeps the dimming behind the dialog.
+    //
+    // popover rather than dialog.showModal(): showModal() makes everything
+    // outside the dialog inert, and a tooltip or popover is portalled to the
+    // body rather than into the modal, so it would be painted above the modal
+    // but refuse clicks. A popover leaves the rest of the page interactive, so
+    // those keep working -- and the focus trap this component already
+    // implements stays in charge rather than being replaced by native
+    // behaviour no test here could reach.
+    useLayoutEffect(() => {
+        if (!show) return undefined;
+
+        showInTopLayer(backdropRef.current);
+        showInTopLayer(modalRef.current);
+
+        return () => {
+            hideFromTopLayer(modalRef.current);
+            hideFromTopLayer(backdropRef.current);
+        };
     }, [show]);
 
     // Move focus into the dialog on open and restore it to the previously
@@ -136,6 +164,17 @@ const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({
         }
     };
 
+    // Dismiss when the click lands on the modal itself rather than inside the
+    // dialog. .modal covers the whole viewport and sits above .modal-backdrop,
+    // so a click on the dimmed area reaches this element and never reaches the
+    // backdrop -- the backdrop's own handler only fires for a synthesised
+    // click, which is why the tests did not catch it.
+    const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        consumerOnClick?.(e);
+        if (e.defaultPrevented) return;
+        if (e.target === e.currentTarget) onHide?.();
+    };
+
     // Inject onHide into Header children
     const enhancedChildren = React.Children.map(children, (child) => {
         if (React.isValidElement(child) && (child.type as any)?.displayName === "Modal.Header") {
@@ -150,11 +189,18 @@ const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({
         <>
             {createPortal(
                 <div
+                    ref={modalRef}
                     className={classNames("modal", show && "show", className)}
                     tabIndex={-1}
                     style={modalStyle}
                     onKeyDown={onKeyDown}
+                    onClick={onClick}
                     {...rest}
+                    // Last, so a consumer cannot unset it: the popover
+                    // attribute is what puts the modal in the top layer, and
+                    // dropping it would silently return the modal to competing
+                    // on z-index.
+                    {...topLayerProps()}
                 >
                     <div className="modal-dialog" role="dialog" aria-modal="true" aria-label={ariaLabel} aria-labelledby={ariaLabelledby} aria-describedby={ariaDescribedby}>
                         <div className="modal-content" ref={contentRef} tabIndex={-1}>
@@ -165,7 +211,7 @@ const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({
                 document.body
             )}
             {show && createPortal(
-                <div className="modal-backdrop show" onClick={onHide} />,
+                <div ref={backdropRef} className="modal-backdrop show" onClick={onHide} {...topLayerProps()} />,
                 document.body
             )}
         </>

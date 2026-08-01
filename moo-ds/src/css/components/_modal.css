@@ -15,8 +15,21 @@
     position: fixed;
     top: 0;
     left: 0;
+    /* Fallback ordering only. The modal is promoted into the top layer, which
+       no z-index can beat; this is what applies where the Popover API is
+       missing and the attribute is therefore not set. */
     z-index: 1055;
     display: none;
+    /* Undo the [popover] UA box: it defaults to a border, padding, a Canvas
+       background and a shrink-to-fit size centred with inset: 0 and
+       margin: auto, none of which suit a full-viewport container. */
+    border: 0;
+    padding: 0;
+    background: none;
+    color: inherit;
+    margin: 0;
+    max-width: none;
+    max-height: none;
     width: 100%;
     height: 100%;
     overflow-x: hidden;
@@ -143,14 +156,27 @@
     margin: 0.25rem;
 }
 
+/* The backdrop is promoted into the top layer just before the modal, so the
+   two stay in the right order there -- the top layer stacks by promotion
+   order. It keeps its own element rather than becoming the modal's ::backdrop
+   because a pseudo-element cannot carry the click handler that dismisses the
+   modal, and because it still has to dim the page where the Popover API is
+   missing and neither element is promoted. */
 .modal-backdrop {
     position: fixed;
     top: 0;
     left: 0;
+    /* Fallback ordering only -- see the note on .modal. */
     z-index: 1050;
     width: 100vw;
     height: 100vh;
     background-color: transparent;
+    /* Undo the [popover] UA box. */
+    border: 0;
+    padding: 0;
+    margin: 0;
+    max-width: none;
+    max-height: none;
 }
 
 .modal-backdrop.fade {

@@ -195,6 +195,62 @@ describe('Modal', () => {
       fireEvent.click(baseElement.querySelector('.modal-backdrop')!);
       expect(onHide).toHaveBeenCalledTimes(1);
     });
+
+    // .modal covers the viewport and sits above .modal-backdrop, so a real
+    // click on the dimmed area lands here rather than on the backdrop. The
+    // test above dispatches straight at the backdrop and so never exercised
+    // the path an actual user takes.
+    it('calls onHide when the dimmed area around the dialog is clicked', () => {
+      const onHide = vi.fn();
+      const { baseElement } = render(<Modal show onHide={onHide}><Modal.Body>Content</Modal.Body></Modal>);
+      fireEvent.click(baseElement.querySelector('.modal')!);
+      expect(onHide).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not call onHide when the dialog itself is clicked', () => {
+      const onHide = vi.fn();
+      const { baseElement } = render(<Modal show onHide={onHide}><Modal.Body>Content</Modal.Body></Modal>);
+      fireEvent.click(baseElement.querySelector('.modal-content')!);
+      expect(onHide).not.toHaveBeenCalled();
+    });
+
+    it('still runs a consumer onClick handler', () => {
+      const onHide = vi.fn();
+      const onClick = vi.fn();
+      const { baseElement } = render(
+        <Modal show onHide={onHide} onClick={onClick}><Modal.Body>Content</Modal.Body></Modal>
+      );
+      fireEvent.click(baseElement.querySelector('.modal')!);
+      expect(onClick).toHaveBeenCalledTimes(1);
+      expect(onHide).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  // The popover attribute is what puts the modal in the top layer, so a
+  // consumer prop must not be able to change or unset it and quietly drop the
+  // modal back to competing on z-index.
+  describe('top layer', () => {
+    const original = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'showPopover');
+
+    afterEach(() => {
+      if (original) Object.defineProperty(HTMLElement.prototype, 'showPopover', original);
+      else delete (HTMLElement.prototype as any).showPopover;
+    });
+
+    it('keeps its own popover configuration over a consumer prop', () => {
+      // jsdom has no Popover API, so the attribute is withheld entirely there;
+      // stand one in so the component takes the branch that applies it.
+      Object.defineProperty(HTMLElement.prototype, 'showPopover', {
+        value: function () { }, configurable: true, writable: true,
+      });
+
+      const { baseElement } = render(
+        // @ts-expect-error deliberately passing a conflicting popover value
+        <Modal show popover="auto"><Modal.Body>Content</Modal.Body></Modal>
+      );
+
+      expect(baseElement.querySelector('.modal')).toHaveAttribute('popover', 'manual');
+    });
   });
 
   describe('Modal.Header', () => {
