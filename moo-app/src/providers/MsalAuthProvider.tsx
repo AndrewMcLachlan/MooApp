@@ -30,6 +30,64 @@ const getRedirectState = (client: IPublicClientApplication): RedirectState => {
     return state;
 };
 
+/**
+ * Whether this is the top-level window rather than a frame.
+ *
+ * MSAL renews tokens in a hidden iframe. Unless silentRedirectUri points at a
+ * scriptless page the iframe boots the SPA, so this interceptor runs inside it
+ * -- and an interactive redirect started there navigates the frame rather than
+ * the page, which loops. silentRedirectUri is opt-in and unset by default, so
+ * a consumer that has not configured it, or whose blank page is not yet
+ * registered as a reply URI, has no protection without this check.
+ *
+ * @see https://learn.microsoft.com/en-us/entra/msal/javascript/browser/errors#block_iframe_reload
+ */
+const isTopWindow = (): boolean => {
+    try {
+        return window.self === window.top;
+    } catch {
+        // Reading window.top across origins throws, which only happens framed.
+        return false;
+    }
+};
+
+/**
+ * Bounds *sequential* interactive redirects, which redirectStateByClient
+ * cannot: a redirect discards the page and takes the WeakMap with it, so the
+ * in-memory guard only ever bounds concurrent callers within one page load.
+ * Held in sessionStorage so it survives the navigation, and scoped to the tab
+ * so one tab recovering does not consume another's attempt.
+ */
+const INTERACTIVE_RECOVERY_ATTEMPTED = "mooappInteractiveRecoveryAttempted";
+
+// sessionStorage throws where storage is blocked -- private browsing, some
+// embedded webviews, a restrictive cookie policy. Authentication must not be
+// the thing that breaks there, so each access degrades to "no marker", which
+// restores the previous behaviour rather than blocking recovery outright.
+const interactiveRecoveryAttempted = (): boolean => {
+    try {
+        return sessionStorage.getItem(INTERACTIVE_RECOVERY_ATTEMPTED) !== null;
+    } catch {
+        return false;
+    }
+};
+
+const markInteractiveRecoveryAttempted = (): void => {
+    try {
+        sessionStorage.setItem(INTERACTIVE_RECOVERY_ATTEMPTED, "1");
+    } catch {
+        // Storage unavailable; the in-memory guard still bounds concurrent callers.
+    }
+};
+
+const clearInteractiveRecoveryAttempt = (): void => {
+    try {
+        sessionStorage.removeItem(INTERACTIVE_RECOVERY_ATTEMPTED);
+    } catch {
+        // Nothing to clear if it could never be written.
+    }
+};
+
 /** Marker carried by cancellations raised by the auth interceptors. */
 const authCancellationMarker = Symbol.for("mooapp.authCancellation");
 
@@ -167,10 +225,34 @@ const handleSilentFailure = async (
         throw authCanceledError("Request canceled: unable to acquire authentication token.");
     }
 
+    // A silent-renewal iframe has no user to interact with, and redirecting
+    // from one navigates the frame rather than the page. Cancel quietly: the
+    // frame is discarded either way, so logging a failure per renewal would be
+    // noise.
+    if (!isTopWindow()) {
+        throw authCanceledError("Request canceled: silent renewal cannot start an interactive redirect.");
+    }
+
     // For any MSAL auth error (expired tokens, consent required, iframe
     // timeouts, etc.), fall back to interactive redirect.
     const redirectState = getRedirectState(msal.instance);
     if (!redirectState.redirectInFlight && msal.inProgress === InteractionStatus.None) {
+
+        // We have already been through an interactive redirect in this tab and
+        // are still failing, so another cannot help -- a corrupt cache entry, a
+        // scope that cannot be consented, an unsatisfiable Conditional Access
+        // policy. Surface the underlying error rather than cancelling:
+        // authCanceledError feeds MooApp's retry policy, which would leave the
+        // app sitting on a loading state instead of showing what went wrong.
+        if (interactiveRecoveryAttempted()) {
+            console.error(
+                "Token acquisition still requires interaction after an interactive redirect; not redirecting again.",
+                error,
+            );
+            throw error;
+        }
+
+        markInteractiveRecoveryAttempted();
         redirectState.redirectInFlight = true;
         const interactiveScopes = Array.from(new Set([...(loginRequest.scopes ?? []), ...scopes]));
         try {
@@ -181,6 +263,9 @@ const handleSilentFailure = async (
             });
         } catch (redirectError) {
             redirectState.redirectInFlight = false;
+            // Nothing navigated, so the attempt was not spent. Leaving the
+            // marker set would disable recovery for the rest of the tab's life.
+            clearInteractiveRecoveryAttempt();
             throw redirectError;
         }
     }
@@ -205,6 +290,11 @@ const acquireTokenForRequest = async (
     catch (error) {
         return handleSilentFailure(error, msal, scopes, tokenRequest);
     }
+
+    // Silent acquisition works again, so the bound is spent rather than
+    // permanent -- a token expiring hours from now must still be able to
+    // recover interactively.
+    clearInteractiveRecoveryAttempt();
 
     if (token.accessToken) {
         request.headers.setAuthorization(`Bearer ${token.accessToken}`);
@@ -261,6 +351,9 @@ const retryAfterUnauthorized = async (
     catch (refreshError) {
         return handleSilentFailure(refreshError, msal, scopes, tokenRequest);
     }
+
+    // As on the request path: a working refresh releases the bound.
+    clearInteractiveRecoveryAttempt();
 
     if (!token.accessToken) {
         throw error;
