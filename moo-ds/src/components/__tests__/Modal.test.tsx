@@ -226,6 +226,33 @@ describe('Modal', () => {
     });
   });
 
+  // The popover attribute is what puts the modal in the top layer, so a
+  // consumer prop must not be able to change or unset it and quietly drop the
+  // modal back to competing on z-index.
+  describe('top layer', () => {
+    const original = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'showPopover');
+
+    afterEach(() => {
+      if (original) Object.defineProperty(HTMLElement.prototype, 'showPopover', original);
+      else delete (HTMLElement.prototype as any).showPopover;
+    });
+
+    it('keeps its own popover configuration over a consumer prop', () => {
+      // jsdom has no Popover API, so the attribute is withheld entirely there;
+      // stand one in so the component takes the branch that applies it.
+      Object.defineProperty(HTMLElement.prototype, 'showPopover', {
+        value: function () { }, configurable: true, writable: true,
+      });
+
+      const { baseElement } = render(
+        // @ts-expect-error deliberately passing a conflicting popover value
+        <Modal show popover="auto"><Modal.Body>Content</Modal.Body></Modal>
+      );
+
+      expect(baseElement.querySelector('.modal')).toHaveAttribute('popover', 'manual');
+    });
+  });
+
   describe('Modal.Header', () => {
     it('renders with modal-header class', () => {
       const { baseElement } = render(

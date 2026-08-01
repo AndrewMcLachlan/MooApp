@@ -195,8 +195,12 @@ const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({
                     style={modalStyle}
                     onKeyDown={onKeyDown}
                     onClick={onClick}
-                    {...topLayerProps()}
                     {...rest}
+                    // Last, so a consumer cannot unset it: the popover
+                    // attribute is what puts the modal in the top layer, and
+                    // dropping it would silently return the modal to competing
+                    // on z-index.
+                    {...topLayerProps()}
                 >
                     <div className="modal-dialog" role="dialog" aria-modal="true" aria-label={ariaLabel} aria-labelledby={ariaLabelledby} aria-describedby={ariaDescribedby}>
                         <div className="modal-content" ref={contentRef} tabIndex={-1}>
