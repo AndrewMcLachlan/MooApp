@@ -267,7 +267,7 @@ describe('addMsalInterceptor', () => {
   // sessionStorage survives the navigation, which is what stops the loop.
   describe('bounding redirects across page loads (#675)', () => {
     it('redirects once, then surfaces the error rather than redirecting again', async () => {
-      const authError = new AuthError('interaction_required');
+      const authError = new AuthError('interaction_required', 'correlation-id');
 
       // First page load: silent fails, we redirect.
       const first = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
@@ -287,7 +287,7 @@ describe('addMsalInterceptor', () => {
     });
 
     it('releases the bound once silent acquisition works again', async () => {
-      const authError = new AuthError('interaction_required');
+      const authError = new AuthError('interaction_required', 'correlation-id');
 
       const failing = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
       await expect(createClientWithInterceptor(failing).get('/api/data')).rejects.toThrow('Request canceled');
@@ -303,7 +303,7 @@ describe('addMsalInterceptor', () => {
     });
 
     it('does not spend the attempt when the redirect never starts', async () => {
-      const authError = new AuthError('interaction_required');
+      const authError = new AuthError('interaction_required', 'correlation-id');
       const redirectFailure = new Error('redirect could not start');
 
       const broken = createMockMsal({
@@ -334,7 +334,7 @@ describe('addMsalInterceptor', () => {
     it('cancels instead of redirecting when not the top window', async () => {
       framed({});   // some other window: we are framed
       const msal = createMockMsal({
-        acquireTokenSilent: vi.fn().mockRejectedValue(new AuthError('interaction_required')),
+        acquireTokenSilent: vi.fn().mockRejectedValue(new AuthError('interaction_required', 'correlation-id')),
       });
 
       const rejection = await createClientWithInterceptor(msal).get('/api/data').catch((e) => e);
@@ -349,14 +349,14 @@ describe('addMsalInterceptor', () => {
     it('does not spend the interactive-recovery attempt while framed', async () => {
       framed({});
       const inFrame = createMockMsal({
-        acquireTokenSilent: vi.fn().mockRejectedValue(new AuthError('interaction_required')),
+        acquireTokenSilent: vi.fn().mockRejectedValue(new AuthError('interaction_required', 'correlation-id')),
       });
       await expect(createClientWithInterceptor(inFrame).get('/api/data')).rejects.toThrow('silent renewal');
 
       // The top window must still be able to recover.
       Object.defineProperty(window, 'top', { value: window.self, configurable: true });
       const topWindow = createMockMsal({
-        acquireTokenSilent: vi.fn().mockRejectedValue(new AuthError('interaction_required')),
+        acquireTokenSilent: vi.fn().mockRejectedValue(new AuthError('interaction_required', 'correlation-id')),
       });
       await expect(createClientWithInterceptor(topWindow).get('/api/data')).rejects.toThrow('Request canceled');
       expect(topWindow.instance.acquireTokenRedirect).toHaveBeenCalledTimes(1);
@@ -364,7 +364,7 @@ describe('addMsalInterceptor', () => {
 
     it('redirects normally in the top window', async () => {
       const msal = createMockMsal({
-        acquireTokenSilent: vi.fn().mockRejectedValue(new AuthError('interaction_required')),
+        acquireTokenSilent: vi.fn().mockRejectedValue(new AuthError('interaction_required', 'correlation-id')),
       });
 
       await expect(createClientWithInterceptor(msal).get('/api/data')).rejects.toThrow('Request canceled');
