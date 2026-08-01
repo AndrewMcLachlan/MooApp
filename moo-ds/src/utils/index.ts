@@ -4,4 +4,5 @@ export * from "./guid";
 export * from "./paging";
 export * from "./renderingHelpers";
 export * from "./sorting";
+export * from "./topLayer";
 export * from "./trimEnd";

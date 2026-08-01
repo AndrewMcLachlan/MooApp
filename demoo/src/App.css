@@ -142,3 +142,20 @@
 .skeleton-media { display: flex; gap: 1rem; align-items: center; max-width: 420px; }
 .skeleton-media .fill { flex: 1; }
 .avatar-lg { width: 64px; height: 64px; border-radius: 50%; }
+
+/* Deliberately obstructive panel for the Overlays "above everything else"
+   sample: the largest z-index a page can use, which a top-layer overlay still
+   paints over. */
+.stacking-rival {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: rgba(0, 90, 40, 0.55);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  font-size: 1.25rem;
+  pointer-events: none;
+}
