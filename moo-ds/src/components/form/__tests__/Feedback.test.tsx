@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { useForm, type Resolver } from 'react-hook-form';
+import { useForm, type Resolver, type ResolverResult } from 'react-hook-form';
 import { Form } from '../Form';
 
 interface Values { name: string; }
@@ -8,10 +8,17 @@ interface Values { name: string; }
 // A resolver stands in for zod/yup: the form components own the register call,
 // so rules reach react-hook-form this way rather than per-field. This one
 // rejects an empty name, which is what submitting the harness produces.
-const resolver: Resolver<Values> = async (values) =>
-    values.name
-        ? { values, errors: {} }
-        : { values: {}, errors: { name: { type: 'required', message: 'Name is required' } } };
+// The return type is annotated so each branch is checked on its own. Without
+// it TypeScript unifies the two into one union, which gives the success case an
+// `errors` of `{ name?: undefined }` where ResolverSuccess wants
+// `Record<string, never>` -- so the whole resolver fails to typecheck even
+// though each branch is individually valid.
+const resolver: Resolver<Values> = async (values): Promise<ResolverResult<Values>> => {
+    if (!values.name) {
+        return { values: {}, errors: { name: { type: 'required', message: 'Name is required' } } };
+    }
+    return { values, errors: {} };
+};
 
 const Harness = ({ children }: { children?: React.ReactNode }) => {
     const form = useForm<Values>({ defaultValues: { name: '' }, resolver });

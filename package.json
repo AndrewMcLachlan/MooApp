@@ -59,7 +59,7 @@
     "lint": "npm run lint --workspaces --if-present",
     "prelint-fix": "node scripts/link-eslint-typescript.mjs",
     "lint-fix": "npm run lint-fix --workspaces --if-present",
-    "type-check": "node node_modules/typescript/bin/tsc -p moo-ds/tsconfig.json && node node_modules/typescript/bin/tsc -p moo-app/tsconfig.json && node node_modules/typescript/bin/tsc -p moo-icons/tsconfig.json",
+    "type-check": "node node_modules/typescript/bin/tsc -p moo-ds/tsconfig.json && node node_modules/typescript/bin/tsc -p moo-app/tsconfig.json && node node_modules/typescript/bin/tsc -p moo-icons/tsconfig.json && node node_modules/typescript/bin/tsc -p demoo/tsconfig.json --noEmit",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage"

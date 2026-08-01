@@ -34,6 +34,14 @@ jobs:
     - run: npm pkg set version=${{ steps.version.outputs.version }} --workspace=moo-ds --workspace=moo-app --workspace=moo-icons
     - run: npm run test:run
     - run: npm run build --workspace=moo-ds --workspace=moo-app --workspace=moo-icons
+    # Nothing else here type-checks the tests: vitest runs through esbuild, which
+    # strips types without checking them, and the build above compiles src only.
+    # Without this step a test file can stop compiling and every check stays green.
+    #
+    # After the build, not before: moo-app and demoo resolve @andrewmclachlan/moo-ds
+    # to the built package's declarations, so type-checking them on a fresh
+    # checkout fails with "Cannot find module" until moo-ds has been built.
+    - run: npm run type-check
     # Publish only from main (the stable trunk) or a prerelease line (a branch whose stated
     # version carries a suffix). Suffix-less non-main branches (incl. PRs) publish nothing.
     - name: Publish
