@@ -46,7 +46,10 @@ const isTopWindow = (): boolean => {
     try {
         return window.self === window.top;
     } catch {
-        // Reading window.top across origins throws, which only happens framed.
+        // Two ways in: reading window.top across origins throws, which only
+        // happens when framed; and window itself is undefined outside a browser.
+        // false is the safe answer to both -- there is nowhere to redirect to in
+        // either case, so the caller cancels instead of trying.
         return false;
     }
 };
