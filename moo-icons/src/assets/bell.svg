@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="SVGRoot" width="32" height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.823">
+  <path d="m16 23.156h-12c-0.53125-2.6562 4-6 3.8011-9.2818 0.40278-10.368 8.1989-9.8744 8.1989-9.8744m0 19.156h12c0.53125-2.6562-4-6-3.8011-9.2818-0.40278-10.368-8.1989-9.8744-8.1989-9.8744"/>
+  <path d="m12 26.047s1 2 4 2c3 0 4-2 4-2"/>
+ </g>
+</svg>

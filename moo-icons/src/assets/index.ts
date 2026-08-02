@@ -1,5 +1,6 @@
 export { default as Application } from "./application.svg";
 export { default as BarChart } from "./bar-chart.svg";
+export { default as Bell } from "./bell.svg";
 export { default as Budget } from "./budget.svg";
 export { default as Cog } from "./cog.svg";
 export { default as Dashboard } from "./dashboard.svg";

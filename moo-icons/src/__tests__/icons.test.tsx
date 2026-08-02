@@ -6,6 +6,7 @@ import * as Icons from '@andrewmclachlan/moo-icons';
 const iconNames = [
   'Application',
   'BarChart',
+  'Bell',
   'Budget',
   'Cog',
   'Dashboard',
@@ -46,9 +47,9 @@ describe('moo-icons', () => {
       });
     });
 
-    it('exports exactly 30 icons', () => {
+    it(`exports exactly ${iconNames.length} icons`, () => {
       const exportedKeys = Object.keys(Icons);
-      expect(exportedKeys).toHaveLength(30);
+      expect(exportedKeys).toHaveLength(iconNames.length);
     });
   });
 
