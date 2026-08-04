@@ -1,0 +1,150 @@
+/* Chart skeletons.
+
+   Consumers draw charts with Chart.js, which renders to a <canvas> and paints
+   nothing at all -- no axes, no legend, no frame -- until it has data. So these
+   own the entire visual for the whole of the wait.
+
+   They draw only what is invariant for a given shape: the elements themselves,
+   plus a baseline axis where one always exists. Legend and tick placeholders are
+   deliberately absent -- they cannot be guessed from outside the consumer's chart
+   config, and furniture that turns out wrong is worse than none. */
+
+.skeleton-chart {
+    /* The root is a <span>. Without this it stays inline, ignores its height, and
+       the line variant's absolutely positioned children collapse to nothing. */
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* So it cannot collapse in an auto-height parent, the trap .spinner-container
+       hit inside a Widget outside the dashboard's fixed rows. */
+    min-height: 12rem;
+}
+
+/* --- bar / horizontal-bar ------------------------------------------------- */
+
+.skeleton-chart-bar,
+.skeleton-chart-horizontal-bar {
+    display: flex;
+    gap: 4%;
+}
+
+.skeleton-chart-bar {
+    flex-direction: row;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--border-colour);
+}
+
+.skeleton-chart-horizontal-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    border-left: 1px solid var(--border-colour);
+}
+
+/* Sizes cycle through 8 fixed steps rather than being randomised: random values
+   break SSR hydration and make snapshots flicker. Deliberately unsorted -- a
+   generic skeleton must not imply the consumer's chart sorts its data. */
+.skeleton-chart-bar > .skeleton-chart-element {
+    flex: 1 1 0;
+
+    &:nth-child(8n + 1) { height: 62%; }
+    &:nth-child(8n + 2) { height: 88%; }
+    &:nth-child(8n + 3) { height: 45%; }
+    &:nth-child(8n + 4) { height: 70%; }
+    &:nth-child(8n + 5) { height: 34%; }
+    &:nth-child(8n + 6) { height: 95%; }
+    &:nth-child(8n + 7) { height: 52%; }
+    &:nth-child(8n + 8) { height: 78%; }
+}
+
+.skeleton-chart-horizontal-bar > .skeleton-chart-element {
+    flex: 1 1 0;
+
+    &:nth-child(8n + 1) { width: 62%; }
+    &:nth-child(8n + 2) { width: 88%; }
+    &:nth-child(8n + 3) { width: 45%; }
+    &:nth-child(8n + 4) { width: 70%; }
+    &:nth-child(8n + 5) { width: 34%; }
+    &:nth-child(8n + 6) { width: 95%; }
+    &:nth-child(8n + 7) { width: 52%; }
+    &:nth-child(8n + 8) { width: 78%; }
+}
+
+/* --- line ----------------------------------------------------------------- */
+
+.skeleton-chart-line {
+    position: relative;
+    border-bottom: 1px solid var(--border-colour);
+}
+
+/* Each series fills the plot area and is cut down to a stroke by clip-path. The
+   polygon walks left-to-right along the top of the stroke, then back along the
+   bottom at +5%, giving an even thickness. Four paths, then they repeat. */
+.skeleton-chart-line > .skeleton-chart-element {
+    position: absolute;
+    inset: 0;
+
+    &:nth-child(4n + 1) {
+        clip-path: polygon(0% 62%, 20% 44%, 40% 58%, 60% 28%, 80% 46%, 100% 22%,
+                           100% 27%, 80% 51%, 60% 33%, 40% 63%, 20% 49%, 0% 67%);
+    }
+
+    &:nth-child(4n + 2) {
+        clip-path: polygon(0% 35%, 20% 52%, 40% 40%, 60% 62%, 80% 48%, 100% 70%,
+                           100% 75%, 80% 53%, 60% 67%, 40% 45%, 20% 57%, 0% 40%);
+    }
+
+    &:nth-child(4n + 3) {
+        clip-path: polygon(0% 78%, 20% 66%, 40% 72%, 60% 50%, 80% 58%, 100% 38%,
+                           100% 43%, 80% 63%, 60% 55%, 40% 77%, 20% 71%, 0% 83%);
+    }
+
+    &:nth-child(4n + 4) {
+        clip-path: polygon(0% 48%, 20% 30%, 40% 50%, 60% 38%, 80% 66%, 100% 54%,
+                           100% 59%, 80% 71%, 60% 43%, 40% 55%, 20% 35%, 0% 53%);
+    }
+}
+
+/* --- pie / doughnut ------------------------------------------------------- */
+
+/* Slice gaps and the doughnut hole are cut out with composited masks rather than
+   painted with divider lines, so the shape sits correctly on any background
+   instead of assuming --section-bg. Same technique as .spinner-comet; the
+   -webkit- prefix is for Safari. */
+.skeleton-chart-pie,
+.skeleton-chart-doughnut {
+    --skeleton-chart-hole: 0;
+    --slice-angle: calc(360deg / 6);
+
+    width: auto;
+    aspect-ratio: 1;
+    max-width: 100%;
+    margin-inline: auto;
+    border-radius: 50%;
+
+    -webkit-mask:
+        radial-gradient(farthest-side, transparent var(--skeleton-chart-hole), #000 0),
+        repeating-conic-gradient(#000 0 calc(var(--slice-angle) - 2deg), transparent 0 var(--slice-angle));
+    mask:
+        radial-gradient(farthest-side, transparent var(--skeleton-chart-hole), #000 0),
+        repeating-conic-gradient(#000 0 calc(var(--slice-angle) - 2deg), transparent 0 var(--slice-angle));
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+}
+
+.skeleton-chart-doughnut {
+    --skeleton-chart-hole: 55%;
+}
+
+/* The count reaches CSS as a class because inline `style` is out (project rules).
+   2-12 covers any pie whose slices are still legible. */
+.skeleton-chart-count-2 { --slice-angle: calc(360deg / 2); }
+.skeleton-chart-count-3 { --slice-angle: calc(360deg / 3); }
+.skeleton-chart-count-4 { --slice-angle: calc(360deg / 4); }
+.skeleton-chart-count-5 { --slice-angle: calc(360deg / 5); }
+.skeleton-chart-count-6 { --slice-angle: calc(360deg / 6); }
+.skeleton-chart-count-7 { --slice-angle: calc(360deg / 7); }
+.skeleton-chart-count-8 { --slice-angle: calc(360deg / 8); }
+.skeleton-chart-count-9 { --slice-angle: calc(360deg / 9); }
+.skeleton-chart-count-10 { --slice-angle: calc(360deg / 10); }
+.skeleton-chart-count-11 { --slice-angle: calc(360deg / 11); }
+.skeleton-chart-count-12 { --slice-angle: calc(360deg / 12); }

@@ -56,7 +56,7 @@ describe('IconButton', () => {
     it('replaces the icon with a spinner', () => {
       const { container } = render(<IconButton icon={faCheck} loading>Save</IconButton>);
 
-      expect(container.querySelector('.spinner-border')).toBeInTheDocument();
+      expect(container.querySelector('.spinner-comet')).toBeInTheDocument();
       expect(container.querySelector('svg[data-icon="check"]')).not.toBeInTheDocument();
     });
 
@@ -64,7 +64,7 @@ describe('IconButton', () => {
       const { container } = render(<IconButton icon={faCheck} badge loading>Add</IconButton>);
 
       const panel = container.querySelector('.btn-icon-panel');
-      expect(panel?.querySelector('.spinner-border')).toBeInTheDocument();
+      expect(panel?.querySelector('.spinner-comet')).toBeInTheDocument();
     });
 
     it('keeps the label', () => {
@@ -81,7 +81,7 @@ describe('IconButton', () => {
 
     it('does not render a second (leading) spinner', () => {
       const { container } = render(<IconButton icon={faCheck} loading>Save</IconButton>);
-      expect(container.querySelectorAll('.spinner-border')).toHaveLength(1);
+      expect(container.querySelectorAll('.spinner-comet')).toHaveLength(1);
     });
 
     it('does not call onClick while loading', () => {

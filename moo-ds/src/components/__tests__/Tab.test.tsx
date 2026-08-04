@@ -37,14 +37,15 @@ describe('Tabs', () => {
       expect(screen.getByRole('tablist')).toBeInTheDocument();
     });
 
-    it('renders tab-content wrapper', () => {
+    it('renders the pane directly under the nav, with no wrapper', () => {
       const { container } = render(
         <Tabs defaultActiveKey="one">
           <Tab eventKey="one" title="Tab One">Content</Tab>
         </Tabs>
       );
 
-      expect(container.querySelector('.tab-content')).toBeInTheDocument();
+      expect(container.querySelector('.tab-content')).not.toBeInTheDocument();
+      expect(screen.getByRole('tablist').nextElementSibling).toHaveClass('tab-pane');
     });
 
     it('marks defaultActiveKey tab as active', () => {

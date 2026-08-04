@@ -1,5 +1,5 @@
 import { Page } from "@andrewmclachlan/moo-app";
-import { Section, useMessages, Button, Widget, Badge, Spinner, Collapsible, Row } from "@andrewmclachlan/moo-ds";
+import { Section, useMessages, Button, Widget, Badge, Spinner, Collapsible, Row, Col } from "@andrewmclachlan/moo-ds";
 import { useState } from "react";
 
 export const Home = () => {
@@ -21,42 +21,52 @@ export const Home = () => {
                 </div>
             </Section>
 
+            {/* Widget's `size` only means something inside Dashboard's grid, so in a
+                Row each one needs a Col to sit in -- `.row > *` is width: 100% otherwise. */}
             <Row>
-                <Widget header="Total Users" size="single" headerSize={5}>
-                    <p className="stat">1,234</p>
-                    <Badge bg="success">+12%</Badge>
-                </Widget>
-                <Widget header="Revenue" size="single" headerSize={5}>
-                    <p className="stat">$45,678</p>
-                    <Badge bg="danger">-3%</Badge>
-                </Widget>
-                <Widget header="Active Sessions" size="single" headerSize={5} loading={widgetLoading}>
-                    <p className="stat">342</p>
-                    <Badge bg="info">Live</Badge>
-                </Widget>
-                <Widget header="View Reports" size="single" headerSize={5} to="/data/table">
-                    <p className="stat">28</p>
-                    <Badge bg="warning">Pending</Badge>
-                </Widget>
+                <Col sm={6} xl={3}>
+                    <Widget header="Total Users" size="single" headerSize={5}>
+                        <p className="stat">1,234</p>
+                        <Badge bg="success">+12%</Badge>
+                    </Widget>
+                </Col>
+                <Col sm={6} xl={3}>
+                    <Widget header="Revenue" size="single" headerSize={5}>
+                        <p className="stat">$45,678</p>
+                        <Badge bg="danger">-3%</Badge>
+                    </Widget>
+                </Col>
+                <Col sm={6} xl={3}>
+                    <Widget header="Active Sessions" size="single" headerSize={5} loading={widgetLoading}>
+                        <p className="stat">342</p>
+                        <Badge bg="info">Live</Badge>
+                    </Widget>
+                </Col>
+                <Col sm={6} xl={3}>
+                    <Widget header="View Reports" size="single" headerSize={5} to="/data/table">
+                        <p className="stat">28</p>
+                        <Badge bg="warning">Pending</Badge>
+                    </Widget>
+                </Col>
             </Row>
 
             <Section title="Spinners" header="Spinner Variants" headerSize={4}>
                 <div className="demo-row loose">
-                    <div>
-                        <Spinner animation="border" />
+                    <div className="demo-sample">
+                        <div className="demo-sample-figure"><Spinner delay={0} /></div>
+                        <p>Comet</p>
+                    </div>
+                    <div className="demo-sample">
+                        <div className="demo-sample-figure"><Spinner animation="border" delay={0} /></div>
                         <p>Border</p>
                     </div>
-                    <div>
-                        <Spinner animation="grow" />
-                        <p>Grow</p>
+                    <div className="demo-sample">
+                        <div className="demo-sample-figure"><Spinner size="sm" delay={0} /></div>
+                        <p>Comet SM</p>
                     </div>
-                    <div>
-                        <Spinner animation="border" size="sm" />
+                    <div className="demo-sample">
+                        <div className="demo-sample-figure"><Spinner animation="border" size="sm" delay={0} /></div>
                         <p>Border SM</p>
-                    </div>
-                    <div>
-                        <Spinner animation="grow" size="sm" />
-                        <p>Grow SM</p>
                     </div>
                 </div>
             </Section>

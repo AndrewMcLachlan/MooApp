@@ -32,15 +32,8 @@
     }
 }
 
-.tab-content {
-    margin-top: 1rem;
-}
-
-/* Tab pane visibility */
+/* Tabs renders the active pane only, so the pane is always the visible one and
+   needs no display toggle -- just the spacing that separated it from the nav. */
 .tab-pane {
-    display: none;
-}
-
-.tab-pane.active {
-    display: block;
+    margin-top: 1rem;
 }

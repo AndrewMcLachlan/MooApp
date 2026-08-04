@@ -13,19 +13,27 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Border: Story = {
-    render: () => <Spinner />,
+// delay={0} throughout: the 300ms default exists so short fetches never flash a
+// spinner, which in a story just looks like a story that failed to render.
+
+export const Comet: Story = {
+    render: () => <Spinner delay={0} />,
 };
 
-export const Grow: Story = {
-    render: () => <Spinner animation="grow" />,
+export const Border: Story = {
+    render: () => <Spinner animation="border" delay={0} />,
 };
 
 export const Small: Story = {
     render: () => (
         <div style={{ display: "flex", gap: "1rem" }}>
-            <Spinner size="sm" />
-            <Spinner animation="grow" size="sm" />
+            <Spinner size="sm" delay={0} />
+            <Spinner animation="border" size="sm" delay={0} />
         </div>
     ),
+};
+
+/** The default 300ms delay in action — remount the story to watch it wait. */
+export const Delayed: Story = {
+    render: () => <Spinner />,
 };

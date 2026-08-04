@@ -97,9 +97,10 @@ export const Tabs: React.FC<TabsProps> = ({ defaultActiveKey, activeKey: control
                     </Nav.Item>
                 ))}
             </Nav>
-            <div className="tab-content">
-                {activePane}
-            </div>
+            {/* Only the active pane is rendered, so there is no set of panes for a
+                .tab-content wrapper to hold or toggle between -- the pane sits
+                directly under the nav and carries the spacing itself. */}
+            {activePane}
         </TabContext.Provider>
     );
 };

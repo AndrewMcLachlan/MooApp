@@ -9,8 +9,19 @@
     align-items: center;
     z-index: 1000;
 
-    .spinner-border {
+    .spinner-border,
+    .spinner-comet {
         --spinner-width: 3rem;
         --spinner-height: 3rem;
     }
+}
+
+/* The container overlays its host and so contributes no height of its own.
+   Where it is the host's only content -- a loading Widget, whose body is
+   unmounted -- the section would collapse to its header and the spinner would
+   land on top of the heading. Give it a floor: 3rem of spinner plus room to
+   breathe. The dashboard's fixed 300px rows already provide one, and its own
+   `min-height: 0` (later in the cascade, and more specific) still wins there. */
+.section:has(.spinner-container) {
+    min-height: 8rem;
 }

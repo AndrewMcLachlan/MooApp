@@ -1,0 +1,42 @@
+/* Conic Comet spinner - a gradient tail masked into a ring.
+
+   Deliberately slower than the gap ring it replaces (1s vs the old 0.75s): the
+   old speed read as urgent against MooApp's flat, calm surfaces. */
+
+@keyframes spinner-comet {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner-comet {
+    --spinner-width: 2rem;
+    --spinner-height: 2rem;
+    --spinner-border-width: 0.25em;
+    --spinner-animation-speed: 1s;
+
+    display: inline-block;
+    width: var(--spinner-width);
+    height: var(--spinner-height);
+    /* Same box as .spinner-border so the two are drop-in swaps for each other. */
+    vertical-align: -0.125em;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent 0%, currentcolor 100%);
+    /* Clip the disc to a ring of --spinner-border-width. -webkit- prefix for Safari. */
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--spinner-border-width)), #000 0);
+    mask: radial-gradient(farthest-side, transparent calc(100% - var(--spinner-border-width)), #000 0);
+    animation: var(--spinner-animation-speed) linear infinite spinner-comet;
+}
+
+.spinner-comet-sm {
+    --spinner-width: 1rem;
+    --spinner-height: 1rem;
+    --spinner-border-width: 0.2em;
+}
+
+/* A stopped spinner reads as a hang, so slow rather than stop. */
+@media (prefers-reduced-motion: reduce) {
+    .spinner-comet {
+        --spinner-animation-speed: 2s;
+    }
+}

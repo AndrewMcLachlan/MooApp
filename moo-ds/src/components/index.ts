@@ -33,6 +33,7 @@ export * from "./OverlayTrigger";
 export * from "./NavItemList";
 export * from "./pagination";
 export * from "./Popover";
+export * from "./ProgressIndeterminate";
 export * from "./Row";
 export * from "./SaveIcon";
 export * from "./SortableTh";
