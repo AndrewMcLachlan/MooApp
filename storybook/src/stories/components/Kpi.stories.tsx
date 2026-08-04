@@ -13,7 +13,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** A single figure. With no tone the accent is the theme's primary colour. */
+const strip: React.CSSProperties = { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.75rem" };
+
+/** With no tone the bar takes the theme's primary colour and the figure inherits. */
 export const Default: Story = {
     args: { label: "Balance" },
     render: (args) => (
@@ -24,22 +26,54 @@ export const Default: Story = {
     ),
 };
 
-/** The tone sets the top edge. Positive and negative are directions, not domain words. */
-export const Tones: Story = {
-    args: { label: "Tone" },
+/** `tone` takes the same semantic tokens a Badge does, and colours the bar and the figure. */
+export const Semantics: Story = {
+    args: { label: "Semantics" },
     render: () => (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.75rem" }}>
-            <Kpi label="Income" tone="positive">
+        <div style={strip}>
+            {(["primary", "secondary", "success", "danger", "warning", "info"] as const).map(tone => (
+                <Kpi key={tone} label={tone} tone={tone}>
+                    <Kpi.Value>$8,200.00</Kpi.Value>
+                    <Kpi.Sub>this month</Kpi.Sub>
+                </Kpi>
+            ))}
+        </div>
+    ),
+};
+
+/** The hue tokens are available too, for categories that aren't good or bad. */
+export const Hues: Story = {
+    args: { label: "Hues" },
+    render: () => (
+        <div style={strip}>
+            {(["blue", "indigo", "purple", "pink", "rose", "orange", "amber", "yellow", "green", "emerald", "teal", "cyan", "slate", "neutral"] as const).map(tone => (
+                <Kpi key={tone} label={tone} tone={tone}>
+                    <Kpi.Value>184</Kpi.Value>
+                </Kpi>
+            ))}
+        </div>
+    ),
+};
+
+/**
+ * `colour` and `textColour` take any CSS colour and are set independently, for the common case
+ * where a brand's bar and figure are two steps of the same hue rather than one colour.
+ */
+export const CustomColours: Story = {
+    args: { label: "Custom" },
+    render: () => (
+        <div style={strip}>
+            <Kpi label="Income" colour="#3e9156" textColour="#6cc67e">
                 <Kpi.Value>$8,200.00</Kpi.Value>
                 <Kpi.Sub>this month</Kpi.Sub>
             </Kpi>
-            <Kpi label="Expenses" tone="negative">
+            <Kpi label="Expenses" colour="#a4332d" textColour="#e07b7b">
                 <Kpi.Value>$6,431.90</Kpi.Value>
                 <Kpi.Sub>this month</Kpi.Sub>
             </Kpi>
-            <Kpi label="Transactions" tone="neutral">
-                <Kpi.Value>184</Kpi.Value>
-                <Kpi.Sub>this month</Kpi.Sub>
+            <Kpi label="Bar only" colour="#7c6cff">
+                <Kpi.Value>$1,768.10</Kpi.Value>
+                <Kpi.Sub>figure keeps its own colour</Kpi.Sub>
             </Kpi>
         </div>
     ),
@@ -52,16 +86,16 @@ export const Tones: Story = {
 export const Sized: Story = {
     args: { label: "Sized" },
     render: () => (
-        <div className="kpi-story-strip" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0.75rem" }}>
+        <div className="kpi-story-strip" style={{ ...strip, gridTemplateColumns: "repeat(2, 1fr)" }}>
             <style>{`
                 .kpi-story-strip .section.kpi { padding: 0.75rem 1rem; }
                 .kpi-story-strip .kpi-value { font-size: 1.375rem; }
             `}</style>
-            <Kpi label="Lowest Balance" tone="negative">
+            <Kpi label="Lowest Balance" tone="danger">
                 <Kpi.Value>-$1,204.00</Kpi.Value>
                 <Kpi.Sub>in March 2027</Kpi.Sub>
             </Kpi>
-            <Kpi label="Sustainable Income" tone="positive">
+            <Kpi label="Sustainable Income" tone="success">
                 <Kpi.Value>$61,000</Kpi.Value>
                 <Kpi.Sub>a year, in today&rsquo;s dollars</Kpi.Sub>
             </Kpi>
@@ -76,32 +110,13 @@ export const Sized: Story = {
 export const Loading: Story = {
     args: { label: "Loading" },
     render: () => (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.75rem" }}>
+        <div style={strip}>
             {[0, 1, 2].map(i => (
                 <Kpi key={i} label={<Skeleton.Text />}>
                     <Kpi.Value><Skeleton.Text /></Kpi.Value>
                     <Kpi.Sub><Skeleton.Text /></Kpi.Sub>
                 </Kpi>
             ))}
-        </div>
-    ),
-};
-
-/** An app can repoint the accent for a whole strip via --kpi-accent, without restating the card. */
-export const CustomAccent: Story = {
-    args: { label: "Custom accent" },
-    render: () => (
-        <div className="kpi-story-brand" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0.75rem" }}>
-            <style>{`
-                .kpi-story-brand .section.kpi[data-tone="positive"] { --kpi-accent: #3e9156; }
-                .kpi-story-brand .section.kpi[data-tone="negative"] { --kpi-accent: #a4332d; }
-            `}</style>
-            <Kpi label="Income" tone="positive">
-                <Kpi.Value>$8,200.00</Kpi.Value>
-            </Kpi>
-            <Kpi label="Expenses" tone="negative">
-                <Kpi.Value>$6,431.90</Kpi.Value>
-            </Kpi>
         </div>
     ),
 };

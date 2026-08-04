@@ -12,16 +12,50 @@ describe("Kpi", () => {
         expect(container.querySelector(".kpi-value")).toHaveTextContent("$1,000");
     });
 
-    it("defaults to the neutral tone so a figure with no direction gets the plain accent", () => {
+    it("takes no tone class when none is asked for, so the card keeps the default bar", () => {
         const { container } = render(<Kpi label="Count"><Kpi.Value>12</Kpi.Value></Kpi>);
 
-        expect(container.querySelector(".kpi")).toHaveAttribute("data-tone", "neutral");
+        expect(container.querySelector(".kpi")?.className).not.toMatch(/kpi-(success|danger|primary)/);
     });
 
-    it("exposes the tone as an attribute, which is what the accent colour keys off", () => {
-        const { container } = render(<Kpi label="Spend" tone="negative"><Kpi.Value>-$40</Kpi.Value></Kpi>);
+    it("maps a tone onto a class from the badge palette", () => {
+        const { container } = render(<Kpi label="Income" tone="success"><Kpi.Value>$500</Kpi.Value></Kpi>);
 
-        expect(container.querySelector(".kpi")).toHaveAttribute("data-tone", "negative");
+        expect(container.querySelector(".kpi")).toHaveClass("kpi-success");
+    });
+
+    it("accepts a hue as readily as a semantic, since both are badge tokens", () => {
+        const { container } = render(<Kpi label="Category" tone="teal"><Kpi.Value>3</Kpi.Value></Kpi>);
+
+        expect(container.querySelector(".kpi")).toHaveClass("kpi-teal");
+    });
+
+    it("takes a custom bar colour outside the palette", () => {
+        const { container } = render(<Kpi label="Income" colour="#3e9156"><Kpi.Value>$500</Kpi.Value></Kpi>);
+
+        expect(container.querySelector<HTMLElement>(".kpi")?.style.getPropertyValue("--kpi-bar")).toBe("#3e9156");
+    });
+
+    it("colours bar and figure independently, which is the case a single token can't cover", () => {
+        const { container } = render(
+            <Kpi label="Income" colour="var(--income-bar)" textColour="var(--income-fg)">
+                <Kpi.Value>$500</Kpi.Value>
+            </Kpi>,
+        );
+
+        const card = container.querySelector<HTMLElement>(".kpi");
+        expect(card?.style.getPropertyValue("--kpi-bar")).toBe("var(--income-bar)");
+        expect(card?.style.getPropertyValue("--kpi-fg")).toBe("var(--income-fg)");
+    });
+
+    it("keeps a consumer's own style alongside the colour variables", () => {
+        const { container } = render(
+            <Kpi label="Income" colour="#3e9156" style={{ gridColumn: "span 2" }}><Kpi.Value>$1</Kpi.Value></Kpi>,
+        );
+
+        const card = container.querySelector<HTMLElement>(".kpi");
+        expect(card?.style.gridColumn).toBe("span 2");
+        expect(card?.style.getPropertyValue("--kpi-bar")).toBe("#3e9156");
     });
 
     it("renders an optional caption under the figure", () => {
