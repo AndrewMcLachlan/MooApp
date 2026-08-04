@@ -63,6 +63,12 @@ describe('Widget', () => {
       expect(container.querySelector('.spinner-container')).not.toBeInTheDocument();
     });
 
+    it('announces the bar as refreshing, not loading', () => {
+      render(<Widget size="single" refreshing>Content</Widget>);
+
+      expect(screen.getByRole('progressbar')).toHaveAccessibleName('Refreshing');
+    });
+
     it('dims the section rather than wrapping the body', () => {
       const { container } = render(<Widget size="single" refreshing>Content</Widget>);
 

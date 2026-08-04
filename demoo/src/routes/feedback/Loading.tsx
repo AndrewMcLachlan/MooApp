@@ -103,10 +103,11 @@ export const Loading = () => {
                 <p>
                     Shimmering placeholders for content whose shape is known ahead of time. Prefer a
                     skeleton when the placeholder can mirror the real layout (text, avatars, blocks,
-                    table rows); prefer a <code>Spinner</code> when the content shape is unknown or
-                    irregular (charts, reports); prefer <code>ProgressIndeterminate</code> when the
-                    panel already has data on screen and is refetching. The moving gradient respects
-                    {" "}<code>prefers-reduced-motion</code>.
+                    table rows, and charts via <code>Skeleton.Chart</code>); prefer a
+                    {" "}<code>Spinner</code> when the content shape is genuinely unpredictable
+                    (reports, arbitrary panel bodies); prefer <code>ProgressIndeterminate</code> when
+                    the panel already has data on screen and is refetching. The moving gradient
+                    respects <code>prefers-reduced-motion</code>.
                 </p>
             </Section>
 

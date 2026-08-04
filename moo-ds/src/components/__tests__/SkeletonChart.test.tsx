@@ -60,6 +60,24 @@ describe('Skeleton.Chart', () => {
 
       expect(elements(container)).toHaveLength(0);
     });
+
+    // Infinity would reach Array.from as a length of 2^53-1 and raise a
+    // RangeError; NaN would silently produce a count class that matches no rule.
+    it('falls back to the default for a non-finite count', () => {
+      const { container } = render(<Skeleton.Chart count={Number.NaN} />);
+
+      expect(elements(container)).toHaveLength(6);
+    });
+
+    it('does not throw on an infinite count', () => {
+      expect(() => render(<Skeleton.Chart count={Number.POSITIVE_INFINITY} />)).not.toThrow();
+    });
+
+    it('falls back to the line default for a non-finite count', () => {
+      const { container } = render(<Skeleton.Chart variant="line" count={Number.NaN} />);
+
+      expect(elements(container)).toHaveLength(2);
+    });
   });
 
   describe('bars and lines shimmer', () => {
@@ -106,6 +124,13 @@ describe('Skeleton.Chart', () => {
       const { container } = render(<Skeleton.Chart variant="pie" count={40} />);
 
       expect(root(container)).toHaveClass('skeleton-chart-count-12');
+    });
+
+    it('falls back to the default slice count for a non-finite count', () => {
+      const { container } = render(<Skeleton.Chart variant="pie" count={Number.NaN} />);
+
+      expect(root(container)).toHaveClass('skeleton-chart-count-6');
+      expect(root(container)?.className).not.toContain('NaN');
     });
   });
 });

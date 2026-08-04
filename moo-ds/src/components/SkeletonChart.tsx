@@ -39,7 +39,11 @@ const clamp = (value: number, min: number, max: number) => Math.min(max, Math.ma
  */
 export const SkeletonChart: React.FC<SkeletonChartProps> = ({ variant = "bar", count, className, ...rest }) => {
 
-    const resolved = count ?? DEFAULT_COUNT[variant];
+    // ?? only catches null/undefined, so a non-finite number would flow straight
+    // through: Infinity blows up Array.from with a RangeError, and NaN emits a
+    // junk skeleton-chart-count-NaN class. Fall back to the default for both.
+    const requested = count ?? DEFAULT_COUNT[variant];
+    const resolved = Number.isFinite(requested) ? requested : DEFAULT_COUNT[variant];
 
     // Pie and doughnut are a single masked disc, not a set of children.
     if (isRound(variant)) {

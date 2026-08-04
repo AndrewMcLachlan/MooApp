@@ -11,7 +11,9 @@ export const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({ children, loa
     <div className={size}>
         <Section className={classNames(className, !loading && refreshing && "is-refreshing")} {...rest}>
             {loading && <SpinnerContainer />}
-            {!loading && refreshing && <ProgressIndeterminate variant="edge" />}
+            {/* "Refreshing", not the default "Loading": the data is already on
+                screen, and announcing a load implies it is not. */}
+            {!loading && refreshing && <ProgressIndeterminate variant="edge" aria-label="Refreshing" />}
             {!loading && children}
         </Section>
     </div>
