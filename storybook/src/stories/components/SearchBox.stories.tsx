@@ -22,7 +22,7 @@ const meta = {
     },
     decorators: [
         (Story) => (
-            <div style={{ width: "300px" }}>
+            <div className="demo-w-md">
                 <Story />
             </div>
         ),
@@ -61,7 +61,7 @@ export const Controlled: Story = {
                     value={value || ""}
                     onChange={handleChange}
                 />
-                <p style={{ marginTop: "8px", fontSize: "12px" }}>
+                <p className="demo-caption">
                     Searching for: "{value || ""}"
                 </p>
             </div>

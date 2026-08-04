@@ -20,9 +20,6 @@ vi.mock('@andrewmclachlan/moo-ds', () => ({
   MenuToggle: ({ onClick }: { onClick: () => void }) => (
     <button data-testid="menu-toggle" onClick={onClick}>Toggle</button>
   ),
-  Container: ({ children, className }: any) => (
-    <div className={className} data-testid="container">{children}</div>
-  ),
 }));
 
 // Mock @tanstack/react-router
@@ -239,19 +236,22 @@ describe('Header', () => {
     });
   });
 
-  describe('containers', () => {
-    it('renders first-header container', () => {
-      render(<Header menu={[]} />);
+  // The two bands were .container-fluid and are now plain divs naming
+  // themselves, so assert on the classes the CSS actually targets.
+  describe('header bands', () => {
+    it('renders the first-header band', () => {
+      const { container } = render(<Header menu={[]} />);
 
-      const containers = screen.getAllByTestId('container');
-      expect(containers[0]).toHaveClass('first-header');
+      expect(container.querySelector('.first-header')).toBeInTheDocument();
     });
 
-    it('renders second-header container', () => {
-      render(<Header menu={[]} />);
+    it('renders the second-header band after the first', () => {
+      const { container } = render(<Header menu={[]} />);
 
-      const containers = screen.getAllByTestId('container');
-      expect(containers[1]).toHaveClass('second-header');
+      const bands = container.querySelectorAll('.first-header, .second-header');
+      expect(bands).toHaveLength(2);
+      expect(bands[0]).toHaveClass('first-header');
+      expect(bands[1]).toHaveClass('second-header');
     });
   });
 });

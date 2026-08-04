@@ -41,7 +41,7 @@ export const Default: Story = {
 
 export const DifferentIcons: Story = {
     render: () => (
-        <div style={{ display: "flex", gap: "16px" }}>
+        <div className="demo-row">
             <ClickableIcon icon="trash" onClick={fn()} />
             <ClickableIcon icon="edit" onClick={fn()} />
             <ClickableIcon icon="check" onClick={fn()} />

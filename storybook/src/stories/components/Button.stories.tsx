@@ -19,7 +19,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
     render: () => (
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+        <div className="demo-row tight">
             <Button variant="primary">Primary</Button>
             <Button variant="secondary">Secondary</Button>
             <Button variant="success">Success</Button>
@@ -32,7 +32,7 @@ export const Variants: Story = {
 
 export const OutlineVariants: Story = {
     render: () => (
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+        <div className="demo-row tight">
             <Button variant="outline-primary">Primary</Button>
             <Button variant="outline-secondary">Secondary</Button>
             <Button variant="outline-success">Success</Button>
@@ -44,7 +44,7 @@ export const OutlineVariants: Story = {
 
 export const Sizes: Story = {
     render: () => (
-        <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+        <div className="demo-row tight">
             <Button size="sm">Small</Button>
             <Button>Default</Button>
             <Button size="lg">Large</Button>
@@ -58,7 +58,7 @@ export const Disabled: Story = {
 
 export const Loading: Story = {
     render: () => (
-        <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+        <div className="demo-row tight">
             <Button loading>Saving</Button>
             <Button variant="outline-primary" loading>Saving</Button>
             <Button variant="secondary" size="sm" loading>Saving</Button>

@@ -94,7 +94,7 @@ export const WithReactNodeHeader: Story = {
     args: {
         header: (
             <span>
-                <FontAwesomeIcon icon="chart-line" style={{ marginRight: "8px" }} />
+                <FontAwesomeIcon icon="chart-line" className="demo-spaced" />
                 Analytics Dashboard
             </span>
         ),

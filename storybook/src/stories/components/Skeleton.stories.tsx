@@ -24,7 +24,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Rect: Story = {
     render: () => (
-        <div style={{ width: 240, height: 120 }}>
+        <div className="demo-box thumb">
             <Skeleton.Rect />
         </div>
     ),
@@ -32,7 +32,7 @@ export const Rect: Story = {
 
 export const Text: Story = {
     render: () => (
-        <div style={{ width: 320 }}>
+        <div className="demo-w-md">
             <Skeleton.Text lines={4} />
         </div>
     ),
@@ -40,7 +40,7 @@ export const Text: Story = {
 
 export const Circle: Story = {
     render: () => (
-        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+        <div className="demo-row">
             <Skeleton.Circle size="sm" />
             <Skeleton.Circle size="md" />
             <Skeleton.Circle size="lg" />
@@ -51,9 +51,9 @@ export const Circle: Story = {
 export const MediaObject: Story = {
     name: "Composed: media object",
     render: () => (
-        <div style={{ display: "flex", gap: "1rem", alignItems: "center", width: 360 }}>
+        <div className="demo-row demo-w-lg">
             <Skeleton.Circle size="lg" />
-            <div style={{ flex: 1 }}>
+            <div className="demo-fill">
                 <Skeleton.Text lines={3} />
             </div>
         </div>

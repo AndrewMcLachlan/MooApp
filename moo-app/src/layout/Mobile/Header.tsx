@@ -1,4 +1,4 @@
-import { Breadcrumb, Container, MenuToggle, useLink } from "@andrewmclachlan/moo-ds";
+import { Breadcrumb, MenuToggle, useLink } from "@andrewmclachlan/moo-ds";
 import { UserMenu } from "../UserMenu";
 import { type HeaderComponent } from "../Types";
 import { useApp, useLayout } from "../../providers";
@@ -12,7 +12,7 @@ export const Header: HeaderComponent = (props) => {
 
     return (
         <header className=" d-lg-none">
-            <Container fluid className="first-header">
+            <div className="first-header">
                 <Link to="/" className="logo">
                     <img src="/logo.svg" alt={`${appName} home`} height={logoHeight} />
                 </Link>
@@ -26,14 +26,14 @@ export const Header: HeaderComponent = (props) => {
                     </ul>
                     <UserMenu showAppInfo={props.showAppInfo} />
                 </nav>
-            </Container>
-            <Container fluid className="second-header">
+            </div>
+            <div className="second-header">
                 <MenuToggle onClick={() => setShowSidebar(true)} />
                 <Breadcrumb breadcrumbs={breadcrumbs} />
                 <div className="actions">
                     {actions}
                 </div>
-            </Container>
+            </div>
         </header>
     );
 };

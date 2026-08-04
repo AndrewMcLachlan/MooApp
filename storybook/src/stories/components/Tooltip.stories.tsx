@@ -44,7 +44,7 @@ export const WithRichContent: Story = {
 
 export const MultipleTooltips: Story = {
     render: () => (
-        <div style={{ display: "flex", gap: "24px", alignItems: "center" }}>
+        <div className="demo-row loose">
             <span>
                 First item <Tooltip id="tooltip-1">Information about the first item</Tooltip>
             </span>

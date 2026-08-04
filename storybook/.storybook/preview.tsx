@@ -5,6 +5,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { LinkComponent, LinkProvider, NavLinkComponent } from "@andrewmclachlan/moo-ds";
 import "../../moo-ds/src/css/mooapp.css";
+import "../src/stories.css";
 
 library.add(fas);
 

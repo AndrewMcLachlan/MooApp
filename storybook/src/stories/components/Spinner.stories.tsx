@@ -26,7 +26,7 @@ export const Border: Story = {
 
 export const Small: Story = {
     render: () => (
-        <div style={{ display: "flex", gap: "1rem" }}>
+        <div className="demo-row">
             <Spinner size="sm" delay={0} />
             <Spinner animation="border" size="sm" delay={0} />
         </div>

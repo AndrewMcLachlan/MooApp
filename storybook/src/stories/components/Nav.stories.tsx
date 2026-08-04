@@ -36,7 +36,7 @@ export const Pills: Story = {
 
 export const Column: Story = {
     render: () => (
-        <Nav column style={{ width: "200px" }}>
+        <Nav column className="demo-w-sm">
             <Nav.Item><Nav.Link active>Dashboard</Nav.Link></Nav.Item>
             <Nav.Item><Nav.Link>Settings</Nav.Link></Nav.Item>
             <Nav.Item><Nav.Link>Profile</Nav.Link></Nav.Item>

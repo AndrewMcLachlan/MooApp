@@ -32,7 +32,7 @@ const meta = {
     },
     decorators: [
         (Story) => (
-            <div style={{ width: "400px", minHeight: "100px" }}>
+            <div className="demo-w-lg demo-minh">
                 <Story />
             </div>
         ),
@@ -152,7 +152,7 @@ export const Interactive: Story = {
                     onChange={handleChange}
                     onCreate={handleCreate}
                 />
-                <p style={{ marginTop: "8px", fontSize: "12px" }}>
+                <p className="demo-caption">
                     Selected tags: {(selectedItems || []).map((i: SampleItem) => i.name).join(", ") || "None"}
                 </p>
             </div>

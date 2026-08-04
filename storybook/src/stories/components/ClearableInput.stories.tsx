@@ -27,7 +27,7 @@ const meta = {
     },
     decorators: [
         (Story) => (
-            <div style={{ width: "300px" }}>
+            <div className="demo-w-md">
                 <Story />
             </div>
         ),
@@ -90,7 +90,7 @@ export const Controlled: Story = {
                     value={value || ""}
                     onChange={handleChange}
                 />
-                <p style={{ marginTop: "8px", fontSize: "12px" }}>
+                <p className="demo-caption">
                     Current value: "{value || ""}"
                 </p>
             </div>
@@ -104,7 +104,7 @@ export const Controlled: Story = {
 
 export const DifferentTypes: Story = {
     render: () => (
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <div className="demo-col tight">
             <ClearableInput clearable type="text" placeholder="Text input" className="form-control" />
             <ClearableInput clearable type="email" placeholder="Email input" className="form-control" />
             <ClearableInput clearable type="password" placeholder="Password input" className="form-control" />
