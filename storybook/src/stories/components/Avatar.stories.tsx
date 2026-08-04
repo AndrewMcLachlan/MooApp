@@ -82,7 +82,7 @@ export const SingleName: Story = {
 
 export const MultipleAvatars: Story = {
     render: () => (
-        <div style={{ display: "flex", gap: "16px" }}>
+        <div className="demo-row">
             <Avatar photo={sampleAvatarUrl} />
             <Avatar name="John Doe" />
             <Avatar name="Jane Smith" />

@@ -19,7 +19,7 @@ export const TextInput: Story = {
 
 export const Check: Story = {
     render: () => (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <div className="demo-col tight">
             <Input.Check id="check1" label="Default checkbox" />
             <Input.Check id="check2" label="Checked checkbox" defaultChecked />
         </div>
@@ -28,7 +28,7 @@ export const Check: Story = {
 
 export const Radio: Story = {
     render: () => (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <div className="demo-col tight">
             <Input.Check id="radio1" type="radio" name="group" label="Option one" defaultChecked />
             <Input.Check id="radio2" type="radio" name="group" label="Option two" />
         </div>
@@ -47,7 +47,7 @@ export const InlineChecks: Story = {
 
 export const Switch: Story = {
     render: () => (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <div className="demo-col tight">
             <Input.Switch id="switch1" label="Off switch" />
             <Input.Switch id="switch2" label="On switch" defaultChecked />
         </div>

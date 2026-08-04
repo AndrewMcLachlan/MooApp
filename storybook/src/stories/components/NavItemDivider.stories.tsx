@@ -10,7 +10,7 @@ const meta = {
     tags: ["autodocs"],
     decorators: [
         (Story) => (
-            <Nav column style={{ width: "200px" }}>
+            <Nav column className="demo-w-sm">
                 <Nav.Link>Item Above</Nav.Link>
                 <Story />
                 <Nav.Link>Item Below</Nav.Link>

@@ -41,7 +41,7 @@ const meta = {
     },
     decorators: [
         (Story) => (
-            <div style={{ width: "300px" }}>
+            <div className="demo-w-md">
                 <Story />
             </div>
         ),
@@ -169,7 +169,7 @@ export const Controlled: Story = {
                     selectedItems={selectedItems || []}
                     onChange={handleChange}
                 />
-                <p style={{ marginTop: "8px", fontSize: "12px" }}>
+                <p className="demo-caption">
                     Selected: {(selectedItems || []).map((i: SampleItem) => i.name).join(", ") || "None"}
                 </p>
             </div>

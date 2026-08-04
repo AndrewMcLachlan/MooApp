@@ -25,7 +25,7 @@ const meta = {
     },
     decorators: [
         (Story) => (
-            <Nav column style={{ width: "200px" }}>
+            <Nav column className="demo-w-sm">
                 <Story />
             </Nav>
         ),

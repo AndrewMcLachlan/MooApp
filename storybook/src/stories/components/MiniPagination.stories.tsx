@@ -105,7 +105,7 @@ export const Interactive: Story = {
                     pageNumber={pageNumber}
                     onChange={handleChange}
                 />
-                <p style={{ marginTop: "8px", fontSize: "12px", textAlign: "center" }}>
+                <p className="demo-caption center">
                     Page {pageNumber} of {args.numberOfPages}
                 </p>
             </div>

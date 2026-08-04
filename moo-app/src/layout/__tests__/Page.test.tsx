@@ -63,10 +63,10 @@ describe('Page', () => {
       expect(container.querySelector('main')).toBeInTheDocument();
     });
 
-    it('applies container-fluid class', () => {
+    it('renders main as a stack', () => {
       const { container } = render(<Page title="Test Page">Content</Page>);
 
-      expect(container.querySelector('.container-fluid')).toBeInTheDocument();
+      expect(container.querySelector('main.stack')).toBeInTheDocument();
     });
 
     it('passes through additional HTML attributes', () => {

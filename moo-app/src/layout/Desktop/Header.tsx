@@ -1,4 +1,3 @@
-import { Container } from "@andrewmclachlan/moo-ds";
 import { Link } from "@tanstack/react-router";
 
 import { Breadcrumb, MenuToggle } from "@andrewmclachlan/moo-ds";
@@ -15,7 +14,7 @@ export const Header: HeaderComponent = (props) => {
 
     return (
         <header className="d-none d-lg-block">
-            <Container fluid className="first-header">
+            <div className="first-header">
                 <Link to="/" className="logo">
                     <img src="/logo.svg" alt={`${appName} home`} height={logoHeight} />
                 </Link>
@@ -30,14 +29,14 @@ export const Header: HeaderComponent = (props) => {
                     </ul>
                     <UserMenu userMenu={props.userMenu} showAppInfo={props.showAppInfo} />
                 </nav>
-            </Container>
-            <Container fluid className="second-header">
+            </div>
+            <div className="second-header">
                 <MenuToggle onClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
                 <Breadcrumb breadcrumbs={breadcrumbs} />
                 <div className="actions">
                     {actions}
                 </div>
-            </Container>
+            </div>
         </header>
     );
 };

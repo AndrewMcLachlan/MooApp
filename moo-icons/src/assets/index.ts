@@ -8,6 +8,7 @@ export { default as Database } from "./database.svg";
 export { default as HamburgerMenu } from "./hamburger-menu.svg";
 export { default as Hierarchy } from "./hierarchy.svg";
 export { default as Import } from "./import.svg";
+export { default as Information } from "./information.svg";
 export { default as LeftRightArrow } from "./left-right-arrow.svg";
 export { default as List } from "./list.svg";
 export { default as NestedList } from "./nested-list.svg";

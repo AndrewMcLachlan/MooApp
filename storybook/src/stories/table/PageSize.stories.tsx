@@ -80,7 +80,7 @@ export const Interactive: Story = {
                     value={value}
                     onChange={handleChange}
                 />
-                <p style={{ marginTop: "8px", fontSize: "12px" }}>
+                <p className="demo-caption">
                     Showing {value} items per page
                 </p>
             </div>

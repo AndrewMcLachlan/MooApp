@@ -29,7 +29,7 @@ const meta = {
     },
     decorators: [
         (Story) => (
-            <div style={{ width: "600px" }}>
+            <div className="demo-w-xxl">
                 <Story />
             </div>
         ),
@@ -72,7 +72,7 @@ export const WithReactNodeHeader: Story = {
                 onSubmit={fn()}
                 header={
                     <span>
-                        <FontAwesomeIcon icon="cog" style={{ marginRight: "8px" }} />
+                        <FontAwesomeIcon icon="cog" className="demo-spaced" />
                         Configuration
                     </span>
                 }
@@ -97,7 +97,7 @@ export const DifferentHeaderSizes: Story = {
         const form4 = useForm();
         const form6 = useForm();
         return (
-            <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+            <div className="demo-col loose">
                 <SectionForm form={form2} onSubmit={fn()} header="Header Size 2" headerSize={2}>
                     <Form.Group groupId="field">
                         <Form.Label>Field</Form.Label>
@@ -163,7 +163,7 @@ export const WithFormContent: Story = {
                 <Form.Group groupId="newsletter">
                     <Form.Check label="Subscribe to newsletter" />
                 </Form.Group>
-                <div style={{ display: "flex", gap: "8px" }}>
+                <div className="demo-row tight">
                     <button type="submit" className="btn btn-primary">Save Profile</button>
                     <button type="button" className="btn btn-secondary" onClick={() => form.reset()}>Reset</button>
                 </div>

@@ -1,8 +1,7 @@
-main.container-fluid {
+/* main is a .stack — the flex column and its gap come from there. What is left
+   here is only what belongs to main specifically. */
+main.stack {
   grid-area: main;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  padding: 1.5rem;
   overflow-y: auto;
 }

@@ -13,7 +13,7 @@ const meta = {
     decorators: [
         ThemeDecorator,
         (Story) => (
-            <div style={{ height: "400px", position: "relative" }}>
+            <div className="demo-box tall">
                 <Story />
             </div>
         ),
@@ -37,7 +37,7 @@ export const WithTriggerButtons: Story = {
     render: () => (
         <div>
             <Notifications />
-            <div style={{ padding: "20px", display: "flex", gap: "8px", flexWrap: "wrap" }}>
+            <div className="demo-row tight padded">
                 <button
                     className="btn btn-success"
                     onClick={() => toast.success("Operation completed successfully!")}

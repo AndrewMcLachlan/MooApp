@@ -169,7 +169,7 @@ export const Badge: Story = {
 
 export const AllVariants: Story = {
     render: () => (
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <div className="demo-col tight">
             <IconLinkButton icon="home" to="/" variant="primary">Primary</IconLinkButton>
             <IconLinkButton icon="cog" to="/settings" variant="secondary">Secondary</IconLinkButton>
             <IconLinkButton icon="check" to="/confirm" variant="success">Success</IconLinkButton>

@@ -1,6 +1,6 @@
 import { useIsAuthenticated } from "@azure/msal-react";
 import { usePageTitle } from "../hooks/pageTitle";
-import { Container, type NavItem } from "@andrewmclachlan/moo-ds";
+import { Stack, type NavItem } from "@andrewmclachlan/moo-ds";
 import { useLayout } from "../providers"
 import { type ReactNode, useEffect, useRef } from "react";
 
@@ -51,9 +51,9 @@ export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, t
     }, [breadcrumbs, navItems, actions]);
 
     return (
-        <Container fluid as="main" {...rest}>
+        <Stack as="main" {...rest}>
             {isAuthenticated && children}
-        </Container>
+        </Stack>
     );
 }
 

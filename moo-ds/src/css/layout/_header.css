@@ -13,12 +13,16 @@
         outline: none;
     }
 
-    .container,
-    .container-fluid {
+    /* Was .container/.container-fluid. Those carried nothing here but the
+       0.75rem inline padding, restated below, so the header bands now name
+       themselves instead of borrowing a grid class. */
+    .first-header,
+    .second-header {
         height: var(--header-height);
         display: flex;
         align-items: center;
         gap: 1rem;
+        padding-inline: 0.75rem;
 
         & > div {
             display: flex;

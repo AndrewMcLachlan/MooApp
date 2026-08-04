@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="SVGRoot" width="32" height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" stroke-width="2"/>
+ <path d="m13.5 13c-0.277 0-0.5 0.223-0.5 0.5v1c0 0.277 0.223 0.5 0.5 0.5h1.5v4.9746h-2.5c-0.277 0-0.5 0.223-0.5 0.5v1.0254c0 0.277 0.223 0.5 0.5 0.5h7c0.277 0 0.5-0.223 0.5-0.5v-1.0254c0-0.277-0.223-0.5-0.5-0.5h-2.5v-5.4746-1c0-0.277-0.223-0.5-0.5-0.5h-1-2z" stroke-width="0" fill="currentColor"/>
+ <circle cx="15.75" cy="10" r="1.25" fill-rule="evenodd" stroke-width="0" fill="currentColor"/>
+</svg>

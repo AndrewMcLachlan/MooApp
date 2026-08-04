@@ -1,6 +1,7 @@
 import { Icon, type NavItem } from "@andrewmclachlan/moo-ds";
 import {
-    Cog, Dashboard, Database, Hierarchy, List, Sliders, Sparkle, Stack, Tags, Transaction, User,
+    Bell,
+    Cog, Dashboard, Database, Hierarchy, Information, List, Sliders, Sparkle, Stack, Tags, Transaction, User,
 } from "@andrewmclachlan/moo-icons";
 
 // Per-category page lists. Each multi-page category's pages pass its list to
@@ -31,8 +32,8 @@ export const dataNav: NavItem[] = [
 ];
 
 export const feedbackNav: NavItem[] = [
-    { route: "/feedback/alerts", text: "Alerts & Messages", image: <Icon icon={Stack} /> },
-    { route: "/feedback/notifications", text: "Notifications", image: <Icon icon={Stack} /> },
+    { route: "/feedback/alerts", text: "Alerts & Messages", image: <Icon icon={Bell} /> },
+    { route: "/feedback/notifications", text: "Notifications", image: <Icon icon={Information} /> },
     { route: "/feedback/loading", text: "Loading", image: <Icon icon={Transaction} /> },
     { route: "/feedback/badges", text: "Badges", image: <Icon icon={Tags} /> },
 ];

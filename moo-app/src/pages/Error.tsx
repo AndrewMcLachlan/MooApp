@@ -1,4 +1,4 @@
-import { Container, ErrorFallback } from "@andrewmclachlan/moo-ds";
+import { ErrorFallback } from "@andrewmclachlan/moo-ds";
 import { Page } from "../layout/Page";
 import React from "react";
 import { type FallbackProps } from "react-error-boundary";
@@ -10,9 +10,9 @@ export const Error: React.FC<FallbackProps> = (props) => {
 
     return (
         <Page title="Error">
-            <Container className="error-page">
+            <div className="container error-page">
                 <ErrorFallback {...props} onClose={() => history.back()} dismissible message="Close this alert to go back to the previous page." />
-            </Container>
+            </div>
         </Page>
     );
 }

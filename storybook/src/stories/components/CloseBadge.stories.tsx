@@ -83,7 +83,7 @@ export const Info: Story = {
 
 export const AllVariants: Story = {
     render: () => (
-        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+        <div className="demo-row tight">
             <CloseBadge bg="primary" onClose={fn()}>Primary</CloseBadge>
             <CloseBadge bg="secondary" onClose={fn()}>Secondary</CloseBadge>
             <CloseBadge bg="success" onClose={fn()}>Success</CloseBadge>

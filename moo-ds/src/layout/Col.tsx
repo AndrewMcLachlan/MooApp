@@ -3,6 +3,7 @@ import React from "react";
 
 export interface ColProps extends React.HTMLAttributes<HTMLElement> {
     as?: React.ElementType;
+    ref?: React.Ref<HTMLElement>;
     xs?: number | boolean;
     sm?: number | boolean;
     md?: number | boolean;
@@ -23,29 +24,27 @@ function colClass(breakpoint: string, value: number | boolean | undefined): stri
     return breakpoint ? `col-${breakpoint}-${value}` : `col-${value}`;
 }
 
-export const Col = React.forwardRef<HTMLElement, React.PropsWithChildren<ColProps>>(
-    ({ as: Tag = "div", xs, sm, md, lg, xl, xxl, fhd, qhd, uhd, className, children, ...rest }, ref) => {
-        const classes = classNames(
-            colClass("", xs),
-            colClass("sm", sm),
-            colClass("md", md),
-            colClass("lg", lg),
-            colClass("xl", xl),
-            colClass("xxl", xxl),
-            colClass("fhd", fhd),
-            colClass("qhd", qhd),
-            colClass("uhd", uhd),
-            // Default to col if no breakpoint specified
-            !xs && !sm && !md && !lg && !xl && !xxl && !fhd && !qhd && !uhd && "col",
-            className,
-        );
+export const Col: React.FC<React.PropsWithChildren<ColProps>> = ({ as: Tag = "div", xs, sm, md, lg, xl, xxl, fhd, qhd, uhd, className, children, ...rest }) => {
+    const classes = classNames(
+        colClass("", xs),
+        colClass("sm", sm),
+        colClass("md", md),
+        colClass("lg", lg),
+        colClass("xl", xl),
+        colClass("xxl", xxl),
+        colClass("fhd", fhd),
+        colClass("qhd", qhd),
+        colClass("uhd", uhd),
+        // Default to col if no breakpoint specified
+        !xs && !sm && !md && !lg && !xl && !xxl && !fhd && !qhd && !uhd && "col",
+        className,
+    );
 
-        return (
-            <Tag ref={ref} className={classes} {...rest}>
-                {children}
-            </Tag>
-        );
-    }
-);
+    return (
+        <Tag className={classes} {...rest}>
+            {children}
+        </Tag>
+    );
+}
 
 Col.displayName = "Col";

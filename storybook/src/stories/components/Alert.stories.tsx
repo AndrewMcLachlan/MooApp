@@ -20,7 +20,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
     render: () => (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <div className="demo-col tight">
             <Alert variant="primary">Primary alert</Alert>
             <Alert variant="success">Success alert</Alert>
             <Alert variant="warning">Warning alert</Alert>

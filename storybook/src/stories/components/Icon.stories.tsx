@@ -79,7 +79,7 @@ export const WithClassName: Story = {
 
 export const DifferentIcons: Story = {
     render: () => (
-        <div style={{ display: "flex", gap: "16px" }}>
+        <div className="demo-row">
             <Icon icon="home" title="Home" />
             <Icon icon="user" title="User" />
             <Icon icon="cog" title="Settings" />

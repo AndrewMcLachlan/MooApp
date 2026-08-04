@@ -55,7 +55,8 @@ describe('Desktop Footer', () => {
   });
 
   describe('layout', () => {
-    it('renders inside a Container', () => {
+    // .container is a plain class now, kept for its max-width clamp.
+    it('renders inside a .container for the width clamp', () => {
       const { container } = render(<Footer copyrightYear={2024} />);
 
       expect(container.querySelector('.container')).toBeInTheDocument();

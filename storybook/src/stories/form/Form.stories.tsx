@@ -19,7 +19,7 @@ const meta = {
     },
     decorators: [
         (Story) => (
-            <div style={{ width: "500px" }}>
+            <div className="demo-w-xl">
                 <Story />
             </div>
         ),
@@ -204,7 +204,7 @@ export const SubmitHandling: Story = {
                     <Form.Label>Email</Form.Label>
                     <Form.Input type="email" />
                 </Form.Group>
-                <div style={{ display: "flex", gap: "8px" }}>
+                <div className="demo-row tight">
                     <button type="submit" className="btn btn-primary">Submit</button>
                     <button type="button" className="btn btn-secondary" onClick={() => form.reset()}>Reset</button>
                 </div>
@@ -225,7 +225,7 @@ export const CompactForm: Story = {
         const form = useForm<{ search: string }>();
         return (
             <Form form={form} onSubmit={fn()} layout="horizontal">
-                <div style={{ display: "flex", gap: "8px", alignItems: "flex-end" }}>
+                <div className="demo-row tight bottom">
                     <Form.Group groupId="search">
                         <Form.Label>Search</Form.Label>
                         <Form.Input placeholder="Enter search term..." />

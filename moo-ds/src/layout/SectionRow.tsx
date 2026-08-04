@@ -1,5 +1,5 @@
 import React, { type PropsWithChildren } from "react";
-import { Row, type RowProps } from "../components/Row";
+import { Row, type RowProps } from "./Row";
 
 export type SectionRowComponent = React.FC<PropsWithChildren<SectionRowProps>>;
 

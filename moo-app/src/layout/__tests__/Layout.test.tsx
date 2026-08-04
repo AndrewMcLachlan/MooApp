@@ -28,8 +28,8 @@ vi.mock('@andrewmclachlan/moo-ds', (): Record<string, any> => ({
   MenuToggle: ({ onClick }: { onClick: () => void }) => (
     <button data-testid="menu-toggle" onClick={onClick}>Toggle</button>
   ),
-  Container: ({ children, className }: any) => (
-    <div className={className} data-testid="container">{children}</div>
+  Stack: ({ children, className, as: Tag = "div" }: any) => (
+    <Tag className={className} data-testid="stack">{children}</Tag>
   ),
   Nav: Object.assign(
     ({ children, className }: any) => <nav className={className}>{children}</nav>,

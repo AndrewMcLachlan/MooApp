@@ -27,7 +27,7 @@ const meta = {
     },
     decorators: [
         (Story) => (
-            <div style={{ width: "500px" }}>
+            <div className="demo-w-xl">
                 <Story />
             </div>
         ),

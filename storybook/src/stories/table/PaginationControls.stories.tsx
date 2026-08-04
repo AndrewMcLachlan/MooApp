@@ -68,7 +68,7 @@ export const Interactive: Story = {
                         onChange={handlePageSizeChange}
                     />
                 </PaginationControls>
-                <p style={{ marginTop: "8px", fontSize: "12px", textAlign: "center" }}>
+                <p className="demo-caption center">
                     Page {pageNumber} of {numberOfPages} ({totalItems} total items, {pageSize} per page)
                 </p>
             </div>

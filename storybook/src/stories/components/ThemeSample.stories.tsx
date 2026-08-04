@@ -57,11 +57,11 @@ export const Red: Story = {
 
 export const AllThemes: Story = {
     render: () => (
-        <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+        <div className="demo-row">
             {Themes.map((theme) => (
-                <div key={theme.name} style={{ textAlign: "center" }}>
+                <div key={theme.name} className="demo-centre">
                     <ThemeSample theme={theme} onClick={fn()} />
-                    <p style={{ marginTop: "8px", fontSize: "12px" }}>{theme.name}</p>
+                    <p className="demo-caption">{theme.name}</p>
                 </div>
             ))}
         </div>

@@ -23,7 +23,7 @@ const meta = {
     },
     decorators: [
         (Story) => (
-            <div style={{ width: "400px" }}>
+            <div className="demo-w-lg">
                 <Story />
             </div>
         ),
@@ -62,7 +62,7 @@ export const WithRichHeader: Story = {
     args: {
         header: (
             <span>
-                <FontAwesomeIcon icon="cog" style={{ marginRight: "8px" }} />
+                <FontAwesomeIcon icon="cog" className="demo-spaced" />
                 Settings Section
             </span>
         ),
@@ -98,7 +98,7 @@ export const NestedCollapsibles: Story = {
 
 export const MultipleCollapsibles: Story = {
     render: () => (
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <div className="demo-col tight">
             <Collapsible header="Section 1">
                 <p>Content for section 1</p>
             </Collapsible>
@@ -116,7 +116,7 @@ export const WithFormContent: Story = {
     args: {
         header: "Additional Options",
         children: (
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            <div className="demo-col tight">
                 <label>
                     <input type="checkbox" /> Enable notifications
                 </label>
