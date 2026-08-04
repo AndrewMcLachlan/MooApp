@@ -14,6 +14,7 @@ const iconNames = [
   'HamburgerMenu',
   'Hierarchy',
   'Import',
+  'Information',
   'LeftRightArrow',
   'List',
   'NestedList',

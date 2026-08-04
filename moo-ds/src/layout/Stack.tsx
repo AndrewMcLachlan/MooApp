@@ -1,8 +1,9 @@
 import classNames from "classnames";
-import type { ElementType, HTMLAttributes, PropsWithChildren } from "react";
+import type { ElementType, HTMLAttributes, PropsWithChildren, Ref } from "react";
 
 export interface StackProps extends HTMLAttributes<HTMLElement> {
     as?: ElementType;
+    ref?: Ref<HTMLElement>;
 }
 
 /** A vertical run of children with a consistent gap between them. */
