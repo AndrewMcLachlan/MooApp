@@ -1,0 +1,70 @@
+/* Indeterminate progress line. Two variants:
+   .progress-indeterminate       - inline, in flow, pill ends
+   .progress-indeterminate-edge  - pinned flush to the top edge of a .section */
+
+@keyframes progress-indeterminate {
+    0% {
+        left: -35%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+.progress-indeterminate {
+    position: relative;
+    overflow: hidden;
+    height: 3px;
+    width: 100%;
+    background-color: var(--border-colour);
+    border-radius: 50rem;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 35%;
+        background-color: var(--primary);
+        border-radius: 50rem;
+        animation: 1.4s ease-in-out infinite progress-indeterminate;
+    }
+}
+
+/* Host must be position: relative -- .section already is. */
+.progress-indeterminate-edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    width: auto;
+    border-radius: 0;
+    z-index: 1000;
+
+    &::after {
+        border-radius: 0;
+    }
+}
+
+/* Body of a panel that is refreshing: keep the data visible but recede it. */
+.is-refreshing:not(.section) {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+/* On a Section the class goes on the host rather than on a wrapper around the
+   body: a wrapper would break `.section .body { flex: 1 }` and the dashboard's
+   `.section > *` flex rules. So dim the children instead -- all but the bar. */
+.section.is-refreshing > *:not(.progress-indeterminate) {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .progress-indeterminate::after {
+        animation: none;
+        width: 100%;
+        opacity: 0.4;
+    }
+}

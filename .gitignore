@@ -28,3 +28,4 @@ storybook-static
 
 *storybook.log
 .claude/settings.local.json
+docs/temp/

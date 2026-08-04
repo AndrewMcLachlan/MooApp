@@ -98,6 +98,42 @@
 .demo-row.start { align-items: flex-start; }
 .demo-row.center { justify-content: center; padding: 3rem 0; }
 
+/* A captioned sample. The fixed-height figure keeps the captions on one line
+   across samples of different heights -- a 1rem spinner beside a 2rem one. */
+.demo-sample {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.demo-sample .demo-sample-figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+}
+
+.demo-sample p {
+  margin: 0;
+}
+
+/* Chart skeletons fill their container, so the showcase has to give them boxes. */
+.demo-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.demo-chart-grid .demo-chart {
+  height: 11rem;
+}
+
+.demo-chart-grid p {
+  margin: 0.5rem 0 0;
+  text-align: center;
+}
+
 /* A vertical stack of samples. */
 .demo-col {
   display: flex;

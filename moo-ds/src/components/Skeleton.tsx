@@ -1,5 +1,8 @@
 import classNames from "classnames";
 import React from "react";
+import { SkeletonChart } from "./SkeletonChart";
+
+export type { SkeletonChartProps, SkeletonChartVariant } from "./SkeletonChart";
 
 export type SkeletonVariant = "text" | "circle" | "rect";
 
@@ -67,4 +70,5 @@ export const Skeleton = Object.assign(SkeletonRoot, {
     Text: SkeletonText,
     Circle: SkeletonCircle,
     Rect: SkeletonRect,
+    Chart: SkeletonChart,
 });

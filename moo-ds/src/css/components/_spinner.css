@@ -10,7 +10,8 @@
     --spinner-width: 2rem;
     --spinner-height: 2rem;
     --spinner-border-width: 0.25em;
-    --spinner-animation-speed: 0.75s;
+    /* 1s, matching .spinner-comet, so the two variants read as one family. */
+    --spinner-animation-speed: 1s;
     --spinner-animation-name: spinner-border;
 
     display: inline-block;
@@ -27,35 +28,4 @@
     --spinner-width: 1rem;
     --spinner-height: 1rem;
     --spinner-border-width: 0.2em;
-}
-
-@keyframes spinner-grow {
-    0% {
-        transform: scale(0);
-    }
-    50% {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-.spinner-grow {
-    --spinner-width: 2rem;
-    --spinner-height: 2rem;
-    --spinner-animation-speed: 0.75s;
-    --spinner-animation-name: spinner-grow;
-
-    display: inline-block;
-    width: var(--spinner-width);
-    height: var(--spinner-height);
-    vertical-align: -0.125em;
-    background-color: currentcolor;
-    border-radius: 50%;
-    opacity: 0;
-    animation: var(--spinner-animation-speed) linear infinite var(--spinner-animation-name);
-}
-
-.spinner-grow-sm {
-    --spinner-width: 1rem;
-    --spinner-height: 1rem;
 }

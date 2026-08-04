@@ -10,7 +10,7 @@ export const IconButton: React.FC<PropsWithChildren<IconButtonProps>> = ({ child
     // While loading the icon becomes the spinner; Button keeps the loading
     // semantics (disabled, aria-busy, click guard) but not its own spinner.
     const glyph = loading
-        ? <Spinner animation="border" size="sm" aria-hidden="true" />
+        ? <Spinner size="sm" delay={0} aria-hidden="true" />
         : <Icon icon={icon} src={src} />;
 
     return (

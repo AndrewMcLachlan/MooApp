@@ -11,7 +11,8 @@
 }
 
 /* The loading spinner stands in for the icon, so match the icon's box. */
-.btn.btn-icon .spinner-border {
+.btn.btn-icon .spinner-border,
+.btn.btn-icon .spinner-comet {
     --spinner-width: 18px;
     --spinner-height: 18px;
     --spinner-border-width: 2px;

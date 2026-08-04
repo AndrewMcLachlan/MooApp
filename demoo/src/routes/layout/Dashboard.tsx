@@ -14,6 +14,7 @@ const activity = [
 export const DashboardPage = () => {
 
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     return (
         // Dashboard is a Page, so this route renders one directly rather than
@@ -45,7 +46,7 @@ export const DashboardPage = () => {
                 <Badge bg="success">+12%</Badge>
             </Widget>
 
-            <Widget header="Revenue" size="single" headerSize={5}>
+            <Widget header="Revenue" size="single" headerSize={5} refreshing={refreshing}>
                 <p className="stat">$45,678</p>
                 <Badge bg="success">+4%</Badge>
             </Widget>
@@ -66,10 +67,20 @@ export const DashboardPage = () => {
             </Widget>
 
             <Widget header="Loading state" size="single" headerSize={5}>
-                <p>A widget swaps its body for a spinner while <code>loading</code> is set.</p>
-                <Button variant="outline-primary" onClick={() => setLoading(!loading)}>
-                    {loading ? "Stop loading" : "Load Active Sessions"}
-                </Button>
+                <p>
+                    A widget swaps its body for a spinner while <code>loading</code> is set &mdash;
+                    there is no data to show yet. With <code>refreshing</code> the data stays put and
+                    recedes behind a bar on the top edge, because replacing content you already have
+                    is the thing worth avoiding.
+                </p>
+                <div className="demo-row tight">
+                    <Button variant="outline-primary" onClick={() => setLoading(!loading)}>
+                        {loading ? "Stop loading" : "Load Active Sessions"}
+                    </Button>
+                    <Button variant="outline-primary" onClick={() => setRefreshing(!refreshing)}>
+                        {refreshing ? "Stop refreshing" : "Refresh Revenue"}
+                    </Button>
+                </div>
             </Widget>
 
             <Widget header="Open Tickets" size="single" headerSize={5} to="/data/table">

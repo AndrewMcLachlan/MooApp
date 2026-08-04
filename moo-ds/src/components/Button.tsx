@@ -52,7 +52,8 @@ export const Button = React.forwardRef<HTMLButtonElement, React.PropsWithChildre
                 onClick={handleClick}
                 {...rest}
             >
-                {loading && loadingSpinner && <Spinner animation="border" size="sm" className="btn-spinner" aria-hidden="true" />}
+                {/* delay={0}: a button's busy state is direct feedback on a click, so it must be immediate. */}
+                {loading && loadingSpinner && <Spinner size="sm" delay={0} className="btn-spinner" aria-hidden="true" />}
                 {children}
             </Tag>
         );
