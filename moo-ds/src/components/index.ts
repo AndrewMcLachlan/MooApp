@@ -19,6 +19,7 @@ export * from "./form";
 export * from "./Icon";
 export * from "./IconButton";
 export * from "./Input";
+export * from "./Kpi";
 export * from "./InputGroup";
 export * from "./IconLinkButton";
 export * from "./LinkBox";

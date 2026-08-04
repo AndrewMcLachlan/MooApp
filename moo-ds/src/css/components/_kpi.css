@@ -1,0 +1,49 @@
+/* KPI card: a headline figure with a coloured top edge.
+   The accent goes through --kpi-accent rather than being set directly, so an app can repoint it
+   for a whole strip — a ledger app wanting its own income/expense hues, say — without restating
+   the rest of the card. Type sizes are the consumer's: the same card serves a page header and a
+   dashboard at different scales. */
+
+.section.kpi {
+    --kpi-accent: var(--primary);
+
+    border-top: 2px solid var(--kpi-accent);
+}
+
+.section.kpi[data-tone="positive"] {
+    --kpi-accent: var(--success);
+}
+
+.section.kpi[data-tone="negative"] {
+    --kpi-accent: var(--danger);
+}
+
+.kpi-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    color: var(--body-colour-dim);
+}
+
+.kpi-value {
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    line-height: 1.1;
+    /* Figures in a row of cards should line up, so the digits are fixed-width. */
+    font-variant-numeric: tabular-nums;
+    margin-top: 2px;
+}
+
+.kpi-sub {
+    font-size: 0.75rem;
+    color: var(--body-colour-dim);
+    margin-top: 2px;
+}
+
+/* A placeholder standing in for one of these lines takes that line's own box, so the card is the
+   same height loading or loaded and nothing below it moves. */
+:is(.kpi-label, .kpi-value, .kpi-sub) > .skeleton-text > .skeleton-text-line {
+    height: 1lh;
+    margin-block: 0;
+}
