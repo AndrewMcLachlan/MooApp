@@ -6,8 +6,11 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      // Resolve to local source for testing without requiring build
-      '@andrewmclachlan/moo-ds': path.resolve(__dirname, '../moo-ds/src'),
+      // Resolve to local source for testing without requiring build.
+      // import.meta.dirname, not __dirname: this package is "type": "module",
+      // so __dirname exists only via Vite's config bundling — it disappears
+      // under configLoader: 'native'.
+      '@andrewmclachlan/moo-ds': path.resolve(import.meta.dirname, '../moo-ds/src'),
     },
   },
   test: {
