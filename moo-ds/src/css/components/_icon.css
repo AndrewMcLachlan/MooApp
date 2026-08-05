@@ -1,0 +1,11 @@
+.custom-icon {
+    &.sm {
+        width: 16px;
+        height: 16px;
+    }
+
+    &.muted {
+        color: var(--secondary-colour);
+    }
+}
+

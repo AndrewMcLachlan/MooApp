@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type PropsWithChildren, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { showInTopLayer, topLayerProps } from "../utils/topLayer";
+import { Icon } from "./Icon";
+import { Information } from "@andrewmclachlan/moo-icons";
 
 export const Tooltip: React.FC<PropsWithChildren<{ id: string }>> = ({ id, children }) => {
     const uniqueId = useId();
@@ -46,7 +48,7 @@ export const Tooltip: React.FC<PropsWithChildren<{ id: string }>> = ({ id, child
                 onBlur={() => setShow(false)}
             >
                 <span className="tooltip-icon" aria-describedby={tooltipId}>
-                    <FontAwesomeIcon icon="info-circle" size="1x" />
+                    <Icon icon={Information} size="sm" className="muted" />
                 </span>
             </span>
             {show && createPortal(
