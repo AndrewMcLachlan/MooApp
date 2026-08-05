@@ -25,9 +25,9 @@
 .skeleton-chart-bar,
 .skeleton-chart-horizontal-bar {
     display: flex;
-    /* 2%, not 4%: with N bars there are N-1 gaps, so 4% spent most of an
-       eight-bar chart on whitespace and left the bars reading as hairlines
-       next to the real chart they stand in for. */
+    /* 2%, not 4%: with N bars there are N-1 gaps, so at 4% an eight-bar chart
+       spent 28% of its width on gaps and the bars read as thin next to the
+       real chart they stand in for. */
     gap: 2%;
 }
 

@@ -71,7 +71,10 @@ main.dashboard {
             align-self: start;
         }
 
-        > *:not(.section-header) {
+        /* .skeleton-chart is excluded so it keeps the min-height floor declared
+           with the component. Zeroing it here and restoring it below would make
+           the same value true in two places. */
+        > *:not(.section-header):not(.skeleton-chart) {
             flex: none;
             min-height: 0;
             overflow: hidden;
@@ -82,15 +85,11 @@ main.dashboard {
            the header's height -- clipping its own baseline axis against the
            section's overflow: hidden. Let it take the space that is actually
            left instead. Has to live here rather than in _skeleton-chart.css:
-           the rule above is both more specific and in a later import. */
+           only the dashboard knows the body has a header above it to share
+           with. */
         > .skeleton-chart {
             flex: 1;
             height: auto;
-            /* Restore the floor the `min-height: 0` above removes. With
-               height: auto, a variant whose children are flex-basis: 0 has
-               nothing to derive a height from if flex does not engage, and
-               collapses to zero. */
-            min-height: 12rem;
         }
     }
 }
