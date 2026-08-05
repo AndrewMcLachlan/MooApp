@@ -1,8 +1,8 @@
 /* KPI card: a headline figure with a coloured top bar.
 
-   Every variant sets --kpi-bar and --kpi-fg, the same shape the badge uses, and the named tokens
-   draw from the same palette so a KPI and a Badge for the same thing agree. A consumer that needs
-   a colour outside the palette passes `colour`/`textColour`, which set the two variables inline. */
+   The bar and figure colours come from --kpi-bar / --kpi-fg, which the component sets from its
+   tone. There is no class per token: a token resolves to var(--hue-<name>), so a colour an app
+   has added to the palette behaves exactly as a built-in one does. */
 
 .section.kpi {
     --kpi-bar: var(--primary);
@@ -35,30 +35,6 @@
     color: var(--body-colour-dim);
     margin-top: 2px;
 }
-
-/* ---- Semantic tokens ---- */
-.kpi-primary   { --kpi-bar: var(--primary);      --kpi-fg: var(--primary); }
-.kpi-secondary { --kpi-bar: #6c757d;             --kpi-fg: #6c757d; }
-.kpi-success   { --kpi-bar: var(--green);        --kpi-fg: var(--green); }
-.kpi-danger    { --kpi-bar: var(--red);          --kpi-fg: var(--red); }
-.kpi-warning   { --kpi-bar: var(--amber);        --kpi-fg: var(--amber); }
-.kpi-info      { --kpi-bar: #0dcaf0;             --kpi-fg: #0dcaf0; }
-
-/* ---- Hue tokens ---- */
-.kpi-blue    { --kpi-bar: var(--hue-blue);    --kpi-fg: var(--hue-blue); }
-.kpi-indigo  { --kpi-bar: var(--hue-indigo);  --kpi-fg: var(--hue-indigo); }
-.kpi-purple  { --kpi-bar: var(--hue-purple);  --kpi-fg: var(--hue-purple); }
-.kpi-pink    { --kpi-bar: var(--hue-pink);    --kpi-fg: var(--hue-pink); }
-.kpi-rose    { --kpi-bar: var(--hue-rose);    --kpi-fg: var(--hue-rose); }
-.kpi-orange  { --kpi-bar: var(--hue-orange);  --kpi-fg: var(--hue-orange); }
-.kpi-amber   { --kpi-bar: var(--hue-amber);   --kpi-fg: var(--hue-amber); }
-.kpi-yellow  { --kpi-bar: var(--hue-yellow);  --kpi-fg: var(--hue-yellow); }
-.kpi-green   { --kpi-bar: var(--hue-green);   --kpi-fg: var(--hue-green); }
-.kpi-emerald { --kpi-bar: var(--hue-emerald); --kpi-fg: var(--hue-emerald); }
-.kpi-teal    { --kpi-bar: var(--hue-teal);    --kpi-fg: var(--hue-teal); }
-.kpi-cyan    { --kpi-bar: var(--hue-cyan);    --kpi-fg: var(--hue-cyan); }
-.kpi-slate   { --kpi-bar: var(--hue-slate);   --kpi-fg: var(--hue-slate); }
-.kpi-neutral { --kpi-bar: var(--hue-neutral); --kpi-fg: var(--hue-neutral); }
 
 /* A placeholder standing in for one of these lines takes that line's own box, so the card is the
    same height loading or loaded and nothing below it moves. */

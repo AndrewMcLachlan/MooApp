@@ -12,22 +12,42 @@ describe("Kpi", () => {
         expect(container.querySelector(".kpi-value")).toHaveTextContent("$1,000");
     });
 
-    it("takes no tone class when none is asked for, so the card keeps the default bar", () => {
+    it("sets no colour of its own when no tone is asked for, so the card keeps the default bar", () => {
         const { container } = render(<Kpi label="Count"><Kpi.Value>12</Kpi.Value></Kpi>);
 
-        expect(container.querySelector(".kpi")?.className).not.toMatch(/kpi-(success|danger|primary)/);
+        expect(container.querySelector<HTMLElement>(".kpi")?.style.getPropertyValue("--kpi-bar")).toBe("");
     });
 
-    it("maps a tone onto a class from the badge palette", () => {
+    it("resolves a semantic tone to its palette token, colouring bar and figure alike", () => {
         const { container } = render(<Kpi label="Income" tone="success"><Kpi.Value>$500</Kpi.Value></Kpi>);
 
-        expect(container.querySelector(".kpi")).toHaveClass("kpi-success");
+        const card = container.querySelector<HTMLElement>(".kpi");
+        expect(card?.style.getPropertyValue("--kpi-bar")).toBe("var(--hue-success)");
+        expect(card?.style.getPropertyValue("--kpi-fg")).toBe("var(--hue-success)");
     });
 
-    it("accepts a hue as readily as a semantic, since both are badge tokens", () => {
+    it("accepts a hue as readily as a semantic, since both are tokens", () => {
         const { container } = render(<Kpi label="Category" tone="teal"><Kpi.Value>3</Kpi.Value></Kpi>);
 
-        expect(container.querySelector(".kpi")).toHaveClass("kpi-teal");
+        expect(container.querySelector<HTMLElement>(".kpi")?.style.getPropertyValue("--kpi-bar")).toBe("var(--hue-teal)");
+    });
+
+    it("resolves a token an app has added to the palette the same way as a built-in one", () => {
+        // The point of the registry: an app declares --hue-income in CSS and names it here, with
+        // no class of its own to write and nothing to win in the cascade.
+        const { container } = render(<Kpi label="Income" tone={"income" as never}><Kpi.Value>$500</Kpi.Value></Kpi>);
+
+        expect(container.querySelector<HTMLElement>(".kpi")?.style.getPropertyValue("--kpi-bar")).toBe("var(--hue-income)");
+    });
+
+    it("lets an explicit colour override the tone for one part only", () => {
+        const { container } = render(
+            <Kpi label="Income" tone="success" textColour="#6cc67e"><Kpi.Value>$500</Kpi.Value></Kpi>,
+        );
+
+        const card = container.querySelector<HTMLElement>(".kpi");
+        expect(card?.style.getPropertyValue("--kpi-bar")).toBe("var(--hue-success)");
+        expect(card?.style.getPropertyValue("--kpi-fg")).toBe("#6cc67e");
     });
 
     it("takes a custom bar colour outside the palette", () => {

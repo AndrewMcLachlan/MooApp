@@ -44,7 +44,21 @@
   --warning: var(--amber);
   --success: var(--green);
 
-   --muted-colour: #6c757d;
+  --muted-colour: #6c757d;
+
+  /* Semantic tokens in the hue namespace, so one name resolves a colour wherever a component
+     takes one — and an app extends the palette by adding a --hue-* of its own, with light-dark()
+     for the two schemes, rather than passing colour values to components. */
+  --hue-primary:   var(--primary);
+  --hue-secondary: var(--muted-colour);
+  --hue-success:   var(--green);
+  --hue-warning:   var(--amber);
+  --hue-danger:    var(--red);
+  --hue-info:      #0dcaf0;
+
+  /* Readable foreground where a token is used as a fill. White unless stated. */
+  --hue-warning-fg: #000;
+  --hue-info-fg:    #000;
 
   /* Hue palette - resolves via color-scheme. Light values are darker/saturated
      for legibility on white; dark values are brighter for dark surfaces. */

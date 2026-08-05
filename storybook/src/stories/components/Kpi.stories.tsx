@@ -56,24 +56,57 @@ export const Hues: Story = {
 };
 
 /**
- * `colour` and `textColour` take any CSS colour and are set independently, for the common case
- * where a brand's bar and figure are two steps of the same hue rather than one colour.
+ * The intended way to add a colour: declare a `--hue-*` token in CSS with `light-dark()`, add it
+ * to the registry so it type-checks, and name it. No colour values in the component call, and
+ * both schemes handled in one place.
+ *
+ * ```ts
+ * declare module "@andrewmclachlan/moo-ds" {
+ *     interface HueRegistry { income: true; expense: true; }
+ * }
+ * ```
  */
-export const CustomColours: Story = {
-    args: { label: "Custom" },
+export const AppDefinedTokens: Story = {
+    args: { label: "App tokens" },
     render: () => (
-        <div style={strip}>
-            <Kpi label="Income" colour="#3e9156" textColour="#6cc67e">
+        <div className="kpi-story-tokens" style={strip}>
+            <style>{`
+                .kpi-story-tokens {
+                    --hue-income:  light-dark(#3e9156, #6cc67e);
+                    --hue-expense: light-dark(#a4332d, #e07b7b);
+                }
+            `}</style>
+            <Kpi label="Income" tone={"income" as never}>
                 <Kpi.Value>$8,200.00</Kpi.Value>
                 <Kpi.Sub>this month</Kpi.Sub>
             </Kpi>
-            <Kpi label="Expenses" colour="#a4332d" textColour="#e07b7b">
+            <Kpi label="Expenses" tone={"expense" as never}>
                 <Kpi.Value>$6,431.90</Kpi.Value>
                 <Kpi.Sub>this month</Kpi.Sub>
             </Kpi>
-            <Kpi label="Bar only" colour="#7c6cff">
+        </div>
+    ),
+};
+
+/**
+ * `colour` and `textColour` are the escape hatch for a one-off with no token, and can be set
+ * independently — a bar in one step of a hue and a figure in another.
+ */
+export const ExplicitColours: Story = {
+    args: { label: "Explicit" },
+    render: () => (
+        <div style={strip}>
+            <Kpi label="Bar and figure" colour="var(--hue-indigo)" textColour="var(--hue-purple)">
+                <Kpi.Value>$8,200.00</Kpi.Value>
+                <Kpi.Sub>two tokens, one card</Kpi.Sub>
+            </Kpi>
+            <Kpi label="Bar only" colour="var(--hue-teal)">
                 <Kpi.Value>$1,768.10</Kpi.Value>
                 <Kpi.Sub>figure keeps its own colour</Kpi.Sub>
+            </Kpi>
+            <Kpi label="Tone, figure overridden" tone="success" textColour="var(--body-colour-bold)">
+                <Kpi.Value>$6,431.90</Kpi.Value>
+                <Kpi.Sub>bar from the tone</Kpi.Sub>
             </Kpi>
         </div>
     ),
