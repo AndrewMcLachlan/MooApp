@@ -15,7 +15,9 @@ describe("Kpi", () => {
     it("takes no tone class when none is asked for, so the card keeps the default bar", () => {
         const { container } = render(<Kpi label="Count"><Kpi.Value>12</Kpi.Value></Kpi>);
 
-        expect(container.querySelector(".kpi")?.className).not.toMatch(/kpi-\w/);
+        // Every tone class, not a few named ones: a stray kpi-anything would recolour the card.
+        const classes = [...container.querySelector(".kpi")!.classList];
+        expect(classes.filter(c => c.startsWith("kpi-"))).toEqual([]);
     });
 
     it("maps a semantic tone to its class", () => {

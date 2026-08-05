@@ -4,9 +4,12 @@
    Section's own border. Section is styled in this layer, and a layer beats specificity: from the
    components layer the top bar lost to `.section { border: ... }` and never drew at all.
 
-   Every tone sets --kpi-bar and --kpi-fg, the same shape the badge uses. An app adds a tone by
-   declaring its own colour token and one rule of the same form; nothing is passed in from a
-   component call, so light and dark are settled in CSS where they belong. */
+   A tone sets --kpi-bar for the line and --kpi-fg for the figure, and the two need not be the same
+   colour. An untoned card sets only the bar and leaves --kpi-fg alone, so the figure keeps whatever
+   colour it would otherwise have.
+
+   An app adds a tone by declaring its own colour tokens and one rule of the same form; nothing is
+   passed in from a component call, so light and dark are settled in CSS where they belong. */
 
 .section.kpi {
     --kpi-bar: var(--primary);
