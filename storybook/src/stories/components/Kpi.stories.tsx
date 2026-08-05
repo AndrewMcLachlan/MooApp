@@ -69,11 +69,11 @@ export const AppDefinedTokens: Story = {
     args: { label: "App tokens" },
     render: () => (
         <div className="kpi-story-strip kpi-story-tokens">
-            <Kpi label="Income" tone={"income" as never}>
+            <Kpi label="Income" tone="income">
                 <Kpi.Value>$8,200.00</Kpi.Value>
                 <Kpi.Sub>this month</Kpi.Sub>
             </Kpi>
-            <Kpi label="Expenses" tone={"expense" as never}>
+            <Kpi label="Expenses" tone="expense">
                 <Kpi.Value>$6,431.90</Kpi.Value>
                 <Kpi.Sub>this month</Kpi.Sub>
             </Kpi>

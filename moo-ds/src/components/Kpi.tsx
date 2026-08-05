@@ -8,16 +8,31 @@ export interface KpiProps extends React.HTMLAttributes<HTMLElement> {
     label: React.ReactNode;
     /**
      * A colour token — a semantic variant, a hue, or one an app has added to the palette.
-     * Colours the top bar and the figure.
      *
-     * An app adds a token by declaring the colour and the rule that uses it in its own CSS, then
-     * registering the name so it type-checks. There is no colour prop: a value passed from a
-     * component call can only ever be one colour, and every one of these has to answer to a light
-     * scheme and a dark one.
+     * A tone sets two things, and they need not be the same colour: `--kpi-bar` is the line and
+     * `--kpi-fg` the figure. A line wants enough weight to read as a rule and a figure enough
+     * contrast to read as text, so the two often want different steps of one hue.
+     *
+     * An app adds a tone in CSS and registers the name so it type-checks. There is no colour
+     * prop: a value passed from a component call can only ever be one colour, and each of these
+     * has to answer to a light scheme and a dark one.
      *
      * ```css
-     * :root      { --hue-income: light-dark(#3e9156, #6cc67e); }
-     * .kpi-income { --kpi-bar: var(--hue-income); --kpi-fg: var(--hue-income); }
+     * :root {
+     *     --hue-income:      light-dark(#2f6f42, #3e9156);
+     *     --hue-income-text: light-dark(#3e9156, #6cc67e);
+     * }
+     *
+     * .section.kpi-income {
+     *     --kpi-bar: var(--hue-income);
+     *     --kpi-fg:  var(--hue-income-text);
+     * }
+     * ```
+     *
+     * ```ts
+     * declare module "@andrewmclachlan/moo-ds" {
+     *     interface HueRegistry { income: true; }
+     * }
      * ```
      */
     tone?: Tone;

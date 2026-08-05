@@ -69,41 +69,46 @@ export const KpiPage = () => {
 
             <Section title="Adding a colour" header="Adding a colour" headerSize={4}>
                 <p>
-                    A token is only a name; the colour behind it is a <code>--hue-&lt;name&gt;</code>
-                    custom property. To add one, declare it in CSS with <code>light-dark()</code> so
-                    both schemes are handled in one place, and register the name so it type-checks:
+                    A tone is only a name. What it means is a rule setting
+                    <code>--kpi-bar</code> for the line and <code>--kpi-fg</code> for the figure,
+                    from colour tokens declared with <code>light-dark()</code> so both schemes are
+                    settled in one place. Register the name and it type-checks like a built-in:
                 </p>
-                <pre className="demo-code">{`/* app CSS */
+                <pre className="demo-code">{`/* CSS: the colours, and the rule wiring them to the card.
+   --kpi-bar is the line, --kpi-fg the figure -- set them
+   apart where a line and a number want different weights. */
 :root {
-    --hue-income:  light-dark(#3e9156, #6cc67e);
-    --hue-expense: light-dark(#a4332d, #e07b7b);
+    --hue-income:      light-dark(#2f6f42, #3e9156);
+    --hue-income-text: light-dark(#3e9156, #6cc67e);
 }
 
-/* app types.d.ts */
+.section.kpi-income {
+    --kpi-bar: var(--hue-income);
+    --kpi-fg:  var(--hue-income-text);
+}
+
+/* TypeScript: register the name and it needs no cast. */
 declare module "@andrewmclachlan/moo-ds" {
-    interface HueRegistry {
-        income: true;
-        expense: true;
-    }
+    interface HueRegistry { income: true; }
 }`}</pre>
                 <p>
-                    After that a token of your own behaves exactly as a built-in one does, with no
-                    colour values in the markup and no stylesheet of yours needing to win against
-                    this one:
+                    After that a tone of your own behaves exactly as a built-in one does:
                 </p>
                 <div className="kpi-demo-strip kpi-demo-tokens">
-                    <Kpi label="Income" tone={"income" as Hue}>
+                    <Kpi label="Income" tone="income">
                         <Kpi.Value>$8,200.00</Kpi.Value>
                         <Kpi.Sub>this month</Kpi.Sub>
                     </Kpi>
-                    <Kpi label="Expenses" tone={"expense" as Hue}>
+                    <Kpi label="Expenses" tone="expense">
                         <Kpi.Value>$6,431.90</Kpi.Value>
                         <Kpi.Sub>this month</Kpi.Sub>
                     </Kpi>
                 </div>
-                <p className="demo-note">
-                    demoo declares those two in its own stylesheet and casts the names here, having
-                    no registry of its own; a real app registers them and drops the cast.
+                <p>
+                    A tone sets two things, and they need not be the same colour. A line wants
+                    enough weight to read as a rule; a figure wants enough contrast to read as
+                    text. Below, each tone is a darker line over a lighter figure &mdash; the
+                    treatment a ledger tends to want, and impossible if a token were one colour.
                 </p>
             </Section>
 

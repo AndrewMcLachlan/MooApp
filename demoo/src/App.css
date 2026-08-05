@@ -188,15 +188,18 @@
   font-size: 1.125rem;
 }
 
-/* What an app writes to add a tone of its own: the colour, and one rule wiring it to the card.
-   A real app puts the tokens on :root beside its others. */
+/* What an app writes to add a tone of its own: the colours, and one rule wiring them to the card.
+   Two tokens per tone, not one — the line is the darker step and the figure the lighter, which is
+   what a ledger wants and what a single-colour token could not express. */
 :root {
-  --hue-income:  light-dark(#3e9156, #6cc67e);
-  --hue-expense: light-dark(#a4332d, #e07b7b);
+  --hue-income:       light-dark(#2f6f42, #3e9156);
+  --hue-income-text:  light-dark(#3e9156, #6cc67e);
+  --hue-expense:      light-dark(#8f2b26, #a4332d);
+  --hue-expense-text: light-dark(#a4332d, #e07b7b);
 }
 
-.section.kpi-income  { --kpi-bar: var(--hue-income);  --kpi-fg: var(--hue-income); }
-.section.kpi-expense { --kpi-bar: var(--hue-expense); --kpi-fg: var(--hue-expense); }
+.section.kpi-income  { --kpi-bar: var(--hue-income);  --kpi-fg: var(--hue-income-text); }
+.section.kpi-expense { --kpi-bar: var(--hue-expense); --kpi-fg: var(--hue-expense-text); }
 
 .demo-code {
   background: var(--section-bg);

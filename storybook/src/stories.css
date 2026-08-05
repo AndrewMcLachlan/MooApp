@@ -108,11 +108,14 @@
     grid-template-columns: repeat(2, 1fr);
 }
 
-/* What an app writes to add a tone: the colour token, and one rule wiring it to the card. */
+/* What an app writes to add a tone: the colour tokens, and one rule wiring them to the card.
+   Two per tone — a darker line over a lighter figure. */
 .kpi-story-tokens {
-    --hue-income:  light-dark(#3e9156, #6cc67e);
-    --hue-expense: light-dark(#a4332d, #e07b7b);
+    --hue-income:       light-dark(#2f6f42, #3e9156);
+    --hue-income-text:  light-dark(#3e9156, #6cc67e);
+    --hue-expense:      light-dark(#8f2b26, #a4332d);
+    --hue-expense-text: light-dark(#a4332d, #e07b7b);
 }
 
-.kpi-story-tokens .section.kpi-income  { --kpi-bar: var(--hue-income);  --kpi-fg: var(--hue-income); }
-.kpi-story-tokens .section.kpi-expense { --kpi-bar: var(--hue-expense); --kpi-fg: var(--hue-expense); }
+.kpi-story-tokens .section.kpi-income  { --kpi-bar: var(--hue-income);  --kpi-fg: var(--hue-income-text); }
+.kpi-story-tokens .section.kpi-expense { --kpi-bar: var(--hue-expense); --kpi-fg: var(--hue-expense-text); }
