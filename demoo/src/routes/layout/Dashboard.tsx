@@ -1,5 +1,5 @@
 import { Dashboard } from "@andrewmclachlan/moo-app";
-import { Widget, Badge, Button } from "@andrewmclachlan/moo-ds";
+import { Widget, Badge, Button, Skeleton } from "@andrewmclachlan/moo-ds";
 import { useState } from "react";
 import { layoutNav } from "../../nav";
 
@@ -15,6 +15,7 @@ export const DashboardPage = () => {
 
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const [chartLoading, setChartLoading] = useState(true);
 
     return (
         // Dashboard is a Page, so this route renders one directly rather than
@@ -68,10 +69,12 @@ export const DashboardPage = () => {
 
             <Widget header="Loading state" size="single" headerSize={5}>
                 <p>
-                    A widget swaps its body for a spinner while <code>loading</code> is set &mdash;
-                    there is no data to show yet. With <code>refreshing</code> the data stays put and
-                    recedes behind a bar on the top edge, because replacing content you already have
-                    is the thing worth avoiding.
+                    A widget swaps its body for a placeholder while <code>loading</code> is set
+                    &mdash; there is no data to show yet. <code>loading</code> on its own gives a
+                    centred spinner; add <code>loadingPlaceholder</code> to substitute your own,
+                    which is how the chart widget below gets a skeleton. With <code>refreshing</code>
+                    {" "}the data stays put and recedes behind a bar on the top edge, because
+                    replacing content you already have is the thing worth avoiding.
                 </p>
                 <div className="demo-row tight">
                     <Button variant="outline-primary" onClick={() => setLoading(!loading)}>
@@ -80,12 +83,27 @@ export const DashboardPage = () => {
                     <Button variant="outline-primary" onClick={() => setRefreshing(!refreshing)}>
                         {refreshing ? "Stop refreshing" : "Refresh Revenue"}
                     </Button>
+                    <Button variant="outline-primary" onClick={() => setChartLoading(!chartLoading)}>
+                        {chartLoading ? "Stop chart loading" : "Load Spending"}
+                    </Button>
                 </div>
             </Widget>
 
             <Widget header="Open Tickets" size="single" headerSize={5} to="/data/table">
                 <p className="stat">28</p>
                 <Badge bg="warning">Linked widget</Badge>
+            </Widget>
+
+            {/* The chart-widget case: a skeleton mirrors the shape a spinner would throw away. */}
+            <Widget
+                header="Spending"
+                size="single"
+                headerSize={5}
+                loading={chartLoading}
+                loadingPlaceholder={<Skeleton.Chart variant="bar" count={8} />}
+            >
+                <p className="stat">$2,410</p>
+                <Badge bg="info">8 tags</Badge>
             </Widget>
 
             <Widget header="Error Rate" size="single" headerSize={5}>

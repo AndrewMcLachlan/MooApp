@@ -27,7 +27,20 @@ For a widget that fetches, that ladder runs: nothing under ~300ms → `Skeleton`
 
 `Spinner` defaults to the `comet` animation — a conic-gradient tail masked into a ring, turning once a second. `border` (the Bootstrap-derived gap ring) remains available via the `animation` prop. It also waits `delay` ms (300 by default) before painting, so sub-300ms fetches never flash one; pass `delay={0}` to render immediately, as `Button` and `IconButton` do — a button's busy state is direct feedback on a click.
 
-`Widget` exposes both states: `loading` (no data yet — the body is replaced by a centred spinner) and `refreshing` (data on screen — an edge bar plus a dimmed, still-mounted body). `loading` wins if both are set.
+`Widget` exposes both states: `loading` (no data yet — the body is replaced by a placeholder) and `refreshing` (data on screen — an edge bar plus a dimmed, still-mounted body). `loading` wins if both are set.
+
+`loading` on its own gives a centred `SpinnerContainer`. Add `loadingPlaceholder` to substitute your own, which is how a chart widget gets a skeleton instead of a spinner:
+
+```tsx
+<Widget header="Top Tags" size="single"
+        loading={isPending}
+        loadingPlaceholder={<Skeleton.Chart variant="bar" count={10} />}
+        refreshing={!isPending && isFetching}>
+    <Bar data={data} options={options} />
+</Widget>
+```
+
+Omit `loadingPlaceholder` — or let it fall through to a falsy value — and you get the default spinner back.
 
 The skeleton shimmer is a single moving gradient that resolves its colours from the active theme and collapses to a static placeholder under `prefers-reduced-motion`. Skeleton shapes are decorative (`aria-hidden`); the loading *region* that contains them carries `aria-busy`. `ProgressIndeterminate` is a `role="progressbar"` with `aria-busy` and no `aria-valuenow`; under `prefers-reduced-motion` it renders as a static full-width bar. The comet spinner slows to 2s rather than stopping — a stopped spinner reads as a hang.
 

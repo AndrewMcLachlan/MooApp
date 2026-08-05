@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '../../test-utils';
 import { Widget } from '../Widget';
+import { Skeleton } from '../Skeleton';
 
 describe('Widget', () => {
   describe('rendering', () => {
@@ -51,6 +52,81 @@ describe('Widget', () => {
 
       expect(screen.getByText('Default Content')).toBeInTheDocument();
       expect(container.querySelector('.spinner-container')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('loadingPlaceholder', () => {
+    it('replaces the default spinner', () => {
+      const { container } = render(
+        <Widget size="single" loading loadingPlaceholder={<div data-testid="custom">Skeleton</div>}>
+          Hidden
+        </Widget>
+      );
+
+      expect(screen.getByTestId('custom')).toBeInTheDocument();
+      expect(container.querySelector('.spinner-container')).not.toBeInTheDocument();
+    });
+
+    it('still hides the children', () => {
+      render(
+        <Widget size="single" loading loadingPlaceholder={<span>Placeholder</span>}>
+          Hidden Content
+        </Widget>
+      );
+
+      expect(screen.queryByText('Hidden Content')).not.toBeInTheDocument();
+    });
+
+    it('is ignored when not loading', () => {
+      render(
+        <Widget size="single" loadingPlaceholder={<span data-testid="custom" />}>Visible</Widget>
+      );
+
+      expect(screen.getByText('Visible')).toBeInTheDocument();
+      expect(screen.queryByTestId('custom')).not.toBeInTheDocument();
+    });
+
+    // `cond && <Thing />` falls through to false when cond is false, and that
+    // should still give the default rather than an empty widget.
+    it.each([null, undefined, false, ''] as const)('falls back to the spinner for %p', (value) => {
+      const { container } = render(
+        <Widget size="single" loading loadingPlaceholder={value}>Content</Widget>
+      );
+
+      expect(container.querySelector('.spinner-container')).toBeInTheDocument();
+    });
+
+    it('defaults to the spinner when omitted', () => {
+      const { container } = render(<Widget size="single" loading>Content</Widget>);
+
+      expect(container.querySelector('.spinner-container')).toBeInTheDocument();
+    });
+
+    // Skeletons are aria-hidden by design, so the region has to carry the
+    // announcement — otherwise a custom placeholder is silent where the
+    // default spinner's role="status" was not.
+    it('marks the region busy even when the placeholder is aria-hidden', () => {
+      const { container } = render(
+        <Widget size="single" loading loadingPlaceholder={<Skeleton.Chart variant="bar" />}>
+          Content
+        </Widget>
+      );
+
+      expect(container.querySelector('.section')).toHaveAttribute('aria-busy', 'true');
+    });
+  });
+
+  describe('busy state', () => {
+    it('marks the region busy while loading', () => {
+      const { container } = render(<Widget size="single" loading>Content</Widget>);
+
+      expect(container.querySelector('.section')).toHaveAttribute('aria-busy', 'true');
+    });
+
+    it('is not busy when not loading', () => {
+      const { container } = render(<Widget size="single">Content</Widget>);
+
+      expect(container.querySelector('.section')).not.toHaveAttribute('aria-busy');
     });
   });
 

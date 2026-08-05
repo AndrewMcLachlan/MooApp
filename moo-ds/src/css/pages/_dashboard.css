@@ -76,5 +76,16 @@ main.dashboard {
             min-height: 0;
             overflow: hidden;
         }
+
+        /* A chart skeleton fills its container, so as a flex: none child with
+           height: 100% it resolved against the whole section and overshot by
+           the header's height -- clipping its own baseline axis against the
+           section's overflow: hidden. Let it take the space that is actually
+           left instead. Has to live here rather than in _skeleton-chart.css:
+           the rule above is both more specific and in a later import. */
+        > .skeleton-chart {
+            flex: 1;
+            height: auto;
+        }
     }
 }
