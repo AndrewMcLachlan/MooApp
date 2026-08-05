@@ -1,20 +1,12 @@
 import classNames from "classnames";
 import React from "react";
-import { toneForegroundVar, toneVar, type Hue, type Tone, type Variant } from "../models/Colours";
+import type { Hue, Tone, Variant } from "../models/Colours";
 
 /** @deprecated Use `Variant`. */
 export type BadgeSemantic = Variant;
 
 /** @deprecated Use `Hue`. */
 export type BadgeHue = Hue;
-
-/* The tokens with a class of their own below. Anything else — a hue an app has added to the
-   palette — is resolved to its custom property instead, so it needs nothing from this stylesheet. */
-const builtIn = new Set<string>([
-    "primary", "secondary", "success", "danger", "warning", "info",
-    "blue", "indigo", "purple", "pink", "rose", "orange", "amber", "yellow",
-    "green", "emerald", "teal", "cyan", "slate", "neutral",
-]);
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
     /**
@@ -45,14 +37,10 @@ type BadgeCssVars = React.CSSProperties & {
 export const Badge = React.forwardRef<HTMLSpanElement, React.PropsWithChildren<BadgeProps>>(
     ({ bg = "primary", colour, textColour, muted, outline, pill, icon, className, children, style, ...rest }, ref) => {
         const useCustom = !!colour;
-        // A token this stylesheet has no class for is an app's own; resolve it to its custom
-        // property so extending the palette is a CSS change rather than a component change.
-        const useToken = !useCustom && !!bg && !builtIn.has(bg);
 
         let inlineStyle: BadgeCssVars | undefined = style;
-        if (useCustom || useToken) {
-            inlineStyle = { ...style, "--badge-bg": useCustom ? colour : toneVar(bg as Tone) };
-            if (useToken) inlineStyle["--badge-fg"] = toneForegroundVar(bg as Tone);
+        if (useCustom) {
+            inlineStyle = { ...style, "--badge-bg": colour };
             if (textColour) {
                 inlineStyle["--badge-fg"] = textColour;
                 // Muted and outline compute color via color-mix and don't read --badge-fg.
@@ -63,7 +51,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, React.PropsWithChildren<B
 
         const classes = classNames(
             "badge",
-            !useCustom && !useToken && bg && `bg-${bg}`,
+            !useCustom && bg && `bg-${bg}`,
             // outline wins when both supplied
             outline && "outline",
             muted && !outline && "muted",

@@ -13,9 +13,9 @@ export interface KpiProps extends React.HTMLAttributes<HTMLElement> {
      * `--kpi-fg` the figure. A line wants enough weight to read as a rule and a figure enough
      * contrast to read as text, so the two often want different steps of one hue.
      *
-     * An app adds a tone in CSS and registers the name so it type-checks. There is no colour
-     * prop: a value passed from a component call can only ever be one colour, and each of these
-     * has to answer to a light scheme and a dark one.
+     * Adding a tone is one rule in your own CSS — nothing to declare to TypeScript, and no colour
+     * prop, because a value passed from a component call can only ever be one colour and each of
+     * these has to answer to a light scheme and a dark one.
      *
      * ```css
      * :root {
@@ -26,12 +26,6 @@ export interface KpiProps extends React.HTMLAttributes<HTMLElement> {
      * .section.kpi-income {
      *     --kpi-bar: var(--hue-income);
      *     --kpi-fg:  var(--hue-income-text);
-     * }
-     * ```
-     *
-     * ```ts
-     * declare module "@andrewmclachlan/moo-ds" {
-     *     interface HueRegistry { income: true; }
      * }
      * ```
      */

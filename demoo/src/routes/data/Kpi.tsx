@@ -72,7 +72,7 @@ export const KpiPage = () => {
                     A tone is only a name. What it means is a rule setting
                     <code>--kpi-bar</code> for the line and <code>--kpi-fg</code> for the figure,
                     from colour tokens declared with <code>light-dark()</code> so both schemes are
-                    settled in one place. Register the name and it type-checks like a built-in:
+                    settled in one place. That is the whole of it &mdash; name it and it works:
                 </p>
                 <pre className="demo-code">{`/* CSS: the colours, and the rule wiring them to the card.
    --kpi-bar is the line, --kpi-fg the figure -- set them
@@ -86,11 +86,7 @@ export const KpiPage = () => {
     --kpi-bar: var(--hue-income);
     --kpi-fg:  var(--hue-income-text);
 }
-
-/* TypeScript: register the name and it needs no cast. */
-declare module "@andrewmclachlan/moo-ds" {
-    interface HueRegistry { income: true; }
-}`}</pre>
+`}</pre>
                 <p>
                     After that a tone of your own behaves exactly as a built-in one does:
                 </p>
