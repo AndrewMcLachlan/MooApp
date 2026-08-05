@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '../../test-utils';
 import { Widget } from '../Widget';
+import { Skeleton } from '../Skeleton';
 
 describe('Widget', () => {
   describe('rendering', () => {
@@ -99,6 +100,33 @@ describe('Widget', () => {
       const { container } = render(<Widget size="single" loading>Content</Widget>);
 
       expect(container.querySelector('.spinner-container')).toBeInTheDocument();
+    });
+
+    // Skeletons are aria-hidden by design, so the region has to carry the
+    // announcement — otherwise a custom placeholder is silent where the
+    // default spinner's role="status" was not.
+    it('marks the region busy even when the placeholder is aria-hidden', () => {
+      const { container } = render(
+        <Widget size="single" loading loadingPlaceholder={<Skeleton.Chart variant="bar" />}>
+          Content
+        </Widget>
+      );
+
+      expect(container.querySelector('.section')).toHaveAttribute('aria-busy', 'true');
+    });
+  });
+
+  describe('busy state', () => {
+    it('marks the region busy while loading', () => {
+      const { container } = render(<Widget size="single" loading>Content</Widget>);
+
+      expect(container.querySelector('.section')).toHaveAttribute('aria-busy', 'true');
+    });
+
+    it('is not busy when not loading', () => {
+      const { container } = render(<Widget size="single">Content</Widget>);
+
+      expect(container.querySelector('.section')).not.toHaveAttribute('aria-busy');
     });
   });
 

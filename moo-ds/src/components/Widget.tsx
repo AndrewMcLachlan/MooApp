@@ -9,7 +9,14 @@ import { ProgressIndeterminate } from "./ProgressIndeterminate";
 // dashboard's `.section > *` flex rules. The CSS dims the children instead.
 export const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({ children, loading = false, loadingPlaceholder, refreshing = false, size = "single", className, ...rest }) => (
     <div className={size}>
-        <Section className={classNames(className, !loading && refreshing && "is-refreshing")} {...rest}>
+        {/* The region owns the loading announcement, not the placeholder — skeletons
+            are aria-hidden by design, so without this a custom placeholder would be
+            silent where the default spinner's role="status" was not. */}
+        <Section
+            className={classNames(className, !loading && refreshing && "is-refreshing")}
+            aria-busy={loading || undefined}
+            {...rest}
+        >
             {/* Truthiness rather than a null check, so `cond && <Thing />` falling
                 through to false still gets the default rather than nothing. */}
             {loading && (loadingPlaceholder || <SpinnerContainer />)}
