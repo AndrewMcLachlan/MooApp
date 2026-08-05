@@ -3,6 +3,7 @@
   "version": "5.2.0",
   "description": "A collection of packages for the MooApp framework",
   "private": true,
+  "type": "module",
   "workspaces": [
     "moo-ds",
     "moo-app",

@@ -1,8 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-vite';
-import { dirname, resolve } from "path"
-import { fileURLToPath } from "url"
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import { resolve } from "path"
 
 const config: StorybookConfig = {
   "stories": [
@@ -29,9 +26,9 @@ const config: StorybookConfig = {
     config.resolve = config.resolve || {};
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@andrewmclachlan/moo-ds': resolve(__dirname, '../../moo-ds/src'),
-      '@andrewmclachlan/moo-app': resolve(__dirname, '../../moo-app/src'),
-      '@andrewmclachlan/moo-icons': resolve(__dirname, '../../moo-icons/src'),
+      '@andrewmclachlan/moo-ds': resolve(import.meta.dirname, '../../moo-ds/src'),
+      '@andrewmclachlan/moo-app': resolve(import.meta.dirname, '../../moo-app/src'),
+      '@andrewmclachlan/moo-icons': resolve(import.meta.dirname, '../../moo-icons/src'),
     };
 
     config.build = config.build || {};
