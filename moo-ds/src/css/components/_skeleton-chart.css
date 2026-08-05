@@ -25,7 +25,10 @@
 .skeleton-chart-bar,
 .skeleton-chart-horizontal-bar {
     display: flex;
-    gap: 4%;
+    /* 2%, not 4%: with N bars there are N-1 gaps, so at 4% an eight-bar chart
+       spent 28% of its width on gaps and the bars read as thin next to the
+       real chart they stand in for. */
+    gap: 2%;
 }
 
 .skeleton-chart-bar {
@@ -46,6 +49,10 @@
 .skeleton-chart-bar > .skeleton-chart-element {
     flex: 1 1 0;
 
+    /* NOTE: these percentages need the host to give .skeleton-chart a definite
+       height. Against an indefinite one they compute to 0, not auto, so the
+       bars vanish and align-self: stretch cannot rescue them (stretch only
+       applies when the cross size is auto). Sizing the host is the contract. */
     &:nth-child(8n + 1) { height: 62%; }
     &:nth-child(8n + 2) { height: 88%; }
     &:nth-child(8n + 3) { height: 45%; }
