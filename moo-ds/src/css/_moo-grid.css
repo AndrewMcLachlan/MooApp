@@ -2,10 +2,9 @@
 
 .container,
 .container-fluid {
-    --gutter-x: 1.5rem;
-    --gutter-y: 0;
+    --gap: 1.5rem;
     width: 100%;
-    padding-inline: calc(var(--gutter-x) * 0.5);
+    padding-inline: calc(var(--gap) * 0.5);
     margin-inline: auto;
 }
 
@@ -31,27 +30,30 @@
     max-width: min(3120px, max(540px, 100dvw - 80px));
 }
 
-/* The gutter stays as negative margin plus child padding rather than becoming
-   `gap`. It cannot be `gap` while .col-* are percentage widths: width: 50%
-   resolves against the row, so two .col-6 already fill it exactly and any gap
-   is pure overflow that wraps the second column onto its own line (measured:
-   2x300px in a 600px row + 24px gap). Moving to `gap` means moving .row to
-   grid with `grid-column: span N`, which changes the public class contract. */
+/* One --gap for both axes: the space between columns and, when a row wraps, between its lines.
+
+   It is spent as negative margin plus child padding rather than the `gap` property, which cannot
+   be used while .col-* are percentage widths: width: 50% resolves against the row, so two .col-6
+   already fill it exactly and any gap is pure overflow that wraps the second column onto its own
+   line (measured: 2x300px in a 600px row + 24px gap). Moving to the property means moving .row to
+   grid with `grid-column: span N`, which changes the public class contract.
+
+   Vertically it costs nothing on a single line: every child carries --gap as top margin and the
+   row cancels one gap's worth, so one line nets to zero and only wrapped lines are separated. */
 .row {
-    --gutter-x: 1.5rem;
-    --gutter-y: 0;
+    --gap: 1.5rem;
     display: flex;
     flex-wrap: wrap;
-    margin-block-start: calc(-1 * var(--gutter-y));
-    margin-inline: calc(-0.5 * var(--gutter-x));
+    margin-block-start: calc(-1 * var(--gap));
+    margin-inline: calc(-0.5 * var(--gap));
 }
 
 .row > * {
     flex-shrink: 0;
     width: 100%;
     max-width: 100%;
-    padding-inline: calc(var(--gutter-x) * 0.5);
-    margin-block-start: var(--gutter-y);
+    padding-inline: calc(var(--gap) * 0.5);
+    margin-block-start: var(--gap);
 }
 
 .col { flex: 1 0 0%; }
