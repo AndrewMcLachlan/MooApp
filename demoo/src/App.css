@@ -159,6 +159,56 @@
 /* Large stat number used on the Home dashboard widgets. */
 .stat { font-size: 2rem; margin: 0; }
 
+/* KPI strips. The component carries no type scale of its own, so the size lives with the
+   container — which is the point of the split, and worth showing twice at two sizes. */
+.home-kpis,
+.kpi-demo-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.home-kpis .section.kpi,
+.kpi-demo-strip .section.kpi {
+  padding: 0.75rem 1rem;
+}
+
+.home-kpis .kpi-value,
+.kpi-demo-strip .kpi-value {
+  font-size: 1.5rem;
+}
+
+/* The hue row is fourteen cards, so they go smaller and narrower. */
+.kpi-demo-strip.tight {
+  grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
+}
+
+.kpi-demo-strip.tight .kpi-value {
+  font-size: 1.125rem;
+}
+
+/* Declared here only because demoo has no registry of its own; a real app would put these on
+   :root beside its other tokens. */
+.kpi-demo-tokens {
+  --hue-income:  light-dark(#3e9156, #6cc67e);
+  --hue-expense: light-dark(#a4332d, #e07b7b);
+}
+
+.demo-code {
+  background: var(--section-bg);
+  border: 1px solid var(--border-colour);
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+  font-size: 0.8125rem;
+}
+
+.demo-note {
+  color: var(--body-colour-dim);
+  font-size: 0.875rem;
+}
+
 /* Activity list inside a dashboard widget. The widget clips its body, so the
    list scrolls rather than pushing past the cell. */
 .dashboard-feed {

@@ -20,6 +20,7 @@ import { UploadPage } from "./routes/forms/Upload";
 import { TablePage } from "./routes/data/Table";
 import { DataGridPage } from "./routes/data/DataGrid";
 import { PaginationPage } from "./routes/data/Pagination";
+import { KpiPage } from "./routes/data/Kpi";
 import { Alerts } from "./routes/feedback/Alerts";
 import { Notifications } from "./routes/feedback/Notifications";
 import { Loading } from "./routes/feedback/Loading";
@@ -72,6 +73,7 @@ const dataRoute = createRoute({ getParentRoute: () => rootRoute, path: "data", c
 const tableRoute = createRoute({ getParentRoute: () => dataRoute, path: "table", component: TablePage });
 const dataGridRoute = createRoute({ getParentRoute: () => dataRoute, path: "data-grid", component: DataGridPage });
 const paginationRoute = createRoute({ getParentRoute: () => dataRoute, path: "pagination", component: PaginationPage });
+const kpiRoute = createRoute({ getParentRoute: () => dataRoute, path: "kpi", component: KpiPage });
 
 // --- Feedback -------------------------------------------------------------
 const feedbackRoute = createRoute({ getParentRoute: () => rootRoute, path: "feedback", component: CategoryOutlet });
@@ -116,6 +118,7 @@ const routeTree = rootRoute.addChildren([
     tableRoute,
     dataGridRoute,
     paginationRoute,
+    kpiRoute,
   ]),
   feedbackRoute.addChildren([
     categoryIndex(feedbackRoute, "/feedback/alerts"),

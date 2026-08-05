@@ -1,5 +1,5 @@
 import { Page } from "@andrewmclachlan/moo-app";
-import { Section, useMessages, Button, Widget, Badge, Spinner, Collapsible, Row, Col } from "@andrewmclachlan/moo-ds";
+import { Section, useMessages, Button, Widget, Badge, Kpi, Skeleton, Spinner, Collapsible, Row, Col } from "@andrewmclachlan/moo-ds";
 import { useState } from "react";
 
 export const Home = () => {
@@ -23,32 +23,27 @@ export const Home = () => {
 
             {/* Widget's `size` only means something inside Dashboard's grid, so in a
                 Row each one needs a Col to sit in -- `.row > *` is width: 100% otherwise. */}
-            <Row>
-                <Col sm={6} xl={3}>
-                    <Widget header="Total Users" size="single" headerSize={5}>
-                        <p className="stat">1,234</p>
-                        <Badge bg="success">+12%</Badge>
-                    </Widget>
-                </Col>
-                <Col sm={6} xl={3}>
-                    <Widget header="Revenue" size="single" headerSize={5}>
-                        <p className="stat">$45,678</p>
-                        <Badge bg="danger">-3%</Badge>
-                    </Widget>
-                </Col>
-                <Col sm={6} xl={3}>
-                    <Widget header="Active Sessions" size="single" headerSize={5} loading={widgetLoading}>
-                        <p className="stat">342</p>
-                        <Badge bg="info">Live</Badge>
-                    </Widget>
-                </Col>
-                <Col sm={6} xl={3}>
-                    <Widget header="View Reports" size="single" headerSize={5} to="/data/table">
-                        <p className="stat">28</p>
-                        <Badge bg="warning">Pending</Badge>
-                    </Widget>
-                </Col>
-            </Row>
+            {/* A figure with a label and a caption is a Kpi, not a Widget with a paragraph in
+                it. Widget still earns its place below, where the tile is a container for
+                arbitrary content and wants its loading and click-through behaviour. */}
+            <div className="home-kpis">
+                <Kpi label="Total Users" tone="success">
+                    <Kpi.Value>{widgetLoading ? <Skeleton.Text /> : "1,234"}</Kpi.Value>
+                    <Kpi.Sub>up 12% on last month</Kpi.Sub>
+                </Kpi>
+                <Kpi label="Revenue" tone="danger">
+                    <Kpi.Value>{widgetLoading ? <Skeleton.Text /> : "$45,678"}</Kpi.Value>
+                    <Kpi.Sub>down 3% on last month</Kpi.Sub>
+                </Kpi>
+                <Kpi label="Active Sessions" tone="info">
+                    <Kpi.Value>{widgetLoading ? <Skeleton.Text /> : "342"}</Kpi.Value>
+                    <Kpi.Sub>live right now</Kpi.Sub>
+                </Kpi>
+                <Kpi label="Pending Reports" tone="warning">
+                    <Kpi.Value>{widgetLoading ? <Skeleton.Text /> : "28"}</Kpi.Value>
+                    <Kpi.Sub>awaiting review</Kpi.Sub>
+                </Kpi>
+            </div>
 
             <Section title="Spinners" header="Spinner Variants" headerSize={4}>
                 <div className="demo-row loose">
