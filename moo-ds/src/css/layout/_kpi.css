@@ -1,0 +1,72 @@
+/* KPI card: a headline figure with a coloured top bar.
+
+   Lives in the layout layer, not components, because it is a Section variant and has to override
+   Section's own border. Section is styled in this layer, and a layer beats specificity: from the
+   components layer the top bar lost to `.section { border: ... }` and never drew at all.
+
+   Every tone sets --kpi-bar and --kpi-fg, the same shape the badge uses. An app adds a tone by
+   declaring its own colour token and one rule of the same form; nothing is passed in from a
+   component call, so light and dark are settled in CSS where they belong. */
+
+.section.kpi {
+    --kpi-bar: var(--primary);
+    /* No default figure colour: unset means the figure inherits, which is what an untoned card
+       and a card whose figure carries its own colouring both want. */
+
+    border-top: 2px solid var(--kpi-bar);
+}
+
+.kpi-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    color: var(--body-colour-dim);
+}
+
+.kpi-value {
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    line-height: 1.1;
+    /* Figures in a row of cards should line up, so the digits are fixed-width. */
+    font-variant-numeric: tabular-nums;
+    margin-top: 2px;
+    color: var(--kpi-fg, inherit);
+}
+
+.kpi-sub {
+    font-size: 0.75rem;
+    color: var(--body-colour-dim);
+    margin-top: 2px;
+}
+
+/* ---- Semantic tones ---- */
+.section.kpi-primary   { --kpi-bar: var(--hue-primary);   --kpi-fg: var(--hue-primary); }
+.section.kpi-secondary { --kpi-bar: var(--hue-secondary); --kpi-fg: var(--hue-secondary); }
+.section.kpi-success   { --kpi-bar: var(--hue-success);   --kpi-fg: var(--hue-success); }
+.section.kpi-warning   { --kpi-bar: var(--hue-warning);   --kpi-fg: var(--hue-warning); }
+.section.kpi-danger    { --kpi-bar: var(--hue-danger);    --kpi-fg: var(--hue-danger); }
+.section.kpi-info      { --kpi-bar: var(--hue-info);      --kpi-fg: var(--hue-info); }
+
+/* ---- Hue tones ---- */
+.section.kpi-blue    { --kpi-bar: var(--hue-blue);    --kpi-fg: var(--hue-blue); }
+.section.kpi-indigo  { --kpi-bar: var(--hue-indigo);  --kpi-fg: var(--hue-indigo); }
+.section.kpi-purple  { --kpi-bar: var(--hue-purple);  --kpi-fg: var(--hue-purple); }
+.section.kpi-pink    { --kpi-bar: var(--hue-pink);    --kpi-fg: var(--hue-pink); }
+.section.kpi-rose    { --kpi-bar: var(--hue-rose);    --kpi-fg: var(--hue-rose); }
+.section.kpi-orange  { --kpi-bar: var(--hue-orange);  --kpi-fg: var(--hue-orange); }
+.section.kpi-amber   { --kpi-bar: var(--hue-amber);   --kpi-fg: var(--hue-amber); }
+.section.kpi-yellow  { --kpi-bar: var(--hue-yellow);  --kpi-fg: var(--hue-yellow); }
+.section.kpi-green   { --kpi-bar: var(--hue-green);   --kpi-fg: var(--hue-green); }
+.section.kpi-emerald { --kpi-bar: var(--hue-emerald); --kpi-fg: var(--hue-emerald); }
+.section.kpi-teal    { --kpi-bar: var(--hue-teal);    --kpi-fg: var(--hue-teal); }
+.section.kpi-cyan    { --kpi-bar: var(--hue-cyan);    --kpi-fg: var(--hue-cyan); }
+.section.kpi-slate   { --kpi-bar: var(--hue-slate);   --kpi-fg: var(--hue-slate); }
+.section.kpi-neutral { --kpi-bar: var(--hue-neutral); --kpi-fg: var(--hue-neutral); }
+
+/* A placeholder standing in for one of these lines takes that line's own box, so the card is the
+   same height loading or loaded and nothing below it moves. */
+:is(.kpi-label, .kpi-value, .kpi-sub) > .skeleton-text > .skeleton-text-line {
+    height: 1lh;
+    margin-block: 0;
+}

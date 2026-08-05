@@ -102,32 +102,11 @@ declare module "@andrewmclachlan/moo-ds" {
                     </Kpi>
                 </div>
                 <p className="demo-note">
-                    This page declares those two tokens on the strip below rather than in an app
-                    stylesheet, and casts the names, because demoo has no registry of its own.
+                    demoo declares those two in its own stylesheet and casts the names here, having
+                    no registry of its own; a real app registers them and drops the cast.
                 </p>
             </Section>
 
-            <Section title="Explicit colours" header="Explicit colours" headerSize={4}>
-                <p>
-                    <code>colour</code> and <code>textColour</code> are the escape hatch for a
-                    one-off with no token, and are set independently &mdash; a bar in one colour and
-                    a figure in another, or a bar alone where the figure does its own colouring.
-                </p>
-                <div className="kpi-demo-strip">
-                    <Kpi label="Two tokens" colour="var(--hue-indigo)" textColour="var(--hue-purple)">
-                        <Kpi.Value>$8,200.00</Kpi.Value>
-                        <Kpi.Sub>bar and figure differ</Kpi.Sub>
-                    </Kpi>
-                    <Kpi label="Bar only" colour="var(--hue-teal)">
-                        <Kpi.Value>$1,768.10</Kpi.Value>
-                        <Kpi.Sub>figure inherits</Kpi.Sub>
-                    </Kpi>
-                    <Kpi label="Tone, figure overridden" tone="success" textColour="var(--body-colour-bold)">
-                        <Kpi.Value>$6,431.90</Kpi.Value>
-                        <Kpi.Sub>bar from the tone</Kpi.Sub>
-                    </Kpi>
-                </div>
-            </Section>
 
             <Section title="Loading" header="Loading" headerSize={4}>
                 <p>

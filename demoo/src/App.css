@@ -188,12 +188,15 @@
   font-size: 1.125rem;
 }
 
-/* Declared here only because demoo has no registry of its own; a real app would put these on
-   :root beside its other tokens. */
-.kpi-demo-tokens {
+/* What an app writes to add a tone of its own: the colour, and one rule wiring it to the card.
+   A real app puts the tokens on :root beside its others. */
+:root {
   --hue-income:  light-dark(#3e9156, #6cc67e);
   --hue-expense: light-dark(#a4332d, #e07b7b);
 }
+
+.section.kpi-income  { --kpi-bar: var(--hue-income);  --kpi-fg: var(--hue-income); }
+.section.kpi-expense { --kpi-bar: var(--hue-expense); --kpi-fg: var(--hue-expense); }
 
 .demo-code {
   background: var(--section-bg);
