@@ -54,6 +54,54 @@ describe('Widget', () => {
     });
   });
 
+  describe('loadingPlaceholder', () => {
+    it('replaces the default spinner', () => {
+      const { container } = render(
+        <Widget size="single" loading loadingPlaceholder={<div data-testid="custom">Skeleton</div>}>
+          Hidden
+        </Widget>
+      );
+
+      expect(screen.getByTestId('custom')).toBeInTheDocument();
+      expect(container.querySelector('.spinner-container')).not.toBeInTheDocument();
+    });
+
+    it('still hides the children', () => {
+      render(
+        <Widget size="single" loading loadingPlaceholder={<span>Placeholder</span>}>
+          Hidden Content
+        </Widget>
+      );
+
+      expect(screen.queryByText('Hidden Content')).not.toBeInTheDocument();
+    });
+
+    it('is ignored when not loading', () => {
+      render(
+        <Widget size="single" loadingPlaceholder={<span data-testid="custom" />}>Visible</Widget>
+      );
+
+      expect(screen.getByText('Visible')).toBeInTheDocument();
+      expect(screen.queryByTestId('custom')).not.toBeInTheDocument();
+    });
+
+    // `cond && <Thing />` falls through to false when cond is false, and that
+    // should still give the default rather than an empty widget.
+    it.each([null, undefined, false, ''] as const)('falls back to the spinner for %p', (value) => {
+      const { container } = render(
+        <Widget size="single" loading loadingPlaceholder={value}>Content</Widget>
+      );
+
+      expect(container.querySelector('.spinner-container')).toBeInTheDocument();
+    });
+
+    it('defaults to the spinner when omitted', () => {
+      const { container } = render(<Widget size="single" loading>Content</Widget>);
+
+      expect(container.querySelector('.spinner-container')).toBeInTheDocument();
+    });
+  });
+
   describe('refreshing state', () => {
     it('shows the edge bar and keeps children mounted', () => {
       const { container } = render(<Widget size="single" refreshing>Live Content</Widget>);
