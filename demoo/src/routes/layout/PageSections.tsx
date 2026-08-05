@@ -1,5 +1,5 @@
 import { Page } from "@andrewmclachlan/moo-app";
-import { Section, SectionTable, Collapsible, Widget, Row, Badge } from "@andrewmclachlan/moo-ds";
+import { Section, SectionTable, Stack, Collapsible, Widget, Row, Badge } from "@andrewmclachlan/moo-ds";
 import { layoutNav } from "../../nav";
 
 export const PageSections = () => {
@@ -25,9 +25,11 @@ export const PageSections = () => {
             </Section>
 
             <Section title="Section header sizes" header="Header sizes" headerSize={4}>
+                <Stack>
                 <Section header="headerSize 3" headerSize={3}><p>A top-level block.</p></Section>
                 <Section header="headerSize 4" headerSize={4}><p>A nested block.</p></Section>
                 <Section header="headerSize 5" headerSize={5}><p>A small sub-block.</p></Section>
+                </Stack>
             </Section>
 
             <SectionTable header="SectionTable" headerSize={4} striped hover>
@@ -46,7 +48,7 @@ export const PageSections = () => {
                     <code>Widget</code> is a dashboard card; drop several into a <code>Row</code> and
                     they lay out as a responsive grid. See the Home page for the live dashboard.
                 </p>
-                <Row>
+                <Stack>
                     <Widget header="Sessions" size="single" headerSize={5}>
                         <p className="stat">342</p>
                         <Badge bg="info">Live</Badge>
@@ -55,7 +57,7 @@ export const PageSections = () => {
                         <p className="stat">3</p>
                         <Badge bg="danger">-1</Badge>
                     </Widget>
-                </Row>
+                </Stack>
             </Section>
 
             <Section title="Collapsible" header="Collapsible" headerSize={4}>

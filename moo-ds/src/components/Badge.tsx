@@ -1,19 +1,18 @@
 import classNames from "classnames";
 import React from "react";
+import type { Hue, Tone, Variant } from "../models/Colours";
 
-export type BadgeSemantic = "primary" | "secondary" | "success" | "danger" | "warning" | "info";
+/** @deprecated Use `Variant`. */
+export type BadgeSemantic = Variant;
 
-export type BadgeHue =
-    | "blue" | "indigo" | "purple" | "pink" | "rose"
-    | "orange" | "amber" | "yellow"
-    | "green" | "emerald" | "teal" | "cyan"
-    | "slate" | "neutral";
+/** @deprecated Use `Hue`. */
+export type BadgeHue = Hue;
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
     /**
      * Named token: a semantic variant or a hue. Ignored when `colour` is also supplied.
      */
-    bg?: BadgeSemantic | BadgeHue;
+    bg?: Tone;
     /**
      * Any CSS colour value. Overrides `bg` when provided.
      * Examples: "#7c6cff", "rgb(124,108,255)", "var(--brand-teal)".

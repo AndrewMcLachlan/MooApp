@@ -1,9 +1,21 @@
 import classNames from "classnames";
 import React from "react";
 import { Spinner } from "./Spinner";
+import type { Variant } from "../models/Colours";
+
+/**
+ * Buttons carry the semantic variants, filled or outlined, plus `link`.
+ *
+ * `info` is excluded deliberately: there is no `.btn-info`, and a button typed for a variant it
+ * cannot render is worse than one that won't compile. Adding the style is all it would take.
+ */
+export type ButtonVariant =
+    | Exclude<Variant, "info">
+    | `outline-${Exclude<Variant, "info">}`
+    | "link";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: "primary" | "outline-primary" | "secondary" | "outline-secondary" | "danger" | "outline-danger" | "warning" | "outline-warning" | "success" | "outline-success" | "link";
+    variant?: ButtonVariant;
     size?: "sm" | "lg";
     as?: React.ElementType;
     active?: boolean;

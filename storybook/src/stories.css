@@ -86,3 +86,36 @@
 .demo-fill { flex: 1; }
 .demo-centre { text-align: center; }
 .demo-spaced { margin-right: 0.5rem; }
+
+/* ---- KPI stories ----
+   The component carries no type scale of its own, so the strip sets it — which is the split
+   being demonstrated, not incidental styling. */
+.kpi-story-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+    gap: 0.75rem;
+}
+
+.kpi-story-strip .section.kpi {
+    padding: 0.75rem 1rem;
+}
+
+.kpi-story-strip .kpi-value {
+    font-size: 1.375rem;
+}
+
+.kpi-story-pair {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* What an app writes to add a tone: the colour tokens, and one rule wiring them to the card.
+   Two per tone — a darker line over a lighter figure. */
+.kpi-story-tokens {
+    --hue-income:       light-dark(#2f6f42, #3e9156);
+    --hue-income-text:  light-dark(#3e9156, #6cc67e);
+    --hue-expense:      light-dark(#8f2b26, #a4332d);
+    --hue-expense-text: light-dark(#a4332d, #e07b7b);
+}
+
+.kpi-story-tokens .section.kpi-income  { --kpi-bar: var(--hue-income);  --kpi-fg: var(--hue-income-text); }
+.kpi-story-tokens .section.kpi-expense { --kpi-bar: var(--hue-expense); --kpi-fg: var(--hue-expense-text); }

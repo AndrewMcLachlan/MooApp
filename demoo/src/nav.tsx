@@ -29,6 +29,7 @@ export const dataNav: NavItem[] = [
     { route: "/data/table", text: "Table", image: <Icon icon={Database} /> },
     { route: "/data/data-grid", text: "Data Grid", image: <Icon icon={Database} /> },
     { route: "/data/pagination", text: "Pagination", image: <Icon icon={List} /> },
+    { route: "/data/kpi", text: "KPI", image: <Icon icon={Sparkle} /> },
 ];
 
 export const feedbackNav: NavItem[] = [

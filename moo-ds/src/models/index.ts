@@ -9,3 +9,4 @@ export * from "./RefProps";
 export * from "./SortDirection";
 export * from "./Theme";
 export * from "./ValueProps";
+export * from "./Colours";

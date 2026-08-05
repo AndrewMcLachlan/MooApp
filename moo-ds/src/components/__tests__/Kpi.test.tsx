@@ -12,16 +12,38 @@ describe("Kpi", () => {
         expect(container.querySelector(".kpi-value")).toHaveTextContent("$1,000");
     });
 
-    it("defaults to the neutral tone so a figure with no direction gets the plain accent", () => {
+    it("takes no tone class when none is asked for, so the card keeps the default bar", () => {
         const { container } = render(<Kpi label="Count"><Kpi.Value>12</Kpi.Value></Kpi>);
 
-        expect(container.querySelector(".kpi")).toHaveAttribute("data-tone", "neutral");
+        // Every tone class, not a few named ones: a stray kpi-anything would recolour the card.
+        const classes = [...container.querySelector(".kpi")!.classList];
+        expect(classes.filter(c => c.startsWith("kpi-"))).toEqual([]);
     });
 
-    it("exposes the tone as an attribute, which is what the accent colour keys off", () => {
-        const { container } = render(<Kpi label="Spend" tone="negative"><Kpi.Value>-$40</Kpi.Value></Kpi>);
+    it("maps a semantic tone to its class", () => {
+        const { container } = render(<Kpi label="Income" tone="success"><Kpi.Value>$500</Kpi.Value></Kpi>);
 
-        expect(container.querySelector(".kpi")).toHaveAttribute("data-tone", "negative");
+        expect(container.querySelector(".kpi")).toHaveClass("kpi-success");
+    });
+
+    it("accepts a hue as readily as a semantic, since both are tokens", () => {
+        const { container } = render(<Kpi label="Category" tone="teal"><Kpi.Value>3</Kpi.Value></Kpi>);
+
+        expect(container.querySelector(".kpi")).toHaveClass("kpi-teal");
+    });
+
+    it("names a token an app has added the same way as a built-in one", () => {
+        // The registry's point: the app declares --hue-income and a .kpi-income rule, and the
+        // component does nothing different for it.
+        const { container } = render(<Kpi label="Income" tone={"income" as never}><Kpi.Value>$500</Kpi.Value></Kpi>);
+
+        expect(container.querySelector(".kpi")).toHaveClass("kpi-income");
+    });
+
+    it("sets no inline style, so colour stays entirely in CSS", () => {
+        const { container } = render(<Kpi label="Income" tone="success"><Kpi.Value>$500</Kpi.Value></Kpi>);
+
+        expect(container.querySelector<HTMLElement>(".kpi")?.getAttribute("style")).toBeNull();
     });
 
     it("renders an optional caption under the figure", () => {
