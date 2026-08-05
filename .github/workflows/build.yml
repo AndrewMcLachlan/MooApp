@@ -32,8 +32,15 @@ jobs:
         registry-url: "https://npm.pkg.github.com"
     - run: npm ci --no-scripts
     - run: npm pkg set version=${{ steps.version.outputs.version }} --workspace=moo-ds --workspace=moo-app --workspace=moo-icons
+    # Before the tests, for the same reason type-check runs after the build below:
+    # moo-ds imports @andrewmclachlan/moo-icons, which resolves through that
+    # package's `exports` to dist/index.es.js. dist is gitignored, so on a fresh
+    # checkout it does not exist and every moo-ds test file that reaches Tooltip
+    # fails with "Failed to resolve import". It passes locally only when a stale
+    # dist happens to be lying around.
+    - run: npm run build --workspace=moo-icons
     - run: npm run test:run
-    - run: npm run build --workspace=moo-ds --workspace=moo-app --workspace=moo-icons
+    - run: npm run build --workspace=moo-ds --workspace=moo-app
     # Nothing else here type-checks the tests: vitest runs through esbuild, which
     # strips types without checking them, and the build above compiles src only.
     # Without this step a test file can stop compiling and every check stays green.

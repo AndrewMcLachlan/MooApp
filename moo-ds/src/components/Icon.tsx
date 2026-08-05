@@ -4,7 +4,7 @@ import classNames from "classnames";
 import type { ElementType, MouseEventHandler } from "react";
 import type { IconType } from "../types";
 
-export const Icon: React.FC<IconProps> = ({ icon, src, onClick, title, className }) => {
+export const Icon: React.FC<IconProps> = ({ icon, src, onClick, title, className, size }) => {
 
     const CustomIconElement = icon as ElementType;
 
@@ -14,9 +14,9 @@ export const Icon: React.FC<IconProps> = ({ icon, src, onClick, title, className
         case "undefined":
             return src ? <img src={src} alt={title ?? ""} className={classNames("custom-icon", clickableClassName, className)} onClick={onClick} title={title} /> : null;
         case "function":
-            return <CustomIconElement className={classNames("custom-icon", clickableClassName, className)} onClick={onClick} title={title} />
+            return <CustomIconElement className={classNames("custom-icon", clickableClassName, className, size)} onClick={onClick} title={title} />
         default:
-            return <FontAwesomeIcon icon={icon as IconProp} className={classNames(clickableClassName, className)} onClick={onClick} title={title} />;
+            return <FontAwesomeIcon icon={icon as IconProp} className={classNames(clickableClassName, className)} onClick={onClick} size={size} title={title} />;
     }
 }
 
@@ -26,6 +26,7 @@ export interface IconProps {
     onClick?: MouseEventHandler<Element>;
     title?: string;
     className?: string;
+    size?: "sm" | "lg";
 }
 
 Icon.displayName = "Icon";

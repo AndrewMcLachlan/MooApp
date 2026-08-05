@@ -44,6 +44,8 @@
   --warning: var(--amber);
   --success: var(--green);
 
+   --muted-colour: #6c757d;
+
   /* Hue palette - resolves via color-scheme. Light values are darker/saturated
      for legibility on white; dark values are brighter for dark surfaces. */
   --hue-blue:    light-dark(#2563eb, #4d8bff);

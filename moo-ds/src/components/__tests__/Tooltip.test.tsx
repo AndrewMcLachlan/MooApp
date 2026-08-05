@@ -16,7 +16,7 @@ describe('Tooltip', () => {
       const svg = container.querySelector('svg');
       expect(svg).toBeInTheDocument();
       // FontAwesome 6 uses circle-info as the canonical name for info-circle
-      expect(svg).toHaveAttribute('data-icon', 'circle-info');
+      expect(svg).toHaveClass('custom-icon', 'muted', 'sm');
     });
 
     it('shows tooltip content on hover', () => {
