@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type PropsWithChildren, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { showInTopLayer, topLayerProps } from "../utils/topLayer";
