@@ -2,7 +2,6 @@
 
 .container,
 .container-fluid {
-    --gap: 1.5rem;
     width: 100%;
     padding-inline: calc(var(--gap) * 0.5);
     margin-inline: auto;
@@ -30,7 +29,8 @@
     max-width: min(3120px, max(540px, 100dvw - 80px));
 }
 
-/* One --gap for both axes, spent differently on each because only one of them can afford it.
+/* --gap (see _variables.css) on both axes, spent differently on each because only one of them
+   can afford it.
 
    Across (main axis) it is negative margin on the row plus padding on the children. `column-gap`
    is unusable while .col-* are percentage widths: width: 50% resolves against the row, so two
@@ -42,7 +42,6 @@
    bearing on how wide a line's items may be, so the overflow above cannot arise. It also applies
    only between lines, so a single-line row is untouched and an empty one occupies nothing. */
 .row {
-    --gap: 1.5rem;
     display: flex;
     flex-wrap: wrap;
     row-gap: var(--gap);

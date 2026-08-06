@@ -96,6 +96,13 @@
   --border-width: 1px;
   --border-radius: 0.375rem;
 
+  /* The space between laid-out things: between a Row's columns and its wrapped lines, and between
+     a Stack's children. One token so a row of cards and a stack of them are spaced alike.
+
+     It inherits, which is the useful part — set it on any container and everything laid out inside
+     retunes to it, no component needing a prop for the purpose. */
+  --gap: 1.5rem;
+
   /* Follow system preference by default */
   color-scheme: light dark;
   --primary: var(--default-primary);

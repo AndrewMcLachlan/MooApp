@@ -1,6 +1,5 @@
-.row.section-row {
-    /* Its vertical gutter used to be set here; .row carries --gap on both axes now. */
-    .section {
-        height: 100%;
-    }
+/* A row of Sections that should read as one band: equal heights, so their bottoms line up however
+   much each contains. Spacing is --gap, from .row, like any other row. */
+.row.section-row .section {
+    height: 100%;
 }
