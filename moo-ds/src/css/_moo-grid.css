@@ -30,21 +30,22 @@
     max-width: min(3120px, max(540px, 100dvw - 80px));
 }
 
-/* One --gap for both axes: the space between columns and, when a row wraps, between its lines.
+/* One --gap for both axes, spent differently on each because only one of them can afford it.
 
-   It is spent as negative margin plus child padding rather than the `gap` property, which cannot
-   be used while .col-* are percentage widths: width: 50% resolves against the row, so two .col-6
-   already fill it exactly and any gap is pure overflow that wraps the second column onto its own
-   line (measured: 2x300px in a 600px row + 24px gap). Moving to the property means moving .row to
-   grid with `grid-column: span N`, which changes the public class contract.
+   Across (main axis) it is negative margin on the row plus padding on the children. `column-gap`
+   is unusable while .col-* are percentage widths: width: 50% resolves against the row, so two
+   .col-6 already fill it exactly and any main-axis gap is pure overflow that wraps the second
+   column onto its own line permanently (measured: 2x300px in a 600px row + 24px gap). Escaping
+   that means moving .row to grid with `grid-column: span N`, which changes the public contract.
 
-   Vertically it costs nothing on a single line: every child carries --gap as top margin and the
-   row cancels one gap's worth, so one line nets to zero and only wrapped lines are separated. */
+   Down (cross axis) `row-gap` is fine, and is what this uses: it spaces flex *lines* and has no
+   bearing on how wide a line's items may be, so the overflow above cannot arise. It also applies
+   only between lines, so a single-line row is untouched and an empty one occupies nothing. */
 .row {
     --gap: 1.5rem;
     display: flex;
     flex-wrap: wrap;
-    margin-block-start: calc(-1 * var(--gap));
+    row-gap: var(--gap);
     margin-inline: calc(-0.5 * var(--gap));
 }
 
@@ -53,7 +54,6 @@
     width: 100%;
     max-width: 100%;
     padding-inline: calc(var(--gap) * 0.5);
-    margin-block-start: var(--gap);
 }
 
 .col { flex: 1 0 0%; }
