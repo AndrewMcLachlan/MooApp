@@ -22,14 +22,18 @@
 
 /* --- bar / horizontal-bar ------------------------------------------------- */
 
+/* No `gap`. A percentage gap is a share of the whole, so its effect swung with
+   the bar count: at 4% eight bars spent 28% of the width on gaps and read as
+   thin, while two bars had a single gap and became slabs. Chart.js instead
+   sizes a bar at categoryPercentage x barPercentage = 0.72 of its own slot
+   whatever the count, so the bars below scale within their slot to match. */
 .skeleton-chart-bar,
 .skeleton-chart-horizontal-bar {
     display: flex;
-    /* 2%, not 4%: with N bars there are N-1 gaps, so at 4% an eight-bar chart
-       spent 28% of its width on gaps and the bars read as thin next to the
-       real chart they stand in for. */
-    gap: 2%;
 }
+
+.skeleton-chart-bar > .skeleton-chart-element { transform: scaleX(0.72); }
+.skeleton-chart-horizontal-bar > .skeleton-chart-element { transform: scaleY(0.72); }
 
 .skeleton-chart-bar {
     flex-direction: row;
@@ -122,9 +126,19 @@
     --skeleton-chart-hole: 0;
     --slice-angle: calc(360deg / 6);
 
+    /* Stay circular. `aspect-ratio` alone was not enough: the base rule's
+       height: 100% made the height definite, so in a host narrower than it was
+       tall `max-width` clamped the width and the ratio could not rebalance --
+       a 150x400 host gave a 150x400 oval. Both axes auto with both maxes lets
+       the ratio fit whichever axis is smaller. `min-width` matches the
+       inherited min-height floor so a host below it overflows as a circle
+       rather than going oval. */
     width: auto;
+    height: auto;
     aspect-ratio: 1;
     max-width: 100%;
+    max-height: 100%;
+    min-width: 12rem;
     margin-inline: auto;
     border-radius: 50%;
 

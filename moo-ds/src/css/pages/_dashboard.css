@@ -91,5 +91,13 @@ main.dashboard {
             flex: 1;
             height: auto;
         }
+
+        /* Round variants opt out: flex: 1 would make the height definite again
+           and a widget narrower than it is tall would clamp the width into an
+           oval. Sizing themselves from the smaller axis keeps them circular. */
+        > .skeleton-chart-pie,
+        > .skeleton-chart-doughnut {
+            flex: 0 1 auto;
+        }
     }
 }
