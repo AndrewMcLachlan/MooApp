@@ -86,14 +86,26 @@ describe('Widget', () => {
       expect(screen.queryByTestId('custom')).not.toBeInTheDocument();
     });
 
-    // `cond && <Thing />` falls through to false when cond is false, and that
-    // should still give the default rather than an empty widget.
-    it.each([null, undefined, false, ''] as const)('falls back to the spinner for %p', (value) => {
+    // Only an absent prop means "no placeholder chosen". null and undefined
+    // read as absent; anything else the caller passed is honoured as-is.
+    it.each([null, undefined] as const)('falls back to the spinner for %p', (value) => {
       const { container } = render(
         <Widget size="single" loading loadingPlaceholder={value}>Content</Widget>
       );
 
       expect(container.querySelector('.spinner-container')).toBeInTheDocument();
+    });
+
+    // The point of a skeleton is to replace the spinner, not to replace it
+    // sometimes. `cond && <Thing />` going false must not resurrect the spinner
+    // — the loading style cannot change with state the caller didn't consider.
+    it.each([false, ''] as const)('renders nothing rather than the spinner for %p', (value) => {
+      const { container } = render(
+        <Widget size="single" loading loadingPlaceholder={value}>Content</Widget>
+      );
+
+      expect(container.querySelector('.spinner-container')).not.toBeInTheDocument();
+      expect(screen.queryByText('Content')).not.toBeInTheDocument();
     });
 
     it('defaults to the spinner when omitted', () => {

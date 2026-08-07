@@ -40,7 +40,16 @@ For a widget that fetches, that ladder runs: nothing under ~300ms → `Skeleton`
 </Widget>
 ```
 
-Omit `loadingPlaceholder` — or let it fall through to a falsy value — and you get the default spinner back.
+Omitting `loadingPlaceholder` gives the spinner. Supplying one means it is *always* used: a value that evaluates to `false` renders nothing rather than reverting to a spinner. The point of a skeleton is to replace the spinner, not to replace it sometimes — a widget whose loading style changes with state the caller wasn't thinking about is worse than either choice made consistently.
+
+That matters most when `loading` is broader than the placeholder's own condition. This shows a skeleton on first load and a *spinner* on every refetch, which is almost certainly not what was meant:
+
+```tsx
+loading={isLoading || isFetching}
+loadingPlaceholder={isLoading && <Skeleton.Chart variant="bar" />}   // don't
+```
+
+Keep the placeholder unconditional — it is only consulted while `loading` — and use `refreshing` for refetches.
 
 The skeleton shimmer is a single moving gradient that resolves its colours from the active theme and collapses to a static placeholder under `prefers-reduced-motion`. Skeleton shapes are decorative (`aria-hidden`); the loading *region* that contains them carries `aria-busy`. `ProgressIndeterminate` is a `role="progressbar"` with `aria-busy` and no `aria-valuenow`; under `prefers-reduced-motion` it renders as a static full-width bar. The comet spinner slows to 2s rather than stopping — a stopped spinner reads as a hang.
 
