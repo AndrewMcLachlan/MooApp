@@ -37,14 +37,14 @@ export interface WidgetProps {
     /** No data yet — the body is replaced by `loadingPlaceholder`. Wins over `refreshing`. */
     loading?: boolean;
     /**
-     * What to show while `loading`. Omit it for a centred `SpinnerContainer`.
+     * What to show while `loading`. Omit it (or pass `null`/`undefined`) for a centred `SpinnerContainer`.
      *
      * Supply one where a spinner would throw away shape you already know —
      * `loadingPlaceholder={<Skeleton.Chart variant="bar" />}` for a chart.
      *
      * Once supplied it is always used: a value that evaluates to `false` renders
      * nothing rather than reverting to the spinner, so the loading style cannot
-     * change underneath you. Only omitting the prop gives the spinner.
+     * change underneath you. Only `undefined`/`null` (including omitting the prop) gives the spinner.
      */
     loadingPlaceholder?: React.ReactNode;
     /** Data is on screen and being refetched: edge bar + dimmed body, body stays mounted. */
