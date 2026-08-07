@@ -89,29 +89,43 @@
 
 /* Each series fills the plot area and is cut down to a stroke by clip-path. The
    polygon walks left-to-right along the top of the stroke, then back along the
-   bottom at +5%, giving an even thickness. Four paths, then they repeat. */
+   bottom at +3%, giving an even thickness. Four paths, then they repeat.
+
+   The shapes are trends, not zigzags. Real line charts move slowly relative to
+   their width -- a decline that bottoms out and recovers, a climb to a peak
+   then a long fall, a steady drift, a near-flat threshold. An alternating
+   up-down-up path at every point reads as noise, which is the one thing a
+   financial chart almost never looks like. Each path below changes direction
+   at most twice, and they are ordered so the first two drawn together read as
+   two related series rather than a scribble. */
 .skeleton-chart-line > .skeleton-chart-element {
     position: absolute;
     inset: 0;
 
+    /* Falls, bottoms out, recovers. */
     &:nth-child(4n + 1) {
-        clip-path: polygon(0% 62%, 20% 44%, 40% 58%, 60% 28%, 80% 46%, 100% 22%,
-                           100% 27%, 80% 51%, 60% 33%, 40% 63%, 20% 49%, 0% 67%);
+        clip-path: polygon(0% 20%, 20% 44%, 40% 58%, 60% 54%, 80% 34%, 100% 12%,
+                           100% 15%, 80% 37%, 60% 57%, 40% 61%, 20% 47%, 0% 23%);
     }
 
+    /* The same motion, lower and shallower. Series in a real chart track each
+       other; mirroring this one would cross it twice and draw a symmetric
+       bowtie, which reads as ornament rather than data. */
     &:nth-child(4n + 2) {
-        clip-path: polygon(0% 35%, 20% 52%, 40% 40%, 60% 62%, 80% 48%, 100% 70%,
-                           100% 75%, 80% 53%, 60% 67%, 40% 45%, 20% 57%, 0% 40%);
+        clip-path: polygon(0% 44%, 20% 62%, 40% 74%, 60% 72%, 80% 60%, 100% 46%,
+                           100% 49%, 80% 63%, 60% 75%, 40% 77%, 20% 65%, 0% 47%);
     }
 
+    /* A steady decline. */
     &:nth-child(4n + 3) {
-        clip-path: polygon(0% 78%, 20% 66%, 40% 72%, 60% 50%, 80% 58%, 100% 38%,
-                           100% 43%, 80% 63%, 60% 55%, 40% 77%, 20% 71%, 0% 83%);
+        clip-path: polygon(0% 38%, 20% 45%, 40% 51%, 60% 58%, 80% 65%, 100% 72%,
+                           100% 75%, 80% 68%, 60% 61%, 40% 54%, 20% 48%, 0% 41%);
     }
 
+    /* Near-flat, like a threshold or a target line. */
     &:nth-child(4n + 4) {
-        clip-path: polygon(0% 48%, 20% 30%, 40% 50%, 60% 38%, 80% 66%, 100% 54%,
-                           100% 59%, 80% 71%, 60% 43%, 40% 55%, 20% 35%, 0% 53%);
+        clip-path: polygon(0% 54%, 20% 52%, 40% 55%, 60% 52%, 80% 56%, 100% 53%,
+                           100% 56%, 80% 59%, 60% 55%, 40% 58%, 20% 55%, 0% 57%);
     }
 }
 
