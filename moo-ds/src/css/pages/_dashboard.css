@@ -92,12 +92,19 @@ main.dashboard {
             height: auto;
         }
 
-        /* Round variants opt out: flex: 1 would make the height definite again
-           and a widget narrower than it is tall would clamp the width into an
-           oval. Sizing themselves from the smaller axis keeps them circular. */
+        /* Round variants take the height like everything else, but cap it by the
+           widget's own width so one taller than it is wide shrinks the disc
+           rather than stretching it into an oval. The grid cell is an
+           inline-size container, so 100cqw is that width; less the section's
+           padding and border (15 + 15 + 1 + 1).
+
+           Opting them out of flex instead -- the previous attempt -- kept them
+           circular but stranded them at their min-width floor: 168px of disc in
+           a 621px-tall widget. */
         > .skeleton-chart-pie,
         > .skeleton-chart-doughnut {
-            flex: 0 1 auto;
+            flex: 1;
+            max-height: calc(100cqw - 32px);
         }
     }
 }
