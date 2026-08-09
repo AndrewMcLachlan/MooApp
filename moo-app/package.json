@@ -27,7 +27,7 @@
     "@andrewmclachlan:registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
-    "@azure/msal-browser": "^5.17.3",
+    "@azure/msal-browser": "^5.18.0",
     "axios": "^1.19.0",
     "classnames": "^2.5.1",
     "date-fns": "^4.4.0",
@@ -58,7 +58,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
-    "@testing-library/user-event": "^14.6.1",
+    "@testing-library/user-event": "^14.6.3",
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
@@ -71,16 +71,16 @@
   },
   "peerDependencies": {
     "@andrewmclachlan/moo-ds": ">=5.2.0",
-    "@azure/msal-react": "^5.5.4",
+    "@azure/msal-react": "^5.5.5",
     "@fortawesome/fontawesome-svg-core": "^7.3.1",
     "@fortawesome/free-regular-svg-icons": "^7.3.1",
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
     "@fortawesome/react-fontawesome": "^3.5.0",
     "@tanstack/react-query": "^5.101.4",
     "@tanstack/react-query-persist-client": "^5.101.2",
-    "@tanstack/react-router": "^1.170.16",
+    "@tanstack/react-router": "^1.170.21",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "react-hook-form": "^7.83.0"
+    "react-hook-form": "^7.84.0"
   }
 }
