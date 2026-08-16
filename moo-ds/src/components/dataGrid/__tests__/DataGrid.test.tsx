@@ -265,6 +265,15 @@ describe("DataGrid", () => {
             expect(container.querySelector("tfoot")).not.toBeInTheDocument();
         });
 
+        // The paginated row model is registered on the shared feature set, so it
+        // applies unless explicitly switched off. Without that guard a grid with
+        // no pagination silently truncates to the default page size of 10.
+        it("renders every row when pagination is off", () => {
+            const { container } = render(<DataGrid data={manyRows} columns={columns} />);
+            expect(container.querySelectorAll("tbody tr")).toHaveLength(25);
+            expect(screen.getByText("Person 25")).toBeInTheDocument();
+        });
+
         it("does not show pagination footer when data is empty", () => {
             const { container } = render(<DataGrid data={[]} columns={columns} showPagination />);
             expect(container.querySelector("tfoot")).not.toBeInTheDocument();

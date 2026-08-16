@@ -1,15 +1,13 @@
 import React, { type ReactNode, useMemo, useState } from "react";
 import {
-    useReactTable,
-    getCoreRowModel,
-    getSortedRowModel,
-    getPaginationRowModel,
+    useTable,
     flexRender,
     type SortingState,
     type PaginationState,
     type OnChangeFn,
+    type RowData,
 } from "@tanstack/react-table";
-import { type ColumnDef, toTanStackColumns } from "./ColumnDef";
+import { type ColumnDef, toTanStackColumns, dataGridFeatures } from "./ColumnDef";
 import classNames from "classnames";
 import { className as classNameProp } from "../../utils/className";
 import { Table, type TableProps } from "../Table";
@@ -30,7 +28,7 @@ export interface DataGridState {
     pageSize: number;
 }
 
-export interface DataGridProps<TData> extends Omit<TableProps, "children" | "onChange"> {
+export interface DataGridProps<TData extends RowData> extends Omit<TableProps, "children" | "onChange"> {
     // Data
     data: TData[];
     columns: ColumnDef<TData>[];
@@ -57,7 +55,7 @@ export interface DataGridProps<TData> extends Omit<TableProps, "children" | "onC
 
 }
 
-function DataGridInner<TData>(
+function DataGridInner<TData extends RowData>(
     {
         data,
         columns,
@@ -108,7 +106,8 @@ function DataGridInner<TData>(
 
     const hasPagination = showPagination || showHeaderPagination;
 
-    const table = useReactTable({
+    const table = useTable({
+        features: dataGridFeatures,
         data,
         columns: tanStackColumns,
         state: {
@@ -117,10 +116,15 @@ function DataGridInner<TData>(
         },
         onSortingChange: sortable ? handleSortingChange : undefined,
         onPaginationChange: hasPagination ? handlePaginationChange : undefined,
-        getCoreRowModel: getCoreRowModel(),
-        ...(sortable && !server ? { getSortedRowModel: getSortedRowModel() } : {}),
-        ...(hasPagination && !server ? { getPaginationRowModel: getPaginationRowModel() } : {}),
-        ...(server ? { manualSorting: true, manualPagination: true, rowCount } : {}),
+        // v8 attached the sorted/paginated row models only when they were
+        // wanted; v9 registers them once on the feature set, so an unwanted one
+        // has to be switched off here instead. Without this a grid with no
+        // `showPagination` would silently slice itself to the default page size
+        // of 10. `manual` means "the data already arrived in this shape", which
+        // is true both for server mode and for the feature being unused.
+        manualSorting: server || !sortable,
+        manualPagination: server || !hasPagination,
+        ...(server ? { rowCount } : {}),
     });
 
     const colCount = columns.length;
@@ -129,7 +133,9 @@ function DataGridInner<TData>(
     const showFooter = showPagination && !loading && hasRows;
     const hasHeaderPagination = showHeaderPagination && !loading && hasRows;
 
-    const pageNumber = table.getState().pagination.pageIndex + 1;
+    // v9 exposes the selected state as `table.state` rather than `getState()`.
+    const pagination = table.state.pagination ?? internalPagination;
+    const pageNumber = pagination.pageIndex + 1;
     const pageCount = table.getPageCount();
 
     const sortField = internalSorting[0]?.id ?? "";
@@ -156,7 +162,7 @@ function DataGridInner<TData>(
                                 const canSort = sortable && header.column.getCanSort();
                                 const isLastHeader = headerIndex === headerGroup.headers.length - 1;
                                 const hasPaginationTh = hasHeaderPagination && isLastHeader;
-                                const headerClass = classNameProp(header.column.columnDef.headerClassName);
+                                const headerClass = classNameProp(header.column.columnDef.meta?.headerClassName);
 
                                 const headerContent = header.isPlaceholder
                                     ? null
@@ -230,8 +236,11 @@ function DataGridInner<TData>(
                     ) : (
                         rows.map((row) => (
                             <tr key={row.id}>
-                                {row.getVisibleCells().map((cell) => (
-                                    <td key={cell.id} {...classNameProp(cell.column.columnDef.className)}>
+                                {/* getAllCells, not getVisibleCells: the latter belongs to
+                                    columnVisibilityFeature, which DataGrid does not register
+                                    because it always renders every column. */}
+                                {row.getAllCells().map((cell) => (
+                                    <td key={cell.id} {...classNameProp(cell.column.columnDef.meta?.className)}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </td>
                                 ))}
@@ -247,7 +256,7 @@ function DataGridInner<TData>(
                                     <PageIndicator pageNumber={pageNumber} pageCount={pageCount} totalRows={rowCount ?? data.length} dataType={dataType} />
                                     <PageSize
                                         pageSizes={pageSizes}
-                                        value={table.getState().pagination.pageSize}
+                                        value={pagination.pageSize}
                                         onChange={(newSize) => {
                                             table.setPageSize(newSize);
                                         }}
@@ -271,7 +280,7 @@ function DataGridInner<TData>(
     );
 }
 
-export const DataGrid = React.forwardRef(DataGridInner) as <TData>(
+export const DataGrid = React.forwardRef(DataGridInner) as <TData extends RowData>(
     props: DataGridProps<TData> & React.RefAttributes<HTMLTableElement>,
 ) => React.ReactElement | null;
 

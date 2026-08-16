@@ -22,6 +22,34 @@ describe("toTanStackColumns", () => {
             ];
             const [col] = toTanStackColumns(columns);
             expect(col).toMatchObject({ accessorKey: "name", enableSorting: false });
+            // The name of this test was aspirational: meta was being overwritten
+            // wholesale by the class props, so a caller's own keys vanished.
+            expect(col.meta).toMatchObject({ hint: "x" });
+        });
+
+        it("lifts the top-level class props into meta", () => {
+            const columns: ColumnDef<Row>[] = [
+                { field: "name", header: "Name", className: "text-end", headerClassName: "th-end" },
+            ];
+            const [col] = toTanStackColumns(columns);
+            expect(col.meta).toMatchObject({ className: "text-end", headerClassName: "th-end" });
+        });
+
+        // Both spellings are legal, so neither may silently erase the other.
+        it("keeps classes supplied through meta when the props are absent", () => {
+            const columns: ColumnDef<Row>[] = [
+                { field: "name", header: "Name", meta: { className: "via-meta", headerClassName: "th-via-meta" } },
+            ];
+            const [col] = toTanStackColumns(columns);
+            expect(col.meta).toMatchObject({ className: "via-meta", headerClassName: "th-via-meta" });
+        });
+
+        it("lets the top-level prop win over the same key in meta", () => {
+            const columns: ColumnDef<Row>[] = [
+                { field: "name", header: "Name", className: "wins", meta: { className: "loses" } },
+            ];
+            const [col] = toTanStackColumns(columns);
+            expect(col.meta).toMatchObject({ className: "wins" });
         });
     });
 

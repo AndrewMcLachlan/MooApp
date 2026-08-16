@@ -1,18 +1,53 @@
-import type {
-    ColumnDef as TanStackColumnDef,
-    IdentifiedColumnDef,
-    RowData,
+import {
+    tableFeatures,
+    metaHelper,
+    rowSortingFeature,
+    rowPaginationFeature,
+    createSortedRowModel,
+    createPaginatedRowModel,
+    sortFns,
+    type ColumnDef as TanStackColumnDef,
+    type IdentifiedColumnDef,
+    type RowData,
 } from "@tanstack/react-table";
 
-declare module "@tanstack/table-core" {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    interface ColumnDefBase<TData extends RowData, TValue> {
-        /** Class applied to each `<td>` cell in this column. */
-        className?: string;
-        /** Class applied to the `<th>` header for this column. */
-        headerClassName?: string;
-    }
+/**
+ * Per-column classes.
+ *
+ * These reach TanStack as `columnDef.meta`. In v8 they were declaration-merged
+ * onto `ColumnDefBase`, which worked but applied globally -- every TanStack
+ * table in a consuming app gained a `className` property it did not implement.
+ * v9's `columnMeta` slot scopes them to this table's feature set instead, so
+ * the escape hatch stays ours. Consumers still write `className` at the top
+ * level of a column; `toTanStackColumns` folds it into `meta`.
+ */
+export interface DataGridColumnMeta {
+    /** Class applied to each `<td>` cell in this column. */
+    className?: string;
+    /** Class applied to the `<th>` header for this column. */
+    headerClassName?: string;
 }
+
+/**
+ * The feature set the DataGrid registers.
+ *
+ * v9 is opt-in: an unregistered feature's options and methods do not exist, so
+ * this list is exactly what DataGrid uses and nothing more. Row models are
+ * passed here rather than as `get*RowModel` table options. Column visibility is
+ * deliberately absent -- DataGrid renders every column, so it reads cells with
+ * the core `getAllCells()` rather than pulling that feature in for
+ * `getVisibleCells()`.
+ */
+export const dataGridFeatures = tableFeatures({
+    rowSortingFeature,
+    rowPaginationFeature,
+    sortedRowModel: createSortedRowModel(),
+    paginatedRowModel: createPaginatedRowModel(),
+    sortFns,
+    columnMeta: metaHelper<DataGridColumnMeta>(),
+});
+
+export type DataGridFeatures = typeof dataGridFeatures;
 
 /**
  * Simplified column definition that combines TanStack's `accessorKey` and
@@ -24,12 +59,15 @@ declare module "@tanstack/table-core" {
  *
  * When `field` is a function and no explicit `id` is provided, an id is
  * auto-generated from `header` (if it's a string) or the column index.
+ *
+ * `TData` is constrained to `RowData` (an object or array) because v9 requires
+ * it throughout. Any row shape that made sense before already satisfies it.
  */
-export type ColumnDef<TData> =
-    | { [K in keyof TData & string]: IdentifiedColumnDef<TData, TData[K]> & { field: K } }[keyof TData & string]
-    | (IdentifiedColumnDef<TData, unknown> & { field: (row: TData) => unknown });
+export type ColumnDef<TData extends RowData> =
+    | { [K in keyof TData & string]: IdentifiedColumnDef<DataGridFeatures, TData, TData[K]> & { field: K } & DataGridColumnMeta }[keyof TData & string]
+    | (IdentifiedColumnDef<DataGridFeatures, TData, unknown> & { field: (row: TData) => unknown } & DataGridColumnMeta);
 
-export function toTanStackColumns<TData>(columns: ColumnDef<TData>[]): TanStackColumnDef<TData, any>[] {
+export function toTanStackColumns<TData extends RowData>(columns: ColumnDef<TData>[]): TanStackColumnDef<DataGridFeatures, TData, any>[] {
     const usedIds = new Set<string>();
     const claim = (preferred: string, index: number): string => {
         let id = preferred;
@@ -47,7 +85,17 @@ export function toTanStackColumns<TData>(columns: ColumnDef<TData>[]): TanStackC
     };
 
     return columns.map((col, index) => {
-        const { field, ...rest } = col;
+        const { field, className, headerClassName, ...rest } = col;
+        // Fold the top-level class props into meta rather than replacing it: both
+        // spellings are legal, so assigning outright would silently drop a column
+        // written as `meta: { className }`, and any other key a consumer has added
+        // to DataGridColumnMeta. The explicit prop wins, but only where it is set —
+        // an absent one must not blank out a value that came in through meta.
+        const meta: DataGridColumnMeta = {
+            ...rest.meta,
+            ...(className !== undefined && { className }),
+            ...(headerClassName !== undefined && { headerClassName }),
+        };
         if (typeof field === "function") {
             const preferred = rest.id
                 ?? (typeof rest.header === "string" && rest.header.length > 0
@@ -55,14 +103,16 @@ export function toTanStackColumns<TData>(columns: ColumnDef<TData>[]): TanStackC
                     : `col-${index}`);
             return {
                 ...rest,
+                meta,
                 id: claim(preferred, index),
                 accessorFn: field,
-            } as TanStackColumnDef<TData, any>;
+            } as TanStackColumnDef<DataGridFeatures, TData, any>;
         }
         usedIds.add(rest.id ?? field);
         return {
             ...rest,
+            meta,
             accessorKey: field,
-        } as TanStackColumnDef<TData, any>;
+        } as TanStackColumnDef<DataGridFeatures, TData, any>;
     });
 }
