@@ -43,7 +43,7 @@
     "eslint": "$eslint"
   },
   "optionalDependencies": {
-    "@esbuild/linux-arm64": "0.28.1",
+    "@esbuild/linux-arm64": "0.28.2",
     "@rollup/rollup-linux-arm64-gnu": "4.62.4"
   },
   "peerDependencies": {
