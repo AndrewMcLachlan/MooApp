@@ -181,10 +181,20 @@ describe('Modal', () => {
   });
 
   describe('sizes', () => {
-    it.each(['sm', 'lg', 'xl'] as const)('sets --modal-width CSS variable for %s', (size) => {
+    // The width comes from .modal-<size> in _modal.css, not an inline
+    // --modal-width: a component must not need an inline style to function.
+    it.each(['sm', 'lg', 'xl'] as const)('applies the size class for %s', (size) => {
       const { baseElement } = render(<Modal show onHide={vi.fn()} size={size}><Modal.Body>Content</Modal.Body></Modal>);
       const modal = baseElement.querySelector('.modal') as HTMLElement;
-      expect(modal.style.getPropertyValue('--modal-width')).toBeTruthy();
+      expect(modal).toHaveClass(`modal-${size}`);
+      expect(modal.getAttribute('style')).toBeNull();
+    });
+
+    it('passes a consumer style through without needing it', () => {
+      const { baseElement } = render(<Modal show onHide={vi.fn()} size="lg" style={{ opacity: 0.5 }}><Modal.Body>C</Modal.Body></Modal>);
+      const modal = baseElement.querySelector('.modal') as HTMLElement;
+      expect(modal.style.opacity).toBe('0.5');
+      expect(modal).toHaveClass('modal-lg');
     });
   });
 

@@ -68,7 +68,14 @@ Demo application showcasing the libraries.
 
 ## Code Style
 
-**No inline styles**: Always use CSS classes instead of inline `style` attributes. If a class doesn't exist for the styling you need, create one in the appropriate CSS file.
+**No inline styles**: Always use CSS classes instead of inline `style` attributes. If a class doesn't exist for the styling you need, create one in the appropriate CSS file. Anything drawn from a closed set -- a `size` or `variant` union -- is a class, never an inline custom property.
+
+Two deliberate exceptions:
+
+- **Components may accept a `style` prop** and spread it onto their root, the way a raw HTML element does. What no component may do is *rely* on an inline style to function. `size="lg"` must work with the style attribute stripped; a consumer-supplied `style` is decoration on top, never load-bearing.
+- **Per-instance generated values** (an `anchor-name` from `useId()`, a measured offset) cannot be enumerated into a stylesheet. Set these with `element.style.setProperty()` and **never** `setAttribute("style", ...)` or `style.cssText` -- a Content-Security-Policy without `'unsafe-inline'` blocks the latter two but [explicitly exempts](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/style-src-attr) styles set on the element's `style` property.
+
+The reason both matter: moo-ds is published. A consuming app may be required to run under a strict CSP, and server-rendered markup drops `style` attributes it does not allow. The library must never be the reason a consumer cannot set one.
 
 ## Requirements
 

@@ -194,3 +194,13 @@
         opacity: 0;
     }
 }
+
+/* Size is a closed set, so it belongs in a class rather than an inline
+   --modal-width. A component must not depend on an inline style to function:
+   a consumer under a Content-Security-Policy without 'unsafe-inline' loses
+   style attributes emitted by server rendering, and a modal that silently
+   ignored `size` would be the result. Consumer-supplied `style` still passes
+   through, it is just no longer load-bearing. */
+.modal-sm { --modal-width: 300px; }
+.modal-lg { --modal-width: 800px; }
+.modal-xl { --modal-width: 1140px; }

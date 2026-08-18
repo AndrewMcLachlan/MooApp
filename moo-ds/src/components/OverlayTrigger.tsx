@@ -28,6 +28,11 @@ export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
 
     const triggers = Array.isArray(trigger) ? trigger : [trigger];
 
+    // setProperty, never setAttribute("style") or style.cssText: a CSP without
+    // 'unsafe-inline' blocks those two but explicitly exempts styles set on the
+    // element's style property, so this keeps working for a consumer that sets one.
+    // The anchor name cannot be a class -- it is generated per instance, and the
+    // overlay is portalled, so tree order cannot pair it with its trigger.
     useLayoutEffect(() => {
         triggerRef.current?.style.setProperty("anchor-name", anchorName);
     }, [anchorName]);

@@ -26,12 +26,6 @@ export interface ModalTitleProps extends React.HTMLAttributes<HTMLElement> {
     as?: React.ElementType;
 }
 
-const sizeWidths: Record<string, string> = {
-    sm: "300px",
-    lg: "800px",
-    xl: "1140px",
-};
-
 const ModalHeader: React.FC<React.PropsWithChildren<ModalHeaderProps>> = ({ closeButton, onHide, className, children, ...rest }) => (
     <div className={classNames("modal-header", className)} {...rest}>
         {children}
@@ -183,16 +177,14 @@ const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({
         return child;
     });
 
-    const modalStyle = size ? { ...style, "--modal-width": sizeWidths[size] } as React.CSSProperties : style;
-
     return (
         <>
             {createPortal(
                 <div
                     ref={modalRef}
-                    className={classNames("modal", show && "show", className)}
+                    className={classNames("modal", size && `modal-${size}`, show && "show", className)}
                     tabIndex={-1}
-                    style={modalStyle}
+                    style={style}
                     onKeyDown={onKeyDown}
                     onClick={onClick}
                     {...rest}
