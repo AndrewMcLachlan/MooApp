@@ -21,12 +21,8 @@ export const Tooltip: React.FC<PropsWithChildren<{ id: string }>> = ({ id, child
 
     useLayoutEffect(() => {
         if (show && portalRef.current && triggerRef.current) {
-            // Promote into the top layer. The tooltip previously relied on
-            // z-index: 1080, which loses to anything on the page carrying a
-            // higher one -- a third-party widget, an app-level overlay --
-            // and loses outright to a top-layer dialog, which paints above
-            // any z-index at all. Guarded, so an environment without the
-            // popover API (jsdom) just renders it in place as before.
+            // Promote into the top layer, so no page z-index or dialog paints over
+            // it. Guarded for environments without the popover API (jsdom).
             showInTopLayer(portalRef.current);
 
             portalRef.current.style.setProperty("position-anchor", anchorName);

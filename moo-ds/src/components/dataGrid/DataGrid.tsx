@@ -129,7 +129,6 @@ function DataGridInner<TData extends RowData>(
     const showFooter = showPagination && !loading && hasRows;
     const hasHeaderPagination = showHeaderPagination && !loading && hasRows;
 
-    // v9 exposes the selected state as `table.state` rather than `getState()`.
     const pagination = table.state.pagination ?? internalPagination;
     const pageNumber = pagination.pageIndex + 1;
     const pageCount = table.getPageCount();

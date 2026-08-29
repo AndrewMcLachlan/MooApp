@@ -265,9 +265,8 @@ option {
 .form-switch {
     padding-left: 0;
 
-    /* The switch is drawn by us rather than by the platform, so it opts out of
-       the native rendering the base .form-check-input now relies on and
-       restores the box styling that used to live there. */
+    /* The switch is drawn here rather than by the platform, so it opts out of
+       native rendering and owns its box styling. */
     .form-check-input {
         --form-switch-thumb-light: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.55%29'/%3e%3c/svg%3e");
         --form-switch-thumb-dark: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.55%29'/%3e%3c/svg%3e");

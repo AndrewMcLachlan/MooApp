@@ -93,13 +93,9 @@ const ModalComponent: React.FC<React.PropsWithChildren<ModalProps>> = ({
     // first: the top layer stacks in the order elements are promoted, so
     // promoting it before the modal keeps the dimming behind the dialog.
     //
-    // popover rather than dialog.showModal(): showModal() makes everything
-    // outside the dialog inert, and a tooltip or popover is portalled to the
-    // body rather than into the modal, so it would be painted above the modal
-    // but refuse clicks. A popover leaves the rest of the page interactive, so
-    // those keep working -- and the focus trap this component already
-    // implements stays in charge rather than being replaced by native
-    // behaviour no test here could reach.
+    // popover, not dialog.showModal(): showModal() makes everything outside the
+    // dialog inert, so a portalled tooltip would paint above the modal but
+    // refuse clicks.
     useLayoutEffect(() => {
         if (!show) return undefined;
 

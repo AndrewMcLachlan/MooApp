@@ -34,10 +34,8 @@ export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
         triggerRef.current?.style.setProperty("anchor-name", anchorName);
     }, [anchorName]);
 
-    // position-anchor has to be set here because the anchor name is generated
-    // per trigger instance. position-area and the flip fallbacks are driven by
-    // the .overlay-<placement> class instead, so the placement mapping lives in
-    // _overlay.css rather than in inline styles.
+    // position-anchor is set here because the anchor name is generated per
+    // trigger instance.
     useLayoutEffect(() => {
         if (show && overlayRef.current) {
             // Promote into the top layer -- see the note in Tooltip.tsx. The

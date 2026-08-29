@@ -77,11 +77,9 @@ export function toTanStackColumns<TData extends RowData>(columns: ColumnDef<TDat
 
     return columns.map((col, index) => {
         const { field, className, headerClassName, ...rest } = col;
-        // Fold the top-level class props into meta rather than replacing it: both
-        // spellings are legal, so assigning outright would silently drop a column
-        // written as `meta: { className }`, and any other key a consumer has added
-        // to DataGridColumnMeta. The explicit prop wins, but only where it is set —
-        // an absent one must not blank out a value that came in through meta.
+        // Merge, do not assign: both spellings are legal, so assigning would
+        // silently drop a column written as `meta: { className }`. The explicit
+        // prop wins only where it is set.
         const meta: DataGridColumnMeta = {
             ...rest.meta,
             ...(className !== undefined && { className }),
