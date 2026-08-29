@@ -12,14 +12,10 @@ import {
 } from "@tanstack/react-table";
 
 /**
- * Per-column classes.
+ * Per-column classes, reaching TanStack as `columnDef.meta`.
  *
- * These reach TanStack as `columnDef.meta`. In v8 they were declaration-merged
- * onto `ColumnDefBase`, which worked but applied globally -- every TanStack
- * table in a consuming app gained a `className` property it did not implement.
- * v9's `columnMeta` slot scopes them to this table's feature set instead, so
- * the escape hatch stays ours. Consumers still write `className` at the top
- * level of a column; `toTanStackColumns` folds it into `meta`.
+ * Consumers write `className` at the top level of a column;
+ * `toTanStackColumns` folds it into `meta`.
  */
 export interface DataGridColumnMeta {
     /** Class applied to each `<td>` cell in this column. */
@@ -32,11 +28,7 @@ export interface DataGridColumnMeta {
  * The feature set the DataGrid registers.
  *
  * v9 is opt-in: an unregistered feature's options and methods do not exist, so
- * this list is exactly what DataGrid uses and nothing more. Row models are
- * passed here rather than as `get*RowModel` table options. Column visibility is
- * deliberately absent -- DataGrid renders every column, so it reads cells with
- * the core `getAllCells()` rather than pulling that feature in for
- * `getVisibleCells()`.
+ * this list is exactly what DataGrid uses.
  */
 export const dataGridFeatures = tableFeatures({
     rowSortingFeature,
@@ -60,8 +52,7 @@ export type DataGridFeatures = typeof dataGridFeatures;
  * When `field` is a function and no explicit `id` is provided, an id is
  * auto-generated from `header` (if it's a string) or the column index.
  *
- * `TData` is constrained to `RowData` (an object or array) because v9 requires
- * it throughout. Any row shape that made sense before already satisfies it.
+ * `TData` is constrained to `RowData`: an object or an array.
  */
 export type ColumnDef<TData extends RowData> =
     | { [K in keyof TData & string]: IdentifiedColumnDef<DataGridFeatures, TData, TData[K]> & { field: K } & DataGridColumnMeta }[keyof TData & string]

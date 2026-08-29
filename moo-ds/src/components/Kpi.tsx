@@ -56,9 +56,8 @@ KpiSub.displayName = "Kpi.Sub";
  * A headline figure on a card with a coloured top bar: a label, the number, and an optional
  * caption underneath.
  *
- * Type sizes are deliberately absent from the component's own CSS — a KPI strip in a page header
- * and one on a dashboard want different scales — so the consumer sets those against the container
- * around the cards.
+ * Type sizes come from the consumer, set against the container around the cards: a KPI strip
+ * in a page header and one on a dashboard want different scales.
  */
 const KpiComponent: React.FC<React.PropsWithChildren<KpiProps>> = ({ label, tone, className, children, ...rest }) => (
     <Section className={classNames("kpi", tone && `kpi-${tone}`, className)} {...rest}>
