@@ -51,6 +51,61 @@ describe('Check', () => {
     });
   });
 
+  describe('label', () => {
+    it('renders the label text', () => {
+      render(
+        <Wrapper>
+          <Check label="I agree to the terms" />
+        </Wrapper>
+      );
+
+      expect(screen.getByLabelText('I agree to the terms')).toBeInTheDocument();
+    });
+
+    it('does not leak label onto the input as an attribute', () => {
+      render(
+        <Wrapper>
+          <Check label="Accept" />
+        </Wrapper>
+      );
+
+      expect(screen.getByRole('checkbox')).not.toHaveAttribute('label');
+    });
+
+    it('wraps the control in a form-check', () => {
+      const { container } = render(
+        <Wrapper>
+          <Check label="Accept" />
+        </Wrapper>
+      );
+
+      expect(container.querySelector('.form-check')).toBeInTheDocument();
+    });
+  });
+
+  describe('type', () => {
+    it('renders a radio when asked', () => {
+      render(
+        <Wrapper>
+          <Check type="radio" label="Monthly" />
+        </Wrapper>
+      );
+
+      expect(screen.getByRole('radio')).toBeInTheDocument();
+    });
+
+    it('styles a radio as a check, not a text box', () => {
+      render(
+        <Wrapper>
+          <Check type="radio" label="Monthly" />
+        </Wrapper>
+      );
+
+      expect(screen.getByRole('radio')).toHaveClass('form-check-input');
+      expect(screen.getByRole('radio')).not.toHaveClass('form-control');
+    });
+  });
+
   describe('id', () => {
     it('uses groupId as id', () => {
       render(

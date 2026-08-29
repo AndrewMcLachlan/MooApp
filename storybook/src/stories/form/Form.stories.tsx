@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
-import { Form, Input } from "@andrewmclachlan/moo-ds";
+import { Form } from "@andrewmclachlan/moo-ds";
 import { useForm } from "react-hook-form";
 
 const meta = {
@@ -129,6 +129,42 @@ export const WithAllInputTypes: Story = {
     },
 };
 
+export const RadioGroupChecks: Story = {
+    render: function Render() {
+        const form = useForm({ defaultValues: { billing: "monthly" } });
+        return (
+            <Form form={form} onSubmit={fn()}>
+                <Form.Group groupId="billing">
+                    <Form.RadioGroup legend="Billing period" inline>
+                        <Form.Radio value="monthly" label="Monthly" />
+                        <Form.Radio value="yearly" label="Yearly" />
+                    </Form.RadioGroup>
+                </Form.Group>
+            </Form>
+        );
+    },
+};
+
+export const RadioGroupButtons: Story = {
+    render: function Render() {
+        const form = useForm({ defaultValues: { period: "3m" } });
+        return (
+            <Form form={form} onSubmit={fn()}>
+                <Form.Group groupId="period">
+                    {/* Same radios, same semantics -- one tab stop, arrow keys move
+                        between options. Only the skin changes. */}
+                    <Form.RadioGroup legend="Period" appearance="buttons">
+                        <Form.Radio value="1m" label="1M" />
+                        <Form.Radio value="3m" label="3M" />
+                        <Form.Radio value="6m" label="6M" />
+                        <Form.Radio value="1y" label="1Y" />
+                    </Form.RadioGroup>
+                </Form.Group>
+            </Form>
+        );
+    },
+};
+
 export const WithGroups: Story = {
     render: function Render() {
         const form = useForm();
@@ -139,11 +175,15 @@ export const WithGroups: Story = {
                     is the case that needs it: only the legend says what is being
                     chosen. The second fieldset shows the other reason to reach for
                     one, disabling a whole block natively. */}
-                <fieldset>
-                    <legend>Billing period</legend>
-                    <Input.Check id="sb-monthly" type="radio" name="billing" label="Monthly" inline defaultChecked />
-                    <Input.Check id="sb-yearly" type="radio" name="billing" label="Yearly" inline />
-                </fieldset>
+                {/* Form.RadioGroup renders this fieldset and legend itself, and binds
+                    the options to one field -- hand-writing it is only for a group
+                    that is not a set of radios. */}
+                <Form.Group groupId="billing">
+                    <Form.RadioGroup legend="Billing period" inline>
+                        <Form.Radio value="monthly" label="Monthly" />
+                        <Form.Radio value="yearly" label="Yearly" />
+                    </Form.RadioGroup>
+                </Form.Group>
                 <fieldset disabled>
                     <legend>Delivery address</legend>
                     <Form.Group groupId="street">
