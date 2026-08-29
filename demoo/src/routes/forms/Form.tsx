@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Page } from "@andrewmclachlan/moo-app";
 import { Form, Section, SectionForm, FormComboBox, Button, Input } from "@andrewmclachlan/moo-ds";
 import { useForm, type Resolver } from "react-hook-form";
@@ -58,6 +59,8 @@ export const FormPage = () => {
     };
 
     const form = useForm<FormSampleValues>({ defaultValues: existing });
+
+    const [shipElsewhere, setShipElsewhere] = useState(false);
 
     // onTouched so a field reports as you leave it. A resolver validates the
     // whole object and returns every failure at once, so on the default
@@ -169,6 +172,50 @@ export const FormPage = () => {
                     <Input type="email" placeholder="Native email constraint" />
                     <Input required placeholder="Native required constraint" />
                 </div>
+            </Section>
+
+            <Section title="Grouping" header="Grouping controls" headerSize={4}>
+                <p>
+                    A <code>Section</code> is the panel: it owns the heading and the visual
+                    grouping, and it is the default for structure. A <code>&lt;fieldset&gt;</code>
+                    sits <em>inside</em> one and does the thing a heading cannot &mdash; it gives a
+                    set of controls a shared accessible name, announced with every control in the
+                    group. Reach for it in two cases and otherwise use a Section.
+                </p>
+
+                <h5>A group that needs a name</h5>
+                <p>
+                    A radio group has no other way to say what it is asking. The individual labels
+                    are &ldquo;Monthly&rdquo; and &ldquo;Yearly&rdquo;; without a
+                    <code> &lt;legend&gt;</code> the question they answer is never announced, and a
+                    screen reader user hears two unrelated options. A heading above them looks the
+                    same and fixes nothing, because a heading is not tied to the controls.
+                </p>
+                <fieldset>
+                    <legend>Billing period</legend>
+                    <Input.Check id="grp-monthly" type="radio" name="billing" label="Monthly" inline defaultChecked />
+                    <Input.Check id="grp-yearly" type="radio" name="billing" label="Yearly" inline />
+                </fieldset>
+
+                <h5>A group that disables as a unit</h5>
+                <p>
+                    Setting <code>disabled</code> on the fieldset disables every control inside it,
+                    natively &mdash; no per-control prop and no JavaScript. Useful while a form is
+                    saving, or for a sub-form that only applies conditionally.
+                </p>
+                <Input.Check
+                    id="grp-toggle"
+                    label="Ship to a different address"
+                    checked={shipElsewhere}
+                    onChange={(e) => setShipElsewhere(e.currentTarget.checked)}
+                />
+                <fieldset disabled={!shipElsewhere}>
+                    <legend>Delivery address</legend>
+                    <div className="demo-col">
+                        <Input placeholder="Street" />
+                        <Input placeholder="Suburb" />
+                    </div>
+                </fieldset>
             </Section>
 
         </Page>

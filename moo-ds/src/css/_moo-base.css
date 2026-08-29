@@ -137,12 +137,20 @@ fieldset {
     border: 0;
 }
 
+/* A legend names a group of controls, so it is a sub-heading inside whatever
+   section already holds the form -- not a peer of that section's header. At the
+   inherited 1.5rem it tied exactly with h4, which is the default Section header
+   size, and a legend then read as a sibling of its own parent heading.
+
+   No float either: that was Bootstrap's workaround for legends not accepting
+   width in old browsers, and it drops the legend out of flow in the flex and
+   grid layouts the form components use. */
 legend {
-    float: left;
     width: 100%;
     padding: 0;
     margin-bottom: 0.5rem;
-    font-size: 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
     line-height: inherit;
 }
 

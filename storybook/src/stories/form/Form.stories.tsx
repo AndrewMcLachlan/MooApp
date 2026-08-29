@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
-import { Form } from "@andrewmclachlan/moo-ds";
+import { Form, Input } from "@andrewmclachlan/moo-ds";
 import { useForm } from "react-hook-form";
 
 const meta = {
@@ -134,26 +134,25 @@ export const WithGroups: Story = {
         const form = useForm();
         return (
             <Form form={form} onSubmit={fn()}>
+                {/* A fieldset is for controls that share an accessible name, not for
+                    visual sub-sections -- Section already does those. The radio group
+                    is the case that needs it: only the legend says what is being
+                    chosen. The second fieldset shows the other reason to reach for
+                    one, disabling a whole block natively. */}
                 <fieldset>
-                    <legend>Personal Information</legend>
-                    <Form.Group groupId="firstName">
-                        <Form.Label>First Name</Form.Label>
-                        <Form.Input />
-                    </Form.Group>
-                    <Form.Group groupId="lastName">
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Input />
-                    </Form.Group>
+                    <legend>Billing period</legend>
+                    <Input.Check id="sb-monthly" type="radio" name="billing" label="Monthly" inline defaultChecked />
+                    <Input.Check id="sb-yearly" type="radio" name="billing" label="Yearly" inline />
                 </fieldset>
-                <fieldset>
-                    <legend>Contact Information</legend>
-                    <Form.Group groupId="email">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Input type="email" />
+                <fieldset disabled>
+                    <legend>Delivery address</legend>
+                    <Form.Group groupId="street">
+                        <Form.Label>Street</Form.Label>
+                        <Form.Input />
                     </Form.Group>
-                    <Form.Group groupId="phone">
-                        <Form.Label>Phone</Form.Label>
-                        <Form.Input type="tel" />
+                    <Form.Group groupId="suburb">
+                        <Form.Label>Suburb</Form.Label>
+                        <Form.Input />
                     </Form.Group>
                 </fieldset>
                 <button type="submit" className="btn btn-primary">Submit</button>
