@@ -137,8 +137,12 @@ fieldset {
     border: 0;
 }
 
+/* Not floated. A full-width floated legend leaves no room beside it, which a block sibling
+   survives -- only its line boxes are shortened -- but a grid or flex one does not: those
+   establish a formatting context that avoids the float, so they shrink to nothing and spill their
+   contents out of the fieldset. The legend still spans the width, so nothing that relied on it
+   looking like a heading changes. */
 legend {
-    float: left;
     width: 100%;
     padding: 0;
     margin-bottom: 0.5rem;
