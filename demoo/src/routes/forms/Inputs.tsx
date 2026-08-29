@@ -56,9 +56,6 @@ export const Inputs = () => {
                 <div className="demo-col">
                     <Input.Check id="chk1" label="Accept terms" defaultChecked />
                     <Input.Check id="chk2" label="Subscribe to updates" />
-                    {/* The radios are wrapped so the group has a name: the labels say
-                        "Monthly" and "Yearly", and only the legend says what is being
-                        chosen. See the Grouping section on the Form page. */}
                     <fieldset>
                         <legend>Billing period</legend>
                         <div className="demo-row">

@@ -134,11 +134,6 @@ export const WithGroups: Story = {
         const form = useForm();
         return (
             <Form form={form} onSubmit={fn()}>
-                {/* A fieldset is for controls that share an accessible name, not for
-                    visual sub-sections -- Section already does those. The radio group
-                    is the case that needs it: only the legend says what is being
-                    chosen. The second fieldset shows the other reason to reach for
-                    one, disabling a whole block natively. */}
                 <fieldset>
                     <legend>Billing period</legend>
                     <Input.Check id="sb-monthly" type="radio" name="billing" label="Monthly" inline defaultChecked />
