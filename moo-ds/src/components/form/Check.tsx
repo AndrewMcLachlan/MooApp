@@ -6,13 +6,8 @@ import { useFormGroup } from "./FormGroupProvider";
 /**
  * A checkbox or radio bound to the surrounding form.
  *
- * `label` is rendered as a real `<label>` tied to the control by id. It used to
- * be spread onto the `<input>`, where it became a stray DOM attribute and no
- * visible text -- so a Check with a label rendered as a naked box.
- *
- * For a set of radios that answer one question, use `Form.RadioGroup` instead:
- * it owns the shared field name and gives the group an accessible name, neither
- * of which a lone Check can do.
+ * For a set of radios answering one question, use `Form.RadioGroup`: it owns the
+ * shared field name and gives the group an accessible name.
  */
 export const Check: CheckComponent = ({ label, inline, id, className, type = "checkbox", ...rest }) => {
 

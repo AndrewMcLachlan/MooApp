@@ -7,10 +7,8 @@ import { useFieldValidity } from "./useFieldError";
 /**
  * One option within a `Form.RadioGroup`.
  *
- * Registers against the *group's* name rather than its own id, which is what
- * makes the options one field instead of several. The id is derived from the
- * name and the value so each input still has a unique one for its label to
- * point at.
+ * Registers against the group's field name; its id is derived from that name and
+ * its value.
  */
 export const Radio: React.FC<RadioProps> = ({ label, value, id, className, ...rest }) => {
 
@@ -20,8 +18,8 @@ export const Radio: React.FC<RadioProps> = ({ label, value, id, className, ...re
     const inputId = id ?? (name !== undefined ? `${name}-${String(value)}` : undefined);
     const validity = useFieldValidity(name);
 
-    // Usable outside a Form: with nothing to register against the radio falls
-    // back to an ordinary uncontrolled input, as the other form controls do.
+    // Usable outside a Form: with nothing to register against, the radio falls
+    // back to an ordinary uncontrolled input.
     const registration = form && name ? form.register(name) : { name };
 
     const input = (
@@ -36,15 +34,11 @@ export const Radio: React.FC<RadioProps> = ({ label, value, id, className, ...re
         />
     );
 
-    // The button appearance needs the input and its label as siblings so the
-    // :checked + .btn rule can reach the label; a wrapper would break it.
+    // Input and label must stay siblings: .btn-check:checked + .btn selects the label.
     if (appearance === "buttons") {
         return (
             <>
                 {input}
-                {/* A bare .btn has a transparent background and border, so an
-                    unselected option would render as plain text. The variant is
-                    what gives it button chrome. */}
                 <label htmlFor={inputId} className={classNames("btn", `btn-${variant}`)}>{label}</label>
             </>
         );

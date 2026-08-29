@@ -12,8 +12,6 @@ export const Input: InputComponent = ({ className, id, ...rest }) => {
     const group = useFormGroup();
     const form = useFormContext();
     id = id ?? group.groupId;
-    // Radios are checks too. Mapping only checkbox here gave a radio the
-    // form-control box, so it rendered as a text field with a dot in it.
     const isCheck = rest.type === "checkbox" || rest.type === "radio";
     const innerClass = isCheck ? "form-check-input" : "form-control";
 

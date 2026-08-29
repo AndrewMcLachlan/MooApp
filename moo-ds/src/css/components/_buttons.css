@@ -360,13 +360,8 @@
     border-bottom-right-radius: var(--btn-border-radius);
 }
 
-/* Radios styled as a joined button group.
-
-   The input stays in the DOM and stays focusable -- it is clipped rather than
-   display: none, because a hidden control is not focusable and the group would
-   lose native radio keyboard behaviour (arrow keys to move, one tab stop for
-   the whole set). The visible control is its <label>, which the browser already
-   forwards clicks and activation to. */
+/* Radios styled as a joined button group */
+/* Must stay focusable: the group relies on native radio keyboard nav. */
 .btn-check {
     position: absolute;
     width: 1px;
@@ -383,18 +378,12 @@
     cursor: pointer;
 }
 
-/* The checked option reads as pressed, reusing the variant's own active tokens
-   so this works for whichever variant the group is given rather than assuming
-   the primary colour. aria-pressed is not used: these are radios, and the
-   checked state is already exposed by the control itself. */
 .btn-check:checked + .btn {
     color: var(--btn-active-colour);
     background-color: var(--btn-active-bg);
     border-color: var(--btn-active-border-colour);
 }
 
-/* Keyboard ring on the label, since the input it belongs to is clipped.
-   Matches the .btn convention above. */
 .btn-check:focus-visible + .btn {
     outline: 0;
     box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--primary) 25%, transparent);
@@ -406,9 +395,6 @@
     opacity: 0.65;
 }
 
-/* The radius rules above target .btn-group > .btn by position, and the clipped
-   input is a real child -- so without these the first and last labels never
-   match and the group renders square. */
 .btn-group > .btn-check:first-child + .btn {
     border-top-left-radius: var(--btn-border-radius);
     border-bottom-left-radius: var(--btn-border-radius);

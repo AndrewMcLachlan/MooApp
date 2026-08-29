@@ -206,14 +206,6 @@ option {
     margin-bottom: 1rem;
 }
 
-/* Fieldsets group controls that share an accessible name -- a radio group above
-   all, where the legend is the only way to expose the question being answered.
-   They sit inside whatever Section holds the form rather than replacing it: the
-   Section is the panel, the fieldset is a group of controls within it.
-
-   The reset in _moo-base.css strips the native border and padding, so the only
-   thing needed here is the rhythm between consecutive groups. Matches
-   .form-group's 1rem so a fieldset and a lone group space identically. */
 fieldset {
     margin-bottom: 1rem;
     min-inline-size: 0;
@@ -223,16 +215,10 @@ fieldset:last-child {
     margin-bottom: 0;
 }
 
-/* A disabled fieldset disables every control inside it natively, so the whole
-   group needs to read as unavailable -- including its legend, which is not a
-   form control and so is untouched by :disabled. */
 fieldset:disabled > legend {
     opacity: 0.5;
 }
 
-/* A radio group is a fieldset, so it already has the fieldset rhythm above.
-   These only lay the options out; the button appearance uses .btn-group and
-   needs nothing here. */
 .radio-group-options {
     display: flex;
     flex-direction: column;

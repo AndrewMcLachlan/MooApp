@@ -26,7 +26,6 @@ const options = (
 
 describe('RadioGroup', () => {
   describe('grouping', () => {
-    // The whole point of the component: options of one question are one field.
     it('registers every option against the group name', () => {
       render(<Wrapper><RadioGroup legend="Billing period">{options}</RadioGroup></Wrapper>);
 
@@ -51,8 +50,6 @@ describe('RadioGroup', () => {
   });
 
   describe('accessible name', () => {
-    // A label cannot name a radio group -- there is no single control for it to
-    // point at. A fieldset with a legend is the markup that can.
     it('renders a fieldset with the legend as the group name', () => {
       const { container } = render(
         <Wrapper><RadioGroup legend="Billing period">{options}</RadioGroup></Wrapper>
@@ -117,8 +114,6 @@ describe('RadioGroup', () => {
       screen.getAllByRole('radio').forEach((r) => expect(r).toHaveClass('btn-check'));
     });
 
-    // The label must be the input's next sibling or `.btn-check:checked + .btn`
-    // never matches and the group shows no selection.
     it('keeps each button label as the input\u0027s next sibling', () => {
       const { container } = render(
         <Wrapper><RadioGroup legend="Billing period" appearance="buttons">{options}</RadioGroup></Wrapper>
@@ -129,7 +124,6 @@ describe('RadioGroup', () => {
       });
     });
 
-    // Buttons are still radios: same semantics, different skin.
     it('stays a radio group in the button appearance', () => {
       render(
         <Wrapper defaultValues={{ billing: 'monthly' }}>

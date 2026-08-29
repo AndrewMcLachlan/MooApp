@@ -20,19 +20,12 @@ export type RadioGroupAppearance = "check" | "buttons";
 /**
  * A set of radios answering one question.
  *
- * Renders a `<fieldset>` with the question as its `<legend>`, which is the only
- * markup that gives the group an accessible name: a `<label>` cannot, because
- * there is no single control for it to point at, and a heading sits near the
- * controls without being associated with them. Every option is announced with
- * the legend as its context.
+ * Renders a `<fieldset>` with the question as its `<legend>`, which is what gives
+ * the group its accessible name, and owns the field name so the options register
+ * as one field.
  *
- * The group owns the field name so the radios register as one field. A lone
- * `Form.Check` registers against its own id, which is right for a checkbox and
- * wrong for a radio -- the options of one question must share a name.
- *
- * `appearance` changes only the skin. Both render the same radios with the same
- * semantics; `buttons` styles them as a joined button group for a small set of
- * short, mutually exclusive choices (a period switcher, a chart mode).
+ * `appearance` changes only the skin: `buttons` styles the same radios as a joined
+ * button group, for a short set of mutually exclusive choices.
  */
 export const RadioGroup: React.FC<React.PropsWithChildren<RadioGroupProps>> = ({
     legend,
@@ -51,8 +44,6 @@ export const RadioGroup: React.FC<React.PropsWithChildren<RadioGroupProps>> = ({
         <RadioGroupContext.Provider value={{ name: fieldName, appearance, variant }}>
             <fieldset className={classNames("radio-group", className)} {...rest}>
                 {legend && <legend>{legend}</legend>}
-                {/* btn-group carries the joined-button styling the labels rely on.
-                    The plain case just needs a row or a stack. */}
                 <div className={classNames(
                     appearance === "buttons" ? "btn-group" : "radio-group-options",
                     appearance === "check" && inline && "radio-group-inline",

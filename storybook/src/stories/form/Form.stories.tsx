@@ -151,8 +151,6 @@ export const RadioGroupButtons: Story = {
         return (
             <Form form={form} onSubmit={fn()}>
                 <Form.Group groupId="period">
-                    {/* Same radios, same semantics -- one tab stop, arrow keys move
-                        between options. Only the skin changes. */}
                     <Form.RadioGroup legend="Period" appearance="buttons">
                         <Form.Radio value="1m" label="1M" />
                         <Form.Radio value="3m" label="3M" />
@@ -170,14 +168,6 @@ export const WithGroups: Story = {
         const form = useForm();
         return (
             <Form form={form} onSubmit={fn()}>
-                {/* A fieldset is for controls that share an accessible name, not for
-                    visual sub-sections -- Section already does those. The radio group
-                    is the case that needs it: only the legend says what is being
-                    chosen. The second fieldset shows the other reason to reach for
-                    one, disabling a whole block natively. */}
-                {/* Form.RadioGroup renders this fieldset and legend itself, and binds
-                    the options to one field -- hand-writing it is only for a group
-                    that is not a set of radios. */}
                 <Form.Group groupId="billing">
                     <Form.RadioGroup legend="Billing period" inline>
                         <Form.Radio value="monthly" label="Monthly" />
