@@ -13,23 +13,16 @@ export const Tooltip: React.FC<PropsWithChildren<{ id: string }>> = ({ id, child
     const portalRef = useRef<HTMLSpanElement>(null);
     const [show, setShow] = useState(false);
 
-    // setProperty, never setAttribute("style") or style.cssText: a CSP without
-    // 'unsafe-inline' blocks those two but explicitly exempts styles set on the
-    // element's style property, so this keeps working for a consumer that sets one.
-    // The anchor name cannot be a class -- it is generated per instance, and the
-    // overlay is portalled, so tree order cannot pair it with its trigger.
+    // Must be setProperty: a strict CSP blocks style attributes but exempts the
+    // style property, so setAttribute/cssText would stop working for consumers.
     useLayoutEffect(() => {
         triggerRef.current?.style.setProperty("anchor-name", anchorName);
     }, [anchorName]);
 
     useLayoutEffect(() => {
         if (show && portalRef.current && triggerRef.current) {
-            // Promote into the top layer. The tooltip previously relied on
-            // z-index: 1080, which loses to anything on the page carrying a
-            // higher one -- a third-party widget, an app-level overlay --
-            // and loses outright to a top-layer dialog, which paints above
-            // any z-index at all. Guarded, so an environment without the
-            // popover API (jsdom) just renders it in place as before.
+            // Promote into the top layer, so no page z-index or dialog paints over
+            // it. Guarded for environments without the popover API (jsdom).
             showInTopLayer(portalRef.current);
 
             portalRef.current.style.setProperty("position-anchor", anchorName);

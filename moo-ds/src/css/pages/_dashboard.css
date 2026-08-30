@@ -21,8 +21,7 @@ main.dashboard {
             overflow: hidden;
             /* Each widget is its own container so its contents can respond to
                the widget's width. Safe here because grid items get a definite
-               1fr width -- see the note in _section.css for why .section
-               itself is deliberately not a container. */
+               1fr width; see the note in _section.css. */
             container-type: inline-size;
             container-name: widget;
 
@@ -96,11 +95,7 @@ main.dashboard {
            widget's own width so one taller than it is wide shrinks the disc
            rather than stretching it into an oval. The grid cell is an
            inline-size container, so 100cqw is that width; less the section's
-           padding and border (15 + 15 + 1 + 1).
-
-           Opting them out of flex instead -- the previous attempt -- kept them
-           circular but stranded them at their min-width floor: 168px of disc in
-           a 621px-tall widget. */
+           padding and border (15 + 15 + 1 + 1). */
         > .skeleton-chart-pie,
         > .skeleton-chart-doughnut {
             flex: 1;

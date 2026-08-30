@@ -4,27 +4,16 @@ import { type PropsWithChildren } from "react";
 import { SpinnerContainer } from "./SpinnerContainer";
 import { ProgressIndeterminate } from "./ProgressIndeterminate";
 
-// `is-refreshing` goes on the Section rather than on a wrapper around the
-// children: a wrapper would swallow `.section .body { flex: 1 }` and the
-// dashboard's `.section > *` flex rules. The CSS dims the children instead.
 export const Widget: React.FC<PropsWithChildren<WidgetProps>> = ({ children, loading = false, loadingPlaceholder, refreshing = false, size = "single", className, ...rest }) => (
     <div className={size}>
-        {/* The region owns the loading announcement, not the placeholder — skeletons
-            are aria-hidden by design, so without this a custom placeholder would be
-            silent where the default spinner's role="status" was not. */}
+        {/* aria-busy sits here: skeleton placeholders are aria-hidden, so nothing
+            inside the region announces the load. */}
         <Section
             className={classNames(className, !loading && refreshing && "is-refreshing")}
             aria-busy={loading || undefined}
             {...rest}
         >
-            {/* ?? not ||: only an absent prop falls back to the spinner. A widget
-                that has been given a placeholder must never substitute one, or the
-                loading style silently changes with state the caller wasn't thinking
-                about — the point of a skeleton is to replace the spinner, not to
-                replace it sometimes. */}
             {loading && (loadingPlaceholder ?? <SpinnerContainer />)}
-            {/* "Refreshing", not the default "Loading": the data is already on
-                screen, and announcing a load implies it is not. */}
             {!loading && refreshing && <ProgressIndeterminate variant="edge" aria-label="Refreshing" />}
             {!loading && children}
         </Section>

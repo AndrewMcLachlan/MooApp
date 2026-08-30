@@ -19,10 +19,8 @@ export const ComboBoxProvider = <T,>(props: React.PropsWithChildren<ComboBoxProv
     // duplicated aria-controls/id relationship.
     const listId = useId();
 
-    // Multi-select keeps the selected items *in* the list (rendered checked),
-    // so the list is the single source of truth for what's selected. They are
-    // no longer stripped out — the dropdown, not just the pills, lets the user
-    // see and toggle every selection.
+    // Multi-select keeps the selected items *in* the list (rendered checked), so
+    // the list is the single source of truth for what is selected.
     const allItems = useMemo(() => {
         return props.items ? props.items : []
     }, [JSON.stringify(props.items)]);

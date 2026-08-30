@@ -28,19 +28,14 @@ export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
 
     const triggers = Array.isArray(trigger) ? trigger : [trigger];
 
-    // setProperty, never setAttribute("style") or style.cssText: a CSP without
-    // 'unsafe-inline' blocks those two but explicitly exempts styles set on the
-    // element's style property, so this keeps working for a consumer that sets one.
-    // The anchor name cannot be a class -- it is generated per instance, and the
-    // overlay is portalled, so tree order cannot pair it with its trigger.
+    // Must be setProperty: a strict CSP blocks style attributes but exempts the
+    // style property, so setAttribute/cssText would stop working for consumers.
     useLayoutEffect(() => {
         triggerRef.current?.style.setProperty("anchor-name", anchorName);
     }, [anchorName]);
 
-    // position-anchor has to be set here because the anchor name is generated
-    // per trigger instance. position-area and the flip fallbacks are driven by
-    // the .overlay-<placement> class instead, so the placement mapping lives in
-    // _overlay.css rather than in inline styles.
+    // position-anchor is set here because the anchor name is generated per
+    // trigger instance.
     useLayoutEffect(() => {
         if (show && overlayRef.current) {
             // Promote into the top layer -- see the note in Tooltip.tsx. The

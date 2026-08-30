@@ -57,16 +57,17 @@ The skeleton shimmer is a single moving gradient that resolves its colours from 
 
 `Section` (and `SectionForm`) is the panel: it owns the heading and the visual grouping, and it is the default for structure. Reach for a `<fieldset>` only for the two things a heading cannot do, and nest it *inside* a Section rather than using it in place of one.
 
-- **A shared accessible name.** A `<legend>` is announced with every control in the group. A heading looks the same and fixes nothing, because it is not associated with the controls. The case where this is not merely nicer but required is a **radio group** — the individual labels say "Monthly" and "Yearly", and only the legend says what is being chosen.
+- **A shared accessible name.** A `<legend>` is announced with every control in the group. A heading looks the same and fixes nothing, because it is not associated with the controls. The case where this is not merely nicer but required is a **radio group** — the individual labels say "Monthly" and "Yearly", and only the legend says what is being chosen. Reach for `Form.RadioGroup` there rather than writing the markup by hand: it renders the fieldset and legend, and binds the options to one field.
 - **Disabling as a unit.** `<fieldset disabled>` disables every control inside it natively — no per-control prop and no JavaScript. Useful while a form saves, or for a sub-form that only applies conditionally.
 
 ```tsx
 <SectionForm header="Subscription" headerSize={4} form={form} onSubmit={save}>
-    <fieldset>
-        <legend>Billing period</legend>
-        <Input.Check id="monthly" type="radio" name="billing" value="monthly" label="Monthly" inline defaultChecked />
-        <Input.Check id="yearly" type="radio" name="billing" value="yearly" label="Yearly" inline />
-    </fieldset>
+    <Form.Group groupId="billing">
+        <Form.RadioGroup legend="Billing period" inline>
+            <Form.Radio value="monthly" label="Monthly" />
+            <Form.Radio value="yearly" label="Yearly" />
+        </Form.RadioGroup>
+    </Form.Group>
 
     <fieldset disabled={saving}>
         <legend>Delivery address</legend>

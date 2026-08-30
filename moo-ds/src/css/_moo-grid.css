@@ -7,24 +7,13 @@
     margin-inline: auto;
 }
 
-/* One fluid rule in place of the nine stepped max-width breakpoints.
-   Read outward: keep 80px of breathing room either side of the viewport, never
-   go below the 540px small-screen cap, and never exceed the largest tier.
+/* Read outward: keep 80px of breathing room either side of the viewport, never
+   go below the 540px small-screen cap, and never exceed the largest tier. The
+   540px floor matters on small screens -- without it a 360px phone would get a
+   280px container.
 
-   The 540px floor keeps small screens exactly as they were -- without it a
-   360px phone would get a 280px container. The -80px term reproduces every
-   tier from 1500px up exactly, since those all sat at viewport minus 80px; the
-   768-1200 band ends up at most 48px narrower than its stepped value.
-
-   80px rather than 5rem deliberately: _reset.css scales the root font size
-   (14px, 12px under 768px), so 5rem would be 70px here and would not line up
-   with the tiers it is replacing.
-
-   The real change is between breakpoints: the container now grows continuously
-   instead of holding one width across a whole band, so it no longer leaves up
-   to ~380px of width unused just below a breakpoint (~190px a side, measured
-   at a 2900px viewport, where the stepped rule held 2440px against 2820px
-   here). */
+   80px, not 5rem: _reset.css scales the root font size (14px, 12px under
+   768px), so 5rem would resolve to 70px here. */
 .container {
     max-width: min(3120px, max(540px, 100dvw - 80px));
 }

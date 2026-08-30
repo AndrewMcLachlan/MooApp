@@ -11,8 +11,8 @@ import { isAuthCancellation } from "../providers";
  * the API stayed down. Testing the error keeps recovery doing its job while leaving
  * unrelated failures to surface as errors.
  *
- * Internal: this module is deliberately not re-exported from `src/index.ts`, so the
- * predicate stays out of the package's public API.
+ * Internal: keep this out of `src/index.ts` so the predicate stays off the
+ * package's public API.
  */
 export const brokenByAuthWindow = (query: { state: { status: string; error: unknown } }): boolean =>
     query.state.status === "error" && isAuthCancellation(query.state.error);

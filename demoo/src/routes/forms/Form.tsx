@@ -62,6 +62,10 @@ export const FormPage = () => {
 
     const [shipElsewhere, setShipElsewhere] = useState(false);
 
+    const choiceForm = useForm<{ billing: string; period: string }>({
+        defaultValues: { billing: "monthly", period: "3m" },
+    });
+
     // onTouched so a field reports as you leave it. A resolver validates the
     // whole object and returns every failure at once, so on the default
     // onSubmit mode the first submit lights up fields you have not reached yet.
@@ -173,6 +177,42 @@ export const FormPage = () => {
                     <Input required placeholder="Native required constraint" />
                 </div>
             </Section>
+
+            <SectionForm header="Radio groups" headerSize={4} form={choiceForm} onSubmit={(data) => { console.log(data); }}>
+                <p>
+                    A set of radios answering one question is one field, so the options share a
+                    name and the group needs its own accessible name. <code>Form.RadioGroup</code>
+                    handles both: it renders a <code>&lt;fieldset&gt;</code> with the question as
+                    the <code>&lt;legend&gt;</code>, and every option registers against the group
+                    rather than its own id. A <code>&lt;label&gt;</code> cannot name a group,
+                    because there is no single control for it to point at.
+                </p>
+
+                <Form.Group groupId="billing">
+                    <Form.RadioGroup legend="Billing period" inline>
+                        <Form.Radio value="monthly" label="Monthly" />
+                        <Form.Radio value="yearly" label="Yearly" />
+                    </Form.RadioGroup>
+                </Form.Group>
+
+                <p>
+                    <code>appearance=&quot;buttons&quot;</code> changes the skin and nothing else
+                    &mdash; still radios, still one tab stop with arrow keys moving between the
+                    options. Suits a short set of mutually exclusive choices where the options
+                    read better as a control than as a list: a period switcher, a chart mode.
+                </p>
+
+                <Form.Group groupId="period">
+                    <Form.RadioGroup legend="Period" appearance="buttons">
+                        <Form.Radio value="1m" label="1M" />
+                        <Form.Radio value="3m" label="3M" />
+                        <Form.Radio value="6m" label="6M" />
+                        <Form.Radio value="1y" label="1Y" />
+                    </Form.RadioGroup>
+                </Form.Group>
+
+                <Button type="submit">Submit</Button>
+            </SectionForm>
 
             <Section title="Grouping" header="Grouping controls" headerSize={4}>
                 <p>
