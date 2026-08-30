@@ -65,12 +65,12 @@
     "@testing-library/user-event": "^14.6.6",
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
-    "@typescript-eslint/eslint-plugin": "^8.67.0",
+    "@types/react-dom": "^19.2.5",
+    "@typescript-eslint/eslint-plugin": "^8.68.0",
     "@typescript-eslint/parser": "^8.10.0",
     "@vitejs/plugin-react": "^6.1.0",
     "globals": "^17.11.0",
-    "rollup": "^4.62.5",
+    "rollup": "^4.63.0",
     "rollup-plugin-peer-deps-external": "^2.2.4"
   },
   "peerDependencies": {
