@@ -6,8 +6,7 @@ import type { Variant } from "../models/Colours";
 /**
  * Buttons carry the semantic variants, filled or outlined, plus `link`.
  *
- * `info` is excluded deliberately: there is no `.btn-info`, and a button typed for a variant it
- * cannot render is worse than one that won't compile. Adding the style is all it would take.
+ * `info` is excluded: there is no `.btn-info` to render it.
  */
 export type ButtonVariant =
     | Exclude<Variant, "info">

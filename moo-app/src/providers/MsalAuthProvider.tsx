@@ -65,8 +65,7 @@ const INTERACTIVE_RECOVERY_ATTEMPTED = "mooappInteractiveRecoveryAttempted";
 
 // sessionStorage throws where storage is blocked -- private browsing, some
 // embedded webviews, a restrictive cookie policy. Authentication must not be
-// the thing that breaks there, so each access degrades to "no marker", which
-// restores the previous behaviour rather than blocking recovery outright.
+// the thing that breaks there, so each access degrades to "no marker".
 const interactiveRecoveryAttempted = (): boolean => {
     try {
         return sessionStorage.getItem(INTERACTIVE_RECOVERY_ATTEMPTED) !== null;

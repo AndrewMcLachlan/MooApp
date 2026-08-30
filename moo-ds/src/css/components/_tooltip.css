@@ -56,11 +56,8 @@
     /* Fade in on appear. @starting-style supplies the pre-insertion value, so
        this needs no mount-time class toggle or timer.
 
-       Entry only, deliberately: Tooltip renders the portal as `{show && ...}`,
-       so on hide React removes the node and there is nothing left to transition.
-       Animating the exit as well would mean keeping the tooltip mounted and
-       driving display from CSS, which is a component change rather than a
-       styling one -- see the same note in _combo-box.css and _overlay.css. */
+       Entry only: Tooltip renders the portal as `{show && ...}`, so on hide
+       React removes the node and there is nothing left to transition. */
     transition: opacity 0.15s ease-out, translate 0.15s ease-out;
 
     @starting-style {

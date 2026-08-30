@@ -45,12 +45,8 @@
     }
 }
 
-/* Placement lives here rather than in OverlayTrigger, which previously wrote
-   position-area and position-try-fallbacks as inline styles from two JS lookup
-   tables. Only position-anchor still has to be set from JS, because the anchor
-   name is generated per trigger instance. Block placements flip block-ward and
-   inline placements flip inline-ward, so a placement that would overflow the
-   viewport lands on the opposite side rather than off-screen. */
+/* Block placements flip block-ward and inline placements flip inline-ward, so a
+   placement that would overflow the viewport lands on the opposite side. */
 .overlay-portal.overlay-top {
     position-area: top;
     position-try-fallbacks: flip-block;

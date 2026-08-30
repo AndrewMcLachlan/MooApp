@@ -143,11 +143,8 @@
     }
 }
 
-/* The slide is the entire animation here, so there is no shorter version to
-   fall back to: reduced motion drops it to a plain appear and disappear.
-   visibility and display still flip, just with nothing to sit through. This
-   matters more than it used to -- the slide-out was previously played while the
-   panel was already hidden, so nobody ever saw it. */
+/* The slide is the entire animation here, so reduced motion drops it to a plain
+   appear and disappear. visibility and display still flip. */
 @media (prefers-reduced-motion: reduce) {
 
     .offcanvas,

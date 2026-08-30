@@ -41,8 +41,7 @@
 /* Variant tokens. light-dark() resolves against the inherited color-scheme,
    which _variables.css sets on :root (light dark) and the .light/.dark and
    [data-theme] theme classes force to a single scheme. That covers all four
-   cases -- OS light, OS dark, forced light, forced dark -- in one rule, so the
-   values no longer need to be repeated per theme.
+   cases -- OS light, OS dark, forced light, forced dark -- in one rule.
    First argument = light, second = dark. */
 
 .alert-danger {

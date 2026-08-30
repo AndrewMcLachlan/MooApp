@@ -32,16 +32,11 @@ const clamp = (value: number, min: number, max: number) => Math.min(max, Math.ma
  * A shimmering stand-in for a chart that has no data yet. Chart.js paints nothing
  * until data arrives, so this owns the whole visual for the wait.
  *
- * It draws only what is invariant for a given shape — the elements, plus a baseline
- * axis where one always exists. Legends and tick labels are deliberately absent: they
- * cannot be guessed from outside the consumer's chart config, and furniture that turns
- * out wrong is worse than none.
+ * It draws the elements, plus a baseline axis where one always exists.
  */
 export const SkeletonChart: React.FC<SkeletonChartProps> = ({ variant = "bar", count, className, ...rest }) => {
 
-    // ?? only catches null/undefined, so a non-finite number would flow straight
-    // through: Infinity blows up Array.from with a RangeError, and NaN emits a
-    // junk skeleton-chart-count-NaN class. Fall back to the default for both.
+    // Guard non-finite counts: Infinity throws in Array.from, NaN yields a junk class.
     const requested = count ?? DEFAULT_COUNT[variant];
     const resolved = Number.isFinite(requested) ? requested : DEFAULT_COUNT[variant];
 
