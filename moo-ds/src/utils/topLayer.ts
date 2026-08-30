@@ -9,8 +9,7 @@
  * The attribute is applied only when the API is present. A `popover` element
  * is `display: none` until it is opened, so adding the attribute somewhere
  * `showPopover()` does not exist (jsdom, or a browser predating the API) would
- * hide the overlay outright and drop it from the accessibility tree. Feature
- * detecting keeps those environments on the previous z-index behaviour.
+ * hide the overlay outright and drop it from the accessibility tree.
  */
 export const supportsPopover = (): boolean =>
     typeof HTMLElement !== "undefined" && typeof HTMLElement.prototype.showPopover === "function";

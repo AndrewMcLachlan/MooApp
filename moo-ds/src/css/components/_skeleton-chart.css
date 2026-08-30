@@ -1,32 +1,20 @@
 /* Chart skeletons.
 
-   Consumers draw charts with Chart.js, which renders to a <canvas> and paints
-   nothing at all -- no axes, no legend, no frame -- until it has data. So these
-   own the entire visual for the whole of the wait.
-
-   They draw only what is invariant for a given shape: the elements themselves,
-   plus a baseline axis where one always exists. Legend and tick placeholders are
-   deliberately absent -- they cannot be guessed from outside the consumer's chart
-   config, and furniture that turns out wrong is worse than none. */
+   Chart.js renders to a <canvas> and paints nothing at all until it has data,
+   so these own the entire visual for the whole of the wait. They draw the
+   elements themselves, plus a baseline axis where one always exists. */
 
 .skeleton-chart {
-    /* The root is a <span>. Without this it stays inline, ignores its height, and
-       the line variant's absolutely positioned children collapse to nothing. */
+    /* The root is a <span>: without this the line variant renders blank. */
     display: block;
     width: 100%;
     height: 100%;
-    /* So it cannot collapse in an auto-height parent, the trap .spinner-container
-       hit inside a Widget outside the dashboard's fixed rows. */
+    /* Floor, so it cannot collapse in an auto-height parent. */
     min-height: 12rem;
 }
 
 /* --- bar / horizontal-bar ------------------------------------------------- */
 
-/* No `gap`. A percentage gap is a share of the whole, so its effect swung with
-   the bar count: at 4% eight bars spent 28% of the width on gaps and read as
-   thin, while two bars had a single gap and became slabs. Chart.js instead
-   sizes a bar at categoryPercentage x barPercentage = 0.72 of its own slot
-   whatever the count, so the bars below scale within their slot to match. */
 .skeleton-chart-bar,
 .skeleton-chart-horizontal-bar {
     display: flex;
@@ -47,16 +35,11 @@
     border-left: 1px solid var(--border-colour);
 }
 
-/* Sizes cycle through 8 fixed steps rather than being randomised: random values
-   break SSR hydration and make snapshots flicker. Deliberately unsorted -- a
-   generic skeleton must not imply the consumer's chart sorts its data. */
 .skeleton-chart-bar > .skeleton-chart-element {
     flex: 1 1 0;
 
-    /* NOTE: these percentages need the host to give .skeleton-chart a definite
-       height. Against an indefinite one they compute to 0, not auto, so the
-       bars vanish and align-self: stretch cannot rescue them (stretch only
-       applies when the cross size is auto). Sizing the host is the contract. */
+    /* These percentages need a definite height on the host: against an
+       indefinite one they compute to 0 and the bars vanish. */
     &:nth-child(8n + 1) { height: 62%; }
     &:nth-child(8n + 2) { height: 88%; }
     &:nth-child(8n + 3) { height: 45%; }
@@ -89,15 +72,7 @@
 
 /* Each series fills the plot area and is cut down to a stroke by clip-path. The
    polygon walks left-to-right along the top of the stroke, then back along the
-   bottom at +3%, giving an even thickness. Four paths, then they repeat.
-
-   The shapes are trends, not zigzags. Real line charts move slowly relative to
-   their width -- a decline that bottoms out and recovers, a climb to a peak
-   then a long fall, a steady drift, a near-flat threshold. An alternating
-   up-down-up path at every point reads as noise, which is the one thing a
-   financial chart almost never looks like. Each path below changes direction
-   at most twice, and they are ordered so the first two drawn together read as
-   two related series rather than a scribble. */
+   bottom at +3%, giving an even thickness. Four paths, then they repeat. */
 .skeleton-chart-line > .skeleton-chart-element {
     position: absolute;
     inset: 0;
@@ -108,9 +83,7 @@
                            100% 15%, 80% 37%, 60% 57%, 40% 61%, 20% 47%, 0% 23%);
     }
 
-    /* The same motion, lower and shallower. Series in a real chart track each
-       other; mirroring this one would cross it twice and draw a symmetric
-       bowtie, which reads as ornament rather than data. */
+    /* The same motion, lower and shallower. */
     &:nth-child(4n + 2) {
         clip-path: polygon(0% 44%, 20% 62%, 40% 74%, 60% 72%, 80% 60%, 100% 46%,
                            100% 49%, 80% 63%, 60% 75%, 40% 77%, 20% 65%, 0% 47%);
@@ -131,22 +104,15 @@
 
 /* --- pie / doughnut ------------------------------------------------------- */
 
-/* Slice gaps and the doughnut hole are cut out with composited masks rather than
-   painted with divider lines, so the shape sits correctly on any background
-   instead of assuming --section-bg. Same technique as .spinner-comet; the
-   -webkit- prefix is for Safari. */
+/* Slice gaps and the doughnut hole are cut out with composited masks, so the
+   shape sits correctly on any background. The -webkit- prefix is for Safari. */
 .skeleton-chart-pie,
 .skeleton-chart-doughnut {
     --skeleton-chart-hole: 0;
     --slice-angle: calc(360deg / 6);
 
-    /* Stay circular. `aspect-ratio` alone was not enough: the base rule's
-       height: 100% made the height definite, so in a host narrower than it was
-       tall `max-width` clamped the width and the ratio could not rebalance --
-       a 150x400 host gave a 150x400 oval. Both axes auto with both maxes lets
-       the ratio fit whichever axis is smaller. `min-width` matches the
-       inherited min-height floor so a host below it overflows as a circle
-       rather than going oval. */
+    /* Stay circular: both axes auto with both maxes, so the ratio fits
+       whichever axis is smaller. */
     width: auto;
     height: auto;
     aspect-ratio: 1;
@@ -170,8 +136,7 @@
     --skeleton-chart-hole: 55%;
 }
 
-/* The count reaches CSS as a class because inline `style` is out (project rules).
-   2-12 covers any pie whose slices are still legible. */
+/* 2-12 covers any pie whose slices are still legible. */
 .skeleton-chart-count-2 { --slice-angle: calc(360deg / 2); }
 .skeleton-chart-count-3 { --slice-angle: calc(360deg / 3); }
 .skeleton-chart-count-4 { --slice-angle: calc(360deg / 4); }

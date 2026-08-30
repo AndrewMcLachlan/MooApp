@@ -121,14 +121,11 @@
         }
     }
 
-    /* Anchor positioned rather than position: absolute inside the control.
-       Absolute positioning kept the list inside the control's containing block,
-       so any ancestor with overflow: hidden clipped it -- dashboard widgets set
-       exactly that. position: fixed takes it out of the flow, position-anchor
-       keeps it pinned to the control, anchor-size() matches the control's width
-       (what width: 100% used to do), and flip-block moves it above the control
-       when there is no room below instead of running off-screen.
-       Follows the pattern already established in _tooltip.css. */
+    /* position: fixed takes the list out of the flow, so an ancestor with
+       overflow: hidden cannot clip it -- dashboard widgets set exactly that.
+       position-anchor pins it to the control, anchor-size() matches the
+       control's width, and flip-block moves it above when there is no room
+       below. Same pattern as _tooltip.css. */
     ol {
         max-height: 20vh;
         overflow-y: auto;

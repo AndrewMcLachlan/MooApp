@@ -116,12 +116,8 @@ function DataGridInner<TData extends RowData>(
         },
         onSortingChange: sortable ? handleSortingChange : undefined,
         onPaginationChange: hasPagination ? handlePaginationChange : undefined,
-        // v8 attached the sorted/paginated row models only when they were
-        // wanted; v9 registers them once on the feature set, so an unwanted one
-        // has to be switched off here instead. Without this a grid with no
-        // `showPagination` would silently slice itself to the default page size
-        // of 10. `manual` means "the data already arrived in this shape", which
-        // is true both for server mode and for the feature being unused.
+        // Off when the feature is unused: the row models are always registered, so
+        // pagination would otherwise slice to the default page size.
         manualSorting: server || !sortable,
         manualPagination: server || !hasPagination,
         ...(server ? { rowCount } : {}),
@@ -133,7 +129,6 @@ function DataGridInner<TData extends RowData>(
     const showFooter = showPagination && !loading && hasRows;
     const hasHeaderPagination = showHeaderPagination && !loading && hasRows;
 
-    // v9 exposes the selected state as `table.state` rather than `getState()`.
     const pagination = table.state.pagination ?? internalPagination;
     const pageNumber = pagination.pageIndex + 1;
     const pageCount = table.getPageCount();
@@ -236,9 +231,6 @@ function DataGridInner<TData extends RowData>(
                     ) : (
                         rows.map((row) => (
                             <tr key={row.id}>
-                                {/* getAllCells, not getVisibleCells: the latter belongs to
-                                    columnVisibilityFeature, which DataGrid does not register
-                                    because it always renders every column. */}
                                 {row.getAllCells().map((cell) => (
                                     <td key={cell.id} {...classNameProp(cell.column.columnDef.meta?.className)}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}

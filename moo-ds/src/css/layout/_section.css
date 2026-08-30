@@ -1,10 +1,7 @@
-/* .section is deliberately NOT a query container, even though widgets would
-   benefit from one. container-type: inline-size also removes the element's
-   intrinsic inline contribution, and .section-group lays sections out in a
-   flex row where they are sized from their content -- adding it collapses
-   those sections to their padding (measured: 132px -> 31px). The dashboard
-   instead makes its grid cells the containers, where the 1fr track gives a
-   definite width; see pages/_dashboard.css. */
+/* Do not add container-type here: it removes the intrinsic inline contribution,
+   collapsing sections laid out in .section-group's flex row (measured 132px ->
+   31px). The dashboard makes its grid cells the containers instead; see
+   pages/_dashboard.css. */
 .section {
     background-color: var(--section-bg);
     padding: 15px;
