@@ -136,8 +136,8 @@ export const WithGroups: Story = {
             <Form form={form} onSubmit={fn()}>
                 <fieldset>
                     <legend>Billing period</legend>
-                    <Input.Check id="sb-monthly" type="radio" name="billing" label="Monthly" inline defaultChecked />
-                    <Input.Check id="sb-yearly" type="radio" name="billing" label="Yearly" inline />
+                    <Input.Check id="sb-monthly" type="radio" name="billing" value="monthly" label="Monthly" inline defaultChecked />
+                    <Input.Check id="sb-yearly" type="radio" name="billing" value="yearly" label="Yearly" inline />
                 </fieldset>
                 <fieldset disabled>
                     <legend>Delivery address</legend>

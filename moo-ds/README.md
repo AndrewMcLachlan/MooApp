@@ -64,8 +64,8 @@ The skeleton shimmer is a single moving gradient that resolves its colours from 
 <SectionForm header="Subscription" headerSize={4} form={form} onSubmit={save}>
     <fieldset>
         <legend>Billing period</legend>
-        <Input.Check id="monthly" type="radio" name="billing" label="Monthly" inline defaultChecked />
-        <Input.Check id="yearly" type="radio" name="billing" label="Yearly" inline />
+        <Input.Check id="monthly" type="radio" name="billing" value="monthly" label="Monthly" inline defaultChecked />
+        <Input.Check id="yearly" type="radio" name="billing" value="yearly" label="Yearly" inline />
     </fieldset>
 
     <fieldset disabled={saving}>

@@ -193,8 +193,8 @@ export const FormPage = () => {
                 </p>
                 <fieldset>
                     <legend>Billing period</legend>
-                    <Input.Check id="grp-monthly" type="radio" name="billing" label="Monthly" inline defaultChecked />
-                    <Input.Check id="grp-yearly" type="radio" name="billing" label="Yearly" inline />
+                    <Input.Check id="grp-monthly" type="radio" name="billing" value="monthly" label="Monthly" inline defaultChecked />
+                    <Input.Check id="grp-yearly" type="radio" name="billing" value="yearly" label="Yearly" inline />
                 </fieldset>
 
                 <h5>A group that disables as a unit</h5>

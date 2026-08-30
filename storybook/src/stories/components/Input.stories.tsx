@@ -29,8 +29,8 @@ export const Check: Story = {
 export const Radio: Story = {
     render: () => (
         <div className="demo-col tight">
-            <Input.Check id="radio1" type="radio" name="group" label="Option one" defaultChecked />
-            <Input.Check id="radio2" type="radio" name="group" label="Option two" />
+            <Input.Check id="radio1" type="radio" name="group" value="one" label="Option one" defaultChecked />
+            <Input.Check id="radio2" type="radio" name="group" value="two" label="Option two" />
         </div>
     ),
 };

@@ -59,8 +59,8 @@ export const Inputs = () => {
                     <fieldset>
                         <legend>Billing period</legend>
                         <div className="demo-row">
-                            <Input.Check id="rad1" type="radio" name="plan" label="Monthly" inline defaultChecked />
-                            <Input.Check id="rad2" type="radio" name="plan" label="Yearly" inline />
+                            <Input.Check id="rad1" type="radio" name="plan" value="monthly" label="Monthly" inline defaultChecked />
+                            <Input.Check id="rad2" type="radio" name="plan" value="yearly" label="Yearly" inline />
                         </div>
                     </fieldset>
                 </div>
