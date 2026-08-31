@@ -53,6 +53,31 @@ Keep the placeholder unconditional — it is only consulted while `loading` — 
 
 The skeleton shimmer is a single moving gradient that resolves its colours from the active theme and collapses to a static placeholder under `prefers-reduced-motion`. Skeleton shapes are decorative (`aria-hidden`); the loading *region* that contains them carries `aria-busy`. `ProgressIndeterminate` is a `role="progressbar"` with `aria-busy` and no `aria-valuenow`; under `prefers-reduced-motion` it renders as a static full-width bar. The comet spinner slows to 2s rather than stopping — a stopped spinner reads as a hang.
 
+## Grouping form controls — Section vs fieldset
+
+`Section` (and `SectionForm`) is the panel: it owns the heading and the visual grouping, and it is the default for structure. Reach for a `<fieldset>` only for the two things a heading cannot do, and nest it *inside* a Section rather than using it in place of one.
+
+- **A shared accessible name.** A `<legend>` is announced with every control in the group. A heading looks the same and fixes nothing, because it is not associated with the controls. The case where this is not merely nicer but required is a **radio group** — the individual labels say "Monthly" and "Yearly", and only the legend says what is being chosen. Reach for `Form.RadioGroup` there rather than writing the markup by hand: it renders the fieldset and legend, and binds the options to one field.
+- **Disabling as a unit.** `<fieldset disabled>` disables every control inside it natively — no per-control prop and no JavaScript. Useful while a form saves, or for a sub-form that only applies conditionally.
+
+```tsx
+<SectionForm header="Subscription" headerSize={4} form={form} onSubmit={save}>
+    <Form.Group groupId="billing">
+        <Form.RadioGroup legend="Billing period" inline>
+            <Form.Radio value="monthly" label="Monthly" />
+            <Form.Radio value="yearly" label="Yearly" />
+        </Form.RadioGroup>
+    </Form.Group>
+
+    <fieldset disabled={saving}>
+        <legend>Delivery address</legend>
+        {/* ...groups... */}
+    </fieldset>
+</SectionForm>
+```
+
+`legend` is styled as a sub-heading (1.125rem, semibold) rather than inheriting the browser default, so it reads as subordinate to the Section header above it rather than tying with an `h4`.
+
 ## Peer dependencies
 
 - `react` and `react-dom` (>= 19.2.7)

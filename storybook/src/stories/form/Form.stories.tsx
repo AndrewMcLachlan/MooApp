@@ -129,31 +129,60 @@ export const WithAllInputTypes: Story = {
     },
 };
 
+export const RadioGroupChecks: Story = {
+    render: function Render() {
+        const form = useForm({ defaultValues: { billing: "monthly" } });
+        return (
+            <Form form={form} onSubmit={fn()}>
+                <Form.Group groupId="billing">
+                    <Form.RadioGroup legend="Billing period" inline>
+                        <Form.Radio value="monthly" label="Monthly" />
+                        <Form.Radio value="yearly" label="Yearly" />
+                    </Form.RadioGroup>
+                </Form.Group>
+            </Form>
+        );
+    },
+};
+
+export const RadioGroupButtons: Story = {
+    render: function Render() {
+        const form = useForm({ defaultValues: { period: "3m" } });
+        return (
+            <Form form={form} onSubmit={fn()}>
+                <Form.Group groupId="period">
+                    <Form.RadioGroup legend="Period" appearance="buttons">
+                        <Form.Radio value="1m" label="1M" />
+                        <Form.Radio value="3m" label="3M" />
+                        <Form.Radio value="6m" label="6M" />
+                        <Form.Radio value="1y" label="1Y" />
+                    </Form.RadioGroup>
+                </Form.Group>
+            </Form>
+        );
+    },
+};
+
 export const WithGroups: Story = {
     render: function Render() {
         const form = useForm();
         return (
             <Form form={form} onSubmit={fn()}>
-                <fieldset>
-                    <legend>Personal Information</legend>
-                    <Form.Group groupId="firstName">
-                        <Form.Label>First Name</Form.Label>
+                <Form.Group groupId="billing">
+                    <Form.RadioGroup legend="Billing period" inline>
+                        <Form.Radio value="monthly" label="Monthly" />
+                        <Form.Radio value="yearly" label="Yearly" />
+                    </Form.RadioGroup>
+                </Form.Group>
+                <fieldset disabled>
+                    <legend>Delivery address</legend>
+                    <Form.Group groupId="street">
+                        <Form.Label>Street</Form.Label>
                         <Form.Input />
                     </Form.Group>
-                    <Form.Group groupId="lastName">
-                        <Form.Label>Last Name</Form.Label>
+                    <Form.Group groupId="suburb">
+                        <Form.Label>Suburb</Form.Label>
                         <Form.Input />
-                    </Form.Group>
-                </fieldset>
-                <fieldset>
-                    <legend>Contact Information</legend>
-                    <Form.Group groupId="email">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Input type="email" />
-                    </Form.Group>
-                    <Form.Group groupId="phone">
-                        <Form.Label>Phone</Form.Label>
-                        <Form.Input type="tel" />
                     </Form.Group>
                 </fieldset>
                 <button type="submit" className="btn btn-primary">Submit</button>

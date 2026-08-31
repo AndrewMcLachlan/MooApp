@@ -56,10 +56,13 @@ export const Inputs = () => {
                 <div className="demo-col">
                     <Input.Check id="chk1" label="Accept terms" defaultChecked />
                     <Input.Check id="chk2" label="Subscribe to updates" />
-                    <div className="demo-row">
-                        <Input.Check id="rad1" type="radio" name="plan" label="Monthly" inline defaultChecked />
-                        <Input.Check id="rad2" type="radio" name="plan" label="Yearly" inline />
-                    </div>
+                    <fieldset>
+                        <legend>Billing period</legend>
+                        <div className="demo-row">
+                            <Input.Check id="rad1" type="radio" name="plan" value="monthly" label="Monthly" inline defaultChecked />
+                            <Input.Check id="rad2" type="radio" name="plan" value="yearly" label="Yearly" inline />
+                        </div>
+                    </fieldset>
                 </div>
             </Section>
 

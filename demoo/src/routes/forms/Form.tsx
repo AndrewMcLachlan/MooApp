@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Page } from "@andrewmclachlan/moo-app";
 import { Form, Section, SectionForm, FormComboBox, Button, Input } from "@andrewmclachlan/moo-ds";
 import { useForm, type Resolver } from "react-hook-form";
@@ -58,6 +59,12 @@ export const FormPage = () => {
     };
 
     const form = useForm<FormSampleValues>({ defaultValues: existing });
+
+    const [shipElsewhere, setShipElsewhere] = useState(false);
+
+    const choiceForm = useForm<{ billing: string; period: string }>({
+        defaultValues: { billing: "monthly", period: "3m" },
+    });
 
     // onTouched so a field reports as you leave it. A resolver validates the
     // whole object and returns every failure at once, so on the default
@@ -169,6 +176,86 @@ export const FormPage = () => {
                     <Input type="email" placeholder="Native email constraint" />
                     <Input required placeholder="Native required constraint" />
                 </div>
+            </Section>
+
+            <SectionForm header="Radio groups" headerSize={4} form={choiceForm} onSubmit={(data) => { console.log(data); }}>
+                <p>
+                    A set of radios answering one question is one field, so the options share a
+                    name and the group needs its own accessible name. <code>Form.RadioGroup</code>
+                    handles both: it renders a <code>&lt;fieldset&gt;</code> with the question as
+                    the <code>&lt;legend&gt;</code>, and every option registers against the group
+                    rather than its own id. A <code>&lt;label&gt;</code> cannot name a group,
+                    because there is no single control for it to point at.
+                </p>
+
+                <Form.Group groupId="billing">
+                    <Form.RadioGroup legend="Billing period" inline>
+                        <Form.Radio value="monthly" label="Monthly" />
+                        <Form.Radio value="yearly" label="Yearly" />
+                    </Form.RadioGroup>
+                </Form.Group>
+
+                <p>
+                    <code>appearance=&quot;buttons&quot;</code> changes the skin and nothing else
+                    &mdash; still radios, still one tab stop with arrow keys moving between the
+                    options. Suits a short set of mutually exclusive choices where the options
+                    read better as a control than as a list: a period switcher, a chart mode.
+                </p>
+
+                <Form.Group groupId="period">
+                    <Form.RadioGroup legend="Period" appearance="buttons">
+                        <Form.Radio value="1m" label="1M" />
+                        <Form.Radio value="3m" label="3M" />
+                        <Form.Radio value="6m" label="6M" />
+                        <Form.Radio value="1y" label="1Y" />
+                    </Form.RadioGroup>
+                </Form.Group>
+
+                <Button type="submit">Submit</Button>
+            </SectionForm>
+
+            <Section title="Grouping" header="Grouping controls" headerSize={4}>
+                <p>
+                    A <code>Section</code> is the panel: it owns the heading and the visual
+                    grouping, and it is the default for structure. A <code>&lt;fieldset&gt;</code>
+                    sits <em>inside</em> one and does the thing a heading cannot &mdash; it gives a
+                    set of controls a shared accessible name, announced with every control in the
+                    group. Reach for it in two cases and otherwise use a Section.
+                </p>
+
+                <h5>A group that needs a name</h5>
+                <p>
+                    A radio group has no other way to say what it is asking. The individual labels
+                    are &ldquo;Monthly&rdquo; and &ldquo;Yearly&rdquo;; without a
+                    <code> &lt;legend&gt;</code> the question they answer is never announced, and a
+                    screen reader user hears two unrelated options. A heading above them looks the
+                    same and fixes nothing, because a heading is not tied to the controls.
+                </p>
+                <fieldset>
+                    <legend>Billing period</legend>
+                    <Input.Check id="grp-monthly" type="radio" name="billing" value="monthly" label="Monthly" inline defaultChecked />
+                    <Input.Check id="grp-yearly" type="radio" name="billing" value="yearly" label="Yearly" inline />
+                </fieldset>
+
+                <h5>A group that disables as a unit</h5>
+                <p>
+                    Setting <code>disabled</code> on the fieldset disables every control inside it,
+                    natively &mdash; no per-control prop and no JavaScript. Useful while a form is
+                    saving, or for a sub-form that only applies conditionally.
+                </p>
+                <Input.Check
+                    id="grp-toggle"
+                    label="Ship to a different address"
+                    checked={shipElsewhere}
+                    onChange={(e) => setShipElsewhere(e.currentTarget.checked)}
+                />
+                <fieldset disabled={!shipElsewhere}>
+                    <legend>Delivery address</legend>
+                    <div className="demo-col">
+                        <Input placeholder="Street" />
+                        <Input placeholder="Suburb" />
+                    </div>
+                </fieldset>
             </Section>
 
         </Page>

@@ -8,6 +8,8 @@ import { Group, type GroupComponent } from "./Group";
 import { Input, type InputComponent } from "./Input";
 import { Label, type LabelComponent } from "./Label";
 import { Password, type PasswordComponent } from "./Password";
+import { Radio, type RadioProps } from "./Radio";
+import { RadioGroup, type RadioGroupProps } from "./RadioGroup";
 import { Select, type SelectComponent } from "./Select";
 import { TextArea, type TextAreaComponent } from "./TextArea";
 
@@ -19,6 +21,8 @@ export type FormComponent<TFormValues> = React.FC<PropsWithChildren<FormProps<TF
     Group: GroupComponent;
     Label: LabelComponent
     Password: PasswordComponent;
+    Radio: React.FC<RadioProps>;
+    RadioGroup: React.FC<PropsWithChildren<RadioGroupProps>>;
     TextArea: TextAreaComponent;
 };
 
@@ -39,6 +43,8 @@ Form.Group = Group;
 Form.Input = Input;
 Form.Label = Label;
 Form.Password = Password;
+Form.Radio = Radio;
+Form.RadioGroup = RadioGroup;
 Form.Select = Select;
 Form.TextArea = TextArea;
 
