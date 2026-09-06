@@ -46,10 +46,10 @@
   "devDependencies": {
     "@tanstack/router-plugin": "^1.168.35",
     "@types/jest": "^30.0.0",
-    "@types/node": "^26.4.0",
+    "@types/node": "^26.4.1",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.5",
-    "@vitejs/plugin-react": "^6.1.0",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
     "esbuild": "^0.28.2",
     "typescript": "^7.0.2",
     "vite": "^8.2.2",
