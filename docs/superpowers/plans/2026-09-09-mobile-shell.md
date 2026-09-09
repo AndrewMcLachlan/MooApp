@@ -1323,7 +1323,6 @@ Expected: FAIL — cannot resolve `../ActionMenu`.
 ```tsx
 import { Menu } from "@andrewmclachlan/moo-ds";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Fragment } from "react";
 import { type PageAction } from "../models/PageAction";
 
 export const ActionMenu: React.FC<ActionMenuProps> = ({ actions }) => {
@@ -1370,8 +1369,6 @@ export interface ActionMenuProps {
 }
 ```
 
-`Fragment` is imported but only needed if you group differently; remove the import if your implementation does not use it, so lint stays clean.
-
 - [ ] **Step 4: Run test to verify it passes**
 
 Run: `npm run test:run -- ActionMenu`
@@ -1402,40 +1399,83 @@ Claude-Session: https://claude.ai/code/session_01UMhsYDPBrTkeKYZTvUzBDg"
 
 - [ ] **Step 1: Write the failing test**
 
-`moo-app/src/layout/__tests__/MobileHeader.test.tsx`. Follow the provider setup in the existing `moo-app/src/layout/__tests__/Header.test.tsx` — read it first and reuse its wrapper and mocks rather than inventing new ones.
+`moo-app/src/layout/__tests__/MobileHeader.test.tsx` — the mock shape follows the existing
+`Header.test.tsx` in the same folder:
 
 ```tsx
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Header } from '../Mobile/Header';
 
-// Use the same wrapper/mocks as Header.test.tsx; `renderHeader` below stands in
-// for whatever that file already provides.
+const mockSetShowSidebar = vi.fn();
+const mockUseLayout = vi.fn();
+
+vi.mock('../../providers', () => ({
+  useLayout: () => mockUseLayout(),
+  useApp: () => ({ name: 'Test App' }),
+}));
+
+vi.mock('@andrewmclachlan/moo-ds', () => ({
+  MenuToggle: ({ onClick }: { onClick: () => void }) => (
+    <button data-testid="menu-toggle" onClick={onClick}>Toggle</button>
+  ),
+}));
+
+vi.mock('../ActionMenu', () => ({
+  ActionMenu: ({ actions }: { actions: unknown[] }) =>
+    actions.length > 0 ? <button type="button" aria-label="More actions">More</button> : null,
+}));
+
+const layout = (overrides: Record<string, unknown> = {}) => {
+  mockUseLayout.mockReturnValue({
+    breadcrumbs: [],
+    actions: [],
+    customActions: [],
+    setShowSidebar: mockSetShowSidebar,
+    ...overrides,
+  });
+};
 
 describe('Mobile Header', () => {
+  beforeEach(() => {
+    mockUseLayout.mockReset();
+    mockSetShowSidebar.mockClear();
+  });
+
   it('renders only the last breadcrumb as the title', () => {
-    renderHeader({ breadcrumbs: [
+    layout({ breadcrumbs: [
       { text: 'Home', route: '/' },
       { text: 'Accounts', route: '/accounts' },
       { text: 'Joint Savings', route: '/accounts/1' },
     ] });
+    render(<Header menu={[]} />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Joint Savings');
     expect(screen.queryByText('Accounts')).not.toBeInTheDocument();
   });
 
-  it('renders described actions in the menu, not the bar', () => {
-    const { container } = renderHeader({ actions: [{ id: 'import', label: 'Import', onClick: vi.fn() }] });
-    expect(container.querySelector('.mobile-header')).not.toHaveTextContent('Import');
+  it('opens the drawer from the toggle', () => {
+    layout();
+    render(<Header menu={[]} />);
+    fireEvent.click(screen.getByTestId('menu-toggle'));
+    expect(mockSetShowSidebar).toHaveBeenCalledWith(true);
+  });
+
+  it('gives described actions to the menu rather than the bar', () => {
+    layout({ actions: [{ id: 'import', label: 'Import', onClick: vi.fn() }] });
+    render(<Header menu={[]} />);
     expect(screen.getByRole('button', { name: 'More actions' })).toBeInTheDocument();
+    expect(screen.queryByText('Import')).not.toBeInTheDocument();
   });
 
   it('renders custom actions in the bar', () => {
-    renderHeader({ customActions: [<button key="s" type="button">Search</button>] });
+    layout({ customActions: [<button key="s" type="button">Search</button>] });
+    render(<Header menu={[]} />);
     expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument();
   });
 
-  it('omits the menu toggle when there are no actions', () => {
-    renderHeader({ actions: [] });
+  it('renders no menu when there are no actions', () => {
+    layout({ actions: [] });
+    render(<Header menu={[]} />);
     expect(screen.queryByRole('button', { name: 'More actions' })).not.toBeInTheDocument();
   });
 });
@@ -1502,7 +1542,110 @@ Claude-Session: https://claude.ai/code/session_01UMhsYDPBrTkeKYZTvUzBDg"
 
 ---
 
-### Task 9: UserMenu on Menu, demoo, and release
+### Task 9: The user menu moves into the drawer
+
+The mobile bar drops the first band, and with it the settings menu and the avatar. Those are not
+lost — the drawer is where they belong on a phone — but nothing puts them there yet, so this task
+exists to stop the mobile header shipping with sign-out unreachable.
+
+**Files:**
+- Modify: `moo-app/src/layout/Mobile/Sidebar.tsx`
+- Modify: `moo-app/src/layout/Types.ts` (`SidebarProps`)
+- Modify: `moo-app/src/layout/Layout.tsx` (pass the header's menu props through to the mobile sidebar)
+- Modify: `moo-app/src/MooAppLayout.tsx`
+- Create: `moo-app/src/layout/__tests__/MobileSidebar.test.tsx`
+
+**Interfaces:**
+- Consumes: `Menu` is not needed here — the drawer lists items inline
+- Produces: `SidebarProps` gains `userMenu?: NavItem[]`, `menu?: React.ReactNode[]`, `showAppInfo?: boolean`
+
+- [ ] **Step 1: Write the failing test**
+
+```tsx
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { Sidebar } from '../Mobile/Sidebar';
+
+const mockUseLayout = vi.fn();
+
+vi.mock('../../providers', () => ({
+  useLayout: () => mockUseLayout(),
+  useApp: () => ({ name: 'Test App', version: '1.0.0' }),
+}));
+
+describe('Mobile Sidebar', () => {
+  beforeEach(() => {
+    mockUseLayout.mockReset();
+    mockUseLayout.mockReturnValue({ showSidebar: true, setShowSidebar: vi.fn(), secondaryNav: [] });
+  });
+
+  it('lists the user menu items', () => {
+    render(<Sidebar navItems={[]} userMenu={[{ text: 'Profile', route: '/profile' }]} />);
+    expect(screen.getByText('Profile')).toBeInTheDocument();
+  });
+
+  it('renders the header menu nodes', () => {
+    render(<Sidebar navItems={[]} menu={[<a key="s" href="/settings">Settings</a>]} />);
+    expect(screen.getByText('Settings')).toBeInTheDocument();
+  });
+
+  it('offers sign out', () => {
+    render(<Sidebar navItems={[]} />);
+    expect(screen.getByText('Sign out')).toBeInTheDocument();
+  });
+});
+```
+
+Mock `@azure/msal-react` and the theme hook the way `UserMenu.test.tsx` already does — read that file
+and copy its mocks rather than writing new ones.
+
+- [ ] **Step 2: Run test to verify it fails**
+
+Run: `npm run test:run -- MobileSidebar`
+Expected: FAIL — `Sidebar` takes only `navItems`.
+
+- [ ] **Step 3: Write the implementation**
+
+Widen `SidebarProps` in `moo-app/src/layout/Types.ts`:
+
+```ts
+export interface SidebarProps {
+    navItems?: NavItem[];
+    userMenu?: NavItem[];
+    menu?: React.ReactNode[];
+    showAppInfo?: boolean;
+}
+```
+
+In `moo-app/src/layout/Mobile/Sidebar.tsx`, add a user section below the existing nav: a divider, the
+`userMenu` items through `NavItemList`, the `menu` nodes, the theme toggle and sign out — the same
+content `UserMenu` shows on desktop, laid out as drawer rows. Keep the existing `navItems` and
+`secondaryNav` blocks untouched.
+
+In `moo-app/src/MooAppLayout.tsx`, pass the header's `userMenu`, `menu` and `showAppInfo` to
+`Layout.MobileSidebar` as well as to the headers, so a consumer declares them once.
+
+- [ ] **Step 4: Run test to verify it passes**
+
+Run: `npm run test:run -- MobileSidebar`
+Expected: PASS, 3 tests.
+
+- [ ] **Step 5: Commit**
+
+```bash
+git add moo-app/src/layout/Mobile/Sidebar.tsx moo-app/src/layout/Types.ts moo-app/src/layout/Layout.tsx moo-app/src/MooAppLayout.tsx moo-app/src/layout/__tests__/MobileSidebar.test.tsx
+git commit -m "feat(moo-app): put the user menu in the mobile drawer
+
+The single-bar mobile header drops the identity band, so profile, settings,
+theme and sign out move to the drawer rather than disappearing.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01UMhsYDPBrTkeKYZTvUzBDg"
+```
+
+---
+
+### Task 10: UserMenu on Menu, demoo, and release
 
 **Files:**
 - Modify: `moo-app/src/layout/UserMenu.tsx`
@@ -1565,5 +1708,4 @@ Open the PR against `main`. Merging publishes moo-ds and moo-app via CI — patc
 
 - **Branch:** create `feature/mobile-shell` from `main` before Task 1.
 - **`Fragment` import in Task 7** is flagged in-step; drop it if unused.
-- **Task 8's test wrapper** is deliberately not spelled out — read `moo-app/src/layout/__tests__/Header.test.tsx` and reuse what is there. Inventing a second provider harness in the same folder is how two harnesses drift apart.
 - **Do not bump versions by hand.** `package.json` stays at Major.Minor; CI sets the patch.
