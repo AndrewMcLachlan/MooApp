@@ -1,0 +1,95 @@
+.filter-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-bar-primary {
+    flex: 1;
+    min-width: 0;
+}
+
+.filter-bar-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: 2.25rem;
+    padding: 0 0.85rem;
+    border: 1px solid var(--border-colour);
+    border-radius: 1.125rem;
+    background-color: var(--section-bg);
+    color: var(--body-colour);
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.filter-bar-button.active {
+    border-color: var(--primary);
+}
+
+.filter-bar-count {
+    background-color: var(--primary);
+    color: #fff;
+    border-radius: 0.6rem;
+    padding: 0 0.35rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1.1rem;
+}
+
+.filter-bar-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    height: 1.6rem;
+    padding: 0 0.35rem 0 0.6rem;
+    border: 1px solid var(--border-colour);
+    border-radius: 0.8rem;
+    background-color: var(--section-bg);
+    font-size: 0.8rem;
+}
+
+.filter-chip-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.1rem;
+    height: 1.1rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--secondary-colour);
+    cursor: pointer;
+}
+
+.filter-chip-remove:hover {
+    color: var(--body-colour);
+}
+
+.filter-bar-clear {
+    margin-left: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--link-colour);
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.filter-bar-clear:hover {
+    text-decoration: underline;
+}
