@@ -1,0 +1,61 @@
+.menu-popover {
+    --menu-item-padding-x: 0.75rem;
+    --menu-item-padding-y: 0.5rem;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        min-width: 11rem;
+    }
+
+    /* display: contents so the anchor carries the link semantics without
+       becoming a box of its own -- the row's flex layout stays on .menu-item. */
+    .menu-item > a {
+        display: contents;
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        padding: var(--menu-item-padding-y) var(--menu-item-padding-x);
+        border-radius: 4px;
+        color: var(--body-colour);
+        white-space: nowrap;
+    }
+
+    .menu-item.clickable:hover {
+        background-color: var(--hover);
+    }
+
+    .menu-item.disabled {
+        color: var(--body-colour-dim);
+    }
+
+    /* Reserved whether or not this item has an icon, so labels line up down the
+       menu and a mixed list does not read as ragged. */
+    .menu-item-icon {
+        display: inline-flex;
+        justify-content: center;
+        width: 1rem;
+        flex: 0 0 1rem;
+        color: var(--secondary-colour);
+    }
+
+    .menu-item-label {
+        flex: 1;
+    }
+
+    .menu-item-check {
+        color: var(--primary);
+    }
+
+    .divider {
+        height: 1px;
+        margin: 0.25rem 0;
+        background-color: var(--border-colour);
+    }
+}
