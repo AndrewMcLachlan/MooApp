@@ -39,6 +39,11 @@ describe('Drawer', () => {
       const { container } = render(<Drawer show onHide={vi.fn()} placement="end"><Drawer.Body>Content</Drawer.Body></Drawer>);
       expect(container.querySelector('.offcanvas-end')).toBeInTheDocument();
     });
+
+    it('applies bottom placement', () => {
+      const { container } = render(<Drawer show onHide={vi.fn()} placement="bottom"><Drawer.Body>Content</Drawer.Body></Drawer>);
+      expect(container.querySelector('.offcanvas-bottom')).toBeInTheDocument();
+    });
   });
 
   describe('close', () => {

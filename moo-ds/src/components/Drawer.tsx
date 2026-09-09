@@ -6,7 +6,7 @@ import { hideFromTopLayer, showInTopLayer, topLayerProps } from "../utils/topLay
 export interface DrawerProps extends React.HTMLAttributes<HTMLDivElement> {
     show: boolean;
     onHide?: () => void;
-    placement?: "start" | "end";
+    placement?: "start" | "end" | "bottom";
 }
 
 export interface DrawerHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
