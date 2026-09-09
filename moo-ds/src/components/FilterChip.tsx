@@ -18,7 +18,7 @@ export const FilterChip: React.FC<PropsWithChildren<FilterChipProps>> = ({ onRem
             aria-label={removeLabel ?? `Remove ${typeof children === "string" ? children : "filter"}`}
             onClick={onRemove}
         >
-            <FontAwesomeIcon icon="times" />
+            <FontAwesomeIcon icon="xmark" />
         </button>
     </span>
 );
