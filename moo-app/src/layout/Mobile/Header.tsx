@@ -1,38 +1,21 @@
-import { Breadcrumb, MenuToggle, useLink } from "@andrewmclachlan/moo-ds";
-import { UserMenu } from "../UserMenu";
+import { MenuToggle } from "@andrewmclachlan/moo-ds";
 import { type HeaderComponent } from "../Types";
-import { useApp, useLayout } from "../../providers";
+import { useLayout } from "../../providers";
+import { ActionMenu } from "../ActionMenu";
 
-export const Header: HeaderComponent = (props) => {
-    const { size, breadcrumbs, actions, setShowSidebar } = useLayout();
-    const { name: appName } = useApp();
-    const Link = useLink();
+export const Header: HeaderComponent = () => {
 
-    const logoHeight = size == "default" ? 80 : 40;
+    const { breadcrumbs, actions, customActions, setShowSidebar } = useLayout();
+
+    const current = breadcrumbs?.[breadcrumbs.length - 1];
 
     return (
-        <header className=" d-lg-none">
-            <div className="first-header">
-                <Link to="/" className="logo">
-                    <img src="/logo.svg" alt={`${appName} home`} height={logoHeight} />
-                </Link>
-                <div className="search">
-                </div>
-                <nav>
-                    <ul>
-                        {props.menu.map((item, i) => (
-                            <li key={i}>{item}</li>
-                        ))}
-                    </ul>
-                    <UserMenu showAppInfo={props.showAppInfo} />
-                </nav>
-            </div>
-            <div className="second-header">
+        <header className="d-lg-none">
+            <div className="mobile-header">
                 <MenuToggle onClick={() => setShowSidebar(true)} />
-                <Breadcrumb breadcrumbs={breadcrumbs} />
-                <div className="actions">
-                    {actions}
-                </div>
+                <h1 className="page-title">{current?.text}</h1>
+                {customActions}
+                <ActionMenu actions={actions ?? []} />
             </div>
         </header>
     );
