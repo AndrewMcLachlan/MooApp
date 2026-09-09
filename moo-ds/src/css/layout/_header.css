@@ -7,8 +7,6 @@
 
     color: var(--header-text);
 
-    height: var(--header-height);
-
     .logo:focus-visible {
         outline: none;
     }
@@ -79,6 +77,45 @@
                     padding-bottom: 0;
                 }
             }
+        }
+    }
+
+    .mobile-header {
+        --mobile-header-height: 56px;
+
+        height: var(--mobile-header-height);
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        padding-inline: 0.75rem;
+        background-color: var(--header-bg);
+        border-bottom: 1px solid var(--border-colour);
+
+        /* Must not wrap: a title that grows a line makes the bar taller than
+           the row below it reserves, which is what produced the overlap. */
+        .page-title {
+            flex: 1;
+            min-width: 0;
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--header-text);
+        }
+
+        .action-menu-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.25rem;
+            height: 2.25rem;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: var(--secondary-colour);
+            cursor: pointer;
         }
     }
 
