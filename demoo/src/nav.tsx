@@ -11,6 +11,7 @@ import {
 
 export const layoutNav: NavItem[] = [
     { route: "/layout/page-sections", text: "Page & Sections", image: <Icon icon={Hierarchy} /> },
+    { route: "/layout/page-actions", text: "Page actions", image: <Icon icon={Sliders} /> },
     { route: "/layout/dashboard", text: "Dashboard", image: <Icon icon={Dashboard} /> },
     { route: "/layout/navigation", text: "Navigation", image: <Icon icon={List} /> },
     { route: "/layout/drawer", text: "Drawer", image: <Icon icon={Sliders} /> },
