@@ -20,6 +20,7 @@ vi.mock('../../providers', () => ({
     setBreadcrumbs: vi.fn(),
     setSecondaryNav: vi.fn(),
     setActions: vi.fn(),
+    setCustomActions: vi.fn(),
   }),
 }));
 

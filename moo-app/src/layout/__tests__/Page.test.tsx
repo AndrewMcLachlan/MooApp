@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import type { PageAction } from '@andrewmclachlan/moo-ds';
 import { render, screen } from '@testing-library/react';
 import { Page } from '../Page';
 
@@ -13,12 +14,14 @@ vi.mock('@azure/msal-react', () => ({
 const mockSetBreadcrumbs = vi.fn();
 const mockSetSecondaryNav = vi.fn();
 const mockSetActions = vi.fn();
+const mockSetCustomActions = vi.fn();
 
 vi.mock('../../providers', () => ({
   useLayout: () => ({
     setBreadcrumbs: mockSetBreadcrumbs,
     setSecondaryNav: mockSetSecondaryNav,
     setActions: mockSetActions,
+    setCustomActions: mockSetCustomActions,
   }),
 }));
 
@@ -203,7 +206,10 @@ describe('Page', () => {
 
   describe('actions', () => {
     it('sets actions when provided', () => {
-      const actions = [<button key="1">Save</button>, <button key="2">Cancel</button>];
+      const actions: PageAction[] = [
+        { id: 'save', label: 'Save', onClick: vi.fn() },
+        { id: 'cancel', label: 'Cancel', onClick: vi.fn() },
+      ];
 
       render(<Page title="Test" actions={actions}>Content</Page>);
 
@@ -217,7 +223,7 @@ describe('Page', () => {
     });
 
     it('does not call setActions again when re-rendered with the same reference', () => {
-      const actions = [<button key="1">Save</button>];
+      const actions: PageAction[] = [{ id: 'save', label: 'Save', onClick: vi.fn() }];
       const { rerender } = render(<Page title="Test" actions={actions}>Content</Page>);
 
       expect(mockSetActions).toHaveBeenCalledTimes(1);
@@ -229,12 +235,12 @@ describe('Page', () => {
 
     it('updates setActions when a new array reference is passed', () => {
       const { rerender } = render(
-        <Page title="Test" actions={[<button key="1">Save</button>]}>Content</Page>
+        <Page title="Test" actions={[{ id: 'save', label: 'Save', onClick: vi.fn() }]}>Content</Page>
       );
 
       expect(mockSetActions).toHaveBeenCalledTimes(1);
 
-      rerender(<Page title="Test" actions={[<button key="2">Delete</button>]}>Content</Page>);
+      rerender(<Page title="Test" actions={[{ id: 'delete', label: 'Delete', onClick: vi.fn() }]}>Content</Page>);
 
       expect(mockSetActions).toHaveBeenCalledTimes(2);
     });

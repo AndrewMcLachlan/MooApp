@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { type NavItem } from "./NavItem";
+import { type PageAction } from "./PageAction";
 
 export type size = "small" | "default";
 
@@ -13,8 +14,10 @@ export interface LayoutContext extends LayoutOptions {
     setBreadcrumbs?: (items: NavItem[]) => void;
     secondaryNav?: (NavItem|ReactNode)[];
     setSecondaryNav?: (items: (NavItem|ReactNode)[]) => void;
-    actions?: ReactNode[];
-    setActions?: (items: ReactNode[]) => void;
+    actions?: PageAction[];
+    setActions?: (items: PageAction[]) => void;
+    customActions?: ReactNode[];
+    setCustomActions?: (items: ReactNode[]) => void;
     showSidebar?: boolean;
     setShowSidebar?: (show: boolean) => void;
 
