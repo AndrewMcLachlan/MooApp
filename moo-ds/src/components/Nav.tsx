@@ -18,6 +18,8 @@ export interface NavLinkProps extends React.HTMLAttributes<HTMLElement> {
     href?: string;
     eventKey?: string;
     variant?: string;
+    /** A link rendered `as="button"` must say so, or it defaults to submit. */
+    type?: "button" | "submit" | "reset";
 }
 
 const NavItem = React.forwardRef<HTMLElement, React.PropsWithChildren<NavItemProps>>(

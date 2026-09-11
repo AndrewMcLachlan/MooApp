@@ -87,6 +87,17 @@
         }
     }
 
+    /* A row that acts rather than navigates is still a row: the button's own
+       chrome has to go or it breaks the column. */
+    button.nav-link {
+        border: 0;
+        background: transparent;
+        padding: 0;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+    }
+
     .divider {
         border-top: 1px solid var(--border-colour);
     }

@@ -44,16 +44,16 @@ export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu =
                     <Nav.Item className="divider" />
                     {userMenu.length > 0 && <NavItemList navItems={userMenu} role="menuitem" onClick={close} />}
                     {menu.map((item: React.ReactNode, i: number) => (
-                        <Nav.Item key={i} className="sidebar-menu-node" onClick={close}>{item}</Nav.Item>
+                        <Nav.Link key={i} as="div" className="sidebar-menu-node" onClick={close}>{item}</Nav.Link>
                     ))}
-                    <Nav.Item className="clickable" role="menuitem" onClick={toggleTheme}>
+                    <Nav.Link as="button" type="button" className="sidebar-theme-toggle" role="menuitem" onClick={toggleTheme}>
                         <FontAwesomeIcon icon={dark ? "sun" : "moon"} />
-                        {dark ? "Light mode" : "Dark mode"}
-                    </Nav.Item>
-                    <Nav.Item className="clickable" role="menuitem" onClick={() => msal.instance.logoutRedirect()}>
+                        <span>{dark ? "Light mode" : "Dark mode"}</span>
+                    </Nav.Link>
+                    <Nav.Link as="button" type="button" className="sidebar-sign-out" role="menuitem" onClick={() => msal.instance.logoutRedirect()}>
                         <FontAwesomeIcon icon="arrow-right-from-bracket" />
-                        Sign out
-                    </Nav.Item>
+                        <span>Sign out</span>
+                    </Nav.Link>
                 </Nav>
             </Drawer.Body>
         </Drawer>
