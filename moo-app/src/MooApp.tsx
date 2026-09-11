@@ -14,7 +14,7 @@ import { MsalProvider } from "@azure/msal-react";
 import { type IPublicClientApplication } from "@azure/msal-browser";
 import { Login } from "./login/Login";
 
-import { faArrowRightFromBracket, faCheck, faEllipsisVertical, faFilter, faMoon, faSun, faTimesCircle, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faCheck, faChevronDown, faEllipsisVertical, faFilter, faMoon, faSun, faTimesCircle, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { type AxiosInstance } from "axios";
 
@@ -23,7 +23,7 @@ import { type AxiosInstance } from "axios";
    need; anything moo-app or moo-ds renders unprompted -- the overflow toggle, a
    menu tick, the filter bar -- has to be registered here or it silently draws
    nothing. */
-library.add(faArrowRightFromBracket, faCheck, faEllipsisVertical, faFilter, faMoon, faSun, faTimesCircle, faXmark);
+library.add(faArrowRightFromBracket, faCheck, faChevronDown, faEllipsisVertical, faFilter, faMoon, faSun, faTimesCircle, faXmark);
 
 export const MooApp: React.FC<PropsWithChildren<MooAppProps>> = ({ router, clientId, auth, scopes = [], client, name, version, copyrightYear, authFallback, queryPersistOptions, silentRedirectUri }) => {
 

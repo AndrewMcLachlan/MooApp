@@ -1,19 +1,17 @@
-import { type SidebarComponent } from "../Types";
-import { useLayout } from "../../providers";
-import { Nav, NavItemList, Drawer, useTheme, Themes } from "@andrewmclachlan/moo-ds";
+import { type NavItem, Drawer, Menu, Nav, NavItemList, Themes, useTheme } from "@andrewmclachlan/moo-ds";
 import { useMsal } from "@azure/msal-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Avatar } from "../../components";
+import { useLayout } from "../../providers";
+import { type SidebarComponent } from "../Types";
 
 const isDark = (themeValue: string) => themeValue === "" ?
     window.matchMedia?.("(prefers-color-scheme: dark)")?.matches ?? false :
     themeValue.startsWith("dark");
 
-/**
- * The mobile shell has one header band and no room for an identity menu, so
- * everything the desktop header keeps in its top-right corner lives here
- * instead: the page's own menu nodes, the user's items, the theme toggle and
- * sign out.
- */
+const isNavItem = (item: NavItem | React.ReactNode): item is NavItem =>
+    typeof item === "object" && item !== null && "text" in item;
+
 export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu = [] }) => {
 
     const layout = useLayout();
@@ -21,6 +19,7 @@ export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu =
     const { theme, setTheme } = useTheme();
 
     const dark = isDark(theme?.theme ?? "");
+    const name = msal.instance.getActiveAccount()?.name;
 
     const close = () => layout.setShowSidebar(false);
 
@@ -33,6 +32,36 @@ export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu =
         <Drawer show={layout.showSidebar} onHide={close} className="sidebar-drawer">
             <Drawer.Header closeButton />
             <Drawer.Body className="d-lg-none sidebar">
+                <div className="sidebar-identity">
+                    <Menu
+                        id="drawer-user-menu"
+                        placement="bottom"
+                        className="drawer-user-menu"
+                        trigger={(
+                            <button type="button" className="sidebar-identity-trigger">
+                                <Avatar />
+                                <span className="sidebar-identity-name">{name}</span>
+                                <FontAwesomeIcon icon="chevron-down" />
+                            </button>
+                        )}
+                    >
+                        {userMenu.filter(isNavItem).map(item => (
+                            <Menu.Item key={item.route ?? item.text} icon={item.image} to={item.route} onClick={close}>
+                                {item.text}
+                            </Menu.Item>
+                        ))}
+                        <Menu.Divider />
+                        <Menu.Item icon={<FontAwesomeIcon icon={dark ? "sun" : "moon"} />} onClick={toggleTheme}>
+                            {dark ? "Light mode" : "Dark mode"}
+                        </Menu.Item>
+                        <Menu.Item icon={<FontAwesomeIcon icon="arrow-right-from-bracket" />} onClick={() => msal.instance.logoutRedirect()}>
+                            Sign out
+                        </Menu.Item>
+                    </Menu>
+                    {menu.length > 0 && (
+                        <div className="sidebar-identity-actions" onClick={close}>{menu}</div>
+                    )}
+                </div>
                 <Nav column>
                     <NavItemList navItems={navItems} role="menuitem" onClick={close} />
                     {layout.secondaryNav.length > 0 &&
@@ -41,19 +70,6 @@ export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu =
                             <NavItemList navItems={layout.secondaryNav} role="menuitem" onClick={close} />
                         </>
                     }
-                    <Nav.Item className="divider" />
-                    {userMenu.length > 0 && <NavItemList navItems={userMenu} role="menuitem" onClick={close} />}
-                    {menu.map((item: React.ReactNode, i: number) => (
-                        <Nav.Link key={i} as="div" className="sidebar-menu-node" onClick={close}>{item}</Nav.Link>
-                    ))}
-                    <Nav.Link as="button" type="button" className="sidebar-theme-toggle" role="menuitem" onClick={toggleTheme}>
-                        <FontAwesomeIcon icon={dark ? "sun" : "moon"} />
-                        <span>{dark ? "Light mode" : "Dark mode"}</span>
-                    </Nav.Link>
-                    <Nav.Link as="button" type="button" className="sidebar-sign-out" role="menuitem" onClick={() => msal.instance.logoutRedirect()}>
-                        <FontAwesomeIcon icon="arrow-right-from-bracket" />
-                        <span>Sign out</span>
-                    </Nav.Link>
                 </Nav>
             </Drawer.Body>
         </Drawer>

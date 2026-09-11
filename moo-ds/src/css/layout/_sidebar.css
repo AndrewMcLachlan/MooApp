@@ -87,17 +87,6 @@
         }
     }
 
-    /* A row that acts rather than navigates is still a row: the button's own
-       chrome has to go or it breaks the column. */
-    button.nav-link {
-        border: 0;
-        background: transparent;
-        padding: 0;
-        font: inherit;
-        text-align: left;
-        cursor: pointer;
-    }
-
     .divider {
         border-top: 1px solid var(--border-colour);
     }
@@ -107,7 +96,7 @@
    extra padding/width around it. The close button overlays the top-right
    corner so the sidebar fills the full drawer height. */
 .offcanvas.sidebar-drawer {
-    --offcanvas-width: 200px;
+    --offcanvas-width: 280px;
     --offcanvas-padding-x: 0;
     --offcanvas-padding-y: 0;
 }
@@ -125,4 +114,78 @@
     min-width: 0;
     border-right: 0;
     padding-top: 3rem;
+}
+
+/* Identity strip at the top of the mobile drawer. The avatar, name and the
+   app's own header icons live here rather than in the row list below: an
+   icon-only control carries its meaning in a compact horizontal strip and
+   reads as a stray mark in a column of labelled rows. */
+.offcanvas.sidebar-drawer .sidebar {
+    /* Two children now, and the column must not spread them to the edges. */
+    justify-content: flex-start;
+}
+
+.sidebar-identity {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    /* The drawer's close button is absolutely positioned in this corner. */
+    padding: 0.5rem var(--touch-target) 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--border-colour);
+}
+
+.sidebar-identity-trigger {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: var(--touch-target);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--body-colour);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.sidebar-identity-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+.sidebar-identity .avatar :is(img, .initials) {
+    height: 28px;
+    width: 28px;
+    border-radius: 14px;
+}
+
+.sidebar-identity-trigger svg {
+    height: 12px;
+    width: 12px;
+    color: var(--secondary-colour);
+}
+
+.sidebar-identity-actions {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-identity-actions :is(a, button) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--touch-target);
+    min-height: var(--touch-target);
+    color: var(--secondary-colour);
+}
+
+.sidebar-identity-actions svg {
+    height: 18px;
+    width: 18px;
 }

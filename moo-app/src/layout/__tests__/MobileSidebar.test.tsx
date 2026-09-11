@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Sidebar } from '../Mobile/Sidebar';
 
 const mockLogoutRedirect = vi.fn();
@@ -20,7 +20,13 @@ vi.mock('../../providers', () => ({
   useApp: () => ({ name: 'Test App', version: '1.0.0' }),
 }));
 
-vi.mock('@andrewmclachlan/moo-ds', () => ({
+vi.mock('../../components', () => ({
+  Avatar: () => <div data-testid="avatar">Avatar</div>,
+}));
+
+vi.mock('@andrewmclachlan/moo-ds', async () => {
+  const React = await import('react');
+  return {
   Drawer: Object.assign(
     ({ children }: any) => <div data-testid="drawer">{children}</div>,
     {
@@ -40,13 +46,33 @@ vi.mock('@andrewmclachlan/moo-ds', () => ({
   NavItemList: ({ navItems }: { navItems: any[] }) => (
     <ul>{navItems?.map((item: any, i: number) => <li key={i}>{item.text}</li>)}</ul>
   ),
+  // Renders the trigger always and the items only once opened, like the real one.
+  Menu: Object.assign(
+    ({ trigger, children }: any) => {
+      const [open, setOpen] = React.useState(false);
+      return (
+        <div>
+          <div onClick={() => setOpen(true)}>{trigger}</div>
+          {open && <ul role="menu">{children}</ul>}
+        </div>
+      );
+    },
+    {
+      Item: ({ children, to, onClick }: any) => <li role="menuitem" onClick={onClick} data-to={to}>{children}</li>,
+      Divider: () => <li role="separator" />,
+    }
+  ),
   useTheme: () => ({ theme: { theme: 'light' }, setTheme: mockSetTheme }),
   Themes: [{ theme: 'light' }, { theme: 'dark' }],
-}));
+  };
+});
+
+const openUserMenu = () => fireEvent.click(screen.getByRole('button', { name: /test user/i }));
 
 describe('Mobile Sidebar', () => {
   beforeEach(() => {
     mockUseLayout.mockReset();
+    mockLogoutRedirect.mockClear();
     mockUseLayout.mockReturnValue({ showSidebar: true, setShowSidebar: vi.fn(), secondaryNav: [] });
   });
 
@@ -55,40 +81,46 @@ describe('Mobile Sidebar', () => {
     expect(screen.getByText('Accounts')).toBeInTheDocument();
   });
 
-  it('lists the user menu items', () => {
+  it('shows the signed-in name in the identity strip', () => {
+    const { container } = render(<Sidebar navItems={[]} />);
+    expect(container.querySelector('.sidebar-identity')).toHaveTextContent('Test User');
+    expect(screen.getByTestId('avatar')).toBeInTheDocument();
+  });
+
+  // These are icon-only controls built for a compact horizontal strip; in a
+  // column of labelled rows they read as stray marks.
+  it('puts the header menu nodes in the identity strip', () => {
+    const { container } = render(<Sidebar navItems={[]} menu={[<a key="s" href="/settings">Settings</a>]} />);
+    const strip = container.querySelector('.sidebar-identity');
+    expect(strip).toContainElement(screen.getByText('Settings'));
+  });
+
+  it('keeps the user menu closed until the identity strip is tapped', () => {
     render(<Sidebar navItems={[]} userMenu={[{ text: 'Profile', route: '/profile' }]} />);
+    expect(screen.queryByText('Profile')).not.toBeInTheDocument();
+  });
+
+  it('opens the user menu items from the identity strip', () => {
+    render(<Sidebar navItems={[]} userMenu={[{ text: 'Profile', route: '/profile' }]} />);
+    openUserMenu();
     expect(screen.getByText('Profile')).toBeInTheDocument();
   });
 
-  it('renders the header menu nodes', () => {
-    render(<Sidebar navItems={[]} menu={[<a key="s" href="/settings">Settings</a>]} />);
-    expect(screen.getByText('Settings')).toBeInTheDocument();
-  });
-
-  it('offers sign out', () => {
+  it('offers the theme toggle in the user menu', () => {
     render(<Sidebar navItems={[]} />);
-    expect(screen.getByText('Sign out')).toBeInTheDocument();
-  });
-
-  it('offers a theme toggle', () => {
-    render(<Sidebar navItems={[]} />);
+    openUserMenu();
     expect(screen.getByText('Dark mode')).toBeInTheDocument();
   });
 
-  // The sidebar stylesheet hangs row layout and icon sizing off .nav-link;
-  // a row that is only .nav-item gets neither, and an unsized icon fills the drawer.
-  it('lays the theme toggle out as a nav link', () => {
-    const { container } = render(<Sidebar navItems={[]} />);
-    expect(container.querySelector('.nav-link.sidebar-theme-toggle')).toBeInTheDocument();
+  it('signs out from the user menu', () => {
+    render(<Sidebar navItems={[]} />);
+    openUserMenu();
+    fireEvent.click(screen.getByText('Sign out'));
+    expect(mockLogoutRedirect).toHaveBeenCalledTimes(1);
   });
 
-  it('lays sign out out as a nav link', () => {
-    const { container } = render(<Sidebar navItems={[]} />);
-    expect(container.querySelector('.nav-link.sidebar-sign-out')).toBeInTheDocument();
-  });
-
-  it('lays a header menu node out as a nav link', () => {
-    const { container } = render(<Sidebar navItems={[]} menu={[<a key="s" href="/settings">Settings</a>]} />);
-    expect(container.querySelector('.nav-link.sidebar-menu-node')).toBeInTheDocument();
+  it('does not repeat the user menu as rows in the navigation', () => {
+    const { container } = render(<Sidebar navItems={[]} userMenu={[{ text: 'Profile', route: '/profile' }]} />);
+    expect(container.querySelector('nav')).not.toHaveTextContent('Sign out');
   });
 });
