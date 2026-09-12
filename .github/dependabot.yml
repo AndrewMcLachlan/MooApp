@@ -8,6 +8,11 @@ updates:
       day: "monday"
       time: '06:00'
     groups:
+      # @vitest/coverage-v8 pins vitest to an exact version, so they must bump together.
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
       dev-dependencies:
         applies-to: version-updates
         patterns:
