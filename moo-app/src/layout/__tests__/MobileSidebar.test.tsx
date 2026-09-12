@@ -81,10 +81,16 @@ describe('Mobile Sidebar', () => {
     expect(screen.getByText('Accounts')).toBeInTheDocument();
   });
 
-  it('shows the signed-in name in the identity strip', () => {
+  it('identifies the account by avatar, not by name in the strip', () => {
     const { container } = render(<Sidebar navItems={[]} />);
-    expect(container.querySelector('.sidebar-identity')).toHaveTextContent('Test User');
     expect(screen.getByTestId('avatar')).toBeInTheDocument();
+    expect(container.querySelector('.sidebar-identity')).not.toHaveTextContent('Test User');
+  });
+
+  // The trigger is an avatar and a chevron, so it has no text to name it.
+  it('names the account trigger for assistive technology', () => {
+    render(<Sidebar navItems={[]} />);
+    expect(screen.getByRole('button', { name: 'Account: Test User' })).toBeInTheDocument();
   });
 
   // These are icon-only controls built for a compact horizontal strip; in a

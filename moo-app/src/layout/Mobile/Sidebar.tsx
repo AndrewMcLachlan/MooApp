@@ -38,9 +38,8 @@ export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu =
                         placement="bottom"
                         className="drawer-user-menu"
                         trigger={(
-                            <button type="button" className="sidebar-identity-trigger">
+                            <button type="button" className="sidebar-identity-trigger" aria-label={name ? `Account: ${name}` : "Account"}>
                                 <Avatar />
-                                <span className="sidebar-identity-name">{name}</span>
                                 <FontAwesomeIcon icon="chevron-down" />
                             </button>
                         )}
