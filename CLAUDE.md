@@ -79,5 +79,5 @@ The reason both matter: moo-ds is published. A consuming app may be required to 
 
 ## Requirements
 
-- Node.js >= 22.0.0
+- Node.js `^22.22.2 || ^24.15.0 || >=26.0.0` — the intersection of the toolchain's requirements; jsdom is the binding constraint
 - React >= 19.0.0
