@@ -27,6 +27,7 @@ export const formsNav: NavItem[] = [
 ];
 
 export const dataNav: NavItem[] = [
+    { route: "/data/filtering", text: "Filtering", image: <Icon icon={Sliders} /> },
     { route: "/data/table", text: "Table", image: <Icon icon={Database} /> },
     { route: "/data/data-grid", text: "Data Grid", image: <Icon icon={Database} /> },
     { route: "/data/pagination", text: "Pagination", image: <Icon icon={List} /> },
