@@ -98,6 +98,21 @@ describe('Mobile Sidebar', () => {
     expect(screen.getByRole('button', { name: 'Account: Test User' })).toBeInTheDocument();
   });
 
+  // userMenu is (NavItem | ReactNode)[]; the desktop UserMenu renders both forms.
+  it('keeps a plain node in the user menu', () => {
+    render(<Sidebar navItems={[]} userMenu={[<span key="n">Custom entry</span>]} />);
+    openUserMenu();
+    expect(screen.getByText('Custom entry')).toBeInTheDocument();
+  });
+
+  it('calls a nav item own onClick as well as closing', () => {
+    const onClick = vi.fn();
+    render(<Sidebar navItems={[]} userMenu={[{ text: 'Ping', onClick }]} />);
+    openUserMenu();
+    fireEvent.click(screen.getByText('Ping'));
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
   it('names the account at the top of the menu', () => {
     const { container } = render(<Sidebar navItems={[]} />);
     openUserMenu();

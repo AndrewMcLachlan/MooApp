@@ -1,6 +1,6 @@
-export const MenuToggle: React.FC<MenuToggleProps> = ({ onClick }) => {
+export const MenuToggle: React.FC<MenuToggleProps> = ({ onClick, controls = "sidebar" }) => {
     return (
-        <button aria-controls="sidebar" className="btn btn-hamburger" onClick={onClick} aria-label="Menu" title="Menu">
+        <button aria-controls={controls} className="btn btn-hamburger" onClick={onClick} aria-label="Menu" title="Menu">
             <div>
                 <svg id="menu-toggle" width="32" height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                     <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
@@ -16,4 +16,6 @@ export const MenuToggle: React.FC<MenuToggleProps> = ({ onClick }) => {
 
 export interface MenuToggleProps {
     onClick: () => void;
+    /** The id of the region this opens. Defaults to the desktop sidebar. */
+    controls?: string;
 }

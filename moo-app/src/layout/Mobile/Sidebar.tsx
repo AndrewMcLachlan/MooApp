@@ -1,6 +1,7 @@
 import { type NavItem, Drawer, Menu, Nav, NavItemList, Themes, useTheme } from "@andrewmclachlan/moo-ds";
 import { useMsal } from "@azure/msal-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { isValidElement } from "react";
 import { Avatar } from "../../components";
 import { useLayout } from "../../providers";
 import { type SidebarComponent } from "../Types";
@@ -10,7 +11,11 @@ const isDark = (themeValue: string) => themeValue === "" ?
     themeValue.startsWith("dark");
 
 const isNavItem = (item: NavItem | React.ReactNode): item is NavItem =>
-    typeof item === "object" && item !== null && "text" in item;
+    !isValidElement(item) && typeof item === "object" && item !== null && "text" in item;
+
+/** Matches NavItemList: a string is a source, anything else is already a node. */
+const itemImage = (image: NavItem["image"]) =>
+    typeof image === "string" ? <img src={image} alt="" /> : image;
 
 export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu = [] }) => {
 
@@ -29,7 +34,7 @@ export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu =
     };
 
     return (
-        <Drawer show={layout.showSidebar} onHide={close} className="sidebar-drawer">
+        <Drawer id="mobile-sidebar" show={layout.showSidebar} onHide={close} className="sidebar-drawer">
             <Drawer.Header closeButton className="sidebar-identity">
                 <Menu
                     id="drawer-user-menu"
@@ -43,10 +48,17 @@ export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu =
                         </button>
                     )}
                 >
-                    {userMenu.filter(isNavItem).map(item => (
-                        <Menu.Item key={item.route ?? item.text} icon={item.image} to={item.route} onClick={close}>
+                    {(userMenu as (NavItem | React.ReactNode)[]).map((item, index) => isNavItem(item) ? (
+                        <Menu.Item
+                            key={item.id ?? item.route ?? item.text}
+                            icon={itemImage(item.image)}
+                            to={item.route}
+                            onClick={e => { item.onClick?.(e); close(); }}
+                        >
                             {item.text}
                         </Menu.Item>
+                    ) : (
+                        <li className="menu-item" key={`node${index}`} onClick={close}>{item as React.ReactNode}</li>
                     ))}
                     <Menu.Divider />
                     <Menu.Item icon={<FontAwesomeIcon icon={dark ? "sun" : "moon"} />} onClick={toggleTheme}>

@@ -12,7 +12,7 @@ export const Header: HeaderComponent = () => {
     return (
         <header className="d-lg-none">
             <div className="mobile-header">
-                <MenuToggle onClick={() => setShowSidebar(true)} />
+                <MenuToggle controls="mobile-sidebar" onClick={() => setShowSidebar(true)} />
                 <h1 className="page-title">{current?.text}</h1>
                 {customActions}
                 <ActionMenu actions={actions ?? []} />

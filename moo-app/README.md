@@ -49,6 +49,7 @@ Every field is optional and falls back to the default, so single-tenant apps can
 
 ```tsx
 import { Page, type PageAction } from "@andrewmclachlan/moo-app";
+import { Icon } from "@andrewmclachlan/moo-ds";
 
 const actions: PageAction[] = [
     { id: "show-net", label: "Show net amount", checked: showNet, onClick: toggleNet },

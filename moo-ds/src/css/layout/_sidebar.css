@@ -139,6 +139,9 @@
     height: auto;
     flex: 1;
     min-height: 0;
+    /* .sidebar sets the overflow shorthand to hidden for the desktop collapse
+       animation, which would clip a nav list taller than the drawer. */
+    overflow-y: auto;
     border-right: 0;
 }
 

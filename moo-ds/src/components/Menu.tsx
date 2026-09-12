@@ -18,7 +18,7 @@ export interface MenuItemProps extends Omit<React.LiHTMLAttributes<HTMLLIElement
     /** Present makes the item a toggle: it reports a checked state and shows a tick. */
     checked?: boolean;
     disabled?: boolean;
-    onClick?: () => void;
+    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
     /** Renders the item's content as a link, so it keeps middle-click and
         open-in-new-tab. Routing comes from LinkProvider, so the menu stays
         router-agnostic. */
@@ -70,7 +70,7 @@ const MenuComponent: React.FC<PropsWithChildren<MenuProps>> = ({ id, trigger, pl
         rootClose
         containerPadding={10}
         overlay={(close: () => void) => (
-            <Popover id={id} className={classNames("menu-popover", className)} {...rest}>
+            <Popover id={id} role="presentation" className={classNames("menu-popover", className)} {...rest}>
                 {header && <Popover.Header as="div" className="menu-header">{header}</Popover.Header>}
                 <Popover.Body>
                     <ul role="menu" onClick={close}>{children}</ul>
