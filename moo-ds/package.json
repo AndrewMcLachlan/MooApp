@@ -35,7 +35,7 @@
     "@tanstack/react-table": "^9.2.4",
     "classnames": "^2.5.1",
     "date-fns": "^4.4.0",
-    "react-error-boundary": "^6.1.4",
+    "react-error-boundary": "^6.1.5",
     "react-toastify": "^11.1.0",
     "use-debounce": "^10.1.1"
   },
