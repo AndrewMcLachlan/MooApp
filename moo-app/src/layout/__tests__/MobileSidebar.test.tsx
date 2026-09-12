@@ -30,8 +30,13 @@ vi.mock('@andrewmclachlan/moo-ds', async () => {
   Drawer: Object.assign(
     ({ children }: any) => <div data-testid="drawer">{children}</div>,
     {
-      Header: ({ children }: any) => <div>{children}</div>,
-      Body: ({ children }: any) => <div>{children}</div>,
+      Header: ({ children, className, closeButton }: any) => (
+        <div className={['offcanvas-header', className].filter(Boolean).join(' ')}>
+          {children}
+          {closeButton && <button type="button" className="btn-close" aria-label="Close" />}
+        </div>
+      ),
+      Body: ({ children, className }: any) => <div className={className}>{children}</div>,
     }
   ),
   Nav: Object.assign(
@@ -48,12 +53,12 @@ vi.mock('@andrewmclachlan/moo-ds', async () => {
   ),
   // Renders the trigger always and the items only once opened, like the real one.
   Menu: Object.assign(
-    ({ trigger, children }: any) => {
+    ({ trigger, header, children }: any) => {
       const [open, setOpen] = React.useState(false);
       return (
         <div>
           <div onClick={() => setOpen(true)}>{trigger}</div>
-          {open && <ul role="menu">{children}</ul>}
+          {open && <><div className="menu-header">{header}</div><ul role="menu">{children}</ul></>}
         </div>
       );
     },
@@ -91,6 +96,12 @@ describe('Mobile Sidebar', () => {
   it('names the account trigger for assistive technology', () => {
     render(<Sidebar navItems={[]} />);
     expect(screen.getByRole('button', { name: 'Account: Test User' })).toBeInTheDocument();
+  });
+
+  it('names the account at the top of the menu', () => {
+    const { container } = render(<Sidebar navItems={[]} />);
+    openUserMenu();
+    expect(container.querySelector('.menu-header')).toHaveTextContent('Test User');
   });
 
   // These are icon-only controls built for a compact horizontal strip; in a

@@ -1,6 +1,26 @@
 .menu-popover {
-    --menu-item-padding-x: 0.75rem;
+    /* Matches .popover-header's inline padding, so an item's icon starts on the
+       same left edge as the header text rather than inside a second inset. */
+    --menu-item-padding-x: 1rem;
     --menu-item-padding-y: 0.5rem;
+
+    /* The items carry their own padding; a second one here indents them past
+       the header and makes the first item sit further down than the gap
+       between items. */
+    .popover-body {
+        padding: 0.25rem 0;
+    }
+
+    .menu-header {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        white-space: nowrap;
+    }
+
+    .menu-header-name {
+        font-weight: 600;
+    }
 
     ul {
         list-style: none;

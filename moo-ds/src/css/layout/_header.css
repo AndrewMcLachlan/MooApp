@@ -30,6 +30,7 @@
         &.first-header {
             display: grid;
             grid-template-columns: 1.5fr minmax(240px, 1fr) 1.5fr;
+            border-bottom: 1px solid var(--border-colour);
 
             nav {
                 justify-content: end;

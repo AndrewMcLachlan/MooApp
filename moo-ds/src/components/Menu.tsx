@@ -9,6 +9,8 @@ export interface MenuProps extends React.HTMLAttributes<HTMLDivElement> {
     id: string;
     trigger: React.ReactElement;
     placement?: "top" | "bottom" | "left" | "right";
+    /** Identifies whose menu this is, above the items. */
+    header?: React.ReactNode;
 }
 
 export interface MenuItemProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>, "onClick"> {
@@ -61,7 +63,7 @@ const MenuDivider: React.FC = () => <li className="divider" role="separator" />;
 
 MenuDivider.displayName = "Menu.Divider";
 
-const MenuComponent: React.FC<PropsWithChildren<MenuProps>> = ({ id, trigger, placement = "bottom", className, children, ...rest }) => (
+const MenuComponent: React.FC<PropsWithChildren<MenuProps>> = ({ id, trigger, placement = "bottom", header, className, children, ...rest }) => (
     <OverlayTrigger
         trigger="click"
         placement={placement}
@@ -69,6 +71,7 @@ const MenuComponent: React.FC<PropsWithChildren<MenuProps>> = ({ id, trigger, pl
         containerPadding={10}
         overlay={(close: () => void) => (
             <Popover id={id} className={classNames("menu-popover", className)} {...rest}>
+                {header && <Popover.Header as="div" className="menu-header">{header}</Popover.Header>}
                 <Popover.Body>
                     <ul role="menu" onClick={close}>{children}</ul>
                 </Popover.Body>

@@ -30,37 +30,37 @@ export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu =
 
     return (
         <Drawer show={layout.showSidebar} onHide={close} className="sidebar-drawer">
-            <Drawer.Header closeButton />
-            <Drawer.Body className="d-lg-none sidebar">
-                <div className="sidebar-identity">
-                    <Menu
-                        id="drawer-user-menu"
-                        placement="bottom"
-                        className="drawer-user-menu"
-                        trigger={(
-                            <button type="button" className="sidebar-identity-trigger" aria-label={name ? `Account: ${name}` : "Account"}>
-                                <Avatar />
-                                <FontAwesomeIcon icon="chevron-down" />
-                            </button>
-                        )}
-                    >
-                        {userMenu.filter(isNavItem).map(item => (
-                            <Menu.Item key={item.route ?? item.text} icon={item.image} to={item.route} onClick={close}>
-                                {item.text}
-                            </Menu.Item>
-                        ))}
-                        <Menu.Divider />
-                        <Menu.Item icon={<FontAwesomeIcon icon={dark ? "sun" : "moon"} />} onClick={toggleTheme}>
-                            {dark ? "Light mode" : "Dark mode"}
-                        </Menu.Item>
-                        <Menu.Item icon={<FontAwesomeIcon icon="arrow-right-from-bracket" />} onClick={() => msal.instance.logoutRedirect()}>
-                            Sign out
-                        </Menu.Item>
-                    </Menu>
-                    {menu.length > 0 && (
-                        <div className="sidebar-identity-actions" onClick={close}>{menu}</div>
+            <Drawer.Header closeButton className="sidebar-identity">
+                <Menu
+                    id="drawer-user-menu"
+                    placement="bottom"
+                    className="drawer-user-menu"
+                    header={name && <span className="menu-header-name">{name}</span>}
+                    trigger={(
+                        <button type="button" className="sidebar-identity-trigger" aria-label={name ? `Account: ${name}` : "Account"}>
+                            <Avatar />
+                            <FontAwesomeIcon icon="chevron-down" />
+                        </button>
                     )}
-                </div>
+                >
+                    {userMenu.filter(isNavItem).map(item => (
+                        <Menu.Item key={item.route ?? item.text} icon={item.image} to={item.route} onClick={close}>
+                            {item.text}
+                        </Menu.Item>
+                    ))}
+                    <Menu.Divider />
+                    <Menu.Item icon={<FontAwesomeIcon icon={dark ? "sun" : "moon"} />} onClick={toggleTheme}>
+                        {dark ? "Light mode" : "Dark mode"}
+                    </Menu.Item>
+                    <Menu.Item icon={<FontAwesomeIcon icon="arrow-right-from-bracket" />} onClick={() => msal.instance.logoutRedirect()}>
+                        Sign out
+                    </Menu.Item>
+                </Menu>
+                {menu.length > 0 && (
+                    <div className="sidebar-identity-actions" onClick={close}>{menu}</div>
+                )}
+            </Drawer.Header>
+            <Drawer.Body className="d-lg-none sidebar">
                 <Nav column>
                     <NavItemList navItems={navItems} role="menuitem" onClick={close} />
                     {layout.secondaryNav.length > 0 &&
