@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
     tableFeatures,
     metaHelper,
@@ -41,22 +42,40 @@ export const dataGridFeatures = tableFeatures({
 
 export type DataGridFeatures = typeof dataGridFeatures;
 
+/** What a column can resolve to: a value that can be compared, and therefore sorted. */
+export type CellValue = string | number | boolean | Date | null | undefined;
+
+/** What a `cell` renderer is handed: the row itself, and the resolved value. */
+export interface CellContext<TData extends RowData> {
+    row: TData;
+    value: CellValue;
+}
+
 /**
- * Simplified column definition that combines TanStack's `accessorKey` and
- * `accessorFn` into a single `field` property.
+ * Simplified column definition.
  *
- * - String `field` → maps to a property key on the row data, with `TValue`
- *   automatically inferred as `TData[K]`.
- * - Function `field` → computes the cell value from the row.
+ * `field` resolves the column's value and nothing else — a key of the row, or
+ * a function computing one. `cell` renders that value. Omit `field` for a
+ * display column (a checkbox, a link); `value` is then undefined and there is
+ * nothing to sort on, so give it an `id`.
  *
  * When `field` is a function and no explicit `id` is provided, an id is
  * auto-generated from `header` (if it's a string) or the column index.
  *
  * `TData` is constrained to `RowData`: an object or an array.
+ *
+ * One shape, not a union of key-typed and function-typed columns. A union
+ * gives TypeScript nothing to discriminate an object literal on, and it then
+ * declines to contextually type sibling properties — which leaves every `cell`
+ * callback's argument an implicit `any` for consumers to annotate by hand.
  */
 export type ColumnDef<TData extends RowData> =
-    | { [K in keyof TData & string]: IdentifiedColumnDef<DataGridFeatures, TData, TData[K]> & { field: K } & DataGridColumnMeta }[keyof TData & string]
-    | (IdentifiedColumnDef<DataGridFeatures, TData, unknown> & { field: (row: TData) => unknown } & DataGridColumnMeta);
+    Omit<IdentifiedColumnDef<DataGridFeatures, TData, CellValue>, "cell">
+    & {
+        field?: (keyof TData & string) | ((row: TData) => CellValue);
+        cell?: (context: CellContext<TData>) => ReactNode;
+    }
+    & DataGridColumnMeta;
 
 export function toTanStackColumns<TData extends RowData>(columns: ColumnDef<TData>[]): TanStackColumnDef<DataGridFeatures, TData, any>[] {
     const usedIds = new Set<string>();
@@ -76,7 +95,7 @@ export function toTanStackColumns<TData extends RowData>(columns: ColumnDef<TDat
     };
 
     return columns.map((col, index) => {
-        const { field, className, headerClassName, ...rest } = col;
+        const { field, className, headerClassName, cell, ...rest } = col;
         // Merge, do not assign: both spellings are legal, so assigning would
         // silently drop a column written as `meta: { className }`. The explicit
         // prop wins only where it is set.
@@ -85,7 +104,14 @@ export function toTanStackColumns<TData extends RowData>(columns: ColumnDef<TDat
             ...(className !== undefined && { className }),
             ...(headerClassName !== undefined && { headerClassName }),
         };
-        if (typeof field === "function") {
+        // Adapt to TanStack's cell context so consumers see `{ row, value }`
+        // rather than a getter and a row wrapper.
+        const cellRenderer = cell === undefined
+            ? undefined
+            : (context: { row: { original: TData }; getValue: () => unknown }) =>
+                cell({ row: context.row.original, value: context.getValue() as CellValue });
+
+        if (field === undefined || typeof field === "function") {
             const preferred = rest.id
                 ?? (typeof rest.header === "string" && rest.header.length > 0
                     ? rest.header.toLowerCase().replace(/\s+/g, "-")
@@ -93,14 +119,17 @@ export function toTanStackColumns<TData extends RowData>(columns: ColumnDef<TDat
             return {
                 ...rest,
                 meta,
+                ...(cellRenderer && { cell: cellRenderer }),
                 id: claim(preferred, index),
-                accessorFn: field,
+                // A display column has no value to resolve, so it gets no accessor.
+                ...(field !== undefined && { accessorFn: field }),
             } as TanStackColumnDef<DataGridFeatures, TData, any>;
         }
         usedIds.add(rest.id ?? field);
         return {
             ...rest,
             meta,
+            ...(cellRenderer && { cell: cellRenderer }),
             accessorKey: field,
         } as TanStackColumnDef<DataGridFeatures, TData, any>;
     });

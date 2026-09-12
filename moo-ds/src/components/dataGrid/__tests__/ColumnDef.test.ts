@@ -107,4 +107,61 @@ describe("toTanStackColumns", () => {
             expect(result[1].id).toBe("name-1");
         });
     });
+
+    // These read as runtime tests but earn their keep at compile time: no cell
+    // argument below is annotated, so `tsc` reports TS7031 on each of them if
+    // ColumnDef ever stops contextually typing `cell`.
+    describe("cell typing", () => {
+        it("types the cell argument of a computed column", () => {
+            const columns: ColumnDef<Row>[] = [
+                { field: () => null, id: "computed", cell: ({ row }) => row.name.toUpperCase() },
+            ];
+            const [col] = toTanStackColumns(columns);
+            expect(col.id).toBe("computed");
+        });
+
+        it("types the cell argument of a keyed column", () => {
+            const columns: ColumnDef<Row>[] = [
+                { field: "age", cell: ({ row, value }) => `${row.age}:${value}` },
+            ];
+            const [col] = toTanStackColumns(columns);
+            expect(col).toMatchObject({ accessorKey: "age" });
+        });
+
+        it("hands the cell the row itself and the resolved value", () => {
+            const columns: ColumnDef<Row>[] = [
+                { field: "age", cell: ({ row, value }) => `${row.name}=${value}` },
+            ];
+            const [col] = toTanStackColumns(columns);
+            const rendered = (col.cell as any)({
+                row: { original: { name: "Ada", age: 36 } },
+                getValue: () => 36,
+            });
+            expect(rendered).toBe("Ada=36");
+        });
+    });
+
+    describe("display column", () => {
+        it("gets no accessor when field is omitted", () => {
+            const columns: ColumnDef<Row>[] = [
+                { id: "select", header: "", cell: ({ row }) => row.name },
+            ];
+            const [col] = toTanStackColumns(columns);
+            expect(col.id).toBe("select");
+            expect(col).not.toHaveProperty("accessorKey");
+            expect(col).not.toHaveProperty("accessorFn");
+        });
+
+        it("leaves the value undefined", () => {
+            const columns: ColumnDef<Row>[] = [
+                { id: "open", cell: ({ value }) => `${value}` },
+            ];
+            const [col] = toTanStackColumns(columns);
+            const rendered = (col.cell as any)({
+                row: { original: { name: "Ada", age: 36 } },
+                getValue: (): undefined => undefined,
+            });
+            expect(rendered).toBe("undefined");
+        });
+    });
 });
