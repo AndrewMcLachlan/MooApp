@@ -45,18 +45,24 @@ export type DataGridFeatures = typeof dataGridFeatures;
  * Simplified column definition that combines TanStack's `accessorKey` and
  * `accessorFn` into a single `field` property.
  *
- * - String `field` → maps to a property key on the row data, with `TValue`
- *   automatically inferred as `TData[K]`.
+ * - String `field` → maps to a property key on the row data.
  * - Function `field` → computes the cell value from the row.
  *
  * When `field` is a function and no explicit `id` is provided, an id is
  * auto-generated from `header` (if it's a string) or the column index.
  *
  * `TData` is constrained to `RowData`: an object or an array.
+ *
+ * One shape, not a union of key-typed and function-typed columns: a union
+ * gives TypeScript nothing to discriminate an object literal on, and it then
+ * declines to contextually type sibling properties — leaving every `cell`
+ * callback's argument an implicit `any` for consumers to annotate by hand.
+ * `getValue()` is `unknown` here as the price of that.
  */
 export type ColumnDef<TData extends RowData> =
-    | { [K in keyof TData & string]: IdentifiedColumnDef<DataGridFeatures, TData, TData[K]> & { field: K } & DataGridColumnMeta }[keyof TData & string]
-    | (IdentifiedColumnDef<DataGridFeatures, TData, unknown> & { field: (row: TData) => unknown } & DataGridColumnMeta);
+    IdentifiedColumnDef<DataGridFeatures, TData, unknown>
+    & { field: (keyof TData & string) | ((row: TData) => unknown) }
+    & DataGridColumnMeta;
 
 export function toTanStackColumns<TData extends RowData>(columns: ColumnDef<TData>[]): TanStackColumnDef<DataGridFeatures, TData, any>[] {
     const usedIds = new Set<string>();

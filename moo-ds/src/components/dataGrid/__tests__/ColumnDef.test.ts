@@ -107,4 +107,25 @@ describe("toTanStackColumns", () => {
             expect(result[1].id).toBe("name-1");
         });
     });
+
+    // These read as runtime tests but earn their keep at compile time: no cell
+    // argument below is annotated, so `tsc` reports TS7031 on each of them if
+    // ColumnDef ever stops contextually typing `cell`.
+    describe("cell typing", () => {
+        it("types the cell argument of a computed column", () => {
+            const columns: ColumnDef<Row>[] = [
+                { field: () => null, id: "computed", cell: ({ row }) => row.original.name.toUpperCase() },
+            ];
+            const [col] = toTanStackColumns(columns);
+            expect(col.id).toBe("computed");
+        });
+
+        it("types the cell argument of a keyed column", () => {
+            const columns: ColumnDef<Row>[] = [
+                { field: "age", cell: ({ row }) => `${row.original.age}` },
+            ];
+            const [col] = toTanStackColumns(columns);
+            expect(col).toMatchObject({ accessorKey: "age" });
+        });
+    });
 });
