@@ -1,6 +1,7 @@
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import svgr from "vite-plugin-svgr";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 import { fileURLToPath } from "url"
 import { createRequire } from "module"
 import { Features } from "lightningcss"
@@ -31,6 +32,9 @@ export default defineConfig({
       include: "**/*.svg",
     }),
     react(),
+    /* Entra permits http only for loopback, so testing on a real device needs
+       the origin to be https before its redirect URI can be registered. */
+    basicSsl(),
   ],
   build: {
     chunkSizeWarningLimit: Infinity,
@@ -44,7 +48,9 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3002
+    port: 3002,
+    host: true,
+    allowedHosts: ["ra.mclachlan.family"]
   },
   resolve: {
     alias: {

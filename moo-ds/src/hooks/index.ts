@@ -4,3 +4,4 @@ export * from "./innerRef";
 export * from "./localStorage";
 export * from "./sessionStorage";
 export * from "./updatingState";
+export * from "./breakpoint";

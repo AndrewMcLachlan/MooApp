@@ -17,4 +17,9 @@ export interface FooterProps extends HTMLAttributes<HTMLElement> {
 
 export interface SidebarProps {
     navItems?: NavItem[],
+    /** The identity items the desktop header keeps in its user menu. The mobile
+        shell has no band for them, so the drawer carries them instead. */
+    userMenu?: NavItem[] | React.ReactNode[];
+    menu?: React.ReactNode[];
+    showAppInfo?: boolean;
 }

@@ -43,6 +43,44 @@ MSAL defaults to the framework's built-in configuration, but you can override it
 
 Every field is optional and falls back to the default, so single-tenant apps can omit `auth` entirely.
 
+## Page actions
+
+`Page` takes its header actions as data, not nodes:
+
+```tsx
+import { Page, type PageAction } from "@andrewmclachlan/moo-app";
+
+const actions: PageAction[] = [
+    { id: "show-net", label: "Show net amount", checked: showNet, onClick: toggleNet },
+    { id: "import", label: "Import", icon: "upload", group: "write", onClick: openImport },
+    { id: "add-family", label: "Add family", group: "write", to: "/settings/families/add" },
+];
+
+<Page title="Families" actions={actions}>…</Page>
+```
+
+The desktop header renders them as a row of controls; the mobile header renders them
+as items in an overflow menu. A header can only do that if it knows what an action
+*is*, which is why nodes are no longer accepted.
+
+- `checked` present makes the action a toggle — a switch on desktop, a ticked item in the menu.
+- `to` instead of `onClick` keeps the action an anchor, so it retains middle-click and open-in-new-tab.
+- `group: "write"` sorts the action below the menu's separator, away from the reading toggles.
+
+Anything that is neither a command nor a link — a search box, a segmented selector —
+goes in `customActions`, which still takes `ReactNode[]` and renders inline in both
+headers. moo-app makes no promise that a custom control fits a phone bar.
+
+### Upgrading
+
+```tsx
+// before
+actions={[<IconButton key="import" icon="upload" onClick={openImport}>Import</IconButton>]}
+
+// after
+actions={[{ id: "import", label: "Import", icon: "upload", onClick: openImport }]}
+```
+
 ## Routing recipe
 
 There is **no `createMooAppBrowserRouter` helper** — build a standard TanStack router and hand it to `MooApp`:

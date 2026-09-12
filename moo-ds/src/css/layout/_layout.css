@@ -6,7 +6,7 @@ html, body, #root, .app-container {
   display: grid;
 
   grid-template-columns: min-content 1fr;
-  grid-template-rows: min-content 80px 1fr;
+  grid-template-rows: min-content min-content 1fr;
 
   grid-template-areas:
     "alerts alerts"
@@ -49,13 +49,13 @@ html, body, #root, .app-container {
       "footer";
 
       grid-template-columns: 1fr;
-      grid-template-rows: 80px 1fr 40px;
+      grid-template-rows: min-content 1fr 40px;
 
       grid-template-areas:
       "header header"
       "main main";
 
       grid-template-columns: 1fr;
-      grid-template-rows: 80px 1fr;
+      grid-template-rows: min-content 1fr;
   }
 }
