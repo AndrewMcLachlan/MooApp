@@ -12,7 +12,7 @@ export const PageActions = () => {
     const actions: PageAction[] = [
         { id: "show-net", label: "Show net amount", checked: showNet, onClick: () => setShowNet(!showNet) },
         { id: "compact", label: "Compact", checked: compact, onClick: () => setCompact(!compact) },
-        { id: "import", label: "Import", icon: "⬆", group: "write", onClick: () => setLastCommand("Import") },
+        { id: "import", label: "Import", icon: "upload", group: "write", onClick: () => setLastCommand("Import") },
         { id: "add", label: "Add profile", group: "write", to: "/profile" },
     ];
 

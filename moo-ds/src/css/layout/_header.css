@@ -106,6 +106,17 @@
             color: var(--header-text);
         }
 
+        .btn.btn-hamburger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: var(--touch-target);
+            height: var(--touch-target);
+            /* The bar's own inline padding already insets it; the box grows
+               inward so the glyph stays on the same left edge. */
+            margin-inline-start: calc((var(--touch-target) - 32px) / -2);
+        }
+
         .action-menu-toggle {
             display: inline-flex;
             align-items: center;

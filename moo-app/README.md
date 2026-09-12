@@ -49,11 +49,10 @@ Every field is optional and falls back to the default, so single-tenant apps can
 
 ```tsx
 import { Page, type PageAction } from "@andrewmclachlan/moo-app";
-import { Icon } from "@andrewmclachlan/moo-ds";
 
 const actions: PageAction[] = [
     { id: "show-net", label: "Show net amount", checked: showNet, onClick: toggleNet },
-    { id: "import", label: "Import", icon: <Icon icon="upload" />, group: "write", onClick: openImport },
+    { id: "import", label: "Import", icon: "upload", group: "write", onClick: openImport },
     { id: "add-family", label: "Add family", group: "write", to: "/settings/families/add" },
 ];
 
@@ -79,7 +78,7 @@ headers. moo-app makes no promise that a custom control fits a phone bar.
 actions={[<IconButton key="import" icon="upload" onClick={openImport}>Import</IconButton>]}
 
 // after
-actions={[{ id: "import", label: "Import", icon: <Icon icon="upload" />, onClick: openImport }]}
+actions={[{ id: "import", label: "Import", icon: "upload", onClick: openImport }]}
 ```
 
 ## Routing recipe

@@ -1,4 +1,4 @@
-import { Menu, type PageAction } from "@andrewmclachlan/moo-ds";
+import { Icon, Menu, type PageAction } from "@andrewmclachlan/moo-ds";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const ActionMenu: React.FC<ActionMenuProps> = ({ actions }) => {
@@ -11,7 +11,7 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({ actions }) => {
     const item = (action: PageAction) => (
         <Menu.Item
             key={action.id}
-            icon={action.icon}
+            icon={action.icon && <Icon icon={action.icon} />}
             checked={action.checked}
             disabled={action.disabled}
             onClick={action.onClick}

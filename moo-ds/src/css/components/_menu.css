@@ -29,19 +29,27 @@
         min-width: 11rem;
     }
 
-    /* display: contents so the anchor carries the link semantics without
-       becoming a box of its own -- the row's flex layout stays on .menu-item. */
-    .menu-item > a {
-        display: contents;
+    /* The focusable child is the row: it carries the padding and the box, so a
+       pointer or a keyboard lands on the same target. */
+    .menu-item > :is(a, button) {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        width: 100%;
+        min-height: var(--touch-target);
+        padding: var(--menu-item-padding-y) var(--menu-item-padding-x);
+        border: 0;
+        border-radius: 4px;
+        background: transparent;
         color: inherit;
+        font: inherit;
+        text-align: left;
         text-decoration: none;
+        cursor: pointer;
     }
 
     .menu-item {
         display: flex;
-        align-items: center;
-        gap: 0.625rem;
-        padding: var(--menu-item-padding-y) var(--menu-item-padding-x);
         border-radius: 4px;
         color: var(--body-colour);
         white-space: nowrap;
@@ -49,6 +57,10 @@
 
     .menu-item.clickable:hover {
         background-color: var(--hover);
+    }
+
+    .menu-item.disabled > button {
+        cursor: default;
     }
 
     .menu-item.disabled {

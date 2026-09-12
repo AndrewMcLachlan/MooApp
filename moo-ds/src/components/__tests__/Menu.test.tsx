@@ -87,7 +87,17 @@ describe('Menu', () => {
       </Menu>
     ));
     open();
-    expect(screen.getByRole('menuitem').querySelector('a')).toHaveAttribute('href', '/settings/families/add');
+    expect(screen.getByRole('menuitem')).toHaveAttribute('href', '/settings/families/add');
+  });
+
+  it('gives a command a focusable control', () => {
+    render(
+      <Menu id="test-menu" trigger={<button type="button">Open</button>}>
+        <Menu.Item onClick={vi.fn()}>Import</Menu.Item>
+      </Menu>
+    );
+    open();
+    expect(screen.getByRole('menuitem').tagName).toBe('BUTTON');
   });
 
   it('renders a divider as a separator', () => {

@@ -28,9 +28,9 @@ export interface MenuItemProps extends Omit<React.LiHTMLAttributes<HTMLLIElement
 /* useLink throws outside a LinkProvider, so it is called from a component that
    renders only when there is a destination. A Menu with no links works with no
    provider in the tree. */
-const MenuLink: React.FC<PropsWithChildren<{ to: string }>> = ({ to, children }) => {
+const MenuLink: React.FC<PropsWithChildren<{ to: string; role?: string; "aria-checked"?: boolean }>> = ({ to, children, ...rest }) => {
     const Link = useLink();
-    return <Link to={to}>{children}</Link>;
+    return <Link to={to} {...rest}>{children}</Link>;
 };
 
 const MenuItem: React.FC<PropsWithChildren<MenuItemProps>> = ({ icon, checked, disabled, onClick, to, className, children, ...rest }) => {
@@ -43,16 +43,29 @@ const MenuItem: React.FC<PropsWithChildren<MenuItemProps>> = ({ icon, checked, d
         </>
     );
 
+    /* The role and the focus belong on the same element, or a keyboard user can
+       reach the menu and not its commands. The li is only the list structure. */
+    const role = checked === undefined ? "menuitem" : "menuitemcheckbox";
+
     return (
         <li
-            role={checked === undefined ? "menuitem" : "menuitemcheckbox"}
-            aria-checked={checked}
-            aria-disabled={disabled || undefined}
+            role="none"
             className={classNames("menu-item", disabled ? "disabled" : "clickable", className)}
-            onClick={disabled ? undefined : onClick}
             {...rest}
         >
-            {to && !disabled ? <MenuLink to={to}>{content}</MenuLink> : content}
+            {to && !disabled
+                ? <MenuLink to={to} role={role} aria-checked={checked}>{content}</MenuLink>
+                : (
+                    <button
+                        type="button"
+                        role={role}
+                        aria-checked={checked}
+                        disabled={disabled}
+                        onClick={onClick}
+                    >
+                        {content}
+                    </button>
+                )}
         </li>
     );
 };

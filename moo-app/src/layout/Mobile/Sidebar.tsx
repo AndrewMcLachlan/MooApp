@@ -3,7 +3,7 @@ import { useMsal } from "@azure/msal-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { isValidElement } from "react";
 import { Avatar } from "../../components";
-import { useLayout } from "../../providers";
+import { useApp, useLayout } from "../../providers";
 import { type SidebarComponent } from "../Types";
 
 const isDark = (themeValue: string) => themeValue === "" ?
@@ -17,9 +17,10 @@ const isNavItem = (item: NavItem | React.ReactNode): item is NavItem =>
 const itemImage = (image: NavItem["image"]) =>
     typeof image === "string" ? <img src={image} alt="" /> : image;
 
-export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu = [] }) => {
+export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu = [], showAppInfo }) => {
 
     const layout = useLayout();
+    const app = useApp();
     const msal = useMsal();
     const { theme, setTheme } = useTheme();
 
@@ -67,6 +68,9 @@ export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu =
                     <Menu.Item icon={<FontAwesomeIcon icon="arrow-right-from-bracket" />} onClick={() => msal.instance.logoutRedirect()}>
                         Sign out
                     </Menu.Item>
+                    {showAppInfo && (
+                        <li className="app-info" role="none">{app.name} {app.version}</li>
+                    )}
                 </Menu>
                 {menu.length > 0 && (
                     <div className="sidebar-identity-actions" onClick={close}>{menu}</div>

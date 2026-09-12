@@ -2,14 +2,16 @@ import { IconButton, IconLinkButton, Input, type PageAction } from "@andrewmclac
 
 export const PageActionControl: React.FC<PageActionControlProps> = ({ action }) => {
 
-    if (action.to !== undefined) {
+    /* A disabled link is still navigable, so a disabled action renders as a
+       button rather than an anchor that ignores the flag. */
+    if (action.to !== undefined && !action.disabled) {
         return (
             <IconLinkButton
-                badge
+                badge={action.icon !== undefined}
+                icon={action.icon}
                 variant={action.variant ?? "primary"}
                 to={action.to}
             >
-                {action.icon}
                 {action.label}
             </IconLinkButton>
         );
@@ -29,12 +31,12 @@ export const PageActionControl: React.FC<PageActionControlProps> = ({ action }) 
 
     return (
         <IconButton
-            badge
+            badge={action.icon !== undefined}
+            icon={action.icon}
             variant={action.variant ?? "primary"}
             disabled={action.disabled}
-            onClick={action.onClick}
+            onClick={action.to !== undefined ? undefined : action.onClick}
         >
-            {action.icon}
             {action.label}
         </IconButton>
     );

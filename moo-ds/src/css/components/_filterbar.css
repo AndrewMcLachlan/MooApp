@@ -95,7 +95,10 @@
 
 .filter-bar-clear {
     margin-left: auto;
-    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target);
+    padding: 0 0.25rem;
     border: 0;
     background: transparent;
     color: var(--link-colour);

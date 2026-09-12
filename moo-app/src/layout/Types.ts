@@ -21,4 +21,5 @@ export interface SidebarProps {
         shell has no band for them, so the drawer carries them instead. */
     userMenu?: NavItem[] | React.ReactNode[];
     menu?: React.ReactNode[];
+    showAppInfo?: boolean;
 }

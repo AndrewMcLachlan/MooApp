@@ -1,8 +1,12 @@
+import { type IconType } from "../types";
+
 interface PageActionBase {
     /** The React key, and the id the desktop switch pairs with its label. */
     id: string;
     label: string;
-    icon?: React.ReactNode;
+    /** An icon the design system can draw, so a header can place it in a badge
+        panel and a menu can place it inline. */
+    icon?: IconType;
     /** "write" sorts below the menu's separator, away from the reading toggles. */
     group?: "read" | "write";
     disabled?: boolean;
