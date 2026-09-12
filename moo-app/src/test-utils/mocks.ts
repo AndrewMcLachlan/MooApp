@@ -1,4 +1,60 @@
-import { vi } from 'vitest';
+import { vi, type Mock } from 'vitest';
+
+interface MsalInstanceMock {
+  acquireTokenSilent: Mock;
+  acquireTokenPopup: Mock;
+  acquireTokenRedirect: Mock;
+  loginRedirect: Mock;
+  loginPopup: Mock;
+  logoutRedirect: Mock;
+  logoutPopup: Mock;
+  getActiveAccount: Mock;
+  setActiveAccount: Mock;
+  getAllAccounts: Mock;
+  addEventCallback: Mock;
+  removeEventCallback: Mock;
+  initialize: Mock;
+}
+
+interface MsalContextMock {
+  instance: MsalInstanceMock;
+  accounts: typeof mockMsalAccount[];
+  inProgress: 'none';
+}
+
+interface QueryClientMock {
+  clear: Mock;
+  cancelQueries: Mock;
+  invalidateQueries: Mock;
+  refetchQueries: Mock;
+  setQueryData: Mock;
+  getQueryData: Mock;
+  getQueryState: Mock;
+  removeQueries: Mock;
+  resetQueries: Mock;
+  isFetching: Mock;
+  isMutating: Mock;
+  getDefaultOptions: Mock;
+  setDefaultOptions: Mock;
+  getQueryCache: Mock;
+  getMutationCache: Mock;
+  mount: Mock;
+  unmount: Mock;
+}
+
+interface LayoutStateMock {
+  breadcrumbs: any[];
+  secondaryNav: any[];
+  actions: any[];
+  showSidebar: boolean;
+  sidebarCollapsed: boolean;
+  setBreadcrumbs: Mock;
+  setSecondaryNav: Mock;
+  setActions: Mock;
+  setShowSidebar: Mock;
+  toggleSidebar: Mock;
+  photo: string | undefined;
+}
 import type { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 /**
@@ -98,7 +154,7 @@ export const mockMsalAccount = {
 /**
  * Creates a mock MSAL context for useMsal() hook
  */
-export const createMsalContextMock = () => ({
+export const createMsalContextMock = (): MsalContextMock => ({
   instance: {
     acquireTokenSilent: vi.fn().mockResolvedValue({
       accessToken: 'mock-access-token',
@@ -129,7 +185,7 @@ export const createMsalContextMock = () => ({
 /**
  * Creates a mock MSAL instance for MsalProvider
  */
-export const createMsalInstanceMock = () => {
+export const createMsalInstanceMock = (): MsalInstanceMock => {
   const context = createMsalContextMock();
   return context.instance;
 };
@@ -138,13 +194,13 @@ export const createMsalInstanceMock = () => {
  * Creates a mock for useIsAuthenticated() hook
  * @param isAuthenticated - Whether user is authenticated (default: true)
  */
-export const createIsAuthenticatedMock = (isAuthenticated = true) =>
+export const createIsAuthenticatedMock = (isAuthenticated = true): Mock<() => boolean> =>
   vi.fn().mockReturnValue(isAuthenticated);
 
 /**
  * Creates a mock QueryClient for React Query
  */
-export const createQueryClientMock = () => ({
+export const createQueryClientMock = (): QueryClientMock => ({
   clear: vi.fn(),
   cancelQueries: vi.fn(),
   invalidateQueries: vi.fn().mockResolvedValue(undefined),
@@ -176,7 +232,7 @@ export const mockAppConfig = {
 /**
  * Mock layout state for LayoutProvider
  */
-export const mockLayoutState = {
+export const mockLayoutState: LayoutStateMock = {
   breadcrumbs: [] as any[],
   secondaryNav: [] as any[],
   actions: [] as any[],

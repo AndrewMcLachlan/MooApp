@@ -1,4 +1,15 @@
-import { vi } from 'vitest';
+import { vi, type Mock } from 'vitest';
+
+interface MatchMediaMockResult {
+  matches: boolean;
+  media: string;
+  onchange: null;
+  addListener: Mock;
+  removeListener: Mock;
+  addEventListener: Mock;
+  removeEventListener: Mock;
+  dispatchEvent: Mock;
+}
 
 /**
  * Creates a mock localStorage/sessionStorage instance
@@ -23,7 +34,7 @@ export const createStorageMock = () => {
  * Creates a mock matchMedia instance
  * @param matches - Whether the media query matches (default: false = light mode)
  */
-export const createMatchMediaMock = (matches = false) =>
+export const createMatchMediaMock = (matches = false): Mock<(query: string) => MatchMediaMockResult> =>
   vi.fn().mockImplementation((query: string) => ({
     matches,
     media: query,
@@ -39,7 +50,7 @@ export const createMatchMediaMock = (matches = false) =>
  * Mocks the theme-color meta element for ThemeProvider
  * Returns the mock element for assertions
  */
-export const mockThemeColorMeta = () => {
+export const mockThemeColorMeta = (): { setAttribute: Mock } => {
   const mockElement = { setAttribute: vi.fn() };
   document.getElementsByName = vi.fn().mockReturnValue([mockElement]);
   return mockElement;
