@@ -1,7 +1,7 @@
 import React, { type ReactNode, createContext, useMemo, useState } from "react";
 import { useContext } from "react";
 import * as Models from "../models";
-import { type NavItem } from "@andrewmclachlan/moo-ds";
+import { type NavItem, type PageAction } from "@andrewmclachlan/moo-ds";
 import { usePhoto } from "../services";
 import { useLocalStorage } from "@andrewmclachlan/moo-ds";
 
@@ -11,15 +11,16 @@ export const LayoutProvider: React.FC<React.PropsWithChildren<LayoutProviderProp
 
     const [breadcrumbs, setBreadcrumbs] = useState<NavItem[]>([]);
     const [secondaryNav, setSecondaryNav] = useState<(NavItem | ReactNode)[]>([]);
-    const [actions, setActions] = useState<ReactNode[]>([]);
+    const [actions, setActions] = useState<PageAction[]>([]);
+    const [customActions, setCustomActions] = useState<ReactNode[]>([]);
     const [showSidebar, setShowSidebar] = useState<boolean>(false);
     const [sidebarCollapsed, setSidebarCollapsed] = useLocalStorage<boolean>("sidebar-collapse", false);
 
     const photo = usePhoto();
 
     const value = useMemo<Models.LayoutContext>(() => ({
-        size, photo, breadcrumbs, setBreadcrumbs, secondaryNav, setSecondaryNav, actions, setActions, showSidebar, setShowSidebar, sidebarCollapsed, setSidebarCollapsed,
-    }), [size, photo, breadcrumbs, secondaryNav, actions, showSidebar, sidebarCollapsed]);
+        size, photo, breadcrumbs, setBreadcrumbs, secondaryNav, setSecondaryNav, actions, setActions, customActions, setCustomActions, showSidebar, setShowSidebar, sidebarCollapsed, setSidebarCollapsed,
+    }), [size, photo, breadcrumbs, secondaryNav, actions, customActions, showSidebar, sidebarCollapsed]);
 
     return (
         <LayoutContext.Provider value={value}>

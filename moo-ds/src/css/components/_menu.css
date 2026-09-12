@@ -1,0 +1,93 @@
+.menu-popover {
+    /* Matches .popover-header's inline padding, so an item's icon starts on the
+       same left edge as the header text rather than inside a second inset. */
+    --menu-item-padding-x: 1rem;
+    --menu-item-padding-y: 0.5rem;
+
+    /* The items carry their own padding; a second one here indents them past
+       the header and makes the first item sit further down than the gap
+       between items. */
+    .popover-body {
+        padding: 0.25rem 0;
+    }
+
+    .menu-header {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        white-space: nowrap;
+    }
+
+    .menu-header-name {
+        font-weight: 600;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        min-width: 11rem;
+    }
+
+    /* The focusable child is the row: it carries the padding and the box, so a
+       pointer or a keyboard lands on the same target. */
+    .menu-item > :is(a, button) {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        width: 100%;
+        min-height: var(--touch-target);
+        padding: var(--menu-item-padding-y) var(--menu-item-padding-x);
+        border: 0;
+        border-radius: 4px;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .menu-item {
+        display: flex;
+        border-radius: 4px;
+        color: var(--body-colour);
+        white-space: nowrap;
+    }
+
+    .menu-item.clickable:hover {
+        background-color: var(--hover);
+    }
+
+    .menu-item.disabled > button {
+        cursor: default;
+    }
+
+    .menu-item.disabled {
+        color: var(--body-colour-dim);
+    }
+
+    /* Reserved whether or not this item has an icon, so labels line up down the
+       menu and a mixed list does not read as ragged. */
+    .menu-item-icon {
+        display: inline-flex;
+        justify-content: center;
+        width: 1rem;
+        flex: 0 0 1rem;
+        color: var(--secondary-colour);
+    }
+
+    .menu-item-label {
+        flex: 1;
+    }
+
+    .menu-item-check {
+        color: var(--primary);
+    }
+
+    .divider {
+        height: 1px;
+        margin: 0.25rem 0;
+        background-color: var(--border-colour);
+    }
+}

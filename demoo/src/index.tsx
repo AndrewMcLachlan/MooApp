@@ -8,6 +8,8 @@ import App from "./App";
 import { CategoryOutlet } from "./routes/CategoryOutlet";
 import { Home } from "./routes/Home";
 import { PageSections } from "./routes/layout/PageSections";
+import { PageActions } from "./routes/layout/PageActions";
+import { Filtering } from "./routes/data/Filtering";
 import { DashboardPage } from "./routes/layout/Dashboard";
 import { Navigation } from "./routes/layout/Navigation";
 import { DrawerPage } from "./routes/layout/Drawer";
@@ -55,6 +57,8 @@ const indexRoute = createRoute({ getParentRoute: () => rootRoute, path: "/", com
 // --- Layout ---------------------------------------------------------------
 const layoutRoute = createRoute({ getParentRoute: () => rootRoute, path: "layout", component: CategoryOutlet });
 const pageSectionsRoute = createRoute({ getParentRoute: () => layoutRoute, path: "page-sections", component: PageSections });
+const pageActionsRoute = createRoute({ getParentRoute: () => layoutRoute, path: "page-actions", component: PageActions });
+const filteringRoute = createRoute({ getParentRoute: () => dataRoute, path: "filtering", component: Filtering });
 const dashboardRoute = createRoute({ getParentRoute: () => layoutRoute, path: "dashboard", component: DashboardPage });
 const navigationRoute = createRoute({ getParentRoute: () => layoutRoute, path: "navigation", component: Navigation });
 const drawerRoute = createRoute({ getParentRoute: () => layoutRoute, path: "drawer", component: DrawerPage });
@@ -100,6 +104,7 @@ const routeTree = rootRoute.addChildren([
   layoutRoute.addChildren([
     categoryIndex(layoutRoute, "/layout/page-sections"),
     pageSectionsRoute,
+    pageActionsRoute,
     dashboardRoute,
     navigationRoute,
     drawerRoute,
@@ -119,6 +124,7 @@ const routeTree = rootRoute.addChildren([
     dataGridRoute,
     paginationRoute,
     kpiRoute,
+    filteringRoute,
   ]),
   feedbackRoute.addChildren([
     categoryIndex(feedbackRoute, "/feedback/alerts"),

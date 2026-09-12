@@ -47,3 +47,6 @@ export * from "./ThemeSelector";
 export * from "./Tooltip";
 export * from "./Upload";
 export * from "./Widget";
+export * from "./Menu";
+export * from "./FilterBar";
+export * from "./FilterChip";

@@ -213,7 +213,7 @@ describe('LayoutProvider', () => {
         return (
           <div>
             <div data-testid="count">{actions?.length ?? 0}</div>
-            <button onClick={() => setActions?.([<span key="1">Action</span>])}>
+            <button onClick={() => setActions?.([{ id: 'a', label: 'Action', onClick: () => {} }])}>
               Set
             </button>
           </div>

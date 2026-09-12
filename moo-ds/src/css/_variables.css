@@ -121,6 +121,11 @@
   --header-text: var(--body-colour);
   --footer-text: var(--body-colour);
 
+  /* Interactive chrome is sized in px, not rem: the root font-size drops to
+     12px below 768px, so a rem-sized control shrinks on exactly the devices
+     where a finger needs it biggest. */
+  --touch-target: 44px;
+
   --hover: light-dark(#e6e6e6, #6e6e6e);
 
   /* Link colours are all --primary derivatives, so a theme changing it carries

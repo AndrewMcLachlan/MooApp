@@ -10,3 +10,5 @@ export * from "./SortDirection";
 export * from "./Theme";
 export * from "./ValueProps";
 export * from "./Colours";
+export * from "./breakpoints";
+export * from "./PageAction";

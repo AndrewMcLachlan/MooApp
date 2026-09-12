@@ -11,6 +11,7 @@ import {
 
 export const layoutNav: NavItem[] = [
     { route: "/layout/page-sections", text: "Page & Sections", image: <Icon icon={Hierarchy} /> },
+    { route: "/layout/page-actions", text: "Page actions", image: <Icon icon={Sliders} /> },
     { route: "/layout/dashboard", text: "Dashboard", image: <Icon icon={Dashboard} /> },
     { route: "/layout/navigation", text: "Navigation", image: <Icon icon={List} /> },
     { route: "/layout/drawer", text: "Drawer", image: <Icon icon={Sliders} /> },
@@ -26,6 +27,7 @@ export const formsNav: NavItem[] = [
 ];
 
 export const dataNav: NavItem[] = [
+    { route: "/data/filtering", text: "Filtering", image: <Icon icon={Sliders} /> },
     { route: "/data/table", text: "Table", image: <Icon icon={Database} /> },
     { route: "/data/data-grid", text: "Data Grid", image: <Icon icon={Database} /> },
     { route: "/data/pagination", text: "Pagination", image: <Icon icon={List} /> },

@@ -3,6 +3,8 @@
 .offcanvas {
     --offcanvas-width: 400px;
     --offcanvas-height: 30vh;
+    --offcanvas-max-height: 85dvh;
+    --offcanvas-radius: 0.875rem;
     --offcanvas-padding-x: 1rem;
     --offcanvas-padding-y: 1rem;
     --offcanvas-colour: var(--body-colour);
@@ -65,6 +67,21 @@
     width: var(--offcanvas-width);
     border-left: var(--offcanvas-border-width) solid var(--offcanvas-border-colour);
     transform: translateX(100%);
+}
+
+.offcanvas-bottom {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: var(--offcanvas-max-height);
+    border-top: var(--offcanvas-border-width) solid var(--offcanvas-border-colour);
+    border-radius: var(--offcanvas-radius) var(--offcanvas-radius) 0 0;
+    /* A sheet sits against the bottom edge, where the home indicator is. */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    transform: translateY(100%);
 }
 
 .offcanvas.show {

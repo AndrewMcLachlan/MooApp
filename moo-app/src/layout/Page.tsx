@@ -1,6 +1,6 @@
 import { useIsAuthenticated } from "@azure/msal-react";
 import { usePageTitle } from "../hooks/pageTitle";
-import { Stack, type NavItem } from "@andrewmclachlan/moo-ds";
+import { Stack, type NavItem, type PageAction } from "@andrewmclachlan/moo-ds";
 import { useLayout } from "../providers"
 import { type ReactNode, useEffect, useRef } from "react";
 
@@ -29,7 +29,7 @@ const applyByReference = <T,>(ref: React.MutableRefObject<unknown>, value: T, se
     }
 };
 
-export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, title, breadcrumbs, navItems, actions, ...rest }) => {
+export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, title, breadcrumbs, navItems, actions, customActions, ...rest }) => {
 
     const isAuthenticated = useIsAuthenticated();
     const layout = useLayout();
@@ -39,16 +39,19 @@ export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({ children, t
     const lastBreadcrumbs = useRef<string | undefined>(undefined);
     const lastNavItems = useRef<unknown>(undefined);
     const lastActions = useRef<unknown>(undefined);
+    const lastCustomActions = useRef<unknown>(undefined);
 
     useEffect(() => {
         const resolvedBreadcrumbs = breadcrumbs ?? EMPTY;
         const resolvedNavItems = navItems ?? EMPTY;
         const resolvedActions = actions ?? EMPTY;
+        const resolvedCustomActions = customActions ?? EMPTY;
 
         applyByContent(lastBreadcrumbs, resolvedBreadcrumbs, layout.setBreadcrumbs);
         applyByReference(lastNavItems, resolvedNavItems, layout.setSecondaryNav);
         applyByReference(lastActions, resolvedActions, layout.setActions);
-    }, [breadcrumbs, navItems, actions]);
+        applyByReference(lastCustomActions, resolvedCustomActions, layout.setCustomActions);
+    }, [breadcrumbs, navItems, actions, customActions]);
 
     return (
         <Stack as="main" {...rest}>
@@ -63,5 +66,7 @@ export interface PageProps extends React.HTMLAttributes<HTMLElement> {
     title: string;
     navItems?: (NavItem|ReactNode)[];
     breadcrumbs?: NavItem[];
-    actions?: ReactNode[];
+    actions?: PageAction[];
+    /** Escape hatch for controls that are neither a command nor a link. */
+    customActions?: ReactNode[];
 }

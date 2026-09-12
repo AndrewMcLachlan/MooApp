@@ -29,6 +29,12 @@ vi.mock('@tanstack/react-router', () => ({
   ),
 }));
 
+vi.mock('../PageActionControl', () => ({
+  PageActionControl: ({ action }: any) => (
+    <button data-testid={`action-${action.id}`}>{action.label}</button>
+  ),
+}));
+
 // Mock UserMenu
 vi.mock('../UserMenu', () => ({
   UserMenu: ({ userMenu }: any) => (
@@ -225,14 +231,14 @@ describe('Header', () => {
       mockUseLayout.mockReturnValue({
         size: 'default',
         breadcrumbs: [],
-        actions: <button data-testid="action-btn">Action</button>,
+        actions: [{ id: 'run', label: 'Run Rules', onClick: vi.fn() }],
         sidebarCollapsed: false,
         setSidebarCollapsed: mockSetSidebarCollapsed,
       });
 
       render(<Header menu={[]} />);
 
-      expect(screen.getByTestId('action-btn')).toBeInTheDocument();
+      expect(screen.getByTestId('action-run')).toHaveTextContent('Run Rules');
     });
   });
 

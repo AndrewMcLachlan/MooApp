@@ -17,7 +17,7 @@ export const MooAppLayout: React.FC<MooAppLayoutProps> = ({ header, sidebar }) =
       <Notifications />
       <Layout.Header {...header} />
       <Layout.MobileHeader {...header} />
-      <Layout.MobileSidebar {...sidebar} />
+      <Layout.MobileSidebar {...sidebar} userMenu={header.userMenu} menu={header.menu} showAppInfo={header.showAppInfo} />
       <Layout.Sidebar {...sidebar} />
       <ErrorBoundary FallbackComponent={Error} resetKeys={[location.pathname]}>
         <Outlet />

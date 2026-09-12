@@ -96,22 +96,101 @@
    extra padding/width around it. The close button overlays the top-right
    corner so the sidebar fills the full drawer height. */
 .offcanvas.sidebar-drawer {
-    --offcanvas-width: 200px;
+    --offcanvas-width: 280px;
     --offcanvas-padding-x: 0;
     --offcanvas-padding-y: 0;
+    --identity-height: 56px;
 }
 
-.offcanvas.sidebar-drawer .offcanvas-header {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0.5rem;
-    z-index: 2;
+/* The identity strip is the drawer's header row: the account trigger, the app's
+   header icons and the close control share one flex context, so there is a
+   single set of gaps rather than a reserved corner the content cannot see. */
+.offcanvas.sidebar-drawer .offcanvas-header.sidebar-identity {
+    /* The drawer is a column flex container and .sidebar asks for height 100%,
+       so without this the column overflows and the strip is shrunk below the
+       height it asks for. */
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: var(--identity-height);
+    /* 1rem matches --nav-link-padding-x, so the avatar lines up with the row
+       icons beneath it. The variable is declared on .nav, a sibling. No right
+       padding: the trailing control is a touch-sized box with its glyph
+       centred, which insets the glyph by the same amount on its own. */
+    padding: 0 0 0 1rem;
+    border-bottom: 1px solid var(--border-colour);
+}
+
+.sidebar-identity .btn-close {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: var(--identity-height);
+    padding: 0;
+    margin: 0;
 }
 
 .offcanvas.sidebar-drawer .offcanvas-body.sidebar {
     width: 100%;
     min-width: 0;
+    height: auto;
+    flex: 1;
+    min-height: 0;
+    /* .sidebar sets the overflow shorthand to hidden for the desktop collapse
+       animation, which would clip a nav list taller than the drawer. */
+    overflow-y: auto;
     border-right: 0;
-    padding-top: 3rem;
+}
+
+.sidebar-identity-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: var(--touch-target);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--body-colour);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.sidebar-identity .avatar :is(img, .initials) {
+    height: 28px;
+    width: 28px;
+    border-radius: 14px;
+}
+
+.sidebar-identity-trigger svg {
+    height: 12px;
+    width: 12px;
+    color: var(--secondary-colour);
+}
+
+.sidebar-identity-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+/* Tap area, not drawn size. These sit next to each other, so the area is won
+   back on the strip's full height rather than on width -- widening them to a
+   square would only push the glyphs apart, and expanding the hit area past the
+   box would make neighbouring targets overlap. */
+.sidebar-identity-actions :is(a, button) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: var(--identity-height);
+    color: var(--secondary-colour);
+}
+
+.sidebar-identity-actions svg {
+    height: 18px;
+    width: 18px;
 }

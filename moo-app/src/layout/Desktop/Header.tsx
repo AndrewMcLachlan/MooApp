@@ -3,11 +3,12 @@ import { Link } from "@tanstack/react-router";
 import { Breadcrumb, MenuToggle } from "@andrewmclachlan/moo-ds";
 import { useApp, useLayout } from "../../providers";
 import { type HeaderComponent } from "../Types";
+import { PageActionControl } from "../PageActionControl";
 import { UserMenu } from "../UserMenu";
 
 export const Header: HeaderComponent = (props) => {
 
-    const { size, breadcrumbs, actions, sidebarCollapsed, setSidebarCollapsed } = useLayout();
+    const { size, breadcrumbs, actions, customActions, sidebarCollapsed, setSidebarCollapsed } = useLayout();
     const { name: appName } = useApp();
 
     const logoHeight = size == "default" ? 80 : 40;
@@ -34,7 +35,8 @@ export const Header: HeaderComponent = (props) => {
                 <MenuToggle onClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
                 <Breadcrumb breadcrumbs={breadcrumbs} />
                 <div className="actions">
-                    {actions}
+                    {actions?.map(action => <PageActionControl key={action.id} action={action} />)}
+                    {customActions}
                 </div>
             </div>
         </header>

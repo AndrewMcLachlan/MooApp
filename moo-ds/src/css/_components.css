@@ -9,8 +9,10 @@
 @import "components/_data-grid.css";
 @import "components/_forms.css";
 @import "components/_icon.css";
+@import "components/_filterbar.css";
 @import "components/_icon-button.css";
 @import "components/_link-box.css";
+@import "components/_menu.css";
 @import "components/_modal.css";
 @import "components/_nav.css";
 @import "components/_offcanvas.css";
