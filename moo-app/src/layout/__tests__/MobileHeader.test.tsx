@@ -90,6 +90,19 @@ describe('Mobile Header', () => {
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 
+  it('leaves the menu toggle where it was whether or not there is a way back', () => {
+    layout({ breadcrumbs: [] });
+    const { unmount } = render(<Header menu={[]} />);
+    expect(screen.getByTestId('menu-toggle').parentElement?.firstElementChild)
+      .toBe(screen.getByTestId('menu-toggle'));
+    unmount();
+
+    layout({ breadcrumbs: [{ text: 'Accounts', route: '/accounts' }] });
+    render(<Header menu={[]} />);
+    expect(screen.getByTestId('menu-toggle').parentElement?.firstElementChild)
+      .toBe(screen.getByTestId('menu-toggle'));
+  });
+
   it('renders no menu when there are no actions', () => {
     layout({ actions: [] });
     render(<Header menu={[]} />);

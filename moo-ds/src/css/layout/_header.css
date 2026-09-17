@@ -106,38 +106,32 @@
         }
 
         .btn.btn-hamburger,
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: var(--touch-target);
-            height: var(--touch-target);
-        }
-
-        .btn-back {
-            --glyph-size: 20px;
-
-            font-size: var(--glyph-size);
-            color: var(--header-text);
-            text-decoration: none;
-        }
-
-        /* The bar's own inline padding already insets the leading control; its
-           box grows inward so the glyph stays on the same left edge. */
-        > :first-child {
-            margin-inline-start: calc((var(--touch-target) - var(--glyph-size, 32px)) / -2);
-        }
-
+        .btn-back,
         .action-menu-toggle {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             width: var(--touch-target);
             height: var(--touch-target);
+            /* The bar's controls are one tone; the title carries the emphasis. */
+            color: var(--secondary-colour);
+        }
+
+        .btn.btn-hamburger {
+            /* The bar's own inline padding already insets it; the box grows
+               inward so the glyph stays on the same left edge. */
+            margin-inline-start: calc((var(--touch-target) - 32px) / -2);
+        }
+
+        .btn-back {
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .action-menu-toggle {
             padding: 0;
             border: 0;
             background: transparent;
-            color: var(--secondary-colour);
             cursor: pointer;
         }
     }

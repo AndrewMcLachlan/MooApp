@@ -18,12 +18,12 @@ export const Header: HeaderComponent = () => {
     return (
         <header className="d-lg-none">
             <div className="mobile-header">
+                <MenuToggle controls="mobile-sidebar" onClick={() => setShowSidebar(true)} />
                 {parent?.route && (
                     <Link to={parent.route} className="btn-back" aria-label={`Back to ${parent.text}`} title={`Back to ${parent.text}`}>
                         <FontAwesomeIcon icon="chevron-left" />
                     </Link>
                 )}
-                <MenuToggle controls="mobile-sidebar" onClick={() => setShowSidebar(true)} />
                 <h1 className="page-title">{current?.text}</h1>
                 {customActions}
                 <ActionMenu actions={actions ?? []} />
