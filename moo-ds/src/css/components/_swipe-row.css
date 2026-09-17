@@ -1,0 +1,77 @@
+.swipe-row {
+    position: relative;
+    overflow: hidden;
+}
+
+.swipe-row-actions {
+    position: absolute;
+    inset: 0 0 0 auto;
+    display: flex;
+    align-items: stretch;
+}
+
+.swipe-row-action {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    /* px, like the other hit areas: the root font-size shrinks on mobile. */
+    min-width: 72px;
+    padding: 0 0.75rem;
+    border: 0;
+    background-color: var(--section-bg);
+    color: var(--body-colour);
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.swipe-row-action:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.swipe-row-action-primary {
+    background-color: var(--primary);
+    color: var(--btn-colour, #0c0c12);
+}
+
+.swipe-row-action-danger {
+    background-color: var(--red, #b03030);
+    color: #fff;
+}
+
+.swipe-row-content {
+    position: relative;
+    background-color: var(--body-bg);
+    transition: transform 0.2s ease;
+    /* The row owns horizontal movement; the page keeps vertical scrolling. */
+    touch-action: pan-y;
+}
+
+/* A row mid-gesture must not animate to the finger, only back from it. */
+.swipe-row-content:active {
+    transition: none;
+}
+
+.pull-to-refresh {
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+}
+
+.pull-to-refresh-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: var(--secondary-colour);
+    transition: height 0.2s ease;
+}
+
+.pull-to-refresh-indicator.armed {
+    color: var(--primary);
+}
+
+.pull-to-refresh-content {
+    transition: transform 0.2s ease;
+}
