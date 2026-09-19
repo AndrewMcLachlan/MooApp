@@ -13,6 +13,7 @@ import { Filtering } from "./routes/data/Filtering";
 import { DashboardPage } from "./routes/layout/Dashboard";
 import { Navigation } from "./routes/layout/Navigation";
 import { DrawerPage } from "./routes/layout/Drawer";
+import { TouchPage } from "./routes/layout/Touch";
 import { FormPage } from "./routes/forms/Form";
 import { Inputs } from "./routes/forms/Inputs";
 import { Buttons } from "./routes/forms/Buttons";
@@ -62,6 +63,7 @@ const filteringRoute = createRoute({ getParentRoute: () => dataRoute, path: "fil
 const dashboardRoute = createRoute({ getParentRoute: () => layoutRoute, path: "dashboard", component: DashboardPage });
 const navigationRoute = createRoute({ getParentRoute: () => layoutRoute, path: "navigation", component: Navigation });
 const drawerRoute = createRoute({ getParentRoute: () => layoutRoute, path: "drawer", component: DrawerPage });
+const touchRoute = createRoute({ getParentRoute: () => layoutRoute, path: "touch", component: TouchPage });
 
 // --- Forms ----------------------------------------------------------------
 const formsRoute = createRoute({ getParentRoute: () => rootRoute, path: "forms", component: CategoryOutlet });
@@ -108,6 +110,7 @@ const routeTree = rootRoute.addChildren([
     dashboardRoute,
     navigationRoute,
     drawerRoute,
+    touchRoute,
   ]),
   formsRoute.addChildren([
     categoryIndex(formsRoute, "/forms/form"),
