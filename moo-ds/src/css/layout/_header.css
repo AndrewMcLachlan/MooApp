@@ -82,15 +82,14 @@
 
     .mobile-header {
         --mobile-header-height: 56px;
+        --mobile-header-gap: 8px;
 
         height: var(--mobile-header-height);
         display: flex;
         align-items: center;
         /* px, like --touch-target: the root font-size drops to 12px on a phone,
-           so a rem here shrinks the bar's spacing on the devices it is read on.
-           The controls carry their own inset inside a 44px box, so they need no
-           gap of their own; the title sets its own margins. */
-        gap: 0;
+           so a rem here shrinks the bar's spacing on the devices it is read on. */
+        gap: var(--mobile-header-gap);
         padding-inline: 12px;
         background-color: var(--header-bg);
         border-bottom: 1px solid var(--border-colour);
@@ -104,8 +103,7 @@
             /* A control's glyph is centred in a 44px box, so the space between two
                controls is an empty inset from each. The title has no box, so it
                borrows one; without it the title sits visibly nearer. */
-            margin-inline-start: 12px;
-            margin-inline-end: 8px;
+            margin-inline-start: 4px;
             font-size: 16px;
             font-weight: 600;
             white-space: nowrap;
@@ -135,6 +133,11 @@
         .btn-back {
             font-size: 24px;
             text-decoration: none;
+            /* Cancels the bar's gap against the control before it. Two 44px boxes
+               already sit ~27px apart on their glyphs; a gap on top of that reads
+               as a wider space than the one before the title. The gap itself has
+               to stay for customActions, which are arbitrary nodes with no box. */
+            margin-inline-start: calc(var(--mobile-header-gap) * -1);
         }
 
         .action-menu-toggle {
