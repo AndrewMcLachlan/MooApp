@@ -37,6 +37,23 @@ export const isArmed = (distance: number): boolean => distance >= PULL_THRESHOLD
 export const canPull = (scrollTop: number): boolean => scrollTop <= 0;
 
 /**
+ * The scroll position a pull must be judged against.
+ *
+ * The component is not necessarily the element that scrolls. Dropped into a
+ * page that scrolls as a whole, its own scrollTop never leaves 0 and every
+ * touch looks like it started at the top, so the gesture arms halfway down a
+ * list. This walks out to whatever actually scrolls.
+ */
+export const scrollTopOf = (element: Element | null): number => {
+    for (let node: Element | null = element; node; node = node.parentElement) {
+        if (node.scrollHeight <= node.clientHeight) continue;
+        const overflowY = node.ownerDocument.defaultView?.getComputedStyle(node).overflowY;
+        if (overflowY === "auto" || overflowY === "scroll") return node.scrollTop;
+    }
+    return element?.ownerDocument.scrollingElement?.scrollTop ?? 0;
+};
+
+/**
  * Whether a movement is vertical enough to treat as a pull.
  *
  * A gesture that is mostly sideways belongs to whatever handles horizontal
