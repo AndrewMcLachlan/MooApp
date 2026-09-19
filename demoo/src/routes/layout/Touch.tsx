@@ -54,7 +54,7 @@ export const TouchPage = () => {
 
                 <p>Refreshed {refreshCount} {refreshCount === 1 ? "time" : "times"}.</p>
 
-                <PullToRefresh onRefresh={refresh} style={{ maxHeight: "60vh" }}>
+                <PullToRefresh onRefresh={refresh} className="demo-touch-list">
                     {runs.map((run) => (
                         <SwipeRow
                             key={run.id}

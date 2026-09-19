@@ -252,6 +252,11 @@
   pointer-events: none;
 }
 
+/* A scroller short enough that the pull gesture has somewhere to pull from. */
+.demo-touch-list {
+  max-height: 60vh;
+}
+
 .demo-touch-row {
   display: flex;
   align-items: center;
