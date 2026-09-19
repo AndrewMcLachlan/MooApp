@@ -251,3 +251,17 @@
   font-size: 1.25rem;
   pointer-events: none;
 }
+
+.demo-touch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-colour);
+}
+
+.demo-touch-repo {
+  color: var(--secondary-colour);
+  font-size: 0.8rem;
+}

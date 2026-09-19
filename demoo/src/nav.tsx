@@ -15,6 +15,7 @@ export const layoutNav: NavItem[] = [
     { route: "/layout/dashboard", text: "Dashboard", image: <Icon icon={Dashboard} /> },
     { route: "/layout/navigation", text: "Navigation", image: <Icon icon={List} /> },
     { route: "/layout/drawer", text: "Drawer", image: <Icon icon={Sliders} /> },
+    { route: "/layout/touch", text: "Touch", image: <Icon icon={Transaction} /> },
 ];
 
 export const formsNav: NavItem[] = [
