@@ -14,6 +14,7 @@ vi.mock('@andrewmclachlan/moo-ds', () => ({
   MenuToggle: ({ onClick }: { onClick: () => void }) => (
     <button data-testid="menu-toggle" onClick={onClick}>Toggle</button>
   ),
+  useLink: () => ({ to, children, ...props }: any) => <a href={to} {...props}>{children}</a>,
 }));
 
 vi.mock('../ActionMenu', () => ({
@@ -66,6 +67,40 @@ describe('Mobile Header', () => {
     layout({ customActions: [<button key="s" type="button">Search</button>] });
     render(<Header menu={[]} />);
     expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument();
+  });
+
+  it('goes up to the parent breadcrumb, not the trail', () => {
+    layout({ breadcrumbs: [
+      { text: 'Accounts', route: '/accounts' },
+      { text: 'Joint Savings', route: '/accounts/1' },
+    ] });
+    render(<Header menu={[]} />);
+    expect(screen.getByRole('link', { name: 'Back to Accounts' })).toHaveAttribute('href', '/accounts');
+  });
+
+  it('goes up to home from a top-level page', () => {
+    layout({ breadcrumbs: [{ text: 'Accounts', route: '/accounts' }] });
+    render(<Header menu={[]} />);
+    expect(screen.getByRole('link', { name: 'Back to Home' })).toHaveAttribute('href', '/');
+  });
+
+  it('offers no way up from home itself', () => {
+    layout({ breadcrumbs: [] });
+    render(<Header menu={[]} />);
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('leaves the menu toggle where it was whether or not there is a way back', () => {
+    layout({ breadcrumbs: [] });
+    const { unmount } = render(<Header menu={[]} />);
+    expect(screen.getByTestId('menu-toggle').parentElement?.firstElementChild)
+      .toBe(screen.getByTestId('menu-toggle'));
+    unmount();
+
+    layout({ breadcrumbs: [{ text: 'Accounts', route: '/accounts' }] });
+    render(<Header menu={[]} />);
+    expect(screen.getByTestId('menu-toggle').parentElement?.firstElementChild)
+      .toBe(screen.getByTestId('menu-toggle'));
   });
 
   it('renders no menu when there are no actions', () => {

@@ -194,3 +194,34 @@
     height: 18px;
     width: 18px;
 }
+
+/* The drawer's rows are sized in px for the same reason --touch-target is: the
+   root font-size drops to 12px below 768px, so a rem-sized row shrinks on
+   exactly the devices where it is tapped rather than clicked. */
+.offcanvas.sidebar-drawer .sidebar .nav {
+    --nav-link-padding-x: 16px;
+    --nav-link-padding-y: 12px;
+
+    font-size: 16px;
+}
+
+.offcanvas.sidebar-drawer .sidebar .nav-link {
+    min-height: var(--touch-target);
+    gap: 12px;
+
+    :is(svg, img) {
+        height: 24px;
+        width: 24px;
+    }
+
+    /* A row's icon takes its label's colour, so hover and active lift both. */
+    svg {
+        stroke: currentColor;
+        fill: currentColor;
+    }
+
+    &.active::before {
+        margin-left: -12px;
+        height: 24px;
+    }
+}
