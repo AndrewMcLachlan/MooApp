@@ -15,14 +15,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.2rem;
-    /* px, like the other hit areas: the root font-size shrinks on mobile. */
+    /* px throughout, like the other hit areas: the root font-size drops to 12px
+       below 768px, which is where a swipe happens at all. */
+    gap: 4px;
     min-width: 72px;
-    padding: 0 0.75rem;
+    padding: 0 12px;
     border: 0;
     background-color: var(--section-bg);
     color: var(--body-colour);
-    font-size: 0.75rem;
+    font-size: 12px;
     cursor: pointer;
 }
 
@@ -33,11 +34,11 @@
 
 .swipe-row-action-primary {
     background-color: var(--primary);
-    color: var(--btn-colour, #0c0c12);
+    color: #fff;
 }
 
 .swipe-row-action-danger {
-    background-color: var(--red, #b03030);
+    background-color: var(--danger);
     color: #fff;
 }
 

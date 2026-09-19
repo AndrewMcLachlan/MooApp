@@ -1,7 +1,8 @@
 import classNames from "classnames";
 import React, { useRef, useState, type PropsWithChildren } from "react";
+import { faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { canPull, isArmed, isVertical, pullDistance, PULL_THRESHOLD } from "./pullGestures";
+import { canPull, isArmed, isVertical, pullDistance, PULL_THRESHOLD, scrollTopOf } from "./pullGestures";
 
 export interface PullToRefreshProps extends React.HTMLAttributes<HTMLDivElement> {
     /** Awaited, so the spinner runs until the data is actually back. */
@@ -33,7 +34,7 @@ export const PullToRefresh: React.FC<PropsWithChildren<PullToRefreshProps>> = ({
 
     const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
         if (disabled || refreshing) return;
-        if (!canPull(containerRef.current?.scrollTop ?? 0)) return;
+        if (!canPull(scrollTopOf(containerRef.current))) return;
         const touch = e.touches[0];
         startRef.current = { x: touch.clientX, y: touch.clientY };
     };
@@ -62,6 +63,10 @@ export const PullToRefresh: React.FC<PropsWithChildren<PullToRefreshProps>> = ({
         setRefreshing(true);
         try {
             await onRefresh();
+        } catch {
+            // Swallowed deliberately: this runs from a touch handler, so a
+            // rejection escaping here is an unhandled rejection in the host
+            // app. Reporting the failure belongs to whoever owns onRefresh.
         } finally {
             setRefreshing(false);
         }
@@ -86,7 +91,7 @@ export const PullToRefresh: React.FC<PropsWithChildren<PullToRefreshProps>> = ({
                 aria-label={refreshing ? refreshingLabel : undefined}
                 role={refreshing ? "status" : undefined}
             >
-                {offset > 0 && <FontAwesomeIcon icon="arrows-rotate" spin={refreshing} />}
+                {offset > 0 && <FontAwesomeIcon icon={faArrowsRotate} spin={refreshing} />}
             </div>
             <div
                 className="pull-to-refresh-content"

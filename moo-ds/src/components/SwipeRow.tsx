@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useRef, useState, type PropsWithChildren, type ReactNode } from "react";
+import React, { useEffect, useRef, useState, type PropsWithChildren, type ReactNode } from "react";
 import { lockAxis, shouldOpen, swipeOffset, type Axis } from "./swipeGestures";
 
 export interface SwipeAction {
@@ -36,6 +36,17 @@ export const SwipeRow: React.FC<PropsWithChildren<SwipeRowProps>> = ({ actions, 
         setOpen(false);
         setOffset(0);
     };
+
+    // An open row is held off its resting position by the panel's width. Lose the
+    // panel and nothing can put the row back: every later touch returns at the
+    // guard in onTouchStart, leaving the content translated over nothing.
+    useEffect(() => {
+        if (actions.length === 0) {
+            close();
+        } else if (open) {
+            setOffset(-panelWidth());
+        }
+    }, [actions, open]);
 
     const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
         if (actions.length === 0) return;
