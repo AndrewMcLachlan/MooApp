@@ -27,11 +27,11 @@
     "@andrewmclachlan:registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
-    "@azure/msal-browser": "^5.22.0",
+    "@azure/msal-browser": "^5.23.0",
     "axios": "^1.20.0",
     "classnames": "^2.5.1",
     "date-fns": "^4.4.0",
-    "react-error-boundary": "^6.1.5",
+    "react-error-boundary": "^6.1.6",
     "react-toastify": "^11.1.0",
     "use-debounce": "^10.1.1"
   },
@@ -76,9 +76,9 @@
     "@fortawesome/free-regular-svg-icons": "^7.3.1",
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
     "@fortawesome/react-fontawesome": "^3.5.0",
-    "@tanstack/react-query": "^5.103.1",
+    "@tanstack/react-query": "^5.103.2",
     "@tanstack/react-query-persist-client": "^5.101.2",
-    "@tanstack/react-router": "^1.170.38",
+    "@tanstack/react-router": "^1.170.39",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-hook-form": "^7.88.0"
