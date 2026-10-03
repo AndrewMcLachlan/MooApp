@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useMemo } from "react";
 import { useContext } from "react";
-import { type Theme, type ThemeOptions, theme, Themes as BuiltInThemes } from "../models";
+import { type Theme, type ThemeOptions, theme, Themes as BuiltInThemes, systemColours } from "../models";
 import { useLocalStorage } from "../hooks/localStorage";
 
 // SSR-safe: window/matchMedia are only touched when available. Resolves the
@@ -24,19 +24,29 @@ export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>
         const colour = document.getElementsByName("theme-color")[0];
         if (!colour) console.warn("No theme colour meta tag found. Theme colour will not be applied.");
 
-        if (currentTheme.colour) {
-            colour?.setAttribute("content", currentTheme.colour);
-        } else {
-            // A theme without a colour (e.g. "System") must not keep the previous
-            // theme's colour on the browser UI.
-            colour?.removeAttribute("content");
-        }
         document.body.setAttribute("class", currentTheme.theme);
         if (currentTheme.theme === "") {
             document.body.removeAttribute("data-theme");
         } else {
             document.body.setAttribute("data-theme", currentTheme.theme.startsWith("dark") ? "dark" : "light");
         }
+
+        const query = window.matchMedia?.("(prefers-color-scheme: dark)");
+
+        const followsSystem = currentTheme.theme === "";
+        const apply = () => {
+            const resolvedColour = currentTheme.colour
+                ?? (followsSystem ? (query?.matches ? systemColours.dark : systemColours.light) : undefined);
+            if (resolvedColour) colour?.setAttribute("content", resolvedColour);
+            else colour?.removeAttribute("content");
+        };
+
+        apply();
+
+        // The System theme follows the OS, so repaint it when the OS changes.
+        if (!followsSystem) return undefined;
+        query?.addEventListener("change", apply);
+        return () => query?.removeEventListener("change", apply);
     }, [currentTheme]);
 
     const value = useMemo<ThemeOptions>(() => ({ theme: currentTheme, setTheme, defaultTheme, themes }), [currentTheme, setTheme, defaultTheme, themes]);

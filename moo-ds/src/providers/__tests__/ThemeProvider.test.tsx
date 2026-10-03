@@ -3,7 +3,7 @@ import { render, screen, act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react';
 import React from 'react';
 import { ThemeProvider, useTheme } from '../ThemeProvider';
-import { Themes } from '../../models';
+import { Themes, systemColours } from '../../models';
 
 // Mock meta element for theme-color
 const createMockMetaElement = () => {
@@ -245,20 +245,23 @@ describe('ThemeProvider', () => {
       expect(result.current.theme?.name).toBe('Dark cool');
     });
 
-    it('clears the theme-color meta content when switching to a theme without a colour', () => {
-      const meta = document.getElementsByName('theme-color')[0] as unknown as { removeAttribute: ReturnType<typeof vi.fn> };
+    // Never cleared: with no theme-color the browser samples the page for its own
+    // chrome, and iOS draws what it makes of that as a gradient over the header.
+    it('resolves a colour for a theme that follows the OS', () => {
+      const meta = document.getElementsByName('theme-color')[0] as unknown as { setAttribute: ReturnType<typeof vi.fn> };
       const wrapper = ({ children }: { children: React.ReactNode }) => (
         <ThemeProvider>{children}</ThemeProvider>
       );
 
       const { result } = renderHook(() => useTheme(), { wrapper });
 
-      // Switch to a coloured theme, then to the System ("") theme which has no colour.
+      // Switch to a coloured theme, then to the System ("") theme which has none.
       act(() => result.current.setTheme?.(Themes.find(t => !!t.colour)));
-      meta.removeAttribute.mockClear();
+      meta.setAttribute.mockClear();
       act(() => result.current.setTheme?.(Themes.find(t => t.theme === '')));
 
-      expect(meta.removeAttribute).toHaveBeenCalledWith('content');
+      // matchMedia is mocked to report no preference, so this is the light one.
+      expect(meta.setAttribute).toHaveBeenCalledWith('content', systemColours.light);
     });
 
     it('can cycle through all themes', () => {
@@ -289,28 +292,28 @@ describe('ThemeProvider', () => {
       const darkTheme = Themes.find(t => t.name === 'Dark warm');
       expect(darkTheme).toBeDefined();
       expect(darkTheme?.theme).toBe('dark');
-      expect(darkTheme?.colour).toBe('#1F1B18');
+      expect(darkTheme?.colour).toBe(systemColours.dark);
     });
 
     it('has Dark cool theme', () => {
       const darkBlueTheme = Themes.find(t => t.name === 'Dark cool');
       expect(darkBlueTheme).toBeDefined();
       expect(darkBlueTheme?.theme).toBe('dark blue');
-      expect(darkBlueTheme?.colour).toBe('#181B1F');
+      expect(darkBlueTheme?.colour).toBe('#0C0D11');
     });
 
     it('has Light theme', () => {
       const lightTheme = Themes.find(t => t.name === 'Light');
       expect(lightTheme).toBeDefined();
       expect(lightTheme?.theme).toBe('light');
-      expect(lightTheme?.colour).toBe('#FFF');
+      expect(lightTheme?.colour).toBe(systemColours.light);
     });
 
     it('has Red theme', () => {
       const redTheme = Themes.find(t => t.name === 'Red');
       expect(redTheme).toBeDefined();
       expect(redTheme?.theme).toBe('light red');
-      expect(redTheme?.colour).toBe('#620000');
+      expect(redTheme?.colour).toBe('#65000B');
     });
   });
 });

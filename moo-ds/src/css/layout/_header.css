@@ -93,6 +93,9 @@
         padding-inline: 12px;
         background-color: var(--header-bg);
         border-bottom: 1px solid var(--border-colour);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
 
         /* Must not wrap: a title that grows a line makes the bar taller than
            the row below it reserves, which is what produced the overlap. */
