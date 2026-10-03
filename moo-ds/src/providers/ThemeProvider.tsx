@@ -33,17 +33,18 @@ export const ThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>
 
         const query = window.matchMedia?.("(prefers-color-scheme: dark)");
 
-        // Must always name a colour, never clear it. With none set the browser
-        // samples the page instead, and iOS fills the status-bar inset with what
-        // it makes of that -- a gradient ramping down over the header rather
-        // than a flat colour meeting it.
-        const apply = () => colour?.setAttribute("content",
-            currentTheme.colour ?? (query?.matches ? systemColours.dark : systemColours.light));
+        const followsSystem = currentTheme.theme === "";
+        const apply = () => {
+            const resolvedColour = currentTheme.colour
+                ?? (followsSystem ? (query?.matches ? systemColours.dark : systemColours.light) : undefined);
+            if (resolvedColour) colour?.setAttribute("content", resolvedColour);
+            else colour?.removeAttribute("content");
+        };
 
         apply();
 
-        // "System" follows the OS, so it has to be repainted when the OS changes.
-        if (currentTheme.colour) return undefined;
+        // The System theme follows the OS, so repaint it when the OS changes.
+        if (!followsSystem) return undefined;
         query?.addEventListener("change", apply);
         return () => query?.removeEventListener("change", apply);
     }, [currentTheme]);
