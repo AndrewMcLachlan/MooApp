@@ -27,7 +27,7 @@
     "@andrewmclachlan:registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
-    "@azure/msal-browser": "^5.23.0",
+    "@azure/msal-browser": "^5.25.0",
     "axios": "^1.20.0",
     "classnames": "^2.5.1",
     "date-fns": "^4.4.0",
@@ -71,12 +71,12 @@
   },
   "peerDependencies": {
     "@andrewmclachlan/moo-ds": ">=5.2.0",
-    "@azure/msal-react": "^5.7.1",
+    "@azure/msal-react": "^5.7.2",
     "@fortawesome/fontawesome-svg-core": "^7.3.1",
     "@fortawesome/free-regular-svg-icons": "^7.3.1",
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
     "@fortawesome/react-fontawesome": "^3.5.0",
-    "@tanstack/react-query": "^5.104.0",
+    "@tanstack/react-query": "^5.104.1",
     "@tanstack/react-query-persist-client": "^5.101.2",
     "@tanstack/react-router": "^1.170.41",
     "react": "^19.2.8",
