@@ -68,9 +68,9 @@
     "@types/react-dom": "^19.3.0",
     "@typescript-eslint/eslint-plugin": "^8.72.1",
     "@typescript-eslint/parser": "^8.10.0",
-    "@vitejs/plugin-react": "^6.1.2",
-    "globals": "^17.13.0",
-    "rollup": "^4.66.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "globals": "^17.14.0",
+    "rollup": "^4.67.5",
     "rollup-plugin-peer-deps-external": "^2.2.4"
   },
   "peerDependencies": {
