@@ -61,6 +61,27 @@ describe('Section', () => {
       expect(container.querySelector('section')).toHaveClass('section', 'custom-class');
     });
 
+    it('sets the accent class and colour when accent is given', () => {
+      const { container } = render(
+        <Section accent="#c0392b" style={{ marginTop: 4 }}>Content</Section>,
+        { wrapper }
+      );
+
+      const section = container.querySelector('section') as HTMLElement;
+      expect(section).toHaveClass('section', 'section-accent');
+      expect(section.style.getPropertyValue('--section-accent')).toBe('#c0392b');
+      expect(section.style.marginTop).toBe('4px');
+    });
+
+    it('has no accent class without accent', () => {
+      const { container } = render(
+        <Section>Content</Section>,
+        { wrapper }
+      );
+
+      expect(container.querySelector('section')).not.toHaveClass('section-accent');
+    });
+
     it('passes through additional props', () => {
       const { container } = render(
         <Section data-testid="my-section" id="section-1">Content</Section>,

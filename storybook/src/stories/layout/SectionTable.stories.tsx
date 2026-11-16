@@ -77,6 +77,15 @@ export const WithoutHeader: Story = {
     },
 };
 
+export const Accent: Story = {
+    args: {
+        header: "Accented",
+        accent: "#c0392b",
+        striped: true,
+        children: sampleTableContent,
+    },
+};
+
 export const CustomHeaderSize: Story = {
     args: {
         header: "Small Header Table",

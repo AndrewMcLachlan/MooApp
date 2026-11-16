@@ -43,6 +43,24 @@ export const PageSections = () => {
                 </tbody>
             </SectionTable>
 
+            <Section title="Accent" header="Accent" headerSize={4} accent="var(--primary)">
+                <p>
+                    <code>accent</code> takes any CSS colour and draws a bar down the section's left
+                    edge, following its rounded corners. <code>SectionTable</code> and{" "}
+                    <code>SectionDataGrid</code> take it too.
+                </p>
+            </Section>
+
+            <SectionTable header="Accented SectionTable" headerSize={4} accent="#2f9e44" hover>
+                <thead>
+                    <tr><th>Group</th><th>Balance</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Everyday</td><td>$1,240.00</td></tr>
+                    <tr><td>Savings</td><td>$18,500.00</td></tr>
+                </tbody>
+            </SectionTable>
+
             <Section title="Widgets" header="Widget & Row" headerSize={4}>
                 <p>
                     <code>Widget</code> is a dashboard card; drop several into a <code>Row</code> and

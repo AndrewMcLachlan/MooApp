@@ -62,6 +62,29 @@
     border-bottom-width: 0;
 }
 
+.section.section-accent {
+    --section-accent-width: 4px;
+
+    border-left: var(--section-accent-width) solid transparent;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        bottom: -1px;
+        left: calc(-1 * var(--section-accent-width));
+        width: var(--section-accent-width);
+        background-color: var(--section-accent);
+        border-top-left-radius: inherit;
+        border-bottom-left-radius: inherit;
+    }
+}
+
+/* Must match the section table's zero bottom border, or the bar overhangs its last row. */
+.section.section-table.section-accent::before {
+    bottom: 0;
+}
+
 .section-group {
     display: flex;
     gap: 20px;

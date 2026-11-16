@@ -10,7 +10,7 @@ export type SectionComponent = React.FC<React.PropsWithChildren<SectionProps>> &
     Subheading: SectionSubheadingComponent;
 };
 
-const Section: SectionComponent = ({ header, headerSize = 2, to, children, className, ...rest }) => {
+const Section: SectionComponent = ({ header, headerSize = 2, to, accent, children, className, style, ...rest }) => {
 
     const H: any = `h${headerSize}`;
     const Link = useLink();
@@ -19,11 +19,11 @@ const Section: SectionComponent = ({ header, headerSize = 2, to, children, class
 
     const headerNode = typeof header === "string" ? (<H className="section-header">{headerLinkNode}</H>) : headerLinkNode;
 
-
+    const accentStyle = accent ? { ...style, "--section-accent": accent } as React.CSSProperties : style;
 
     return (
 
-        <section className={classNames("section", className)} {...rest}>
+        <section className={classNames("section", accent && "section-accent", className)} style={accentStyle} {...rest}>
             {headerNode}
             {children}
         </section>
@@ -40,4 +40,6 @@ export interface SectionProps extends React.DetailedHTMLProps<React.HTMLAttribut
     header?: string | React.ReactNode;
     headerSize?: 1 | 2 | 3 | 4 | 5 | 6;
     to?: string;
+    /** A CSS colour for a bar down the section's left edge. */
+    accent?: string;
 }
