@@ -74,6 +74,27 @@ describe("SectionDataGrid", () => {
         });
     });
 
+    describe("accent prop", () => {
+        it("passes accent to the Section wrapper", () => {
+            const { container } = render(
+                <SectionDataGrid data={data} columns={columns} header="Title" accent="red" />,
+            );
+
+            const section = container.querySelector("section") as HTMLElement;
+            expect(section).toHaveClass("section-table", "section-accent");
+            expect(section.style.getPropertyValue("--section-accent")).toBe("red");
+        });
+
+        it("renders a Section wrapper for accent without a header", () => {
+            const { container } = render(
+                <SectionDataGrid data={data} columns={columns} accent="red" />,
+            );
+
+            expect(container.querySelector("section.section-table.section-accent table.data-grid")).toBeInTheDocument();
+            expect(screen.getByRole("table")).not.toHaveClass("section");
+        });
+    });
+
     describe("headerSize prop", () => {
         it("applies headerSize to Section header", () => {
             const { container } = render(

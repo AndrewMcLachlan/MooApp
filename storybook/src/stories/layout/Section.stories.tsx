@@ -32,6 +32,14 @@ export const Simple: Story = {
 };
 
 
+export const Accent: Story = {
+    args: {
+        header: "Accented",
+        accent: "#2f5fad",
+        children: "A section with a coloured bar down its left edge.",
+    },
+};
+
 export const Full: Story = {
     args: {
         children:

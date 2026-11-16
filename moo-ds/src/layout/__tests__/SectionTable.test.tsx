@@ -47,6 +47,30 @@ describe('SectionTable', () => {
       expect(container.querySelector('.section-table')).toBeInTheDocument();
     });
 
+    it('passes accent to the Section wrapper', () => {
+      const { container } = render(
+        <SectionTable header="Table Title" accent="red">
+          <tbody><tr><td>Data</td></tr></tbody>
+        </SectionTable>
+      );
+
+      const section = container.querySelector('section') as HTMLElement;
+      expect(section).toHaveClass('section-table', 'section-accent');
+      expect(section.style.getPropertyValue('--section-accent')).toBe('red');
+      expect(container.querySelector('table')).not.toHaveClass('section-accent');
+    });
+
+    it('renders a Section wrapper for accent without a header', () => {
+      const { container } = render(
+        <SectionTable accent="red">
+          <tbody><tr><td>Data</td></tr></tbody>
+        </SectionTable>
+      );
+
+      expect(container.querySelector('section.section-table.section-accent > table')).toBeInTheDocument();
+      expect(container.querySelector('table')).not.toHaveClass('section');
+    });
+
     it('renders header text', () => {
       render(
         <SectionTable header="Table Title">
