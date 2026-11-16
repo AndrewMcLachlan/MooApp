@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { CopyText } from "@andrewmclachlan/moo-ds";
+import { CopyText, Notifications } from "@andrewmclachlan/moo-ds";
 
 const meta = {
     title: "Moo App/Components/CopyText",
@@ -7,6 +7,14 @@ const meta = {
     parameters: {
         layout: "centered",
     },
+    decorators: [
+        (Story) => (
+            <>
+                <Story />
+                <Notifications />
+            </>
+        ),
+    ],
     tags: ["autodocs"],
     argTypes: {
         text: {

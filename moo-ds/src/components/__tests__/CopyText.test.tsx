@@ -34,6 +34,15 @@ describe('CopyText', () => {
     expect(toast.promise).toHaveBeenCalledExactlyOnceWith(expect.any(Promise), { success: 'Copied #485', error: "Couldn't copy #485" });
   });
 
+  it('reports a missing Clipboard API through the error toast', async () => {
+    Object.defineProperty(navigator, 'clipboard', { value: undefined, configurable: true });
+    render(<CopyText text="#485" />);
+    fireEvent.click(screen.getByRole('button'));
+
+    const [promise] = vi.mocked(toast.promise).mock.calls[0];
+    await expect(promise).rejects.toThrow();
+  });
+
   it('applies a custom class', () => {
     render(<CopyText text="#485" className="pr-number" />);
     expect(screen.getByRole('button')).toHaveClass('copy-text', 'pr-number');
