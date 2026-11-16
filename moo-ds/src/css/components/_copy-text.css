@@ -1,0 +1,15 @@
+.copy-text {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+        color: var(--primary);
+        text-decoration: underline dotted;
+        text-underline-offset: 2px;
+    }
+}

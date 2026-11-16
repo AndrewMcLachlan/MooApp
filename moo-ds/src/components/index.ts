@@ -7,6 +7,7 @@ export * from "./ButtonGroup";
 export * from "./ClearableInput";
 export * from "./ClickableIcon";
 export * from "./CloseBadge";
+export * from "./CopyText";
 export * from "./Collapsible";
 export * from "./comboBox";
 export * from "./dataGrid";

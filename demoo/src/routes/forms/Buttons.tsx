@@ -1,5 +1,5 @@
 import { Page } from "@andrewmclachlan/moo-app";
-import { Section, Button, ButtonGroup, IconButton, IconLinkButton, LinkBox, Icon, Col, Row } from "@andrewmclachlan/moo-ds";
+import { Section, Button, ButtonGroup, CopyText, IconButton, IconLinkButton, LinkBox, Icon, Col, Row } from "@andrewmclachlan/moo-ds";
 import { HamburgerMenu } from "@andrewmclachlan/moo-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -22,6 +22,11 @@ export const Buttons = () => {
                     <Button variant="danger">Danger</Button>
                     <Button disabled>Disabled</Button>
                 </div>
+            </Section>
+
+            <Section title="Click to copy" header="CopyText" headerSize={4}>
+                <p>Inline text that copies a value to the clipboard when clicked and confirms with a toast. Pass children to show a label while copying the full value.</p>
+                <p>Merged in pull request <CopyText text="#485" />, from commit <CopyText text="3f9c2a1e7b4d">3f9c2a1</CopyText>.</p>
             </Section>
 
             <Section title="Button loading state" header="Button loading state" headerSize={4}>
