@@ -4,6 +4,8 @@ import axios, { type AxiosInstance, type InternalAxiosRequestConfig } from "axio
 import { type IMsalContext, useMsal } from "@azure/msal-react";
 import { AuthError, type AuthenticationResult, EventType, InteractionStatus, InteractionType, type IPublicClientApplication, type SilentRequest } from "@azure/msal-browser";
 import { getSilentRedirectUri, loginRequest } from "../login/msal";
+import { clearRecoveryStage, getRecoveryStage, interactiveScopes, isSessionExpired, markSessionExpired, recoverySucceeded, setRecoveryStage, signInAgain } from "../login/interactiveRecovery";
+import { SessionExpiredPrompt } from "../login/SessionExpiredPrompt";
 
 export interface MsalAuthProviderProps {
     /**
@@ -54,42 +56,6 @@ const isTopWindow = (): boolean => {
     }
 };
 
-/**
- * Bounds *sequential* interactive redirects, which redirectStateByClient
- * cannot: a redirect discards the page and takes the WeakMap with it, so the
- * in-memory guard only ever bounds concurrent callers within one page load.
- * Held in sessionStorage so it survives the navigation, and scoped to the tab
- * so one tab recovering does not consume another's attempt.
- */
-const INTERACTIVE_RECOVERY_ATTEMPTED = "mooappInteractiveRecoveryAttempted";
-
-// sessionStorage throws where storage is blocked -- private browsing, some
-// embedded webviews, a restrictive cookie policy. Authentication must not be
-// the thing that breaks there, so each access degrades to "no marker".
-const interactiveRecoveryAttempted = (): boolean => {
-    try {
-        return sessionStorage.getItem(INTERACTIVE_RECOVERY_ATTEMPTED) !== null;
-    } catch {
-        return false;
-    }
-};
-
-const markInteractiveRecoveryAttempted = (): void => {
-    try {
-        sessionStorage.setItem(INTERACTIVE_RECOVERY_ATTEMPTED, "1");
-    } catch {
-        // Storage unavailable; the in-memory guard still bounds concurrent callers.
-    }
-};
-
-const clearInteractiveRecoveryAttempt = (): void => {
-    try {
-        sessionStorage.removeItem(INTERACTIVE_RECOVERY_ATTEMPTED);
-    } catch {
-        // Nothing to clear if it could never be written.
-    }
-};
-
 /** Marker carried by cancellations raised by the auth interceptors. */
 const authCancellationMarker = Symbol.for("mooapp.authCancellation");
 
@@ -119,8 +85,8 @@ const forceRefreshByInstance = new WeakMap<IPublicClientApplication, Promise<Aut
  * a request interceptor that acquires tokens silently (falling back to an
  * interactive redirect on recoverable auth errors), and a response interceptor
  * that recovers from a 401 by force-refreshing the token and retrying the
- * request once. Renders its children unchanged — it exposes no context, it
- * only wires up the client.
+ * request once. Renders its children unchanged, plus a "session expired"
+ * prompt once automatic recovery is exhausted. It exposes no context.
  */
 export const MsalAuthProvider: React.FC<React.PropsWithChildren<MsalAuthProviderProps>> = ({ client, scopes = [], children }) => {
 
@@ -181,6 +147,7 @@ export const MsalAuthProvider: React.FC<React.PropsWithChildren<MsalAuthProvider
     return (
         <>
             {children}
+            <SessionExpiredPrompt scopes={scopes} />
         </>
     );
 }
@@ -201,11 +168,28 @@ const buildSilentRequest = (msal: IMsalContext, scopes: string[]): SilentRequest
     };
 };
 
+const redirectForToken = async (msal: IMsalContext, scopes: string[], silentRequest: SilentRequest): Promise<void> => {
+    setRecoveryStage("tokenRedirect");
+    try {
+        await msal.instance.acquireTokenRedirect({
+            ...loginRequest,
+            scopes: interactiveScopes(scopes),
+            ...(silentRequest.account ? { account: silentRequest.account } : {})
+        });
+    } catch (redirectError) {
+        // Nothing navigated, so the attempt was not spent.
+        clearRecoveryStage();
+        throw redirectError;
+    }
+};
+
 /**
  * Shared failure path for silent token acquisition. Non-recoverable errors
  * (network failures, misconfiguration, interaction already in progress) cancel
- * the request outright; recoverable MSAL auth errors trigger a single guarded
- * interactive redirect. Always throws.
+ * the request outright. Recoverable MSAL auth errors escalate once per tier,
+ * bounded across page loads by the tab's recovery stage: a token redirect,
+ * then a fresh sign-in, then a prompt asking the user to sign in again. No
+ * tier redirects automatically more than once. Always throws.
  */
 const handleSilentFailure = async (
     error: unknown,
@@ -240,34 +224,33 @@ const handleSilentFailure = async (
     const redirectState = getRedirectState(msal.instance);
     if (!redirectState.redirectInFlight && msal.inProgress === InteractionStatus.None) {
 
-        // We have already been through an interactive redirect in this tab and
-        // are still failing, so another cannot help -- a corrupt cache entry, a
-        // scope that cannot be consented, an unsatisfiable Conditional Access
-        // policy. Surface the underlying error rather than cancelling:
-        // authCanceledError feeds MooApp's retry policy, which would leave the
-        // app sitting on a loading state instead of showing what went wrong.
-        if (interactiveRecoveryAttempted()) {
-            console.error(
-                "Token acquisition still requires interaction after an interactive redirect; not redirecting again.",
-                error,
-            );
+        const stage = getRecoveryStage();
+
+        // A fresh sign-in has already been tried in this tab and silent
+        // acquisition still fails, so another automatic redirect cannot help.
+        // Hand the decision to the user. Surface the underlying error rather
+        // than cancelling: authCanceledError feeds MooApp's retry policy, which
+        // would leave the app sitting on a loading state.
+        if (stage === "loginRedirect") {
+            if (!isSessionExpired()) {
+                console.error("Token acquisition still requires interaction after a fresh sign-in; asking the user to sign in again.", error);
+                markSessionExpired();
+            }
             throw error;
         }
 
-        markInteractiveRecoveryAttempted();
         redirectState.redirectInFlight = true;
-        const interactiveScopes = Array.from(new Set([...(loginRequest.scopes ?? []), ...scopes]));
         try {
-            await msal.instance.acquireTokenRedirect({
-                ...loginRequest,
-                scopes: interactiveScopes,
-                ...(silentRequest.account ? { account: silentRequest.account } : {})
-            });
+            if (stage === "tokenRedirect") {
+                // The token redirect came back and silent acquisition still
+                // fails, or the user backed out of it. A full sign-in
+                // re-establishes the account and its tokens from scratch.
+                await signInAgain(msal.instance, scopes, false);
+            } else {
+                await redirectForToken(msal, scopes, silentRequest);
+            }
         } catch (redirectError) {
             redirectState.redirectInFlight = false;
-            // Nothing navigated, so the attempt was not spent. Leaving the
-            // marker set would disable recovery for the rest of the tab's life.
-            clearInteractiveRecoveryAttempt();
             throw redirectError;
         }
     }
@@ -296,7 +279,7 @@ const acquireTokenForRequest = async (
     // Silent acquisition works again, so the bound is spent rather than
     // permanent -- a token expiring hours from now must still be able to
     // recover interactively.
-    clearInteractiveRecoveryAttempt();
+    recoverySucceeded();
 
     if (token.accessToken) {
         request.headers.setAuthorization(`Bearer ${token.accessToken}`);
@@ -355,7 +338,7 @@ const retryAfterUnauthorized = async (
     }
 
     // As on the request path: a working refresh releases the bound.
-    clearInteractiveRecoveryAttempt();
+    recoverySucceeded();
 
     if (!token.accessToken) {
         throw error;

@@ -60,7 +60,7 @@ Demo application showcasing the libraries.
 
 (ThemeProvider sits at the root — above the auth boundary — so the unauthenticated Login/fallback screen is themed too.)
 
-**Auth token injection**: `MsalAuthProvider` attaches a request interceptor to the app's axios client that acquires an MSAL access token silently per request (falling back to an interactive redirect on a recoverable auth error). The hey-api generated client uses that same instance, so all generated SDK/React Query calls are authenticated automatically.
+**Auth token injection**: `MsalAuthProvider` attaches a request interceptor to the app's axios client that acquires an MSAL access token silently per request. On a recoverable auth error it escalates once per tier per tab (tracked in sessionStorage): an `acquireTokenRedirect`, then a fresh `loginRedirect`, then a "Your session has expired" prompt that `MsalAuthProvider` renders, whose button starts a user-initiated sign-in. There is never more than one automatic redirect per tier. The hey-api generated client uses that same instance, so all generated SDK/React Query calls are authenticated automatically.
 
 **Build tooling**: Libraries use Vite library mode to output ESM with TypeScript declarations (via vite-plugin-dts). Peer dependencies are externalized via rollup-plugin-peer-deps-external.
 
