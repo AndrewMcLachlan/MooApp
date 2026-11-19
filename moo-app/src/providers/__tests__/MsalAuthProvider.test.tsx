@@ -1,11 +1,14 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import { AuthError } from '@azure/msal-browser';
 import { MsalAuthProvider, addMsalInterceptor, isAuthCancellation } from '../MsalAuthProvider';
+import { getRecoveryStage, isSessionExpired, markSessionExpired, recoverySucceeded } from '../../login/interactiveRecovery';
 
 // Mock MSAL react context for the component test
 const mockAcquireTokenSilent = vi.fn();
+const mockLoginRedirect = vi.fn();
 const mockAddEventCallback = vi.fn().mockReturnValue('callback-id');
 const mockRemoveEventCallback = vi.fn();
 
@@ -14,6 +17,7 @@ vi.mock('@azure/msal-react', () => ({
     instance: {
       acquireTokenSilent: mockAcquireTokenSilent,
       acquireTokenRedirect: vi.fn(),
+      loginRedirect: mockLoginRedirect,
       addEventCallback: mockAddEventCallback,
       removeEventCallback: mockRemoveEventCallback,
       getActiveAccount: vi.fn().mockReturnValue(null),
@@ -78,6 +82,73 @@ describe('MsalAuthProvider', () => {
 
     expect(mockRemoveEventCallback).toHaveBeenCalledWith('callback-id');
   });
+
+  describe('session expired prompt', () => {
+    beforeEach(() => {
+      recoverySucceeded();
+      sessionStorage.clear();
+      mockLoginRedirect.mockReset().mockResolvedValue(undefined);
+    });
+
+    it('is not shown while recovery is possible', () => {
+      render(
+        <MsalAuthProvider client={axios.create()}>
+          <div>Content</div>
+        </MsalAuthProvider>
+      );
+
+      expect(screen.queryByText('Your session has expired')).not.toBeInTheDocument();
+    });
+
+    it('appears once automatic recovery is exhausted', () => {
+      render(
+        <MsalAuthProvider client={axios.create()}>
+          <div>Content</div>
+        </MsalAuthProvider>
+      );
+
+      act(() => markSessionExpired());
+
+      expect(screen.getByText('Your session has expired')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Sign in again' })).toBeInTheDocument();
+    });
+
+    it('starts an interactive sign-in with the account picker when the user asks', async () => {
+      markSessionExpired();
+      render(
+        <MsalAuthProvider client={axios.create()} scopes={['api://test']}>
+          <div>Content</div>
+        </MsalAuthProvider>
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: 'Sign in again' }));
+
+      expect(mockLoginRedirect).toHaveBeenCalledTimes(1);
+      expect(mockLoginRedirect).toHaveBeenCalledWith(expect.objectContaining({
+        prompt: 'select_account',
+        scopes: ['openid', 'profile', 'api://test'],
+      }));
+      // Recorded as the last tier, so failing again on return lands back on
+      // this prompt instead of starting another automatic redirect.
+      expect(getRecoveryStage()).toBe('loginRedirect');
+    });
+
+    it('keeps the prompt available when the sign-in cannot start', async () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      mockLoginRedirect.mockRejectedValue(new AuthError('interaction_in_progress', 'busy'));
+      markSessionExpired();
+      render(
+        <MsalAuthProvider client={axios.create()}>
+          <div>Content</div>
+        </MsalAuthProvider>
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: 'Sign in again' }));
+
+      expect(screen.getByRole('button', { name: 'Sign in again' })).toBeEnabled();
+      consoleSpy.mockRestore();
+    });
+  });
 });
 
 describe('addMsalInterceptor', () => {
@@ -85,6 +156,7 @@ describe('addMsalInterceptor', () => {
     instance: {
       acquireTokenSilent: vi.fn(),
       acquireTokenRedirect: vi.fn(),
+      loginRedirect: vi.fn(),
       getActiveAccount: vi.fn().mockReturnValue(null),
       getAllAccounts: vi.fn().mockReturnValue([]),
       ...overrides,
@@ -104,6 +176,7 @@ describe('addMsalInterceptor', () => {
     mockGetSilentRedirectUri.mockReturnValue(undefined);
     // The interactive-recovery bound is deliberately persistent (see #675), so
     // it survives between cases unless cleared.
+    recoverySucceeded();
     sessionStorage.clear();
   });
 
@@ -266,24 +339,75 @@ describe('addMsalInterceptor', () => {
   // sequential redirects -- only concurrent ones within a single page load.
   // sessionStorage survives the navigation, which is what stops the loop.
   describe('bounding redirects across page loads (#675)', () => {
-    it('redirects once, then surfaces the error rather than redirecting again', async () => {
-      const authError = new AuthError('interaction_required', 'correlation-id');
+    it('escalates to a fresh sign-in, then asks the user rather than redirecting again', async () => {
+      const authError = new AuthError('refresh_token_expired', 'correlation-id');
 
-      // First page load: silent fails, we redirect.
+      // First page load: silent fails, we redirect for a token.
       const first = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
       await expect(createClientWithInterceptor(first).get('/api/data')).rejects.toThrow('Request canceled');
       expect(first.instance.acquireTokenRedirect).toHaveBeenCalledTimes(1);
+      expect(first.instance.loginRedirect).not.toHaveBeenCalled();
 
       // After the redirect the page is new: module state is gone, so a fresh
       // mock stands in for it. Only sessionStorage carries over.
       const second = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
-      const rejection = await createClientWithInterceptor(second).get('/api/data').catch((e) => e);
-
+      await expect(createClientWithInterceptor(second).get('/api/data')).rejects.toThrow('Request canceled');
       expect(second.instance.acquireTokenRedirect).not.toHaveBeenCalled();
+      expect(second.instance.loginRedirect).toHaveBeenCalledTimes(1);
+      // Automatic, so no account picker: an existing Entra session completes it.
+      expect(second.instance.loginRedirect.mock.calls[0][0]).not.toHaveProperty('prompt');
+      expect(isSessionExpired()).toBe(false);
+
+      // Still failing after a fresh sign-in: no more automatic redirects.
+      const third = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
+      const rejection = await createClientWithInterceptor(third).get('/api/data').catch((e) => e);
+
+      expect(third.instance.acquireTokenRedirect).not.toHaveBeenCalled();
+      expect(third.instance.loginRedirect).not.toHaveBeenCalled();
+      expect(isSessionExpired()).toBe(true);
       expect(rejection).toBe(authError);
-      // Surfaced, not cancelled -- a cancellation feeds the retry policy and
-      // the app would hang on a loading state instead of showing the failure.
       expect(isAuthCancellation(rejection)).toBe(false);
+
+      // Every later request in the tab gets the same answer, never a redirect.
+      const fourth = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
+      await expect(createClientWithInterceptor(fourth).get('/api/data')).rejects.toBe(authError);
+      expect(fourth.instance.acquireTokenRedirect).not.toHaveBeenCalled();
+      expect(fourth.instance.loginRedirect).not.toHaveBeenCalled();
+    });
+
+    it('does not spend the fresh sign-in attempt when the login redirect never starts', async () => {
+      const authError = new AuthError('interaction_required', 'correlation-id');
+
+      const first = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
+      await expect(createClientWithInterceptor(first).get('/api/data')).rejects.toThrow('Request canceled');
+
+      const broken = createMockMsal({
+        acquireTokenSilent: vi.fn().mockRejectedValue(authError),
+        loginRedirect: vi.fn().mockRejectedValue(new Error('redirect could not start')),
+      });
+      await expect(createClientWithInterceptor(broken).get('/api/data')).rejects.toThrow('redirect could not start');
+
+      const retry = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
+      await expect(createClientWithInterceptor(retry).get('/api/data')).rejects.toThrow('Request canceled');
+      expect(retry.instance.acquireTokenRedirect).not.toHaveBeenCalled();
+      expect(retry.instance.loginRedirect).toHaveBeenCalledTimes(1);
+    });
+
+    it('clears the expired state once silent acquisition works again', async () => {
+      const authError = new AuthError('interaction_required', 'correlation-id');
+      for (let i = 0; i < 3; i++) {
+        const failing = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
+        await createClientWithInterceptor(failing).get('/api/data').catch((): void => undefined);
+      }
+      expect(isSessionExpired()).toBe(true);
+
+      const working = createMockMsal({ acquireTokenSilent: vi.fn().mockResolvedValue({ accessToken: 'tok' }) });
+      await createClientWithInterceptor(working).get('/api/data');
+
+      expect(isSessionExpired()).toBe(false);
+      const later = createMockMsal({ acquireTokenSilent: vi.fn().mockRejectedValue(authError) });
+      await expect(createClientWithInterceptor(later).get('/api/data')).rejects.toThrow('Request canceled');
+      expect(later.instance.acquireTokenRedirect).toHaveBeenCalledTimes(1);
     });
 
     it('releases the bound once silent acquisition works again', async () => {
@@ -415,6 +539,7 @@ describe('401 response recovery', () => {
     mockGetSilentRedirectUri.mockReturnValue(undefined);
     // The interactive-recovery bound is deliberately persistent (see #675), so
     // it survives between cases unless cleared.
+    recoverySucceeded();
     sessionStorage.clear();
   });
 

@@ -77,6 +77,52 @@ describe('auth-recovered event', () => {
   });
 });
 
+describe('active account after interactive success', () => {
+  const freshAccount = { homeAccountId: 'fresh-home', localAccountId: 'fresh-local', tenantId: 't' };
+
+  const fireOn = async (event: any) => {
+    const instance = await getMsalInstance('client-abc') as any;
+    instance.setActiveAccount.mockClear();
+    eventCallback.current!(event);
+    return instance;
+  };
+
+  it.each([
+    msalBrowser.InteractionType.Redirect,
+    msalBrowser.InteractionType.Popup,
+  ])('sets the active account to the returned account on a %s ACQUIRE_TOKEN_SUCCESS', async (interactionType) => {
+    // The recovery redirect is an acquireTokenRedirect, not a login, so this is
+    // the event that tells us which account the fresh tokens belong to.
+    const instance = await fireOn({
+      eventType: msalBrowser.EventType.ACQUIRE_TOKEN_SUCCESS,
+      interactionType,
+      payload: { account: freshAccount },
+    });
+
+    expect(instance.setActiveAccount).toHaveBeenCalledWith(freshAccount);
+  });
+
+  it('sets the active account on LOGIN_SUCCESS', async () => {
+    const instance = await fireOn({
+      eventType: msalBrowser.EventType.LOGIN_SUCCESS,
+      interactionType: msalBrowser.InteractionType.Redirect,
+      payload: { account: freshAccount },
+    });
+
+    expect(instance.setActiveAccount).toHaveBeenCalledWith(freshAccount);
+  });
+
+  it('leaves the active account alone on a silent ACQUIRE_TOKEN_SUCCESS', async () => {
+    const instance = await fireOn({
+      eventType: msalBrowser.EventType.ACQUIRE_TOKEN_SUCCESS,
+      interactionType: msalBrowser.InteractionType.Silent,
+      payload: { account: freshAccount },
+    });
+
+    expect(instance.setActiveAccount).not.toHaveBeenCalled();
+  });
+});
+
 describe('msal configuration', () => {
   describe('loginRequest', () => {
     it('is defined', () => {

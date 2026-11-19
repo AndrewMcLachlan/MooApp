@@ -142,23 +142,32 @@ const getMsalInstance = async (clientId: string, options?: MsalOptions): Promise
     msalInstance = await msal.createStandardPublicClientApplication(msalConfig);
 
     msalInstance.addEventCallback((event) => {
-        if (event.eventType === msal.EventType.LOGIN_SUCCESS && event.payload) {
+        const isInteractive =
+            event.interactionType === msal.InteractionType.Redirect ||
+            event.interactionType === msal.InteractionType.Popup;
+
+        if (
+            (event.eventType === msal.EventType.LOGIN_SUCCESS ||
+                (event.eventType === msal.EventType.ACQUIRE_TOKEN_SUCCESS && isInteractive)) &&
+            event.payload
+        ) {
+            // Silent requests use the active account; if it is not the account
+            // the user just signed in as, they keep reading its expired tokens.
             const payload = event.payload as msal.AuthenticationResult;
-            const account = payload.account;
-            msalInstance.setActiveAccount(account);
+            if (payload.account) {
+                msalInstance.setActiveAccount(payload.account);
+            }
             window.dispatchEvent(new Event(AUTH_RECOVERED_EVENT));
         }
         else if (
             event.eventType === msal.EventType.ACQUIRE_TOKEN_SUCCESS &&
-            (event.interactionType === msal.InteractionType.Redirect ||
-                event.interactionType === msal.InteractionType.Popup ||
-                event.interactionType === msal.InteractionType.Silent)
+            event.interactionType === msal.InteractionType.Silent
         ) {
-            // Include Silent: when auth is brought back up to date by a background
-            // silent token renewal (not an interactive redirect/popup), any query
-            // that errored during the auth window must still be recovered. The
-            // listener (MooApp) only refetches errored queries, so firing this on
-            // every silent success is a no-op when nothing is stuck.
+            // When auth is brought back up to date by a background silent token
+            // renewal, any query that errored during the auth window must still
+            // be recovered. The listener (MooApp) only refetches errored
+            // queries, so firing this on every silent success is a no-op when
+            // nothing is stuck.
             window.dispatchEvent(new Event(AUTH_RECOVERED_EVENT));
         }
     });
