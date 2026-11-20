@@ -3,6 +3,7 @@ import { useNavLink } from "../providers";
 import React from "react";
 import { type NavItem } from "../models";
 import { Button } from "./Button";
+import { Icon } from "./Icon";
 import { Nav } from "./Nav";
 
 export const NavItemList: React.FC<NavItemListProps> = ({ navItems, as = React.Fragment, role, onClick }) => {
@@ -29,7 +30,7 @@ export const NavItemList: React.FC<NavItemListProps> = ({ navItems, as = React.F
 
         const navItem = item as NavItem;
 
-        const image = typeof navItem.image === "string" ? <img src={navItem.image} alt="" /> : navItem.image ?? <></>;
+        const image = <Icon icon={navItem.icon} src={navItem.iconSrc} />;
 
         if (navItem.route) {
             return <As key={`route${index}`}><NavLink className={({ isActive }) => `nav-link ${(!selected?.id || selected?.id === navItem.id) && isActive ? "active" : ""}`} to={navItem.route} onClick={(e: React.MouseEvent<HTMLElement>) => onNavItemClick(e, navItem)} title={navItem.text} role={role}>{image}<span>{navItem.text}</span></NavLink></As >;

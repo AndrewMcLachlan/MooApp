@@ -40,6 +40,7 @@ export * from "./SearchBox";
 export * from "./Skeleton";
 export * from "./Spinner";
 export * from "./SpinnerContainer";
+export * from "./SplitButton";
 export * from "./Tab";
 export * from "./Table";
 export * from "./TagPanel";

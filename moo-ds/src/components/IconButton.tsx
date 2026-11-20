@@ -26,7 +26,6 @@ export const IconButton: React.FC<PropsWithChildren<IconButtonProps>> = ({ child
 export interface IconButtonProps extends ButtonProps {
     icon?: IconType;
     iconSrc?: string;
-    /** Render the icon in a full-height split panel on the left, divided from the label by a convex sweep (as in "Add" buttons). Designed for solid variants. */
     badge?: boolean;
 }
 

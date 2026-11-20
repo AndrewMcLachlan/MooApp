@@ -1,5 +1,5 @@
 import { Page } from "@andrewmclachlan/moo-app";
-import { Section, Button, ButtonGroup, CopyText, IconButton, IconLinkButton, LinkBox, Icon, Col, Row } from "@andrewmclachlan/moo-ds";
+import { Section, Button, ButtonGroup, CopyText, SplitButton, Menu, toast, IconButton, IconLinkButton, LinkBox, Icon, Col, Row } from "@andrewmclachlan/moo-ds";
 import { HamburgerMenu } from "@andrewmclachlan/moo-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -61,6 +61,27 @@ export const Buttons = () => {
                         <Button size="sm" variant="outline-primary">Month</Button>
                         <Button size="sm" variant="outline-primary">Year</Button>
                     </ButtonGroup>
+                </div>
+            </Section>
+
+            <Section title="Split Button" header="SplitButton" headerSize={4}>
+                <p>A split button. The label runs the default action and the caret opens the alternatives.</p>
+                <div className="demo-row">
+                    <SplitButton id="demo-add" label="Add transaction" icon="plus" toggleLabel="More add options" onClick={() => toast.info("Add transaction")}>
+                        <Menu.Item icon="plus" onClick={() => toast.info("Add transfer")}>Add transfer</Menu.Item>
+                        <Menu.Item icon="upload" onClick={() => toast.info("Import from file")}>Import from file</Menu.Item>
+                    </SplitButton>
+                    <SplitButton id="demo-save" label="Save" variant="outline-primary" toggleLabel="More save options" onClick={() => toast.info("Save")}>
+                        <Menu.Item onClick={() => toast.info("Save as draft")}>Save as draft</Menu.Item>
+                        <Menu.Item onClick={() => toast.info("Save and close")}>Save and close</Menu.Item>
+                    </SplitButton>
+                    <SplitButton id="demo-export" label="Export" variant="secondary" size="sm" onClick={() => toast.info("Export CSV")}>
+                        <Menu.Item onClick={() => toast.info("Export Excel")}>Excel (.xlsx)</Menu.Item>
+                        <Menu.Item onClick={() => toast.info("Export OFX")}>OFX</Menu.Item>
+                    </SplitButton>
+                    <SplitButton id="demo-disabled" label="Disabled" disabled>
+                        <Menu.Item>Unreachable</Menu.Item>
+                    </SplitButton>
                 </div>
             </Section>
 

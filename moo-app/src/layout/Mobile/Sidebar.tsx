@@ -13,10 +13,6 @@ const isDark = (themeValue: string) => themeValue === "" ?
 const isNavItem = (item: NavItem | React.ReactNode): item is NavItem =>
     !isValidElement(item) && typeof item === "object" && item !== null && "text" in item;
 
-/** Matches NavItemList: a string is a source, anything else is already a node. */
-const itemImage = (image: NavItem["image"]) =>
-    typeof image === "string" ? <img src={image} alt="" /> : image;
-
 export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu = [], showAppInfo }) => {
 
     const layout = useLayout();
@@ -52,7 +48,8 @@ export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu =
                     {(userMenu as (NavItem | React.ReactNode)[]).map((item, index) => isNavItem(item) ? (
                         <Menu.Item
                             key={item.id ?? item.route ?? item.text}
-                            icon={itemImage(item.image)}
+                            icon={item.icon}
+                            iconSrc={item.iconSrc}
                             to={item.route}
                             onClick={e => { item.onClick?.(e); close(); }}
                         >
@@ -62,10 +59,10 @@ export const Sidebar: SidebarComponent = ({ navItems = [], userMenu = [], menu =
                         <li className="menu-item" key={`node${index}`} onClick={close}>{item as React.ReactNode}</li>
                     ))}
                     <Menu.Divider />
-                    <Menu.Item icon={<FontAwesomeIcon icon={dark ? "sun" : "moon"} />} onClick={toggleTheme}>
+                    <Menu.Item icon={dark ? "sun" : "moon"} onClick={toggleTheme}>
                         {dark ? "Light mode" : "Dark mode"}
                     </Menu.Item>
-                    <Menu.Item icon={<FontAwesomeIcon icon="arrow-right-from-bracket" />} onClick={() => msal.instance.logoutRedirect()}>
+                    <Menu.Item icon="arrow-right-from-bracket" onClick={() => msal.instance.logoutRedirect()}>
                         Sign out
                     </Menu.Item>
                     {showAppInfo && (

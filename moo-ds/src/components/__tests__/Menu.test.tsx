@@ -100,6 +100,26 @@ describe('Menu', () => {
     expect(screen.getByRole('menuitem').tagName).toBe('BUTTON');
   });
 
+  it('renders an icon from its name', () => {
+    render(
+      <Menu id="test-menu" trigger={<button type="button">Open</button>}>
+        <Menu.Item icon="plus" onClick={vi.fn()}>Import</Menu.Item>
+      </Menu>
+    );
+    open();
+    expect(screen.getByRole('menuitem').querySelector('.menu-item-icon svg')).toBeInTheDocument();
+  });
+
+  it('renders an icon from iconSrc', () => {
+    render(
+      <Menu id="test-menu" trigger={<button type="button">Open</button>}>
+        <Menu.Item iconSrc="/import.svg" onClick={vi.fn()}>Import</Menu.Item>
+      </Menu>
+    );
+    open();
+    expect(screen.getByRole('menuitem').querySelector('.menu-item-icon img')).toHaveAttribute('src', '/import.svg');
+  });
+
   it('renders a divider as a separator', () => {
     render(
       <Menu id="test-menu" trigger={<button type="button">Open</button>}>

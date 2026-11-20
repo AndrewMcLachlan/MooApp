@@ -73,6 +73,7 @@ export const OverlayTrigger: React.FC<OverlayTriggerProps> = ({
     };
 
     if (triggers.includes("click")) {
+        triggerProps["aria-expanded"] = show;
         triggerProps.onClick = (e: React.MouseEvent) => {
             setShow(!show);
             // Call original onClick if it exists
