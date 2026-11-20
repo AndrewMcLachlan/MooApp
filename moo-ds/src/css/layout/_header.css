@@ -117,7 +117,8 @@
 
         .btn.btn-hamburger,
         .btn-back,
-        .action-menu-toggle {
+        .action-menu-toggle,
+        .page-action {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -143,12 +144,29 @@
             margin-inline-start: calc(var(--mobile-header-gap) * -1);
         }
 
-        .action-menu-toggle {
+        .action-menu-toggle,
+        .page-action {
             padding: 0;
             border: 0;
             background: transparent;
             cursor: pointer;
             font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .page-action:disabled {
+            cursor: default;
+            opacity: 0.5;
+        }
+
+        /* A label needs its own width; the 44px height still holds the tap target. */
+        .page-action-text {
+            width: auto;
+            padding-inline: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--link-colour);
+            white-space: nowrap;
         }
     }
 

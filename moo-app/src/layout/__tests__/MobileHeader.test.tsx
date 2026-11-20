@@ -57,7 +57,10 @@ describe('Mobile Header', () => {
   });
 
   it('gives described actions to the menu rather than the bar', () => {
-    layout({ actions: [{ id: 'import', label: 'Import', onClick: vi.fn() }] });
+    layout({ actions: [
+      { id: 'import', label: 'Import', onClick: vi.fn() },
+      { id: 'add', label: 'Add', onClick: vi.fn() },
+    ] });
     render(<Header menu={[]} />);
     expect(screen.getByRole('button', { name: 'More actions' })).toBeInTheDocument();
     expect(screen.queryByText('Import')).not.toBeInTheDocument();
