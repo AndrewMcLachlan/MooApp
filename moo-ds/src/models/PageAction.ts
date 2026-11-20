@@ -33,7 +33,8 @@ interface PageLink extends PageActionBase {
 /**
  * A page action described rather than rendered, so each header can present it
  * in the form that fits: a control in a row on desktop, an item in a menu on a
- * phone. A node can only be placed, not re-presented, which is why `actions`
- * takes these and `customActions` takes the nodes.
+ * phone (or a button in the bar when it is the only one). A node can only be
+ * placed, not re-presented, which is why `actions` takes these and
+ * `customActions` takes the nodes.
  */
 export type PageAction = PageCommand | PageLink;
