@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { OverlayTrigger } from "./OverlayTrigger";
 import { Popover } from "./Popover";
 import { useLink } from "../providers/LinkProvider";
+import { Icon } from "./Icon";
+import { type IconType } from "../types";
 
 export interface MenuProps extends React.HTMLAttributes<HTMLDivElement> {
     id: string;
@@ -14,7 +16,9 @@ export interface MenuProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export interface MenuItemProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>, "onClick"> {
-    icon?: React.ReactNode;
+    icon?: IconType;
+    /** An image URL, used when there is no `icon`. */
+    iconSrc?: string;
     /** Present makes the item a toggle: it reports a checked state and shows a tick. */
     checked?: boolean;
     disabled?: boolean;
@@ -33,11 +37,11 @@ const MenuLink: React.FC<PropsWithChildren<{ to: string; role?: string; "aria-ch
     return <Link to={to} {...rest}>{children}</Link>;
 };
 
-const MenuItem: React.FC<PropsWithChildren<MenuItemProps>> = ({ icon, checked, disabled, onClick, to, className, children, ...rest }) => {
+const MenuItem: React.FC<PropsWithChildren<MenuItemProps>> = ({ icon, iconSrc, checked, disabled, onClick, to, className, children, ...rest }) => {
 
     const content = (
         <>
-            <span className="menu-item-icon">{icon}</span>
+            <span className="menu-item-icon"><Icon icon={icon} src={iconSrc} /></span>
             <span className="menu-item-label">{children}</span>
             {checked && <FontAwesomeIcon icon="check" className="menu-item-check" />}
         </>

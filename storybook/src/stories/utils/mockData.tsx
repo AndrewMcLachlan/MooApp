@@ -1,5 +1,4 @@
 import type { NavItem } from "@andrewmclachlan/moo-ds";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 /**
  * Sample items for ComboBox and TagPanel stories
@@ -33,9 +32,9 @@ export const navItemsWithClick: NavItem[] = [
 ];
 
 export const navItemsWithImages: NavItem[] = [
-    { id: "1", text: "Dashboard", route: "/dashboard", image: <FontAwesomeIcon icon="home" /> },
-    { id: "2", text: "Settings", route: "/settings", image: <FontAwesomeIcon icon="cog" /> },
-    { id: "3", text: "Profile", route: "/profile", image: <FontAwesomeIcon icon="user" /> },
+    { id: "1", text: "Dashboard", route: "/dashboard", icon: "home" },
+    { id: "2", text: "Settings", route: "/settings", icon: "cog" },
+    { id: "3", text: "Profile", route: "/profile", icon: "user" },
 ];
 
 /**

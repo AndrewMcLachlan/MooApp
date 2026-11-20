@@ -1,0 +1,36 @@
+.split-button {
+    .split-button-toggle {
+        --btn-padding-x: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    /* A filled variant's border matches its fill, so the divider is drawn from the text colour. */
+    .split-button-toggle:not([class*="btn-outline-"]) {
+        border-left-color: color-mix(in srgb, var(--btn-colour) 30%, transparent);
+    }
+
+    .split-button-caret {
+        transition: transform 0.15s ease;
+    }
+
+    .drop-down-chevron {
+        stroke: currentColor;
+    }
+
+    .split-button-toggle[aria-expanded="true"] .split-button-caret {
+        transform: rotate(180deg);
+    }
+}
+
+/* Opens under the toggle and extends leftward, so the menu lines up with the group's right edge. */
+.overlay-portal.overlay-bottom:has(.split-button-menu) {
+    position-area: bottom span-left;
+    position-try-fallbacks: flip-block, flip-inline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .split-button .split-button-caret {
+        transition: none;
+    }
+}

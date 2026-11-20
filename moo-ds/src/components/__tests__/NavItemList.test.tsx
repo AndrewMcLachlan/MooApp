@@ -54,10 +54,10 @@ describe('NavItemList', () => {
     });
   });
 
-  describe('rendering with images', () => {
-    it('renders string image as img element', () => {
+  describe('rendering with icons', () => {
+    it('renders iconSrc as an img element', () => {
       const navItems: NavItem[] = [
-        { text: 'With Image', route: '/', image: '/icon.png' },
+        { text: 'With Image', route: '/', iconSrc: '/icon.png' },
       ];
 
       const { container } = render(<NavItemList navItems={navItems} />);
@@ -67,14 +67,25 @@ describe('NavItemList', () => {
       expect(img).toHaveAttribute('src', '/icon.png');
     });
 
-    it('renders ReactNode image directly', () => {
+    it('renders an icon component', () => {
+      const CustomIcon = () => <svg data-testid="custom-icon" />;
       const navItems: NavItem[] = [
-        { text: 'With Icon', route: '/', image: <span data-testid="custom-icon">Icon</span> },
+        { text: 'With Icon', route: '/', icon: CustomIcon },
       ];
 
       render(<NavItemList navItems={navItems} />);
 
       expect(screen.getByTestId('custom-icon')).toBeInTheDocument();
+    });
+
+    it('renders an icon name', () => {
+      const navItems: NavItem[] = [
+        { text: 'With Icon', route: '/', icon: 'plus' },
+      ];
+
+      const { container } = render(<NavItemList navItems={navItems} />);
+
+      expect(container.querySelector('.nav-link svg')).toBeInTheDocument();
     });
   });
 

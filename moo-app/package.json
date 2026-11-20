@@ -1,6 +1,6 @@
 {
   "name": "@andrewmclachlan/moo-app",
-  "version": "5.2.0",
+  "version": "6.0.0",
   "type": "module",
   "main": "dist/index.es.js",
   "types": "dist/index.d.ts",
@@ -70,7 +70,7 @@
     "rollup-plugin-peer-deps-external": "^2.2.4"
   },
   "peerDependencies": {
-    "@andrewmclachlan/moo-ds": ">=5.2.0",
+    "@andrewmclachlan/moo-ds": ">=6.0.0",
     "@azure/msal-react": "^5.8.1",
     "@fortawesome/fontawesome-svg-core": "^7.3.1",
     "@fortawesome/free-regular-svg-icons": "^7.3.1",
